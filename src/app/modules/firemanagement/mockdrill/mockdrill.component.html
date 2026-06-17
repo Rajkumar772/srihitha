@@ -1,0 +1,363 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Mock Drill
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <div class="card-body" class="gth">
+         
+            <form [formGroup]="drillform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Drill Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="drill_date"
+                                placeholder="Enter Drill Date"
+                                [ngClass]="{'is-invalid': submitted && f['drill_date'].errors }">
+                            <div *ngIf="submitted && f['drill_date'].errors" class="invalid-feedback">
+                                <div *ngIf="f['drill_date'].errors.required">Drill Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Drill Time<span style="color: red;">*</span></label>
+                            <input type="time" [(ngModel)]="startTime" class="form-control" id="input-2"
+                                formControlName="startTime" placeholder="Enter Admission Date"
+                                [ngClass]="{'is-invalid': submitted && f['startTime'].errors }">
+                            <div *ngIf="submitted && f['startTime'].errors" class="invalid-feedback">
+                                <div *ngIf="f['startTime'].errors.required">Drill Time is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Location<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="location"
+                                placeholder="Enter Location"
+                                [ngClass]="{'is-invalid': submitted && f['location'].errors }">
+                            <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                                <div *ngIf="f['location'].errors.required">Location is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Conducted By<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="conductedby"
+                                placeholder="Enter Conducted By"
+                                [ngClass]="{'is-invalid': submitted && f['conductedby'].errors }">
+                            <div *ngIf="submitted && f['conductedby'].errors" class="invalid-feedback">
+                                <div *ngIf="f['conductedby'].errors.required">Conducted By is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Total Participants<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" id="input-2" formControlName="totalparticipants"
+                                placeholder="Enter Total Participants"
+                                [ngClass]="{'is-invalid': submitted && f['totalp
+                                
+                                articipants'].errors }">
+                            <div *ngIf="submitted && f['totalparticipants'].errors" class="invalid-feedback">
+                                <div *ngIf="f['totalparticipants'].errors.required">Total Participants is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Type of Drill<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="typeofdrill"
+                                placeholder="Enter Type of Drill"
+                                [ngClass]="{'is-invalid': submitted && f['typeofdrill'].errors }">
+                            <div *ngIf="submitted && f['typeofdrill'].errors" class="invalid-feedback">
+                                <div *ngIf="f['typeofdrill'].errors.required">Type of Drill is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Fire Officer Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="fireofficername"
+                                placeholder="Enter Fire Officer Name"
+                                [ngClass]="{'is-invalid': submitted && f['fireofficername'].errors }">
+                            <div *ngIf="submitted && f['fireofficername'].errors" class="invalid-feedback">
+                                <div *ngIf="f['fireofficername'].errors.required">Fire Officer Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Submit</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th> Drill Date</th>
+                                            <th>Drill Time</th>
+                                            <th>Location</th>
+                                            <th>Conducted By</th>
+                                            <th>Total Participants</th>
+                                            <th>Fire Officer Name</th>
+                                            <th> Type of Drill</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.drill_date }}</td>
+                                            <td>{{ row.startTime }}</td>
+                                            <td>{{ row.location }}</td>
+                                            <td>{{ row.conductedby }}</td>
+                                            <td>{{ row.totalparticipants }}</td>
+                                            <td>{{ row.fireofficername }}</td>
+                                            <td>{{ row.typeofdrill }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="drill_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Drill Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.drill_date}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="startTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Drill Time</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.startTime}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Location</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.location}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="conductedby">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Conducted By</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.conductedby}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="totalparticipants">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total Participants</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.totalparticipants}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fireofficername">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Fire Officer Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.fireofficername}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="typeofdrill">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Type of Drill</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.typeofdrill}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'drill_date',value:item.drill_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'drill_date'; let int = index">
+                                                {{item.drill_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'startTime',value:item.startTime}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'startTime'; let int = index">
+                                                {{item.startTime}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'location',value:item.location}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'location'; let int = index">
+                                                {{item.location}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'conductedby',value:item.conductedby}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'conductedby'; let int = index">
+                                                {{item.conductedby}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'totalparticipants',value:item.totalparticipants}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'totalparticipants'; let int = index">
+                                                {{item.totalparticipants}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'fireofficername',value:item.fireofficername}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'fireofficername'; let int = index">
+                                                {{item.fireofficername}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'typeofdrill',value:item.typeofdrill}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'typeofdrill'; let int = index">
+                                                {{item.typeofdrill}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

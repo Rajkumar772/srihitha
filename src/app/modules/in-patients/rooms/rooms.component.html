@@ -1,0 +1,765 @@
+<div class="hospital-dashboard rooms-only-view">
+    <!-- Top Header -->
+<header class="top-header">
+    <div class="brand-section">
+        <div class="brand-icon">
+            <i class="bx bxs-building-house"></i>
+        </div>
+        <h1>Hospital Rooms</h1>
+    </div>
+
+    <!-- <div class="header-right">
+        <div class="header-info">
+            <i class="bx bx-calendar"></i>
+            <span>23 May 2025</span>
+        </div>
+        <div class="header-info">
+            <i class="bx bx-time-five"></i>
+            <span>07:45 PM</span>
+        </div>
+    </div> -->
+</header>
+
+    <!-- Main Content Full Width -->
+    <main class="main-content full-width-content">
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card blue-card" (click)="getRoomsData(3)">
+                <div class="summary-icon light-blue">
+                    <i class="bx bx-bed"></i>
+                </div>
+                <div class="summary-text">
+                    <h4>Total Rooms</h4>
+                    <h2 class="blue-text">{{ total_rooms }}</h2>
+                </div>
+            </div>
+
+            <div class="summary-card green-card" (click)="getRoomsData(0)">
+                <div class="summary-icon light-green">
+                    <i class="bx bx-bed"></i>
+                </div>
+                <div class="summary-text">
+                    <h4>Available Rooms</h4>
+                    <h2 class="green-text">{{ available_count }}</h2>
+                </div>
+            </div>
+
+            <div class="summary-card red-card" (click)="getRoomsData(1)">
+                <div class="summary-icon light-red">
+                    <i class="bx bx-bed"></i>
+                </div>
+                <div class="summary-text">
+                    <h4>Rooms Occupied</h4>
+                    <h2 class="red-text">{{ occupied_count }}</h2>
+                </div>
+            </div>
+
+            <div class="summary-card orange-card" (click)="getRoomsData(2)">
+                <div class="summary-icon light-orange">
+                    <i class="bx bx-brush"></i>
+                </div>
+                <div class="summary-text">
+                    <h4>Rooms in Cleaning</h4>
+                    <h2 class="orange-text">{{ cleaning_count }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Groups -->
+        <div class="room-panel" *ngFor="let b of groupedRooms">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2>Floor {{ b[0].floor_type }}</h2>
+                    <span>|</span>
+                    <h3>{{ b[0].room_condition }}</h3>
+                </div>
+
+                <div class="panel-status">
+                    <i class="bx bx-pulse"></i>
+                    <div class="live-status">
+                        <span class="dot"></span>
+                        <span>Live Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body rooms-only-layout">
+                <!-- Floor Selector -->
+                <div class="floor-selector">
+                    <h4>Select Floor</h4>
+
+                    <div class="floor-option active-floor">
+                        <div>
+                            <strong>Floor {{ b[0].floor_type }}</strong>
+                            <p>{{ b[0].room_condition }}</p>
+                        </div>
+                        <i class="bx bx-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Room Cards -->
+                <div class="rooms-grid rooms-grid-wide">
+                    <div class="room-card-wrap" *ngFor="let i of b">
+
+                        <!-- Available -->
+                        <div class="room-card" *ngIf="i.room_status == '0'">
+                            <div class="room-image">
+                                <img [src]="i.img" alt="room" />
+                            </div>
+
+                            <div class="room-info available-text clickNgetdata" (click)="booking(modal, i)">
+                                <h5>{{ i.bed_type }}</h5>
+                                <h3>{{ i.room_number }}</h3>
+                                <p>{{ i.bed_no }}</p>
+                            </div>
+
+                            <div class="status-pill available-pill">
+                                <span class="dot green-dot"></span>
+                                Available
+                            </div>
+                        </div>
+
+                        <!-- Occupied -->
+                        <div class="room-card" *ngIf="i.room_status == '1'">
+                            <div class="room-image">
+                                <img [src]="i.img" alt="room" />
+                            </div>
+
+                            <div class="room-info occupied-text clickNgetdata"
+                                (click)="checkout(checkinmodal, roomchange, i)">
+                                <h5>{{ i.bed_type }}</h5>
+                                <h3>{{ i.room_number }}</h3>
+                                <p>{{ i.bed_no }}</p>
+                            </div>
+
+                            <div class="status-pill occupied-pill">
+                                <span class="dot red-dot"></span>
+                                Occupied
+                            </div>
+                        </div>
+
+                        <!-- Cleaning -->
+                        <div class="room-card" *ngIf="i.room_status == '2'">
+                            <div class="room-image">
+                                <img [src]="i.img" alt="room" />
+                            </div>
+
+                            <div class="room-info cleaning-text clickNgetdata" (click)="gotoavaliblity(i)">
+                                <h5>{{ i.bed_type }}</h5>
+                                <h3>{{ i.room_number }}</h3>
+                                <p>{{ i.bed_no }}</p>
+                            </div>
+
+                            <div class="status-pill cleaning-pill">
+                                <span class="dot orange-dot"></span>
+                                Cleaning
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- check-IN -->
+<ng-template #modal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">In - Patient</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body gth">
+        <form [formGroup]="form">
+            <br>
+            <div class="row">
+                <div class="col-lg-8">
+                    <br>
+                    <div class="form-group">
+                        <label>OP Patient ID <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select id="inputstate" id="default-select" (change)="changepn(uh_id)" [(ngModel)]="uh_id"
+                            formControlName="uh_id" [ngClass]="{'is-invalid': typesubmit && type.uh_id.errors}">
+                            <ng-option *ngFor="let p of patients_data" value="{{p.uh_id}}">
+                                {{ p.uh_id }} / {{p.name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="typesubmit && type.uh_id.errors" class="invalid-feedback">
+                            <span *ngIf="type.uh_id.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Reason for Admission<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="reasonforadmission"
+                            [(ngModel)]="reasonforadmission"
+                            [ngClass]="{'is-invalid': typesubmit && type.reasonforadmission.errors}"
+                            placeholder="Reason for Admission" />
+                        <div *ngIf="typesubmit && type.reasonforadmission.errors" class="invalid-feedback">
+                            <span *ngIf="type.reasonforadmission.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Significant Findings<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="significantfindings"
+                            [(ngModel)]="significantfindings"
+                            [ngClass]="{'is-invalid': typesubmit && type.significantfindings.errors}"
+                            placeholder="Significant Findings" />
+                        <div *ngIf="typesubmit && type.significantfindings.errors" class="invalid-feedback">
+                            <span *ngIf="type.significantfindings.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Diagnosis of the Patient<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="diagnosisofthepatient"
+                            [(ngModel)]="diagnosisofthepatient"
+                            [ngClass]="{'is-invalid': typesubmit && type.diagnosisofthepatient.errors}"
+                            placeholder="Diagnosis of the Patient" />
+                        <div *ngIf="typesubmit && type.diagnosisofthepatient.errors" class="invalid-feedback">
+                            <span *ngIf="type.diagnosisofthepatient.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Full Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="full_name" [(ngModel)]="full_name"
+                            [ngClass]="{'is-invalid': typesubmit && type.full_name.errors}"
+                            placeholder="Enter Full Name" />
+                        <div *ngIf="typesubmit && type.full_name.errors" class="invalid-feedback">
+                            <span *ngIf="type.full_name.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Age<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="age" [(ngModel)]="age"
+                            [ngClass]="{'is-invalid': typesubmit && type.age.errors}" placeholder="Enter Age">
+                        <div *ngIf="typesubmit && type.age.errors" class="invalid-feedback">
+                            <span *ngIf="type.age.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Gender<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="gender" [(ngModel)]="gender"
+                            [ngClass]="{'is-invalid': typesubmit && type.gender.errors}"
+                            placeholder="Enter only numbers">
+                        <div *ngIf="typesubmit && type.gender.errors" class="invalid-feedback">
+                            <span *ngIf="type.gender.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Mobile Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="phone_number" type="text" class="form-control"
+                                [(ngModel)]="phone_number" minlength="10" maxlength="10"
+                                [ngClass]="{'is-invalid': typesubmit && type.phone_number.errors}"
+                                placeholder="Enter Mobile Number" (keypress)="numericOnly($event)">
+                            <div *ngIf="typesubmit && type.phone_number.errors" class="invalid-feedback">
+                                <span *ngIf="type.phone_number.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <input type="text" class="form-control" formControlName="occupation"
+                            placeholder="Enter Occupation"
+                            [ngClass]="{'is-invalid': typesubmit && type.occupation.errors}">
+                        <div *ngIf="typesubmit && type.occupation.errors" class="invalid-feedback">
+                            <span *ngIf="type.occupation.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Address<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="address" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.address.errors}"
+                                placeholder="Enter Address" [(ngModel)]="address">
+                            <div *ngIf="typesubmit && type.address.errors" class="invalid-feedback">
+                                <span *ngIf="type.address.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Complaint</label>
+                        <div>
+                            <input formControlName="complaint" type="text" class="form-control" [(ngModel)]="complaint"
+                                [ngClass]="{'is-invalid': typesubmit && type.complaint.errors}"
+                                placeholder="Enter Complaint">
+                            <div *ngIf="typesubmit && type.complaint.errors" class="invalid-feedback">
+                                <span *ngIf="type.complaint.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Consultant<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="doctor_name" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.doctor_name.errors}"
+                                placeholder="Enter Consultant" [(ngModel)]="doctor_name">
+                            <div *ngIf="typesubmit && type.doctor_name.errors" class="invalid-feedback">
+                                <span *ngIf="type.doctor_name.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Aadhar Number</label>
+                        <div>
+                            <input formControlName="aadhar" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.aadhar.errors}"
+                                placeholder="Enter Aadhar Number" maxlength="12" (keypress)="numericOnly($event)">
+                            <div *ngIf="typesubmit && type.aadhar.errors" class="invalid-feedback">
+                                <span *ngIf="type.aadhar.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Room Type<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="room_type" type="text" class="form-control" readonly
+                                [ngClass]="{'is-invalid': typesubmit && type.room_type.errors}" placeholder="">
+                            <div *ngIf="typesubmit && type.room_type.errors" class="invalid-feedback">
+                                <span *ngIf="type.room_type.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Room Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="room_number" type="text" class="form-control" readonly
+                                [ngClass]="{'is-invalid': typesubmit && type.room_number.errors}" placeholder="">
+                            <div *ngIf="typesubmit && type.room_number.errors" class="invalid-feedback">
+                                <span *ngIf="type.room_number.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Bed Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="bed_no" type="text" class="form-control" readonly
+                                [ngClass]="{'is-invalid': typesubmit && type.bed_no.errors}" placeholder="">
+                            <div *ngIf="typesubmit && type.bed_no.errors" class="invalid-feedback">
+                                <span *ngIf="type.bed_no.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Room Price<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="price" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.price.errors}"
+                                placeholder="Enter only numbers" readonly>
+                            <div *ngIf="typesubmit && type.price.errors" class="invalid-feedback">
+                                <span *ngIf="type.price.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Admit Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="admin_date" type="datetime-local" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.admin_date.errors}">
+                            <div *ngIf="typesubmit && type.admin_date.errors" class="invalid-feedback">
+                                <span *ngIf="type.admin_date.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-outline">
+                        <label class="form-label">Medi Claim<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="Yes" (change)="timeslot($event.target)"
+                                formControlName="med_claim"
+                                [ngClass]="{'is-invalid': typesubmit && type.med_claim.errors}">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="No" (change)="timeslot($event.target)"
+                                formControlName="med_claim"
+                                [ngClass]="{'is-invalid': typesubmit && type.med_claim.errors}">
+                            <label class="form-check-label">No</label>
+                        </div>
+                        <div *ngIf="typesubmit && type.med_claim.errors" class="invalid-feedback">
+                            <span *ngIf="type.med_claim.errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" *ngIf="newORold">
+                    <br>
+                    <div class="form-group">
+                        <label for="input-2">Insurance</label>
+                        <ng-select style="border: 1px solid black;border-radius: 5px;" formControlName="insurance_name">
+                            <ng-option value="" disabled>Select Insurance </ng-option>
+                            <ng-option value="{{a.name}}" *ngFor="let a of casefiledata">{{a.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-outline">
+                        <label>Payment Type <span style="color: red;">*</span></label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="CASH"
+                                (change)="paymentslot($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;CASH</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="UPI"
+                                (change)="paymentslot($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;UPI</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="CASHLESS"
+                                (change)="paymentslot($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;CASHLESS</label>
+                        </div>
+                        <div *ngIf="typesubmit && type['payment_types'].errors" class="invalid-feedback">
+                            <span *ngIf="type['payment_types'].errors['required']">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Advance Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="amount" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': typesubmit && type.amount.errors}"
+                                placeholder="Enter only numbers">
+                            <div *ngIf="typesubmit && type.amount.errors" class="invalid-feedback">
+                                <span *ngIf="type.amount.errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" *ngIf="paymentload">
+                    <br>
+                    <div class="form-group">
+                        <label>Transaction ID </label>
+                        <input type="text" class="form-control" formControlName="transaction_id" [readonly]="isReadOnly"
+                            [ngClass]="{'is-invalid': typesubmit && type['transaction_id'].errors}"
+                            placeholder="Type something" (keypress)="numericOnly($event)" />
+                        <div *ngIf="typesubmit && type['transaction_id'].errors" class="invalid-feedback">
+                            <span *ngIf="type['transaction_id'].errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group mb-0" style="text-align: right;">
+            <br>
+            <button type="submit" style="background-color: blue;
+            color: white;
+            width: 80px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;" (click)="Submit()"> Submit </button>&nbsp;
+            <button type="reset" class="btn btn-secondary" (click)="modal.dismiss('Cross click')"> Close </button>
+        </div>
+    </div>
+</ng-template>
+
+<!-- check-OUT -->
+<ng-template #checkinmodal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">In - Patient</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="checkoutform">
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>OP Patient ID<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="uh_id" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Patients Condition at the time of Discharge<span
+                                style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" placeholder="Patients Condition at the time of Discharge"
+                            class="form-control" formControlName="patientconditionatthetimeofdischarge" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="name" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Number </label>
+                        <input type="text" class="form-control" formControlName="phone_number" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Admitted Date <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input formControlName="admin_date" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Room Price<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input formControlName="price" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Advance Paid <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input formControlName="amount" type="text" class="form-control"
+                            placeholder="Enter only numbers" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>DisCharge Date <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="datetime-local" formControlName="discharge_date" class="form-control"
+                            (input)="difference($event)"
+                            [ngClass]="{'is-invalid': dischargeSubmit && dischargeType['discharge_date'].errors}">
+                        <div *ngIf="dischargeSubmit && dischargeType['discharge_date'].errors" class="invalid-feedback">
+                            <span *ngIf="dischargeType['discharge_date'].errors['required']">This value is
+                                required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Pending Amount</label>
+                        <div>
+                            <input formControlName="lessadvance" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Days</label>
+                        <input formControlName="t_days" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-outline">
+                        <label>Payment Type <span style="color: red;">*</span></label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="CASH"
+                                (change)="paymentslot1($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;CASH</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="UPI"
+                                (change)="paymentslot1($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;UPI</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="CASHLESS"
+                                (change)="paymentslot1($event.target)" formControlName="payment_types"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_types'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;CASHLESS</label>
+                        </div>
+                        <div *ngIf="typesubmit && type['payment_types'].errors" class="invalid-feedback">
+                            <span *ngIf="type['payment_types'].errors['required']">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" *ngIf="paymentload1">
+                    <br>
+                    <div class="form-group">
+                        <label>Transaction ID </label>
+                        <input type="text" class="form-control" formControlName="transaction_id" [readonly]="isReadOnly"
+                            [ngClass]="{'is-invalid': typesubmit && type['transaction_id'].errors}"
+                            placeholder="Type something" (keypress)="numericOnly($event)" />
+                        <div *ngIf="typesubmit && type['transaction_id'].errors" class="invalid-feedback">
+                            <span *ngIf="type['transaction_id'].errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group mb-0" style="text-align: right;">
+            <br>
+            <button type="submit" style="background-color: blue;
+            color: white;
+            width: 80px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;" (click)="checkoutsubmit()"> Submit </button>&nbsp;
+            <button type="reset" class="btn btn-secondary" (click)="modal.dismiss('Cross click')"> Close </button>
+        </div>
+    </div>
+</ng-template>
+
+<!-- room - exchange -->
+<ng-template #roomchange let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Room change </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="checkoutforms">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>OP Patient ID<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="uh_id" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="name" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Number </label>
+                        <input type="text" class="form-control" formControlName="phone_number" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Admitted Date <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input formControlName="admin_date" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Room Price<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input formControlName="price" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Change Room</label>
+                        <ng-select formControlName="roomsnumber">
+                            <ng-option value="{{a.room_number}},{{a.bed_no}},{{a.id}},{{a.bed_type}},{{a.price}}"
+                                *ngFor="let a of rromavalble">{{a.room_number}}-{{a.bed_no}} -
+                                {{a.room_condition}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group mb-0" style="text-align: right;">
+            <br>
+            <button type="submit" class="btn btn-primary me-1" (click)="roomchanges()"> Submit </button>
+            <button type="reset" class="btn btn-secondary" (click)="modal.dismiss('Cross click')"> Close </button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading ...</h5>
+</div>

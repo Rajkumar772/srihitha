@@ -1,0 +1,408 @@
+  <section class="handoff-page">
+
+    <div class="handoff-header">
+      <img src="assets/back/logo2.png" class="handoff-logo" alt="Hospital Logo">
+      <h2>NURSE HAND OFF COMMUNICATION</h2>
+    </div>
+
+    <div class="handoff-patient-line">
+      <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+      <span>UMR No</span><input [(ngModel)]="header.umr_no">
+      <span>Sex</span><input [(ngModel)]="header.sex">
+      <span>Age</span><input [(ngModel)]="header.age">
+      <span>IP No</span><input [(ngModel)]="header.ip_no">
+    </div>
+
+    <!-- REALTIME ENTRY FORM -->
+    <div class="handoff-entry-card no-print">
+
+      <h3>{{ editingColumnKey ? 'Edit Nurse Hand Off Entry' : 'Add Nurse Hand Off Entry' }}</h3>
+
+      <div class="handoff-entry-grid">
+
+        <label>
+          Area
+          <input placeholder="Ex: ICU / Ward" [(ngModel)]="handoffEntry.area">
+        </label>
+
+        <label>
+          Shift
+          <select [(ngModel)]="handoffEntry.shift">
+            <option value="">Select Shift</option>
+            <option>Morning</option>
+            <option>Evening</option>
+            <option>Night</option>
+          </select>
+        </label>
+
+        <label>
+          Identify Yourself
+          <select [(ngModel)]="handoffEntry.identify_yourself">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+
+        <label>
+          Identify Patient
+          <select [(ngModel)]="handoffEntry.identify_patient">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+
+        <label>
+          General Condition
+          <select [(ngModel)]="handoffEntry.general_condition">
+            <option value="">Select</option>
+            <option>Good</option>
+            <option>Fair</option>
+            <option>Poor</option>
+          </select>
+        </label>
+
+        <label>
+          Consciousness Level
+          <select [(ngModel)]="handoffEntry.consciousness">
+            <option value="">Select</option>
+            <option>Conscious</option>
+            <option>Semi Conscious</option>
+            <option>Unconscious</option>
+          </select>
+        </label>
+
+        <label>
+          IV Fluids / Flow Rate
+          <input placeholder="Ex: NS 100ml/hr" [(ngModel)]="handoffEntry.iv_fluids">
+        </label>
+
+        <label>
+          Vitals Recorded
+          <select [(ngModel)]="handoffEntry.vitals_recorded">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+
+        <label>
+          Critical Lab / Radiology Result
+          <input placeholder="Ex: No / Hb 7.2 informed" [(ngModel)]="handoffEntry.critical_results">
+        </label>
+
+        <label>
+          Invasive Lines
+          <textarea placeholder="Ex: PICC line inserted on 28-05-2026"
+            [(ngModel)]="handoffEntry.invasive_lines"></textarea>
+        </label>
+
+        <label>
+          Nurse Name / Emp ID
+          <input placeholder="Ex: Nurse Rani / EMP102" [(ngModel)]="handoffEntry.nurse_name">
+        </label>
+
+      </div>
+
+      <div class="handoff-form-actions">
+        <button type="button" (click)="saveHandoffEntry()">
+          {{ editingColumnKey ? 'Update Entry' : 'Save To Sheet' }}
+        </button>
+
+        <button type="button" class="cancel-btn" (click)="resetHandoffEntry()">
+          Clear
+        </button>
+      </div>
+
+    </div>
+
+    <!-- SAVED ENTRY LIST -->
+    <div class="handoff-saved-list no-print" *ngIf="handoff.columns.length">
+      <h3>Saved Hand Off Entries</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Area / Shift</th>
+            <th>Nurse</th>
+            <th>Condition</th>
+            <th>Vitals</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let col of handoff.columns; let i = index" [hidden]="!col.value">
+            <td>{{ col.value || '-' }}</td>
+            <td>{{ col.nurse_name }}</td>
+            <td>{{ getCellValue(i, 0, 2) }}</td>
+            <td>{{ getCellValue(i, 1, 1) }}</td>
+            <td>
+              <button type="button" (click)="editHandoffEntry(i)">Edit</button>
+              <button type="button" class="delete-btn" (click)="deleteHandoffEntry(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PRINT SHEET -->
+    <div class="handoff-scroll">
+      <table class="handoff-table">
+        <tbody>
+
+          <tr class="top-row">
+            <td class="vertical-empty"></td>
+
+            <td class="area-shift-cell">
+              <div class="diagonal-line"></div>
+              <span class="area-text">AREA</span>
+              <span class="shift-text">SHIFT</span>
+            </td>
+
+            <td *ngFor="let col of handoff.columns; trackBy: trackByIndex">
+              <input [(ngModel)]="col.value">
+            </td>
+          </tr>
+
+          <ng-container *ngFor="let group of handoff.groups; trackBy: trackByIndex">
+
+            <tr *ngFor="let row of group.rows; let rowIndex = index; trackBy: trackByIndex">
+
+              <td class="vertical-title" *ngIf="rowIndex === 0" [attr.rowspan]="group.rows.length">
+                {{ group.title }}
+              </td>
+
+              <td class="question-cell" [innerHTML]="row.label"></td>
+
+              <td *ngFor="let col of handoff.columns; trackBy: trackByIndex">
+                <input [(ngModel)]="row.values[col.key]">
+              </td>
+
+            </tr>
+
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="handoff-actions no-print">
+      <button type="button" (click)="addShiftColumn()">+ Add Empty Shift</button>
+      <button type="button" (click)="removeShiftColumn()">- Remove Last Shift</button>
+      <button type="button" (click)="addBlankInvasiveLine()">+ Add Invasive Line</button>
+      <button type="button" (click)="removeBlankInvasiveLine()">- Remove Invasive Line</button>
+    </div>
+
+  </section>
+
+
+  <!-- SECOND SECTION - EXACT IMAGE DESIGN -->
+  <div class="handoff-exact-section">
+
+    <div class="exact-logo-row">
+      <img src="assets/back/logo2.png" class="exact-logo" alt="Hospital Logo">
+    </div>
+
+    <div class="exact-patient-line">
+      <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+      <span>UMR No</span><input [(ngModel)]="header.umr_no">
+      <span>Sex</span><input [(ngModel)]="header.sex">
+      <span>Age</span><input [(ngModel)]="header.age">
+      <span>IP No</span><input [(ngModel)]="header.ip_no">
+    </div>
+
+    <!-- REALTIME NURSE ENTRY -->
+    <div class="exact-entry-card no-print">
+
+      <h3>{{ editingExactIndex !== null ? 'Edit Nurse Shift Entry' : 'Nurse Shift Entry' }}</h3>
+
+      <div class="exact-entry-grid">
+
+        <label>Date
+          <input type="date" [(ngModel)]="currentShift.date">
+        </label>
+
+        <label>Shift
+          <select [(ngModel)]="currentShift.shift">
+            <option value="">Select Shift</option>
+            <option>Morning</option>
+            <option>Evening</option>
+            <option>Night</option>
+          </select>
+        </label>
+
+        <label>Column
+          <select [(ngModel)]="currentShift.columnKey">
+            <option value="">Select Column</option>
+            <option *ngFor="let col of exactColumns" [value]="col.key">
+              {{ col.label }}
+            </option>
+          </select>
+        </label>
+
+        <label>Nurse Name / Emp ID
+          <input placeholder="Ex: Nurse Rani / EMP102" [(ngModel)]="currentShift.nurseName">
+        </label>
+
+        <label>Temperature
+          <input placeholder="Ex: 98.6°F" [(ngModel)]="currentShift.temperature">
+        </label>
+
+        <label>Pulse
+          <input placeholder="Ex: 78/min" [(ngModel)]="currentShift.pulse">
+        </label>
+
+        <label>Respiration Rate
+          <input placeholder="Ex: 18/min" [(ngModel)]="currentShift.respiration">
+        </label>
+
+        <label>Blood Pressure
+          <input placeholder="Ex: 120/80" [(ngModel)]="currentShift.bp">
+        </label>
+
+        <label>SpO₂
+          <input placeholder="Ex: 98%" [(ngModel)]="currentShift.spo2">
+        </label>
+
+        <label>GRBS
+          <input placeholder="Ex: 110 mg/dl" [(ngModel)]="currentShift.grbs">
+        </label>
+
+        <label>Pain Score
+          <input placeholder="Ex: No / 3 abdomen" [(ngModel)]="currentShift.pain">
+        </label>
+
+        <label>Intake / Output
+          <input placeholder="Ex: 500ml / 300ml" [(ngModel)]="currentShift.intakeOutput">
+        </label>
+
+      </div>
+
+      <div class="exact-entry-actions">
+        <button type="button" (click)="saveExactShiftEntry()">
+          {{ editingExactIndex !== null ? 'Update Entry' : 'Save To Selected Column' }}
+        </button>
+
+        <button type="button" class="clear-btn" (click)="clearExactShiftEntry()">
+          Clear
+        </button>
+      </div>
+
+    </div>
+
+    <!-- SAVED SHIFT DETAILS -->
+    <div class="exact-saved-list no-print" *ngIf="savedExactShiftEntries.length">
+
+      <h3>Saved Nurse Shift Entries</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Column</th>
+            <th>Nurse / Emp ID</th>
+            <th>Vitals</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let entry of savedExactShiftEntries; let i = index">
+            <td>{{ entry.date || '-' }}</td>
+            <td>{{ entry.shift || '-' }}</td>
+            <td>{{ entry.columnLabel || '-' }}</td>
+            <td>{{ entry.nurseName || '-' }}</td>
+            <td>
+              T: {{ entry.temperature || '-' }},
+              P: {{ entry.pulse || '-' }},
+              BP: {{ entry.bp || '-' }},
+              SpO₂: {{ entry.spo2 || '-' }}
+            </td>
+            <td>
+              <button type="button" (click)="editExactShiftEntry(i)">Edit</button>
+              <button type="button" class="delete-btn" (click)="deleteExactShiftEntry(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="exact-table-scroll">
+      <table class="exact-handoff-table">
+        <tbody>
+
+          <ng-container *ngFor="let group of exactHandoffGroups">
+
+            <tr *ngFor="let row of group.rows; let i = index">
+
+              <td class="exact-vertical-title" *ngIf="i === 0" [attr.rowspan]="group.rows.length">
+                {{ group.title }}
+              </td>
+
+              <td class="exact-label-cell" [innerHTML]="row.label"></td>
+
+              <td *ngFor="let col of exactColumns">
+
+                <div class="shift-cell-wrapper">
+
+                  <div class="shift-header" *ngIf="row.label === 'Temperature'">
+                    <span>{{ col.shift || '-' }}</span>
+                    <small>{{ col.date || '-' }}</small>
+                  </div>
+
+                  <ng-container *ngIf="row.label !== 'Handover by Sign &<br>Employee ID'; else signatureUploadCell">
+                    <textarea [(ngModel)]="row.values[col.key]"></textarea>
+                  </ng-container>
+
+                  <ng-template #signatureUploadCell>
+                    <div class="dynamic-sign-box">
+
+                      <input class="sign-name-input" placeholder="Nurse / Emp ID" [(ngModel)]="row.values[col.key]">
+
+                      <input type="file" accept="image/*" class="sign-upload-input no-print"
+                        (change)="uploadExactTableSignature($event, col)">
+
+                      <img *ngIf="col.signature_preview" [src]="col.signature_preview" class="dynamic-sign-img"
+                        alt="Signature">
+
+                    </div>
+                  </ng-template>
+                </div>
+
+              </td>
+
+            </tr>
+
+          </ng-container>
+
+        </tbody>
+      </table>
+      <div class="exact-actions no-print">
+        <button type="button" (click)="addExactShiftColumn()">+ Add Empty Shift</button>
+        <button type="button" (click)="removeExactShiftColumn()">- Remove Last Shift</button>
+        <button type="button" (click)="addExactOtherRow()">+ Add Section Row</button>
+        <button type="button" (click)="removeExactOtherRow()">- Remove Section Row</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="db-action-buttons no-print">
+
+    <button type="button" class="save-db-btn" (click)="saveNurseHandoffToDb()">
+
+      Save Nurse Handoff
+
+    </button>
+
+    <button type="button" class="load-db-btn" (click)="loadSavedNurseHandoff()">
+
+      Load Saved Nurse Handoff
+
+    </button>
+
+  </div> -->

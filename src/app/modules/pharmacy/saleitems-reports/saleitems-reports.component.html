@@ -1,0 +1,1250 @@
+<div class="row">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+            Sale-Items-Reports
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+            <div style="display: flex;justify-content: space-between;">
+
+                <!-- <div>
+                    <h6 class="mt-3">
+                        <mat-slide-toggle (click)="changeFilters()" [(ngModel)]="isChecked"><b>For More
+                                Filters</b></mat-slide-toggle>
+                    </h6>
+                </div> -->
+            </div>
+
+            <div class="card-body" class="gth" *ngIf="!isChecked">
+                <form [formGroup]="Sale_reports" (ngSubmit)="SearchDATE()">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input [max]="currentDate" type="date" class="form-control" formControlName="sale_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['sale_date'].errors }">
+                                <div *ngIf="submitt && validDate['sale_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['sale_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input [max]="currentDate" type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['to_date'].errors }">
+                                <div *ngIf="submitt && validDate['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body" class="gth" *ngIf="isChecked">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <label>From Date<span style="color: red;">*</span></label>
+                            <input id="from_date" (change)="functionToGetRange()" type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <label>To Date<span style="color: red;">*</span></label>
+                            <input id="to_date" (change)="functionToGetRange()" [max]="currentDate" type="date"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <label>BILL NO<span style="color: red;">*</span></label>
+                            <ng-select (change)="ParticularBillNo($event)">
+                                <ng-option *ngFor="let p of FullPatientsSalesBillDetails"
+                                    value="{{p.sale_bill_no}}">{{p.sale_bill_no}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group mb-4">
+                            <label>OP Patient ID <span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <ng-select (change)="ParticularpatientSale($event)">
+                                <ng-option *ngFor="let p of NonDuplicateArray" value="{{p.uh_id}}">{{p.uh_id
+                                    + " " + p.patient_name}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <label>Mobile No<span style="color: red;">*</span></label>
+                            <input minlength="10" maxlength="10" (keypress)="numericOnly($event)" type="text"
+                                class="form-control" (keyup)="getMBnoDetails($event)" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <label>Payment Methods<span style="color: red;">*</span></label>
+                            <ng-select (change)="payMode($event)">
+                                <ng-option value="CASH">CASH</ng-option>
+                                <ng-option value="UPI">UPI</ng-option>
+                                <ng-option value="E - CARD">E - CARD</ng-option>
+                                <ng-option value="BOTH">BOTH</ng-option>
+                                <ng-option value="CREDIT">CREDIT</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <div class="row toppad" style="background: white;">
+                            <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                <!-- serch header start -->
+                                <div class="row buttonhide">
+                                    <div class="col">
+                                        <mat-form-field class="sea">
+                                            <mat-label>Search</mat-label>
+                                            <input matInput (keyup)="applyFilter($event)"   #input>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <div class="btns">
+                                            <button mat-raised-button class="btn btn-secondary m-1"
+                                                (click)="exporter.exportTable('xlsx', {fileName:'Sales-Item-Report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                            <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- serch header end -->
+                                <div class="example-container">
+                                    <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                                        #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                                        <ng-container matColumnDef="i">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">S.No
+                                            </th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_date">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Sale Date</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <b>{{row.sale_date | date: 'dd/MM/yyyy' }}</b>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_bill_no">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Bill No
+                                            </th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.sale_bill_no}}
+                                                <!-- <div>
+                                                    <i *ngIf="row.d_in != '1'"
+                                                        (click)="modifyPtntdts(patientCredentialsTempo , row)"
+                                                        style="font-size: 20px;cursor: pointer;" class="fa fa-user"
+                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-remove" style="color: red;"
+                                                        *ngIf="row.d_in == '1'"></i>
+                                                </div> -->
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="uh_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                OP Patient ID</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span
+                                                    *ngIf="row.uh_id !== 'null' && row.uh_id !== '' && row.uh_id !== null;else noTransactionId">
+                                                    {{row.uh_id}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="patient_type">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Type</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.patient_type=='1'"
+                                                    style="font-weight: bold;text-transform: uppercase;">
+                                                    PHARMACY
+                                                </span>
+                                                <span *ngIf="row.patient_type=='2'"
+                                                    style="font-weight: bold;text-transform: uppercase;">
+                                                    DOCTOR
+                                                </span>
+                                                <span *ngIf="row.patient_type=='3'"
+                                                    style="font-weight: bold;text-transform: uppercase;">
+                                                    DIRECT
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="patient_name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Name</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.patient_name}}</td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="patient_number">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Number</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span
+                                                    *ngIf="row.patient_number !== 'null' && row.patient_number !== '' && row.patient_number !== null;else noTransactionId">
+                                                    {{row.patient_number}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <!-- <ng-container matColumnDef="patient_age">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Age</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+
+
+                                                <span
+                                                    *ngIf="row.patient_age !== 'null' && row.patient_age !== '' && row.patient_age !== null;else noTransactionId">
+                                                    {{row.patient_age}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+
+
+                                        <ng-container matColumnDef="patient_gender">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Gender</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+
+                                                <span
+                                                    *ngIf="row.patient_gender !== 'null' && row.patient_gender !== '' && row.patient_gender !== null;else noTransactionId">
+                                                    {{row.patient_gender}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container> -->
+
+                                        <ng-container matColumnDef="payment_mode">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Payment Mode</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+                                                <span *ngIf="row.payment_mode == 'CASH'">
+                                                    <h6 style="font-weight: 600;" class="text-success">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'UPI'">
+                                                    <h6 style="font-weight: 600;" class="text-info">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'BOTH'">
+                                                    <h6 style="font-weight: 600;" class="text-dark">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'CREDIT'">
+                                                    <h6 style="font-weight: 600;" class="text-danger">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'E - CARD'">
+                                                    <h6 style="font-weight: 700;color: #8a0bf2;">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="pymnt_mode_status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Payment Status</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.pymnt_mode_ind == '0' && row.pymnt_mode_status == '0'">
+                                                    <h6 style="font-weight: 600;" class="text-primary">
+
+                                                        <i style="color: rgb(28, 28, 242);font-size: 18px"
+                                                            class="fa-solid fa-check"></i>
+                                                    </h6>
+                                                </span>
+
+                                                <span *ngIf="row.pymnt_mode_ind == '1' && row.pymnt_mode_status == '0'">
+                                                    <h6 style="font-weight: 600;" class="text-danger">
+
+                                                        <i class="fa fa-remove" style="color: red;font-size: 18px;"></i>
+                                                    </h6>
+                                                </span>
+
+                                                <span *ngIf="row.pymnt_mode_status == '1'">
+                                                    <h6 style="font-weight: 600;" class="text-success">
+                                                        TO CASH </h6>
+                                                </span>
+                                                <span *ngIf="row.pymnt_mode_status == '2'">
+                                                    <h6 style="font-weight: 600;" class="text-info">
+                                                        TO UPI/TO E - CARD</h6>
+                                                </span>
+                                                <span *ngIf="row.pymnt_mode_status == '3'">
+                                                    <h6 style="font-weight: 600;" class="text-dark">
+                                                        TO BOTH</h6>
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="pymnt_update_dt">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Credited DateTime</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.pymnt_update_dt !== 'null' && row.pymnt_update_dt !== ''
+                                                 && row.pymnt_update_dt !== null ; else noTransactionId">
+                                                    <b>{{row.pymnt_update_dt | date:'dd/MM/YYYY'}}</b>
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_without_discount_total">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Without Discount</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.sale_without_discount_total | number:'1.2-2'}}
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_gst_amount">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                GST Tax Amount</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.sale_gst_amount| number:'1.2-2'}}
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_disc_percnt">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Discount (%)</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.sale_disc_percnt}}
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef>
+                                                <!-- style="display: flex;flex-direction: column;padding: 10px;" -->
+                                                <span *ngIf="!isChecked"> Grand Total</span>
+                                                <!-- <span> OT Returns</span> -->
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_grandtotal">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                GrandTotal</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.payment_mode!='CREDIT'">
+                                                    {{row.sale_grandtotal| number:'1.2-2'}}
+                                                </span>
+                                                <span *ngIf="row.payment_mode=='CREDIT'"
+                                                    style="font-weight: bold;font-size: 18px;color: red;">
+                                                    {{row.sale_grandtotal| number:'1.2-2'}}
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                                <span *ngIf="!isChecked"
+                                                    style="font-weight: 800;font-size: 18px;">{{FullgrandTotal |
+                                                    currency:'INR':'symbol':'1.0-0'}} </span>
+                                                
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="no_of_items">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                No of Items</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                {{row.no_of_items}}
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="return_ind">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Bill Status</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span style="font-size: 16px;"
+                                                    *ngIf="row.return_ind !== 1;else noTransactionId">
+                                                    <img style="height: 45px;width: 45px;"
+                                                        src="assets/back/unlock.png" />
+                                                </span>
+                                                <ng-template #noTransactionId>
+                                                    <img style="height: 45px;width: 45px;"
+                                                        src="assets/back/open-padlock.png" />
+                                                </ng-template>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="bill_modified_date">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Return Date</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.bill_modified_date !== 'null' && row.bill_modified_date !== ''
+                                                 && row.bill_modified_date !== null ; else noTransactionId">
+                                                    <b>{{row.bill_modified_date |date:'dd/MM/YYYY' }}</b>
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="return_amount">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Return Amount</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <span *ngIf="row.return_amount=='0'">
+                                                    {{row.return_amount}}
+                                                </span>
+                                                <span *ngIf="row.return_amount!='0'"
+                                                    style="font-weight: bold;font-size: 18px;color: red;">
+                                                    {{row.return_amount}}
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="view">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                View</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <i *ngIf="row.d_in != '1'"
+                                                    (click)="getPatientEachsaledts(centerDataModal, row)"
+                                                    style="color: black;cursor: pointer;" class="fa-solid fa-eye"></i>
+                                                <i (click)="deleteItemsbill(deleteitemTempo, row)"
+                                                    class="fa-solid fa-eye"
+                                                    style="color: red;cursor: pointer;font-size: 20px;"
+                                                    *ngIf="row.d_in == '1'"></i>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="print">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Print</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                <img style="height: 40px;width: 40px;"
+                                                    *ngIf="row.payment_mode=='CREDIT'&&row.d_in != '1'"
+                                                    src="assets/back/kneeling.png" />
+                                                <i *ngIf="row.payment_mode!='CREDIT'&&row.d_in != '1'"
+                                                    style="color: black;cursor: pointer;font-size: 20px;"
+                                                    (click)="printSalesReports(row)" class="fa-solid fa-print"></i>
+                                                <i class="fa fa-remove" style="color: red;" *ngIf="row.d_in == '1'"></i>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="p_members">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Entry By</th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre"
+                                                style="text-transform: uppercase;">
+                                                <span *ngIf="row.p_members !== 'null' && row.p_members !== ''
+                                                && row.p_members !== null ; else noTransactionId">
+                                                    <b style="text-transform: uppercase;">{{row.p_members }}</b>
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <!-- Select Start -->
+
+                                        <ng-container matColumnDef="select1">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div class="cell">
+                                                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                        (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                        [clearable]="true">
+                                                        <ng-option [value]="{key:'i' ,value:item.i}"
+                                                            *ngFor="let item of clonedata; let int = index">
+                                                            {{item.i}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="select2">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div class="cell">
+                                                    <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                        (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                        [clearable]="true">
+                                                        <ng-option [value]="{key:'sale_date' ,value:item.sale_date}"
+                                                            *ngFor="let item of clonedata | removeDuplicateJsonObject : 'sale_date'; let int = index ">
+                                                            {{item.sale_date }}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="select3">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div class="cell">
+                                                    <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                        (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                        [clearable]="true">
+                                                        <ng-option
+                                                            [value]="{key:'sale_bill_no' ,value:item.sale_bill_no}"
+                                                            *ngFor="let item of clonedata | removeDuplicateJsonObject : 'sale_bill_no'; let int = index">
+                                                            {{item.sale_bill_no}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="select4">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div class="cell">
+                                                    <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                        (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                        [clearable]="true">
+                                                        <ng-option [value]="{key:'uh_id' ,value:item.uh_id}"
+                                                            *ngFor="let item of clonedata| removeDuplicateJsonObject : 'uh_id'; let int = index">
+                                                            {{item.uh_id}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </th>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"
+                                            [ngClass]="{'highlight-row': shouldHighlight(row)}">
+                                        </tr>
+
+                                        <!-- <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                            class="example-second-header-row" [ngClass]="{'hide': !hideselect}"> -->
+                                        <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+                                        <!-- Footer end -->
+                                    </table>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #centerDataModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Medicines List </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Bill Details</h5>
+            </div>
+
+            <form [formGroup]="mainBillform">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Sale Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input type="text" formControlName="sale_date" class="form-control" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Bill No<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input type="text" formControlName="sale_bill_no" class="form-control" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>OP Patient ID<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="uh_id" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Patient Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="patient_name"
+                                [ngClass]="{'is-invalid': mainSubmit && MainBillValid['patient_name'].errors}" />
+                            <div *ngIf="mainSubmit && MainBillValid['patient_name'].errors" class="invalid-feedback">
+                                <span *ngIf="MainBillValid['patient_name'].errors.required">This value is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Mobile Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly (keypress)="numericOnly($event)" type="text" class="form-control"
+                                minlength="10" maxlength="10" formControlName="patient_number"
+                                [ngClass]="{'is-invalid': mainSubmit && MainBillValid['patient_number'].errors}" />
+                            <div *ngIf="mainSubmit && MainBillValid['patient_number'].errors" class="invalid-feedback">
+                                <span *ngIf="MainBillValid['patient_number'].errors.required">This value is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Age<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" (keypress)="numericOnly($event)"
+                                minlength="1" maxlength="2" formControlName="patient_age"
+                                [ngClass]="{'is-invalid': mainSubmit && MainBillValid['patient_age'].errors}" />
+                            <div *ngIf="mainSubmit && MainBillValid['patient_age'].errors" class="invalid-feedback">
+                                <span *ngIf="MainBillValid['patient_age'].errors.required">This value is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Gender<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="patient_gender" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Payment Mode<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="payment_mode" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Without Discount(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control"
+                                formControlName="sale_without_discount_total" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group p-2">
+                            <label>Tax Amount(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="sale_gst_amount" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group p-2">
+                            <label>Discount (%)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="sale_disc_percnt" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group p-2">
+                            <label>NOI<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="no_of_items" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Grand Total(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="sale_grandtotal" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Initial Grand Total(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="initial_grandtotal" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Returnable Amount(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="return_amount" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group p-2">
+                            <label>Doctor Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input readonly type="text" class="form-control" formControlName="d_name" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0 ">
+                <thead>
+                    <tr style="background-color:blue;font-size: 17px;color: white;">
+                        <th style="color: white;">S.No</th>
+                        <th style="color: white;">Medicine Name</th>
+                        <th style="color: white;">Batch No</th>
+                        <th style="color: white;">Exp Date</th>
+                        <th style="color: white;">MRP Rate / Tab</th>
+                        <th style="color: white;">Quantity</th>
+                        <th style="color: white;">GST %</th>
+                        <th style="color: white;">Gross (Rs)</th>
+                        <th style="color: white;">CGST</th>
+                        <th style="color: white;">SGST</th>
+                        <th style="color: white;">Total Amount</th>
+                        <th style="color: white;">Update</th>
+                        <th style="color: white;">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let i of medicinearr;let y = index">
+                        <tr *ngIf="i.d_in !== 1">
+                            <td>{{y+1}}</td>
+                            <td>{{i.medicine_name}}</td>
+                            <td>{{i.batch_no}}</td>
+                            <td>{{i.expirydate}}</td>
+                            <td>{{i.eachcost | number:'1.2-2'}}</td>
+                            <td>{{i.total_tabs }}</td>
+                            <td>{{i.gst_per}}</td>
+                            <td>{{i.sale_without_mrp_total | number:'1.2-2'}}</td>
+                            <td>{{i.sale_cgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_sgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_with_mrp_total | number:'1.2-2'}}</td>
+                            <td style="text-align: center;">
+                                <i style="font-size: 18px;cursor: pointer;" class="fa-solid fa-pencil"
+                                    (click)="updateArow(i,y,editFormTempo)"></i>
+                            </td>
+                            <td style="text-align: center;">
+                                <i style="font-size: 18px;cursor: pointer;" class="fa-solid fa-trash"
+                                    (click)="delete(i)"></i>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center m-3">
+            <!-- <button class="btn btn-success" *ngIf="bill_return_ind=='0'&& audit_disc_ind"
+                (click)="saveAndUpdate()">Save</button>
+            <button class="btn btn-danger" *ngIf="bill_return_ind=='1'" (click)="ReturnDone()">Already Modified</button>
+
+            <button *ngIf="bill_return_ind=='0'&& !audit_disc_ind && gettingUserId == '18' || gettingUserId == '19'"
+                class="btn btn-info">Change Discount</button> -->
+
+            <button style="background-color: blue;
+            color: white;
+            width: 98px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;" *ngIf="isAuditDiscountApplicable" (click)="saveAndUpdate()">Save</button>
+            <button class="btn btn-danger" *ngIf="isAlreadyModified" (click)="ReturnDone()">Already Modified</button>
+            <button class="btn btn-info" style="color: white;" *ngIf="isChangeDiscountVisible"
+                (click)="suretoRechangeDiscount()">Change
+                To Original Discount</button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>
+
+<ng-template #editFormTempo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Update Quantity</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="medicineEditForm">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group p-2">
+                        <label>Medicine Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" formControlName="medicine_name" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-2">
+                        <label>Medicine Batch No<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" formControlName="batch_no" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Expiry Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="expiry_date" />
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Availability Tabs<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="availability_tabs" />
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>MRP Rate / Tab<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="mrp_rate_per_tab" />
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>GST (%)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="gst_percentage_each_drug" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Quantity of Tabs<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" (keypress)="numericOnly($event)"
+                            formControlName="quantity" (keyup)="calculateRintoQntyForUpdate($event)" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Total Amount(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" (keypress)="numericOnly($event)"
+                            formControlName="total_amount" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>CGST Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="cgst_on_medicine" />
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>SGST Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="sgst_on_medicine" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Gross Amount(Rs)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="gross_amount" />
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-3">
+                <button style="background-color: blue;
+                color: white;
+                width: 98px;
+                height: 38px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;" (click)="updatetherowandinsert()">Update</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+<ng-template #otpTempo>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Enter OTP</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="otpForm">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group p-2">
+                        <label>Enter OTP <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input (keypress)="numericOnly($event)" minlength="4" maxlength="4" type="text"
+                            class="form-control" formControlName="otp_number"
+                            [ngClass]="{'is-invalid': otpSubmit && otpValid['otp_number'].errors}"
+                            placeholder="Type something" />
+                        <div *ngIf="otpSubmit && otpValid['otp_number'].errors" class="invalid-feedback">
+                            <span *ngIf="otpValid['otp_number'].errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-2">
+                        <button (click)="submitOtp()" class="btn btn-primary mt-4">Submit OTP</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+<ng-template #patientCredentialsTempo>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Patient Details</h5>
+        <button type="button" class="btn-close" (click)="dis()" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="patientCredentialsForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-outline">
+                        <label>Patient Type<span style="color: red;">*</span>
+                        </label>
+                        <br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="1" (change)="timeslot($event)"
+                                formControlName="patient_type"
+                                [ngClass]="{'is-invalid': ptntSubmit && ptntValid['patient_type'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;(OP)</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="3" (change)="timeslot($event)"
+                                formControlName="patient_type"
+                                [ngClass]="{'is-invalid': ptntSubmit && ptntValid['patient_type'].errors}">
+                            <label class="form-check-label" style="padding: 3px">&nbsp;(DIRECT)</label>
+                        </div>
+
+                        <div *ngIf="ptntSubmit && ptntValid['patient_type'].errors" class="invalid-feedback">
+                            <span *ngIf="ptntValid['patient_type'].errors['required']">This value is required.</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4" *ngIf="newORoldOne">
+                    <div class="form-group p-2">
+                        <label>OP Patient ID <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select (change)="changepn($event)" formControlName="uh_id">
+                            <ng-option *ngFor="let p of patients_data" value="{{p.uh_id}}">{{p.uh_id}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="patient_name"
+                            [ngClass]="{'is-invalid': ptntSubmit && ptntValid['patient_name'].errors}" />
+                        <div *ngIf="ptntSubmit && ptntValid['patient_name'].errors" class="invalid-feedback">
+                            <span *ngIf="ptntValid['patient_name'].errors.required">This value is
+                                required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input (keypress)="numericOnly($event)" type="text" class="form-control" minlength="10"
+                            maxlength="10" formControlName="patient_number"
+                            [ngClass]="{'is-invalid': ptntSubmit && ptntValid['patient_number'].errors}" />
+                        <div *ngIf="ptntSubmit && ptntValid['patient_number'].errors" class="invalid-feedback">
+                            <span *ngIf="ptntValid['patient_number'].errors.required">This value is
+                                required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Age</label>
+                        <input type="text" class="form-control" (keypress)="numericOnly($event)" minlength="1"
+                            maxlength="2" formControlName="patient_age" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-2">
+                        <label>Gender</label>
+                        <input type="text" class="form-control" formControlName="patient_gender" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Payment Mode<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+
+                            <ng-select formControlName="payment_mode" (change)="paymentslot($event)"
+                                [ngClass]="{'is-invalid': typesubmit && type['payment_mode'].errors}">
+                                <ng-option value="CASH">CASH</ng-option>
+                                <ng-option value="UPI">UPI</ng-option>
+                                <ng-option value="E - CARD">E - CARD</ng-option>
+                                <ng-option value="BOTH">BOTH</ng-option>
+                                <!-- <ng-option value="CREDIT">CREDIT</ng-option> -->
+                            </ng-select>
+
+                            <div *ngIf="typesubmit && type['payment_mode'].errors" class="invalid-feedback">
+                                <span *ngIf="type['payment_mode'].errors.required">This value is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3" *ngIf="paymentload">
+                    <div class="form-group p-2">
+                        <label>Transcation Id<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input type="text" class="form-control" formControlName="transcation_id" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3" *ngIf="showTwoAmounts">
+                    <div class="form-group p-2">
+                        <label>CASH Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input type="number" min="0" step="1" class="form-control" formControlName="cash_amount" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3" *ngIf="showTwoAmounts">
+                    <div class="form-group p-2">
+                        <label>UPI Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input type="number" min="0" step="1" class="form-control" formControlName="upi_amount" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center;">
+                <button style="background-color: blue;
+                color: white;
+                width: 98px;
+                height: 38px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;" (click)="updatePatientdts()">Update</button>
+            </div>
+        </form>
+
+    </div>
+
+</ng-template>
+
+<ng-template #deleteitemTempo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Medicines List </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Bill Details</h5>
+
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0 ">
+                <thead>
+                    <tr style="background-color:blue;font-size: 17px;color: black;">
+                        <th style="color: black;">S.No</th>
+                        <th style="color: black;">Medicine Name</th>
+                        <th style="color: black;">Batch No</th>
+                        <th style="color: black;">Exp Date</th>
+                        <th style="color: black;">MRP Rate / Tab</th>
+                        <th style="color: black;">Quantity</th>
+                        <th style="color: black;">GST %</th>
+                        <th style="color: black;">Gross (Rs)</th>
+                        <th style="color: black;">CGST</th>
+                        <th style="color: black;">SGST</th>
+                        <th style="color: black;">Total Amount</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let i of deletedItems;let y = index">
+                        <tr>
+                            <td>{{y+1}}</td>
+                            <td>{{i.medicine_name}}</td>
+                            <td>{{i.batch_no}}</td>
+                            <td>{{i.expirydate}}</td>
+                            <td>{{i.eachcost | number:'1.2-2'}}</td>
+                            <td>{{i.total_tabs }}</td>
+                            <td>{{i.gst_per}}</td>
+                            <td>{{i.sale_without_mrp_total | number:'1.2-2'}}</td>
+                            <td>{{i.sale_cgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_sgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_with_mrp_total | number:'1.2-2'}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center m-3">
+
+            <button class="btn btn-danger">BILL DELETED</button>
+        </div>
+    </div>
+</ng-template>
+
+
+
+<ng-template #viewOpenBrkup>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Breakup Report</h5>
+        <button type="button" class="btn-close" (click)="disBrkup()" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0 ">
+                <tr>
+                    <th>DATE</th>
+                    <th style="font-size: large;">{{dateBrkup | date: 'dd/MM/yyyy' }}</th>
+                </tr>
+                <tr>
+                    <th>CASH</th>
+                    <th style="font-size: large;">{{brkupCash | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>UPI</th>
+                    <th style="font-size: large;">{{brkupUpi | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>E - CARD</th>
+                    <th style="font-size: large;">{{brkupNetBanking | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>BOTH - Cash</th>
+                    <th style="font-size: large;">{{brkupBothCash | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>BOTH - Upi</th>
+                    <th style="font-size: large;">{{brkupBothUpi | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>CREDIT</th>
+                    <th style="font-size: large;">{{brkupCredit | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>SALE RETURNS</th>
+                    <th style="font-size: large;">{{brkupSaleReturn | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>OT RETURNS</th>
+                    <th style="font-size: large;">{{otAmount | number:'1.2-2'}}</th>
+                </tr>
+                <tr>
+                    <th>OVERALL TOTAL</th>
+                    <th style="font-size: large;">{{FullgrandTotal | currency:'INR':'symbol':'1.0-0'}}</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</ng-template>

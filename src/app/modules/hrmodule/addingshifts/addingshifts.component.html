@@ -1,0 +1,335 @@
+<div class="card" *ngIf="this.user_idadmin == 1">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+           Adding Shifts
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="card" *ngIf="this.user_idadmin != 1">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+           Assigned Shifts Reports
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="card" style="padding:10px" *ngIf="this.user_idadmin == 1">
+    <form (ngSubmit)="categoryubmit()" [formGroup]="Registerform">
+        <div class="row">
+            <div class="col-lg-3 p-2">
+                <div class="form-group">
+                    <label>Choose Employee</label>
+                    <ng-select formControlName="employeename" [ngClass]="{'is-invalid': submitted && f['employeename'].errors}" appendTo="body" dropdownPosition="auto">
+                        <ng-option value="{{a.name}},{{a.id}}"
+                            *ngFor="let a of getemployeelistdata">{{a.name}}&nbsp;&nbsp;{{a.number}}</ng-option>
+                    </ng-select>
+                     <div class="invalid-feedback" *ngIf="submitted && f['employeename'].errors?.['required']">
+                        Choose Employee is required
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label>  Shift Start Date<span style="color:red">*</span>
+                </label>
+                <div>
+                    <input type="date" formControlName="fromdate" class="form-control mt-1" place="Enter Image"
+                        [ngClass]="{'is-invalid': submitted && f['fromdate'].errors}" />
+                    <div class="invalid-feedback" *ngIf="submitted && f['fromdate'].errors?.['required']">
+                        Shift Start Date is required
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label>Shift End Date<span style="color:red">*</span>
+                </label>
+                <div>
+                    <input type="date" formControlName="todate" class="form-control mt-1" place="Enter Image"
+                        [ngClass]="{'is-invalid': submitted && f['todate'].errors}" />
+                    <div class="invalid-feedback" *ngIf="submitted && f['todate'].errors?.['required']">
+                       Shift End Date is required
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="mb-3 col-lg-3">
+                <label>Choose Shift Type<span style="color:red">*</span>
+                </label>
+                <div>
+                    <ng-select class="rounded-select" formControlName="shifttype"
+                        [ngClass]="{'is-invalid': submitted && f['shifttype'].errors}" appendTo="body" dropdownPosition="auto">
+                        <ng-option value="" disabled Selected>Select</ng-option>
+                        <ng-option value="Morning Shift">Morning Shift</ng-option>
+                        <ng-option value="Afternoon Shift">Afternoon Shift</ng-option>
+                        <ng-option value="Night Shift">Night Shift</ng-option>
+                    </ng-select>
+                    <div class="invalid-feedback" *ngIf="submitted && f['shifttype'].errors?.['required']">
+                        Choose Shift Type is required
+                    </div>
+                </div>
+            </div> -->
+              <div class="mb-3 col-lg-3">
+              <label class="form-label">Choose Shift Type <span style="color:red">*</span></label>
+              <ng-select id="inputstate" id="default-select" formControlName="shifttype"
+                [ngClass]="{'is-invalid': submitted && f['shifttype'].errors}" appendTo="body" dropdownPosition="auto"
+                (change)="changeType($event, opentimings)">
+                <ng-option value="" disabled Selected>Select Shift Type</ng-option>
+                <ng-option *ngFor="let p of shifttimings" [value]="p.name">
+                  {{ p.name }}
+                </ng-option>
+                <ng-option value="ADD">Add New Shift Timings</ng-option>
+              </ng-select>
+              <div class="invalid-feedback" *ngIf="submitted && f['shifttype'].errors?.['required']">
+                Shift Timings is required
+              </div>
+            </div>
+
+            <div class="mb-3 col-lg-3" style="margin-top: 10px;">
+                <button type="submit" class="btn btn-primary">ADD</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- /////leave management code starts -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <!-- <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Roomtype report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button> -->
+                                    <button mat-raised-button class="btn btn-secondary m-1"
+                                                (click)="exportTable('ExampleMaterialTable','Adding Shifts Report')">Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="empname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                  Employee  Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.empname}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.number}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fromdate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Shift Start Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.fromdate | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="todate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                  Shift End Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.todate | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="shifttype">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                  Shift Type</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.shifttype}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'empname',value:item.empname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'empname'; let int = index">
+                                                {{item.empname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'number',value:item.number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'number'; let int = index">
+                                                {{item.number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'fromdate',value:item.fromdate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'fromdate'; let int = index">
+                                                {{item.fromdate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'todate',value:item.todate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'todate'; let int = index">
+                                                {{item.todate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'shifttype',value:item.shifttype}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'shifttype'; let int = index">
+                                                {{item.shifttype}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ///image popup code starts -->
+<!-- ===== Image Popup (same component) ===== -->
+<div class="img-modal" *ngIf="isImgPopupOpen" (click)="closeImgPopup()">
+    <div class="img-modal-card" (click)="$event.stopPropagation()">
+
+        <div class="img-modal-head">
+            <div class="img-modal-title">Preview</div>
+
+            <div class="img-modal-actions">
+                <a class="btn-open" [href]="popupImgUrl" target="_blank" rel="noopener">Open</a>
+                <button type="button" class="btn-close" (click)="closeImgPopup()">✕</button>
+            </div>
+        </div>
+
+        <div class="img-modal-body">
+            <img [src]="popupImgUrl" alt="Preview Image">
+        </div>
+
+    </div>
+</div>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+    <div class="for-spin">
+        <span class="loader"></span>
+        <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+        </p>
+    </div>
+</div>
+
+
+ <!-- /////employee managenment adding timings dropdown -->
+  <ng-template #opentimings let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Add New Shift Timings</h5>
+      <!-- <button type="button" (click)="dis()" class="btn-close" aria-hidden="true"></button> -->
+       <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addshifttimings">
+        <div class="row">
+          <div class="col-10">
+            <label>Add New Shift Timings<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" formControlName="new_type"
+              [ngClass]="{'is-invalid': subs && valid['new_type'].errors}" />
+            <div *ngIf="subs && valid['new_type'].errors" class="invalid-feedback">
+              <span *ngIf="valid['new_type'].errors.required">This value is required.</span>
+            </div>
+          </div>
+          <div class="col-2">
+            <label></label>
+            <button (click)="submitCategory()" style="background-color: #573474;
+                    color: white;
+                    width: 58px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">ADD</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>

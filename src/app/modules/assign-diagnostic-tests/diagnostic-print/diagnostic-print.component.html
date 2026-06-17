@@ -1,0 +1,139 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill" style="border: 1px solid black;">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of test_data; let i = index;">
+
+        <mat-card class="card" *ngIf="test_data.length" style="margin-bottom: 0px;">
+
+            <div class="row">
+                <div class="col-6">
+                    <img src="assets/back/PRINTLOGO.png" style="width: 75%;margin-top: -10px;margin-bottom: 10px;">
+                </div>
+                <div class="col-6" style="text-align: right;">
+                    <h5 style="font-size: 20px;">Manoj</h5>
+                </div>
+            </div>
+
+
+            <div class="row" style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                <div class="col-12">
+                    <h4 style="font-size: 20px; text-align: center;" class="mt-2">XRAY RECEIPT</h4>
+                </div>
+            </div>
+            <div class="row" style="height: 100%;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4" style="font-size: 14px; text-align: justify;">
+                            OP Patient ID <br>Patient Name <br> Age/Sex
+                        </div>
+                        <div class="col-1" style="font-size: 14px;">
+                            : <br> : <br> :
+                        </div>
+                        <div class="col-7" style="font-size: 14px; text-align: justify;">
+                            {{ item.uh_id}} <br>
+                            {{item.name}} <br>
+                            {{ item.age }}/{{ item.gender }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4" style="font-size: 14px; text-align: justify;">
+                            Date <br> Address <br> Mode
+                        </div>
+                        <div class="col-1" style="font-size: 14px;">
+                            : <br> : <br> :
+                        </div>
+                        <div class="col-7" style="font-size: 14px; text-align: justify;">
+                            {{ item.diagnostic_date | date : 'd-MM-YYY'}}<br>
+                            {{item.address}} <br>
+                            {{ item.payment_mode }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12" style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                    <h4 style="font-size: 20px; text-align: center;" class="mt-2">XRAYS NAME</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="centered-table">
+                    <table>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>TEST NAME</th>
+                            <th>TEST AMOUNT</th>
+                        </tr>
+                        <tr *ngFor="let a of groupMbrsData, let i=index;" style="font-size: 15px;">
+                            <td>{{i+1}}</td>
+                            <td>{{a.d_test_name}}</td>
+                            <td>{{a.d_test_amount}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row" style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                <div class="col-12">
+                    <h4 style="text-align:center ;font-size: 20px;" class="mt-2">PAYMENT DETAILS</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h5 style="margin: 0;">
+                            <span style="min-width: 150px; text-align: left;"><b>Amount in words</b> :</span>
+                            <span style="text-transform: capitalize;">{{numberInWords + " " + 'Rupees Only /-' }}</span>
+                        </h5>
+                        <h5 style="margin: 0;">
+                            <span style="min-width: 150px; text-align: left;"><b>TOTAL </b> :</span>
+                            <span style="text-transform: capitalize;">{{grandTotal | number : '1.2-2'}}</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row" style="margin-top: -22px;margin-bottom: -17px;">
+                <h5 style="text-align: end;"><b>(Authorized Signature)</b></h5>
+            </div>
+
+        </mat-card>
+    </div>
+
+</div>
+
+<div class="row">
+    <p style="text-align: center;font-size: 15px;margin-top: 15px;font-weight: 600;"> Kovvur</p>
+</div>
+
+
+<style>
+    .centered-table {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .centered-table table {
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    .centered-table th,
+    .centered-table td {
+        /* border: 1px solid black; */
+        text-align: center;
+        /* padding: 9px; */
+    }
+</style>

@@ -1,0 +1,461 @@
+<br>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Supplier-Purchase-Reports</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+
+                    <li class="breadcrumb-item"><a href="javascript: void(0);"
+                            style="color: black;">Supplier-Purchase-Reports</a></li>
+                    <li class="breadcrumb-item active">Purchase-Items</li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+            <div style="background-color: #ae92c5;
+            border: none;
+            width: 190px;
+            height: 45px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;cursor: pointer;" (click)="gotopurchase()"><i class="fa-solid fa-bars"></i>
+                &nbsp; &nbsp; Purchase-Items
+            </div><br>
+            <div class="card-body" class="gth">
+                <form>
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                               <label>Supplier Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select (change)="changepns($event)">
+                                    <ng-option value="" disabled>Select Supplier Name</ng-option>
+                                    <ng-option *ngFor="let a of suppyrdata" [value]="a">{{a.supplier_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input id="from_date" (change)="supplierBydatefilter()" type="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input id="to_date" (change)="supplierBydatefilter()" type="date" class="form-control">
+                            </div>
+                        </div> 
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col-3">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-1 search">
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(1)">find_in_page</i>
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(0)">refresh</i>
+                        </div>
+
+                        <div class="col-2 cent_btn mt-2" style="margin-top: 13px;">
+                            <div class="colorbtns color_custm">
+                                <button class="colorbtns colo" (click)="changecolor('blue')"> </button>
+                                <button class="colorbtns colo1" (click)="changecolor('rgb(0, 255, 242)')"></button>
+                                <button class="colorbtns colo2" (click)="changecolor('rgb(255, 174, 0)')"></button>
+                                <button class="colorbtns colo3" (click)="changecolor('rgb(255, 0, 170)')"></button>
+                                <input type="color" id="color1" name="favcolor" value="blue"
+                                    (change)="this.changeCustomColor($event)" (keyup)="this.changeCustomColor($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <mat-paginator [pageSizeOptions]="[100,500,1000,1500]" showFirstLastButton>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-2">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','Supplier Purchase Reports')">Excel</button>
+
+                                <button mat-raised-button style="background-color: blue;
+                                color: white;
+                                width: 75px;
+                                height: 38px;
+                                font-size: 16px;
+                                border: none;
+                                border-radius: 5px;" (click)="printsupplierPurchases()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier Name</th>
+                                <td mat-cell *matCellDef="let row" class="left">
+                                    <span class="clickNgetdata">{{row.supplier_name}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_gst">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    GST No</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_gst}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoice_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Invoice No</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.invoice_number}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoice_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Invoice Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.invoice_date | date:'dd-MM-YYYY'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="font-weight: 600;font-size: 18px;">
+                                    <span>Cleared Amount : {{cleared | currency:'INR':'symbol':'1.0-0'}}
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_bill_no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Bill No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.purchase_bill_no}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="font-weight: 600;font-size: 18px;">
+                                    <span>
+                                        Due Amount : {{notcleared | currency:'INR':'symbol':'1.0-0'}}
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="grandtotal">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total Net Amount</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para"><b>{{row.grandtotal | number:'1.2-2'}}</b></span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                    <span style="font-weight: 800;font-size: 18px;"> Grand Total : {{getTotalCost() |
+                                        currency:'INR':'symbol':'1.0-0'}} </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_payment_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Payment Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <div *ngIf="row.purchase_payment_date == '' || row.purchase_payment_date == null  ">
+                                        - </div>
+                                    <div *ngIf="row.purchase_payment_date!=''|| row.purchase_payment_date != null  ">
+                                        {{row.purchase_payment_date | date:'dd-MM-YYYY'}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_payment_mode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Payment Mode
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span *ngIf="row.purchase_payment_mode === 'CASH'">
+                                        <h6 style="font-weight: 600;color:violet;">
+                                            {{row.purchase_payment_mode || '-'}}
+                                        </h6>
+                                    </span>
+                                    <span *ngIf="row.purchase_payment_mode === 'UPI'">
+                                        <h6 style="font-weight: 600;" class="text-info">
+                                            {{row.purchase_payment_mode || '-'}}
+                                        </h6>
+                                    </span>
+                                    <span *ngIf="row.purchase_payment_mode === 'CHEQUE'">
+                                        <h6 style="font-weight: 600;color: rgb(236, 106, 0);">
+                                            {{row.purchase_payment_mode || '-'}}
+                                        </h6>
+                                    </span>
+                                    <span
+                                        *ngIf="row.purchase_payment_mode !== 'CASH' && row.purchase_payment_mode !== 'UPI' && row.purchase_payment_mode !== 'CHEQUE'">
+                                        <h6>
+                                            -
+                                        </h6>
+                                    </span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                             <ng-container matColumnDef="purchase_transcation_id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Transaction ID</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.purchase_transcation_id || '-'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_check_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Cheque Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.purchase_check_number || '-'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_payment_ind">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Payment Status</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <!-- <span class="para">{{row.purchase_payment_ind}}</span> -->
+                                    <span *ngIf="row.purchase_payment_ind == 'NOT CLEARED'">
+                                        <h6 style="font-weight: 600;font-size: 13px;" class="text-danger">
+                                            NOT CLEARED</h6>
+                                    </span>
+                                    <span *ngIf="row.purchase_payment_ind == 'CLEARED'">
+                                        <h6 style="font-weight: 600;font-size: 13px;" class="text-success">
+                                            CLEARED</h6>
+                                    </span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+
+                            <!--  -->
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_name' ,value:item.supplier_name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'supplier_name'; let int = index">
+                                                {{item.supplier_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_gst' ,value:item.supplier_gst}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'supplier_gst'; let int = index">
+                                                {{item.supplier_gst}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'invoice_number' ,value:item.invoice_number}"
+                                                *ngFor="let item of clonedata| removeDuplicateJsonObject : 'invoice_number'; let int = index">
+                                                {{item.invoice_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'invoice_date' ,value:item.invoice_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'invoice_date'; let int = index">
+                                                {{item.invoice_date | date:'dd-MM-YYYY'}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'purchase_bill_no' ,value:item.purchase_bill_no}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_bill_no'; let int = index">
+                                                {{item.purchase_bill_no}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'grandtotal' ,value:item.grandtotal}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'grandtotal'; let int = index">
+                                                {{item.grandtotal}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'purchase_payment_date' ,value:item.purchase_payment_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_payment_date'; let int = index">
+                                                {{item.purchase_payment_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'purchase_payment_mode' ,value:item.purchase_payment_mode}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_payment_mode'; let int = index">
+                                                {{item.purchase_payment_mode}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'purchase_transcation_id' ,value:item.purchase_transcation_id}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_transcation_id'; let int = index">
+                                                {{item.purchase_transcation_id}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'purchase_check_number' ,value:item.purchase_check_number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_check_number'; let int = index">
+                                                {{item.purchase_check_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                            <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

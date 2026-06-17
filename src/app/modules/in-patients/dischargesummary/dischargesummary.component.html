@@ -1,0 +1,844 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Discharge Summary
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <div class="card-body" class="gth">
+            <form [formGroup]="dischargesummary" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="section-title">
+                        <h4><u style="color:blue">Patient Details</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label>OP Patient ID <span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <ng-select id="inputstate" id="default-select" (change)="changepn(uh_id)"
+                                [(ngModel)]="uh_id" formControlName="uh_id"
+                                [ngClass]="{'is-invalid': submitted && f['uhid'].errors }">
+                                <ng-option *ngFor="let p of patients_data" value="{{p.uh_id}}">
+                                    {{ p.uh_id }} / {{p.name}}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['uhid'].errors" class="invalid-feedback">
+                                <div *ngIf="f['uhid'].errors.required">UHID is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Patient Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="name" readonly
+                                placeholder="Enter Patient Name"
+                                [ngClass]="{'is-invalid': submitted && f['name'].errors }">
+                            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['name'].errors.required">Address is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Admission Date<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="admin_date"
+                                placeholder="Enter Admission Date" readonly
+                                [ngClass]="{'is-invalid': submitted && f['admin_date'].errors }">
+                            <div *ngIf="submitted && f['admin_date'].errors" class="invalid-feedback">
+                                <div *ngIf="f['admin_date'].errors.required">UHID is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Discharge Date<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="discharge_date"
+                                placeholder="Enter Discharge Date" readonly
+                                [ngClass]="{'is-invalid': submitted && f['discharge_date'].errors }">
+                            <div *ngIf="submitted && f['discharge_date'].errors" class="invalid-feedback">
+                                <div *ngIf="f['discharge_date'].errors.required">Discharge Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" style="margin-top:20px">
+                        <h4> <u style="color:blue">Details at the time of Date of
+                                Admission</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Reason for Admission<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="reason_for_admission"
+                                placeholder="Enter Reason for Admission"
+                                [ngClass]="{'is-invalid': submitted && f['reason_for_admission'].errors }">
+                            <div *ngIf="submitted && f['reason_for_admission'].errors" class="invalid-feedback">
+                                <div *ngIf="f['reason_for_admission'].errors.required">UHID is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Significant Findings<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="significant_findings"
+                                placeholder="Enter Significant Findings"
+                                [ngClass]="{'is-invalid': submitted && f['significant_findings'].errors }">
+                            <div *ngIf="submitted && f['significant_findings'].errors" class="invalid-feedback">
+                                <div *ngIf="f['significant_findings'].errors.required">UHID is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Diagnosis of the Patient<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="diagnosisofthepatient"
+                                placeholder="Enter Diagnosis of the Patient"
+                                [ngClass]="{'is-invalid': submitted && f['diagnosisofthepatient'].errors }">
+                            <div *ngIf="submitted && f['diagnosisofthepatient'].errors" class="invalid-feedback">
+                                <div *ngIf="f['diagnosisofthepatient'].errors.required">Final Diagnosis is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Patient Condition at the Time of Discharge<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2"
+                                formControlName="patientconditionatthetimeofdischarge"
+                                placeholder="Enter Patient Condition at the Time of Discharge"
+                                [ngClass]="{'is-invalid': submitted && f['patientconditionatthetimeofdischarge'].errors }">
+                            <div *ngIf="submitted && f['patientconditionatthetimeofdischarge'].errors"
+                                class="invalid-feedback">
+                                <div *ngIf="f['patientconditionatthetimeofdischarge'].errors.required">Patient Condition
+                                    at the
+                                    Time of
+                                    Discharge is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" style="margin-top:20px">
+                        <h4><u style="color:blue"> Details Regarding Investigations</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Mention if any Procedures Performed<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="procedures_done"
+                                placeholder="Enter Mention if any Procedures Performed"
+                                [ngClass]="{'is-invalid': submitted && f['procedures_done'].errors }">
+                            <div *ngIf="submitted && f['procedures_done'].errors" class="invalid-feedback">
+                                <div *ngIf="f['procedures_done'].errors.required">Mention if any Procedures Performed is
+                                    required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Mention Other Treatment Details<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2"
+                                formControlName="othertreatment_details" placeholder="Mention Other Treatment Details"
+                                [ngClass]="{'is-invalid': submitted && f['othertreatment_details'].errors }">
+                            <div *ngIf="submitted && f['othertreatment_details'].errors" class="invalid-feedback">
+                                <div *ngIf="f['othertreatment_details'].errors.required">Mention Other Treatment Details
+                                    is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Mention the Medications Administered<span
+                                    style="color: red;">*</span></label>
+                            <textarea class="form-control" formControlName="medications_given"
+                                placeholder="Mention the Medications Administered" rows="4"
+                                [ngClass]="{'is-invalid': submitted && f['medications_given'].errors }"></textarea>
+                            <div *ngIf="submitted && f['medications_given'].errors" class="invalid-feedback">
+                                <div *ngIf="f['medications_given'].errors.required">Mention the Medications Administered
+                                    is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" style="margin-top:20px">
+                        <h4> <u style="color:blue">Follow-up Details</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Followup Advice<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="followup_advice"
+                                placeholder="Enter Followup Advice"
+                                [ngClass]="{'is-invalid': submitted && f['followup_advice'].errors }">
+                            <div *ngIf="submitted && f['followup_advice'].errors" class="invalid-feedback">
+                                <div *ngIf="f['followup_advice'].errors.required">Followup Advice is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Medications Prescribed<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="medicationsprescribed"
+                                placeholder="Enter Medications Prescribed"
+                                [ngClass]="{'is-invalid': submitted && f['medicationsprescribed'].errors }">
+                            <div *ngIf="submitted && f['medicationsprescribed'].errors" class="invalid-feedback">
+                                <div *ngIf="f['medicationsprescribed'].errors.required">Medications Prescribed is
+                                    required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Other Instructions<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="otherinstructions"
+                                placeholder="Enter Other Instructions"
+                                [ngClass]="{'is-invalid': submitted && f['otherinstructions'].errors }">
+                            <div *ngIf="submitted && f['otherinstructions'].errors" class="invalid-feedback">
+                                <div *ngIf="f['otherinstructions'].errors.required">Other Instructions is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" style="margin-top:20px">
+                        <h4><u style="color:blue">Details in case of Emergency</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Details on How to seek medical help<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="howtoseekmedicalhelp"
+                                placeholder="Enter Details on How to seek medical help"
+                                [ngClass]="{'is-invalid': submitted && f['howtoseekmedicalhelp'].errors }">
+                            <div *ngIf="submitted && f['howtoseekmedicalhelp'].errors" class="invalid-feedback">
+                                <div *ngIf="f['howtoseekmedicalhelp'].errors.required">Details on How to seek medical
+                                    help is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Contact numbers of the Hospital or the Doctor<span
+                                    style="color: red;">*</span></label>
+                            <input type="number" class="form-control" id="input-2"
+                                formControlName="contactnumberhospital"
+                                placeholder="Enter Contact numbers of the Hospital or the Doctor"
+                                [ngClass]="{'is-invalid': submitted && f['contactnumberhospital'].errors }">
+                            <div *ngIf="submitted && f['contactnumberhospital'].errors" class="invalid-feedback">
+                                <div *ngIf="f['contactnumberhospital'].errors.required">Contact numbers of the Hospital
+                                    or the Doctor is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" style="margin-top:20px">
+                        <h4><u style="color:blue">Details in case of Death</u></h4>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4 p-2">
+                        <div class="form-group">
+                            <label for="input-2">Mention the cause of Death except for MLCs<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="causeofdeath"
+                                placeholder="Enter cause of Death except for MLCs"
+                                [ngClass]="{'is-invalid': submitted && f['causeofdeath'].errors }">
+                            <div *ngIf="submitted && f['causeofdeath'].errors" class="invalid-feedback">
+                                <div *ngIf="f['causeofdeath'].errors.required">Mention the cause of Death except for
+                                    MLCs is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-lg-3">
+                        <label> Upload Signature Treating Doctor/Staff</label>
+                        <div>
+                            <input type="file" accept="image/*,.pdf,application/pdf" (change)="onImageChange($event)"
+                                formControlName="category_image" class="form-control mt-1" place="Enter Image" />
+                            <img *ngIf="review" [src]="reviewimg" alt="Preview" style="width:100px;height:100px" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Submit</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>UHID Number</th>
+                                            <th>Patient Full Name</th>
+                                            <th>Date of Admission</th>
+                                            <th>Date of Discharge</th>
+                                            <th>Reason for Admission</th>
+                                            <th>Significant Findings</th>
+                                            <th>Diagnosis of the Patient</th>
+                                            <th>Patient Condition at Discharge</th>
+                                            <th>Procedures Performed</th>
+                                            <th>Medications Administered</th>
+                                            <th>Other Treatment Details</th>
+                                            <th>Follow-up Advice</th>
+                                            <th>Medications Prescribed</th>
+                                            <th>Other Instructions</th>
+                                            <th>How to Seek Medical Help</th>
+                                            <th>Hospital / Doctor Contact</th>
+                                            <th>Cause of Death</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.uh_id }}</td>
+                                            <td>{{ row.name }}</td>
+                                            <td>{{ row.admin_date }}</td>
+                                            <td>{{ row.discharge_date }}</td>
+                                            <td>{{ row.reason_for_admission }}</td>
+                                            <td>{{ row.significant_findings }}</td>
+                                            <td>{{ row.diagnosisofthepatient }}</td>
+                                            <td>{{ row.patientconditionatthetimeofdischarge }}</td>
+                                            <td>{{ row.procedures_done }}</td>
+                                            <td>{{ row.medications_given }}</td>
+                                            <td>{{ row.othertreatment_details }}</td>
+                                            <td>{{ row.followup_advice }}</td>
+                                            <td>{{ row.medicationsprescribed }}</td>
+                                            <td>{{ row.otherinstructions }}</td>
+                                            <td>{{ row.howtoseekmedicalhelp }}</td>
+                                            <td>{{ row.contactnumberhospital }}</td>
+                                            <td>{{ row.causeofdeath }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="print">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Print
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre" (click)="printResults(row)">
+                                    <i class="fa-solid fa-print me-2" style="font-size:22px"></i>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="uh_id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    UHID</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.uh_id || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Patient Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="admin_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date of Admission </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.admin_date || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="discharge_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date of Discharge</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.discharge_date || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="reason_for_admission">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Reason for Admission</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.reason_for_admission || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="significant_findings">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Significant Findings</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.significant_findings || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="diagnosisofthepatient">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Diagnosis of the Patient</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{diagnosisofthepatient || '__'}}</span>
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="patientconditionatthetimeofdischarge">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Patients Condition at the time of Discharge</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.patientconditionatthetimeofdischarge || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="procedures_done">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mention if any procedure performed</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.procedures_done || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="medications_given">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mention the Medications Administered</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.medications_given || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="othertreatment_details">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mention other treatment details</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.othertreatment_details || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="followup_advice">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Follow-up Advice</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.followup_advice || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="medicationsprescribed">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Medications Prescribed</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.medicationsprescribed || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="otherinstructions">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    other instructions</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.otherinstructions || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="howtoseekmedicalhelp">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Details on How to seek medical help</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.howtoseekmedicalhelp || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="contactnumberhospital">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Contact numbers of the Hospital or the Doctor</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.contactnumberhospital || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="causeofdeath">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mention the cause of Death except for MLCs</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.causeofdeath || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="doctor_signature">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Signature
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <img *ngIf="row.doctor_signature" [src]="row.doctor_signature"
+                                        alt="Doctor Signature" class="signature-img">
+                                    <span *ngIf="!row.doctor_signature">__</span>
+                                </td>
+                            </ng-container> -->
+                            <ng-container matColumnDef="doctor_signature">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+    Signature
+  </th>
+
+  <td mat-cell *matCellDef="let row" class="centre">
+
+    <img *ngIf="row.doctor_signature"
+         [src]="row.doctor_signature"
+         class="signature-img clickable"
+         (click)="previewImage(row.doctor_signature)">
+
+    <span *ngIf="!row.doctor_signature">__</span>
+
+  </td>
+</ng-container>
+
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select20">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'print',value:item.print}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'print'; let int = index">
+                                                {{item.print}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'uh_id',value:item.uh_id}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'uh_id'; let int = index">
+                                                {{item.uh_id}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name',value:item.name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'name'; let int = index">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'admin_date',value:item.admin_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'admin_date'; let int = index">
+                                                {{item.admin_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'discharge_date',value:item.discharge_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'discharge_date'; let int = index">
+                                                {{item.discharge_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'reason_for_admission',value:item.reason_for_admission}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'reason_for_admission'; let int = index">
+                                                {{item.reason_for_admission}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'significant_findings',value:item.significant_findings}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'significant_findings'; let int = index">
+                                                {{item.significant_findings}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'diagnosisofthepatient',value:item.diagnosisofthepatient}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'diagnosisofthepatient'; let int = index">
+                                                {{item.diagnosisofthepatient}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'patientconditionatthetimeofdischarge',value:item.patientconditionatthetimeofdischarge}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'patientconditionatthetimeofdischarge'; let int = index">
+                                                {{item.patientconditionatthetimeofdischarge}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'procedures_done',value:item.procedures_done}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'procedures_done'; let int = index">
+                                                {{item.procedures_done}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'medications_given',value:item.medications_given}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'medications_given'; let int = index">
+                                                {{item.medications_given}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'othertreatment_details',value:item.othertreatment_details}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'othertreatment_details'; let int = index">
+                                                {{item.othertreatment_details}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select12">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'followup_advice',value:item.followup_advice}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'followup_advice'; let int = index">
+                                                {{item.followup_advice}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select13">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'medicationsprescribed',value:item.medicationsprescribed}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'medicationsprescribed'; let int = index">
+                                                {{item.medicationsprescribed}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select14">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'otherinstructions',value:item.otherinstructions}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'otherinstructions'; let int = index">
+                                                {{item.otherinstructions}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select15">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'howtoseekmedicalhelp',value:item.howtoseekmedicalhelp}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'howtoseekmedicalhelp'; let int = index">
+                                                {{item.howtoseekmedicalhelp}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select16">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'contactnumberhospital',value:item.contactnumberhospital}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'contactnumberhospital'; let int = index">
+                                                {{item.contactnumberhospital}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select17">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'causeofdeath',value:item.causeofdeath}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'causeofdeath'; let int = index">
+                                                {{causeofdeath}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select18">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'doctor_signature',value:item.doctor_signature}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'doctor_signature'; let int = index">
+                                                {{doctor_signature}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- //////view test and view results -->
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>
+<!-- ////image popup code  starts -->
+ <!-- IMAGE PREVIEW OVERLAY -->
+<div class="image-preview-overlay"
+     *ngIf="selectedImage"
+     (click)="closePreview()">
+
+  <img [src]="selectedImage"
+       class="preview-image"
+       (click)="$event.stopPropagation()">
+
+</div>

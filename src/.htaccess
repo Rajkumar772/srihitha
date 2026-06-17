@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+Header always append X-Frame-Options SAMEORIGIN
+Header always set Content-Security-Policy "frame-ancestors 'self';"
+    RewriteEngine on
+    RewriteCond %{HTTPS} !on
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTP_HOST} ^abdigitals.co.in/$
+    RewriteRule (.*) http://abdigitals.co.in/$1 [R=301,L]
+
+    # Don't rewrite files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Rewrite everything else to index.html
+    # to allow html5 state links
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
+  <FilesMatch "\.php$">
+    Order Deny,Allow
+    Deny from all
+  </FilesMatch>
+</IfModule>

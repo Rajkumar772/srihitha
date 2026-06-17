@@ -1,0 +1,229 @@
+                                   ////css////
+                                   .loader {
+                                       width: 68px;
+                                       height: 68px;
+                                       border-radius: 50%;
+                                       display: inline-block;
+                                       border-top: 4px solid #0077b6;
+                                       border-right: 4px solid transparent;
+                                       box-sizing: border-box;
+                                       animation: rotation 1s linear infinite;
+                                   }
+
+                                   .loader::after {
+                                       content: '';
+                                       box-sizing: border-box;
+                                       position: absolute;
+                                       left: 0;
+                                       top: 0;
+                                       width: 68px;
+                                       height: 68px;
+                                       border-radius: 50%;
+                                       border-bottom: 4px solid #0077b6;
+                                       border-left: 4px solid transparent;
+                                   }
+
+                                   @keyframes rotation {
+                                       0% {
+                                           transform: rotate(0deg);
+                                       }
+
+                                       100% {
+                                           transform: rotate(360deg);
+                                       }
+                                   }
+
+                                   .my-overlay {
+                                       left: 0 !important;
+                                       top: 0 !important;
+                                       z-index: 10000 !important;
+                                       width: 100% !important;
+                                       height: 100% !important;
+                                       position: fixed !important;
+                                       background-color: rgba(0, 0, 0, 0.9) !important;
+                                       display: flex;
+                                       align-items: center;
+                                       justify-content: center;
+                                       flex-direction: column;
+                                       align-content: space-between;
+                                       opacity: 0.6;
+                                   }
+
+
+
+
+
+                                   .center {
+                                       display: block;
+                                       margin-right: auto;
+                                       margin-right: auto;
+                                   }
+
+                                   .total {
+                                       border-right: 2px solid black;
+                                       border-bottom: 2px solid black;
+                                       text-align: center;
+                                   }
+
+                                   .card {
+
+                                       width: 100%;
+
+                                   }
+
+                                   .data {
+
+                                       padding: 20px;
+                                   }
+
+                                   .rest {
+                                       margin: 40px 0;
+                                   }
+
+                                   .pincity {
+                                       display: flex;
+                                       justify-content: space-between;
+                                   }
+
+                                   .my-overlay1 i.fa.fa-spinner1.fa-spin1,
+                                   .spinner-big {
+                                       font-size: 100px !important;
+                                   }
+
+                                   .my-overlay {
+                                       left: 0 !important;
+                                       top: 0 !important;
+                                       z-index: 10000 !important;
+                                       width: 100% !important;
+                                       height: 100% !important;
+                                       position: fixed !important;
+                                       background-color: rgba(0, 0, 0, 0.9) !important;
+                                       cursor: pointer !important;
+                                       visibility: visible !important;
+                                       transition: visibility 0s, opacity 0.4s linear !important;
+                                       display: flex;
+                                       align-items: center;
+                                       justify-content: center;
+                                       flex-direction: column;
+                                       align-content: space-between;
+                                       cursor: wait !important;
+                                       opacity: 0.6;
+                                   }
+
+                                   .codcent {
+                                       display: flex;
+                                       flex-direction: column;
+                                       justify-content: center;
+                                   }
+
+                                   @media print {
+                                       #printPageButton {
+                                           display: none;
+                                       }
+
+                                   }
+
+                                   .button-customize {
+                                       text-align: center;
+                                       margin: 20px;
+                                       height: 2.5rem;
+                                       width: 9rem;
+                                       text-align: center;
+                                       font-family: Gilroy !important;
+                                       font-size: 1rem !important;
+                                   }
+
+                                   .btn {
+                                       display: flex;
+                                       justify-content: center;
+                                   }
+
+                                   .btns {
+                                       display: flex;
+                                       justify-content: center;
+                                   }
+
+                                   .boto {
+                                       display: flex;
+                                       flex-direction: column;
+                                       justify-content: center;
+                                   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   @media print {
+
+                                       @page {
+                                           size: A4;
+                                           margin: 10mm;
+                                           /* control page margin */
+                                       }
+
+                                       body {
+                                           margin: 0;
+                                       }
+
+                                       #editor {
+                                           width: 100% !important;
+                                           margin: 0 !important;
+                                       }
+
+                                       .btns,
+                                       #printPageButton,
+                                       .my-overlay {
+                                           display: none !important;
+                                       }
+
+                                       div[style*="border: 1px solid black"] {
+                                           width: 100% !important;
+                                           /* prevent 98% overflow */
+                                           margin: 0 !important;
+                                       }
+                                   }
+
+
+
+                                   /////NEW CODE STARTS
+                                   
+
+/* LEFT: hospital name */
+.rx-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.rx-header-left,
+.rx-header-right {
+    width: 48%;
+}
+
+.rx-header-right {
+    text-align: right;
+}
+
+
+
+.headerimg{
+    width:100%
+}
+.qrcode{
+    width:150px;
+    height:150px
+}

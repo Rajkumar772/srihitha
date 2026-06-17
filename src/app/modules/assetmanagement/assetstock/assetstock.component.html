@@ -1,0 +1,349 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            View Asset Stock
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<!-- ///new code starts -->
+<div class="row da-row-gap">
+    <div class="col-md-3">
+        <div class="card da-stat-card movable-card">
+            <div class="card-body" (click)="getcradsdata('Movable')">
+                <div class="d-flex align-items-center">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="da-stat-label text-truncate mb-2">Total Movable</p>
+                        <h5 class="da-stat-value mb-0">
+                            {{todayscountdata[0]?.total_movable || 0}}
+                        </h5>
+                    </div>
+                    <div class="da-stat-icon ms-auto">
+                        <i class="bx bx-transfer-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card da-stat-card immovable-card">
+            <div class="card-body" (click)="getcradsdata('ImMovable')">
+                <div class="d-flex align-items-center">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="da-stat-label text-truncate mb-2">Total Im-Movable</p>
+                        <h5 class="da-stat-value mb-0">
+                            {{todayscountdata[0]?.total_immovable || 0}}
+                        </h5>
+                    </div>
+                    <div class="da-stat-icon ms-auto">
+                        <i class="bx bx-building"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ////new code starts -->
+
+<div class="card" *ngIf="todayscountdataselected.length > 0">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; 
+                   text-align: center; background: blue; color: white;">
+            {{ selecteddata }}
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black; background-color:white;
+                          text-decoration: none; font-size: 25px;
+                          border-radius: 20px;">
+                </a>
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row da-row-gap">
+    <div class="col-md-3" *ngFor="let item of todayscountdataselected">
+        <div class="card da-stat-card movable-card" [ngStyle]="{'background': getCardGradient(i), 'color': 'white'}">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="da-stat-label text-truncate mb-2">
+                            {{ item.companyname }}
+                        </p>
+                        <h5 class="da-stat-value mb-0">
+                            {{ item.qty }}
+                        </h5>
+
+                    </div>
+                    <div class="da-stat-icon ms-auto">
+                        <i class="bx bx-building"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+
+                                <!-- ✅ HIDDEN TABLE ONLY FOR EXCEL EXPORT (NO EDIT/DELETE) -->
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name of the Equipment</th>
+                                            <th>Total</th>
+                                            <th>Given</th>
+                                            <th>Available</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.nameofequipment }}</td>
+                                            <td>{{ row.total_equipment }}</td>
+                                            <td>{{ row.given_equipment }}</td>
+                                            <td>{{ row.available_quantity }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Roomtype report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button> -->
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="nameofequipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name of the Equipment</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.nameofequipment}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="total_equipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.total_equipment}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="given_equipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Given</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.given_equipment}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="available_quantity">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Available</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.available_quantity }}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="record123(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'nameofequipment',value:item.nameofequipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'nameofequipment'; let int = index">
+                                                {{item.nameofequipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'total_equipment',value:item.total_equipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'total_equipment'; let int = index">
+                                                {{item.total_equipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'given_equipment',value:item.given_equipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'given_equipment'; let int = index">
+                                                {{item.given_equipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'available_quantity',value:item.available_quantity}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'available_quantity'; let int = index">
+                                                {{item.available_quantity}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View Asset History</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: #0d6efd;">
+                <tr>
+                    <th style="color:white; text-align:center;">S.No</th>
+                    <th style="color:white; text-align:center;">Type</th>
+                    <th style="color:white; text-align:center;">Equipment Name</th>
+                    <th style="color:white; text-align:center;">Company</th>
+                    <th style="color:white; text-align:center;">Model</th>
+                    <th style="color:white; text-align:center;">Location</th>
+                    <th style="color:white; text-align:center;">Department</th>
+                    <th style="color:white; text-align:center;">Purchase Date</th>
+                    <th style="color:white; text-align:center;">Purchase Rate</th>
+                    <th style="color:white; text-align:center;">Quantity</th>
+                    <!-- <th style="color:white; text-align:center;">Entry By</th>
+                    <th style="color:white; text-align:center;">Entry Name</th> -->
+                    <th style="color:white; text-align:center;">Date & Time</th>
+                    <!-- <th style="color:white; text-align:center;">Image</th> -->
+                    <th style="color:white; text-align:center;">Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let a of equipmentData; let i = index" [ngClass]="{
+        'available-row': a.ind == 0,
+        'not-available-row': a.ind == 1
+      }">
+                    <td style="text-align:center;">{{ i + 1 }}</td>
+                    <td style="text-align:center;">{{ a.typeofproduct || '__'}}</td>
+                    <td style="text-align:center;">{{ a.nameofequipment || '__' }}</td>
+                    <td style="text-align:center;">{{ a.companyname || '__' }}</td>
+                    <td style="text-align:center;">{{ a.model || '-' }}</td>
+                    <td style="text-align:center;">{{ a.location || '__' }}</td>
+                    <td style="text-align:center;">{{ a.department || '__'}}</td>
+                    <td style="text-align:center;">{{ a.purchase_date | date:'yyyy-MM-dd' }}</td>
+                    <td style="text-align:center;">{{ a.purchase_rate || '__' }}</td>
+                    <td style="text-align:center;">{{ a.quantity || '__' }}</td>
+                    <td style="text-align:center;">{{ a.i_ts || '__' }}</td>
+                    <!-- <td style="text-align:center;">{{ a.entry_by }}</td>
+                    <td style="text-align:center;">{{ a.entry_name }}</td> -->
+                    <!-- <td style="text-align:center;">
+                        <a *ngIf="a.image" [href]="a.image" target="_blank">View</a>
+                        <span *ngIf="!a.image">-</span>
+                    </td> -->
+                    <td style="text-align:center; font-weight: bold;">
+                        <span *ngIf="a.ind == 0" style="color: green;">Purchase</span>
+                        <span *ngIf="a.ind == 1" style="color: red;">Given</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</ng-template>
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

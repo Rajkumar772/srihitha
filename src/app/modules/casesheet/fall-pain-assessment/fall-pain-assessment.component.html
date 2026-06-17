@@ -1,0 +1,439 @@
+<div class="fall-pain-wrapper">
+
+  <!-- ================= FALL RISK ASSESSMENT ================= -->
+  <section class="assessment-page">
+
+    <ng-container *ngFor="let page of fallPages; let pageIndex = index; trackBy: trackByIndex">
+
+      <div class="fall-risk-page">
+        <div class="fall-page-actions no-print">
+          <button type="button" class="fall-delete-page-btn" *ngIf="fallPages.length > 1"
+            (click)="removeFallRiskPage(pageIndex)">
+            Delete This Page
+          </button>
+        </div>
+        <div class="fall-header">
+          <img src="assets/back/logo2.png" class="fall-logo">
+          <h2>FALL RISK ASSESSMENT</h2>
+        </div>
+
+        <div class="fall-patient-line">
+          <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+          <span>UMR No</span><input [(ngModel)]="header.umr_no">
+          <span>Sex</span><input [(ngModel)]="header.sex">
+          <span>Age</span><input [(ngModel)]="header.age">
+        </div>
+
+        <table class="fall-risk-table">
+
+          <colgroup>
+            <col class="param-col">
+            <col class="score-col">
+            <col class="condition-col">
+            <col *ngFor="let c of boxColumns" class="box-col">
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th colspan="3" class="text-left">
+                Name of the Patient
+                <input class="inner-name-input" [(ngModel)]="header.patient_name">
+              </th>
+
+              <th colspan="9">
+                <input [(ngModel)]="page.fall.patient_name">
+              </th>
+
+              <th colspan="8" class="text-left">
+                I.P.No :
+                <input class="inner-ip-input" [(ngModel)]="header.ip_no">
+              </th>
+
+              <th colspan="4">
+                <input [(ngModel)]="page.fall.ip_no">
+              </th>
+            </tr>
+
+            <tr>
+              <th>Parameter</th>
+              <th class="vertical-score">Scor</th>
+              <th class="condition-head">Condition <span class="time_wdt">Time</span></th>
+
+              <ng-container *ngFor="let date of page.fallDates">
+                <th colspan="3" class="date-time-head">
+
+                  <input type="date" class="date-picker-clean" [(ngModel)]="date.date">
+
+                  <div class="time-slot-row">
+                    <input type="time" [(ngModel)]="date.morning">
+                    <input type="time" [(ngModel)]="date.evening">
+                    <input type="time" [(ngModel)]="date.night">
+                  </div>
+
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <ng-container *ngFor="let group of page.fallGroups; trackBy: trackByIndex">
+
+              <tr *ngIf="group.note">
+                <td [attr.rowspan]="group.rows.length + 1" class="param-cell">
+                  {{ group.parameter }}
+                </td>
+
+                <td colspan="24" class="group-note">
+                  {{ group.note }}
+                </td>
+              </tr>
+
+              <tr *ngFor="let row of group.rows; let i = index; trackBy: trackByIndex">
+
+                <td *ngIf="!group.note && i === 0" [attr.rowspan]="group.rows.length" class="param-cell">
+                  {{ group.parameter }}
+                </td>
+
+                <td class="score-cell">{{ row.score }}</td>
+                <td class="condition-cell">{{ row.condition }}</td>
+
+                <td *ngFor="let c of boxColumns" class="entry-cell">
+                  <button type="button" class="tick-btn" [class.selected]="row.values[c] === '✓'"
+                    (click)="toggleTick(row, c)">
+                    {{ row.values[c] === '✓' ? '✓' : '' }}
+                  </button>
+                </td>
+
+              </tr>
+
+            </ng-container>
+
+            <tr class="total-score-row">
+              <td colspan="3" class="bottom-label">Total Score</td>
+
+              <td *ngFor="let c of boxColumns" class="score-entry-cell">
+                <input type="text" maxlength="2" class="total-score-input" [(ngModel)]="page.fall.totalScore[c]"
+                  placeholder="0">
+              </td>
+            </tr>
+
+            <tr class="signature-row">
+              <td colspan="4" class="bottom-label sign-upload-cell">
+
+                <div class="sign-title">ID No. &amp; Sign of Nursing Staff</div>
+
+                <div class="sign-upload-box">
+                  <input type="text" placeholder="Enter Nurse Name" [(ngModel)]="page.fall.nurseName"
+                    class="sign-name-input">
+
+                  <input type="file" accept="image/*"
+                    (change)="onFallSignatureUpload($event, page.fall, 'nurseSignature')" class="sign-file-input">
+
+                  <img *ngIf="page.fall.nurseSignature_preview" [src]="page.fall.nurseSignature_preview"
+                    class="signature-preview">
+                </div>
+
+              </td>
+
+              <td *ngFor="let c of boxColumns"></td>
+            </tr>
+
+            <tr class="signature-row">
+              <td colspan="4" class="bottom-label sign-upload-cell">
+
+                <div class="sign-title">Name and sign of Doctor</div>
+
+                <div class="sign-upload-box">
+                  <input type="text" placeholder="Enter Doctor Name" [(ngModel)]="page.fall.doctorName"
+                    class="sign-name-input">
+
+                  <input type="file" accept="image/*"
+                    (change)="onFallSignatureUpload($event, page.fall, 'doctorSignature')" class="sign-file-input">
+
+                  <img *ngIf="page.fall.doctorSignature_preview" [src]="page.fall.doctorSignature_preview"
+                    class="signature-preview">
+                </div>
+
+              </td>
+
+              <td *ngFor="let c of boxColumns"></td>
+            </tr>
+
+            <tr>
+              <td colspan="25" class="fall-note">
+                Score of 8-14-Moderate risk: one nurse and attender to accompany patient for ambulation if needed:
+                15 or above High risk: not allow the patient to move from bed
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </ng-container>
+
+    <button type="button" class="pain-add-row-btn no-print" (click)="addFallRiskPage()">
+
+      + Add Fall Risk Page
+
+    </button>
+
+  </section>
+
+
+
+
+  <!-- ================= PAIN ASSESSMENT SHEET ================= -->
+
+  <section class="pain-page">
+
+    <div class="pain-main-header">
+      <img src="assets/back/logo2.png" class="pain-logo">
+      <h2>PAIN ASSESSMENT SHEET</h2>
+    </div>
+
+    <div class="pain-patient-line">
+      <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+      <span>UMR No</span><input [(ngModel)]="header.umr_no">
+      <span>Sex</span><input [(ngModel)]="header.sex">
+      <span>Age</span><input [(ngModel)]="header.age">
+      <span>IP No</span><input [(ngModel)]="header.ip_no">
+    </div>
+
+    <table class="pain-entry-table">
+      <thead>
+        <tr>
+          <th>Sl.No</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Pain<br>Score</th>
+          <th>Charactor</th>
+          <th>Location</th>
+          <th>Duration</th>
+          <th>Referral /<br>Radiation</th>
+          <th>Intervention</th>
+          <th>Assessed<br>By</th>
+          <th>Doctor<br>By</th>
+          <th class="no-print">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of painRows; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><input type="date" [(ngModel)]="row.date"></td>
+          <td><input type="time" [(ngModel)]="row.time"></td>
+          <td><input type="number" min="0" max="10" [(ngModel)]="row.pain_score"></td>
+          <td><input placeholder="Sharp/Dull" [(ngModel)]="row.character"></td>
+          <td><input placeholder="Site" [(ngModel)]="row.location"></td>
+          <td><input placeholder="Duration" [(ngModel)]="row.duration"></td>
+          <td><input placeholder="Radiation" [(ngModel)]="row.referral"></td>
+          <td><input placeholder="Medicine/Action" [(ngModel)]="row.intervention"></td>
+          <td><input placeholder="Nurse" [(ngModel)]="row.assessed_by"></td>
+          <td><input placeholder="Doctor" [(ngModel)]="row.doctor_by"></td>
+
+          <td class="pain-action-cell no-print">
+            <button type="button" class="pain-delete-btn" (click)="removePainRow(i)">
+              🗑
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="pain-add-row-btn no-print" (click)="addPainRow()">
+      + Add Pain Row
+    </button>
+
+    <div class="pain-bottom-layout">
+
+      <!-- LEFT: PAIN TOOL - REALTIME SELECT -->
+      <div class="pain-tool-box">
+
+        <h3>Pain Assessment Tool</h3>
+
+        <div class="pain-line-scale dynamic-scale">
+          <button type="button" class="pain-score-btn" *ngFor="let n of painNumbers"
+            [class.active]="selectedPainScore === n" (click)="selectPainScore(n)">
+            <span class="tick-line"></span>
+            <strong>{{ n }}</strong>
+          </button>
+        </div>
+
+        <div class="scale-text">
+          <span>No Hurt</span>
+          <span>Moderate Pain</span>
+          <span>Worst Possible<br>Pain</span>
+        </div>
+
+        <h3 class="faces-title">Wong-Baker FACES Pain Rating Scale</h3>
+
+        <div class="faces-row">
+          <button type="button" class="face-item face-select-btn" *ngFor="let face of faces"
+            [class.active]="selectedPainFace === face.score" (click)="selectPainFace(face)">
+            <div class="draw-face">{{ face.icon }}</div>
+            <div>{{ face.text }}</div>
+            <strong>{{ face.score }}</strong>
+          </button>
+        </div>
+
+        <div class="pain-note">
+          If Pain scale &gt;4, Intervention for Pain relief must be documented in drug chart &
+          patient to be reassessed hourly till he/she is conslable
+        </div>
+
+      </div>
+
+      <!-- RIGHT: BEHAVIOURAL SCALE - REALTIME SELECT -->
+      <div class="behaviour-scale-box">
+
+        <table class="behaviour-table">
+          <thead>
+            <tr>
+              <th colspan="3">The Behavioural Pain Scale</th>
+              <th rowspan="2">Compliance<br>with<br>Ventilation</th>
+              <th rowspan="2">Ventilation Response</th>
+            </tr>
+            <tr>
+              <th>Item</th>
+              <th>Description</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of behaviouralScale; let i = index" [class.selected-row]="isBehaviourSelected(item)"
+              (click)="selectBehaviourItem(item)">
+
+              <td>{{ item.item }}</td>
+              <td>{{ item.description }}</td>
+              <td class="score-cell">{{ item.score }}</td>
+
+              <td *ngIf="i === 0" rowspan="8" class="compliance-cell">
+                Select<br>Ventilation<br>Status
+              </td>
+
+              <td *ngIf="i === 0" rowspan="2" class="vent-option" [class.active]="selectedVentilation === 1"
+                (click)="selectVentilation(ventilationOptions[0]); $event.stopPropagation()">
+                {{ ventilationOptions[0].description }}
+                <strong>1</strong>
+              </td>
+
+              <td *ngIf="i === 2" rowspan="2" class="vent-option" [class.active]="selectedVentilation === 2"
+                (click)="selectVentilation(ventilationOptions[1]); $event.stopPropagation()">
+                {{ ventilationOptions[1].description }}
+                <strong>2</strong>
+              </td>
+
+              <td *ngIf="i === 4" rowspan="2" class="vent-option" [class.active]="selectedVentilation === 3"
+                (click)="selectVentilation(ventilationOptions[2]); $event.stopPropagation()">
+                {{ ventilationOptions[2].description }}
+                <strong>3</strong>
+              </td>
+
+              <td *ngIf="i === 6" rowspan="2" class="vent-option" [class.active]="selectedVentilation === 4"
+                (click)="selectVentilation(ventilationOptions[3]); $event.stopPropagation()">
+                {{ ventilationOptions[3].description }}
+                <strong>4</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="behaviour-total-box">
+          <label>Behavioural Pain Total Score</label>
+          <input type="number" readonly [(ngModel)]="behaviourTotalScore">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="nursing-page">
+
+    <div class="nursing-sheet">
+
+      <div class="nursing-logo-row">
+        <img src="assets/back/logo2.png" class="nursing-logo" alt="Hospital Logo">
+      </div>
+
+      <div class="nursing-patient-line">
+        <label>Patient Name</label>
+        <input [(ngModel)]="header.patient_name">
+
+        <label>UMR No</label>
+        <input [(ngModel)]="header.umr_no">
+
+        <label>Sex</label>
+        <input [(ngModel)]="header.sex">
+
+        <label>Age</label>
+        <input [(ngModel)]="header.age">
+
+        <label>IP No</label>
+        <input [(ngModel)]="header.ip_no">
+      </div>
+
+      <div class="nursing-title">
+        <h2>NURSING ASSESSMENT CHART</h2>
+        <p>(To be filled by nurse in each shift)</p>
+      </div>
+
+      <div class="nursing-table-scroll">
+        <table class="nursing-table">
+
+          <colgroup>
+            <col class="label-col">
+            <col *ngFor="let col of nursingColumns" class="shift-col">
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th></th>
+
+              <ng-container *ngFor="let date of nursingDates; let d = index">
+                <th colspan="3" class="date-head">
+                  Date:
+                  <input type="date" [(ngModel)]="date.date" (ngModelChange)="syncNursingAssessment()">
+              </ng-container>
+            </tr>
+
+            <tr>
+              <th></th>
+
+              <th *ngFor="let col of nursingColumns">
+                <input type="time" [(ngModel)]="col.time" (ngModelChange)="syncNursingAssessment()">
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let row of nursingRows">
+              <td class="row-label">{{ row.label }}</td>
+
+              <td *ngFor="let col of nursingColumns" class="nursing-entry-cell">
+
+                <textarea *ngIf="row.type === 'text'" class="nursing-cell-input" [(ngModel)]="row.values[col.key]"
+                  (ngModelChange)="syncNursingAssessment()">
+</textarea>
+
+                <div *ngIf="row.type === 'fixed'" class="fixed-text-display">
+                  <div *ngFor="let option of row.options">{{ option }}</div>
+                </div>
+
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </section>

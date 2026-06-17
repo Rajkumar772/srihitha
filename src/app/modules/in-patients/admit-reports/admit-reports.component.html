@@ -1,0 +1,635 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+            Date of Admit Reports
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+
+            <div class="card-body" class="gth">
+                <form [formGroup]="patientManagementSrch">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="from_date"
+                                    [ngClass]="{'is-invalid': submitted && validDate['from_date'].errors }">
+                                <div *ngIf="submitted && validDate['from_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['from_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submitted && validDate['to_date'].errors }">
+                                <div *ngIf="submitted && validDate['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                                    color: white;
+                                    width: 98px;
+                                    height: 38px;
+                                    font-size: 16px;
+                                    border: none;
+                                    border-radius: 5px;" (click)="SearchDATE()">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col-3">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-1 search">
+                            <i class="material-icons cust-icon para" style="color: #86868c;"
+                                (click)="originalandtoggle(1)">find_in_page</i>
+                            <i class="material-icons cust-icon para" style="color: #86868c;"
+                                (click)="originalandtoggle(0)">refresh</i>
+                        </div>
+                        <div class="col-2 cent_btn">
+                            <div class="colorbtns color_custm">
+                                <button class="colorbtns colo" (click)="changecolor('blue')"> </button>
+                                <button class="colorbtns colo1" (click)="changecolor('rgb(0, 255, 242)')"></button>
+                                <button class="colorbtns colo2" (click)="changecolor('rgb(255, 174, 0)')"></button>
+                                <button class="colorbtns colo3" (click)="changecolor('rgb(255, 0, 170)')"></button>
+                                <input type="color" id="color1" name="favcolor" value="blue"
+                                    (change)="this.changeCustomColor($event)" (keyup)="this.changeCustomColor($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <mat-paginator [pageSizeOptions]="[500,1000,1500,2000]" showFirstLastButton>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-2">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Admit Reports', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+                                <button mat-raised-button style="background-color: blue;
+                                                            color: white;
+                                                            width: 75px;
+                                                            height: 38px;
+                                                            font-size: 16px;
+                                                            border: none;
+                                                            border-radius: 5px;"
+                                    (click)="Printmedicinewise(dataSource)">Print</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="uh_id">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    OP Patient ID</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span style="font-weight: 600;font-size: 14px;" class="para">{{row.uh_id}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ip_number">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    IN Patient No</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span style="font-weight: 600;font-size: 14px;"
+                                        class="para">{{row.ip_number}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_of_admit">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Date Of Admit</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.date_of_admit | date: 'dd/MM/yyyy , hh:mm a'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_of_discharge">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Date Of Discharge</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.date_of_discharge == ''|| row.date_of_discharge == null "> * </div>
+                                    <div *ngIf="row.date_of_discharge!='' || row.date_of_discharge != null ">
+                                        {{row.date_of_discharge | date: 'dd/MM/yyyy , hh:mm a'}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Patient Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="final_bill_no">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Final Bill No</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.final_bill_no}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="grandTotal">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Total Amount </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.grandTotal}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                    <span style="font-weight: 800; font-size: 18px;">
+                                        {{cash | currency:'INR':'symbol':'1.0-0'}} Cash
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="paymentMode">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Payment Mode</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span *ngIf="row.paymentMode == 'CASH'">
+                                        <h6 style="font-weight: 600;" class="text-success">
+                                            {{row.paymentMode}}</h6>
+                                    </span>
+                                    <span *ngIf="row.paymentMode == 'UPI'">
+                                        <h6 style="font-weight: 600;" class="text-info">
+                                            {{row.paymentMode}}</h6>
+                                    </span>
+                                    <span *ngIf="row.paymentMode == 'BOTH'">
+                                        <h6 style="font-weight: 600;color: rgb(236, 106, 0);">
+                                            {{row.paymentMode}}</h6>
+                                    </span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                    <span style="font-weight: 800; font-size: 18px;">
+                                        {{upi | currency:'INR':'symbol':'1.0-0'}} UPI
+                                    </span>
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="cash">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Cash Amount
+                                </th>
+
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.cash}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef>
+                                    <span style="font-weight: 800; font-size: 18px;">
+                                        {{both | currency:'INR':'symbol':'1.0-0'}} BOTH
+                                        <span style="font-size: 12px;">(Cash & UPI)</span>
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="upi">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    UPI Amount
+                                </th>
+
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.upi}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="transactionId">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Transaction ID
+                                </th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.transactionId == ''|| row.transactionId == null "> * </div>
+                                    <div *ngIf="row.transactionId!='' || row.transactionId != null ">
+                                        {{row.transactionId}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="initialDiscount">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Discount(%)</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.initialDiscount == ''|| row.initialDiscount == null "> * </div>
+                                    <div *ngIf="row.initialDiscount!='' || row.initialDiscount != null ">
+                                        {{row.initialDiscount + " " +"%"}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="discountAmount">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Discount Amount</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.discountAmount == ''|| row.discountAmount == null "> * </div>
+                                    <div *ngIf="row.discountAmount!='' || row.discountAmount != null ">
+                                        {{row.discountAmount | number:'1.2-2'}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="totalAmountAftrDscnt">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Total Amount After Discount</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.totalAmountAftrDscnt == ''|| row.totalAmountAftrDscnt == null "> *
+                                    </div>
+                                    <div *ngIf="row.totalAmountAftrDscnt!='' || row.totalAmountAftrDscnt != null ">
+                                        {{row.totalAmountAftrDscnt | number:'1.2-2'}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="gstRate">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    GST (%)</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.gstRate == ''|| row.gstRate == null "> * </div>
+                                    <div *ngIf="row.gstRate!='' || row.gstRate != null ">
+                                        {{row.gstRate + " " +"%"}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="gstAmount">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    GST Tax Amount</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.gstAmount == ''|| row.gstAmount == null "> * </div>
+                                    <div *ngIf="row.gstAmount!='' || row.gstAmount != null ">
+                                        {{row.gstAmount | number:'1.2-2'}} </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="totalamount">
+                                <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [ngStyle]="headerclass">
+                                    Total Grand Amount</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.totalamount | number:'1.2-2'}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                    <span style="font-weight: 800;font-size: 18px;">{{grandtotal|
+                                        currency:'INR':'symbol':'1.0-0'}} Grand Total </span>
+                                </td>
+                            </ng-container>
+
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="select1" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'uh_id',value:item.uh_id}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'uh_id'; let int = index">
+                                                {{item.uh_id}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'ip_number',value:item.ip_number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'ip_number'; let int = index">
+                                                {{item.ip_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'date_of_admit',value:item.date_of_admit}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'date_of_admit'; let int = index">
+                                                {{item.date_of_admit}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'date_of_discharge',value:item.date_of_discharge}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'date_of_discharge'; let int = index">
+                                                {{item.date_of_discharge}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name',value:item.name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'name'; let int = index">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'final_bill_no',value:item.final_bill_no}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'final_bill_no'; let int = index">
+                                                {{item.final_bill_no}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'grandTotal',value:item.grandTotal}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'grandTotal'; let int = index">
+                                                {{item.grandTotal}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'paymentMode',value:item.paymentMode}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'paymentMode'; let int = index">
+                                                {{item.paymentMode}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'cash',value:item.cash}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'cash'; let int = index">
+                                                {{item.cash}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'upi',value:item.upi}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'upi'; let int = index">
+                                                {{item.upi}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select12">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'transactionId',value:item.transactionId}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'transactionId'; let int = index">
+                                                {{item.transactionId}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select13">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'initialDiscount',value:item.initialDiscount}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'initialDiscount'; let int = index">
+                                                {{item.initialDiscount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select14">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'discountAmount',value:item.discountAmount}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'discountAmount'; let int = index">
+                                                {{item.discountAmount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select15">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'totalAmountAftrDscnt',value:item.totalAmountAftrDscnt}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'totalAmountAftrDscnt'; let int = index">
+                                                {{item.totalAmountAftrDscnt}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select16">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'gstRate',value:item.gstRate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'gstRate'; let int = index">
+                                                {{item.gstRate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select17">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'gstAmount',value:item.gstAmount}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'gstAmount'; let int = index">
+                                                {{item.gstAmount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select18">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'totalamount',value:item.totalamount}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'totalamount'; let int = index">
+                                                {{item.totalamount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="header-row-second-group">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" [ngStyle]="headerclass"
+                                    style="text-align: center;"> Payment Mode (Both)
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="['i', 'uh_id', 'ip_number', 'date_of_admit','date_of_discharge','name','final_bill_no',
+                                      'grandTotal','paymentMode','header-row-second-group','transactionId','initialDiscount',
+                                      'discountAmount','totalAmountAftrDscnt','gstRate','gstAmount','totalamount']">
+                            </tr>
+
+                            <tr mat-header-row *matHeaderRowDef="restOfColumns"></tr>
+
+
+                            <!-- <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr> -->
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                            <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+                            <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

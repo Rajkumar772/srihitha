@@ -1,0 +1,83 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+
+
+
+
+
+<div class="table-responsive p-2">
+
+
+
+
+    <table class="table">
+        <tbody>
+            <tr style="text-align: center;">
+                <th colspan="18"><strong>OT Return List Items</strong></th>
+
+            </tr>
+
+            <tr>
+                <th><strong>S.no</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>Bill No</strong></th>
+                <th><strong>Source Name</strong></th>
+                <th><strong>Total Items</strong></th>
+                <th><strong>Total Net Amount</strong></th>
+            </tr>
+
+
+
+            <tr *ngFor="let a of mainItem; let i = index;">
+                <td>{{i +1}}</td>
+                <td>{{a.invoice_date | date : 'dd-MM-YYYY' }}</td>
+                <td>{{a.invoice_number }}</td>
+                <td>{{a.supplier_name }}</td>
+                <td>{{a.no_of_items }}</td>
+                <td>{{a.grandtotal | number:'1.2-2'}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div style="overflow: auto;">
+        <table class="table table-bordered">
+            <thead >
+                <tr>
+                    <th >S.no</th>
+                    <th >Medicine Name</th>
+                    <th >HSN Code</th>
+                    <th >Batch No</th>
+                    <th >Each Tab MRP Cost</th>
+                    <th >GST %</th>
+                    <th >Total Tabs</th>
+                    <th >Expiry Date</th>
+                    <th >Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="tr" *ngFor="let i of otreturnslistitems;let y=index;">
+                    <td>{{y+1}}</td>
+                    <td>{{i.medicine_name}}</td>
+                    <td>{{i.hsncode}}</td>
+                    <td>{{i.batch_no}}</td>
+                    <td>{{i.eachcost | number:'1.2-2'}}</td>
+                    <td>{{i.gst_per + "%"}}</td>
+                    <td>{{i.total_tabs}}</td>
+                    <td>{{i.expirydate}}</td>
+                    <td>{{i.with_gst_price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

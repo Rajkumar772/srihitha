@@ -1,0 +1,61 @@
+<div class="doctor-lab-page no-print">
+
+  <div class="page-title">
+    <h2>Doctor Assigned Radiology Tests</h2>
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="getDoctorAssignedRadiology()">
+      Refresh
+    </button>
+  </div>
+
+  <input
+    type="text"
+    class="form-control search-box"
+    placeholder="Search UHID / Patient / Mobile"
+    [(ngModel)]="searchText">
+
+  <div class="loading" *ngIf="loading">
+    Loading...
+  </div>
+
+  <table class="patients-table" *ngIf="!loading && filteredPatients.length">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Visited Date</th>
+        <th>OP Patient ID</th>
+        <th>Patient Name</th>
+        <th>Mobile</th>
+        <th>Print</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of filteredPatients; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ p.diagnostic_date || p.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ p.uh_id }}</td>
+        <td>{{ p.name || p.full_name }}</td>
+        <td>{{ p.phone_number || p.mobile || '-' }}</td>
+
+        <td>
+          <button
+            type="button"
+            class="print-icon-btn"
+            title="Print Radiology Bill"
+            (click)="printDiagnostic(p)">
+            <i class="fa fa-print"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="empty" *ngIf="!loading && !filteredPatients.length">
+    No doctor assigned radiology tests found.
+  </div>
+
+</div>

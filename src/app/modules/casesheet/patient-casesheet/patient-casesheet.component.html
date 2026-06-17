@@ -1,0 +1,756 @@
+<div class="case-pdf-page">
+<div class="primary-consultant-sheet">
+
+  <div class="primary-header">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+  </div>
+
+  <div class="primary-patient-box">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="primary-title">
+    PLAN OF PRIMARY CONSULTANT
+  </div>
+
+  <div class="primary-box big">
+    <label>PROVISIONAL DIAGNOSIS / DIAGNOSIS:</label>
+    <textarea [(ngModel)]="consultant.planPrimaryConsultant.diagnosis"></textarea>
+  </div>
+
+  <div class="primary-box big">
+    <label>PLAN OF CARE :</label>
+    <textarea [(ngModel)]="consultant.planPrimaryConsultant.plan_of_care"></textarea>
+  </div>
+
+  <div class="primary-box medium">
+    <label>EXPECTED OUTCOME (PROGNOSIS) :</label>
+    <textarea [(ngModel)]="consultant.planPrimaryConsultant.expected_outcome"></textarea>
+  </div>
+
+  <div class="primary-box medium">
+    <label>PREVENTIVE ASPECTS OF CARE :</label>
+    <textarea [(ngModel)]="consultant.planPrimaryConsultant.preventive_aspects"></textarea>
+  </div>
+
+  <div class="primary-footer">
+    <div>
+      <label>SIGNATURE WITH NAME</label>
+      <input type="file" accept="image/*"
+        (change)="onSignatureUpload($event, consultant.planPrimaryConsultant, 'signature')">
+
+      <img *ngIf="consultant.planPrimaryConsultant.signature_preview"
+        [src]="consultant.planPrimaryConsultant.signature_preview"
+        class="sign-preview">
+
+      <input placeholder="Name" [(ngModel)]="consultant.planPrimaryConsultant.signature_name">
+    </div>
+
+    <div>
+      <label>DATE:</label>
+      <input type="date" [(ngModel)]="consultant.planPrimaryConsultant.date">
+    </div>
+
+    <div>
+      <label>TIME:</label>
+      <input type="time" [(ngModel)]="consultant.planPrimaryConsultant.time">
+    </div>
+  </div>
+
+</div>
+
+<div class="change-plan-page">
+
+  <div class="change-plan-header">
+    <div class="change-logo">
+      <img src="assets/back/logo2.png" alt="Hospital Logo">
+    </div>
+
+    <h2>
+      CHANGE OF PLAN (OR) CHANGE OF THE PATIENT CONDITION
+    </h2>
+  </div>
+
+  <div class="change-patient-line">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <table class="change-plan-table">
+    <thead>
+      <tr>
+        <th class="date-col">Date<br>& Time</th>
+        <th>Details of Change of Plan<br>or Condition</th>
+        <th>Patient or Attendant Signature,<br>Name & Relation</th>
+        <th>Doctor Signature &<br>Name</th>
+        <th class="no-print action-col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of consultant.changeOfPlan; let i = index; trackBy: trackByIndex">
+        <td>
+          <input type="datetime-local" [(ngModel)]="row.date_time">
+        </td>
+
+        <td>
+          <textarea [(ngModel)]="row.details"></textarea>
+        </td>
+
+        <!-- PATIENT / ATTENDANT -->
+
+        <td class="signature-td">
+
+          <div class="signature-box">
+
+            <input type="file" accept="image/*" class="signature-upload"
+              (change)="onSignatureUpload($event, row, 'patient_signature')">
+
+            <img *ngIf="row.patient_signature_preview" [src]="row.patient_signature_preview" class="table-sign-preview">
+
+            <input type="text" placeholder="Name & Relation" [(ngModel)]="row.patient_name_relation"
+              class="signature-name-input">
+
+          </div>
+
+        </td>
+
+        <!-- DOCTOR -->
+
+        <td class="signature-td">
+
+          <div class="signature-box">
+
+            <input type="file" accept="image/*" class="signature-upload"
+              (change)="onSignatureUpload($event, row, 'doctor_signature')">
+
+            <img *ngIf="row.doctor_signature_preview" [src]="row.doctor_signature_preview">
+
+            <input type="text" placeholder="Doctor Name" [(ngModel)]="row.doctor_name" class="signature-name-input">
+
+          </div>
+
+        </td>
+
+        <td class="no-print action-cell">
+          <button type="button" class="row-delete-btn" (click)="removeChangeOfPlanRow(i)">
+            ✕
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="add-row-btn no-print" (click)="addChangeOfPlanRow()">
+    + Add Row
+  </button>
+
+</div>
+
+<div class="progress-notes-page">
+
+  <div class="progress-notes-header">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+    <h2>PROGRESS NOTES</h2>
+  </div>
+
+  <div class="progress-patient-line">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <table class="progress-notes-table">
+    <tbody>
+      <tr *ngFor="let row of consultant.progressNotes; let i = index; trackBy: trackByIndex">
+        <td class="progress-date-cell">
+          <input type="datetime-local" [(ngModel)]="row.date_time">
+        </td>
+
+        <td>
+          <textarea [(ngModel)]="row.instructions"></textarea>
+        </td>
+
+        <td class="no-print action-cell">
+          <button type="button" class="row-delete-btn" (click)="removeProgressNoteRow(i)">
+            <i class="bx bx-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="add-row-btn no-print" (click)="addProgressNoteRow()">
+    + Add Progress Note
+  </button>
+
+</div>
+
+<div class="case-pdf-page cannula-page">
+
+  <div class="cannula-top">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+
+    <h3>
+      PERIPHERAL CANNULA ASSESSMENT SHEET
+    </h3>
+  </div>
+
+  <div class="cannula-patient-line">
+    <label>Patient Name</label>
+    <input [(ngModel)]="header.patient_name">
+
+    <label>UMR No</label>
+    <input [(ngModel)]="header.umr_no">
+
+    <label>Sex</label>
+    <input [(ngModel)]="header.sex">
+
+    <label>Age</label>
+    <input [(ngModel)]="header.age">
+
+    <label>IP No</label>
+    <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="cannula-box">
+
+    <div class="cannula-left">
+      <div class="line-row">
+        <span>Insertion details</span>
+        <span>Date and Time:</span>
+        <input type="datetime-local" [(ngModel)]="consultant.cannula.insertion_date_time">
+      </div>
+
+      <div class="line-row">
+        <span>Location:</span>
+        <input [(ngModel)]="consultant.cannula.location">
+      </div>
+
+      <div class="check-line">
+        <span>Insertion reasons:</span>
+
+        <label>IV fluids <input type="checkbox" [(ngModel)]="consultant.cannula.iv_fluids"></label>
+        <label>IV antibiotics <input type="checkbox" [(ngModel)]="consultant.cannula.iv_antibiotics"></label>
+        <label>Blood transfusion <input type="checkbox" [(ngModel)]="consultant.cannula.blood_transfusion"></label>
+        <label>Chemotherapy <input type="checkbox" [(ngModel)]="consultant.cannula.chemotherapy"></label>
+        <label>Surgery <input type="checkbox" [(ngModel)]="consultant.cannula.surgery"></label>
+      </div>
+
+      <div class="line-row">
+        <span>Others:</span>
+        <input [(ngModel)]="consultant.cannula.others">
+      </div>
+
+      <label class="cannula-check">Patient identity confirmed
+        <input type="checkbox" [(ngModel)]="consultant.cannula.patient_identity_confirmed">
+      </label>
+
+      <label class="cannula-check">Obtained verbal informed consent from patients/attendants
+        <input type="checkbox" [(ngModel)]="consultant.cannula.verbal_consent">
+      </label>
+
+      <label class="cannula-check">Local anesthesia used
+        <input type="checkbox" [(ngModel)]="consultant.cannula.local_anesthesia">
+      </label>
+
+      <div class="line-row">
+        <span>Appropriate cannula selected: Gauge:</span>
+        <input [(ngModel)]="consultant.cannula.gauge">
+      </div>
+
+      <label class="cannula-check">Washed hands and applied hand rub and gloves
+        <input type="checkbox" [(ngModel)]="consultant.cannula.washed_hands">
+      </label>
+
+      <label class="cannula-check">Skin preparation is done with alcohol swab moving from center to periphery
+        <input type="checkbox" [(ngModel)]="consultant.cannula.skin_preparation">
+      </label>
+
+      <div class="check-line">
+        <span>Ease of insertion:</span>
+        <label>Routine <input type="checkbox" [(ngModel)]="consultant.cannula.routine"></label>
+        <label>Difficult <input type="checkbox" [(ngModel)]="consultant.cannula.difficult"></label>
+      </div>
+
+      <div class="line-row">
+        <span>Number of attempts:</span>
+        <input [(ngModel)]="consultant.cannula.attempts">
+      </div>
+
+      <label class="cannula-check">Applied appropriate sterile and secure dressing no blood clots below the hub
+        <input type="checkbox" [(ngModel)]="consultant.cannula.sterile_dressing">
+      </label>
+
+      <label class="cannula-check">Saline flush administered
+        <input type="checkbox" [(ngModel)]="consultant.cannula.saline_flush">
+      </label>
+
+      <label class="cannula-check">Cannula timed and dated
+        <input type="checkbox" [(ngModel)]="consultant.cannula.cannula_timed">
+      </label>
+    </div>
+
+    <div class="cannula-right"></div>
+
+  </div>
+
+  <div class="cannula-note">
+    Phlebities assessment to be assess if cannula needs to remain in-situ, Hand hygiene must be performed before and
+    after running cannula
+  </div>
+
+  <div class="cannula-table-area">
+
+    <table class="cannula-table">
+      <colgroup>
+        <col class="param-col">
+        <col span="9" class="shift-col">
+      </colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="3">
+            Day 1<br>
+            Date:
+            <input type="date" [(ngModel)]="consultant.cannula.day1_date">
+          </th>
+          <th colspan="3">
+            Day 2<br>
+            Date:
+            <input type="date" [(ngModel)]="consultant.cannula.day2_date">
+          </th>
+          <th colspan="3">
+            Day 3<br>
+            Date:
+            <input type="date" [(ngModel)]="consultant.cannula.day3_date">
+          </th>
+        </tr>
+
+        <tr>
+          <th>Parameters</th>
+          <th>M</th>
+          <th>E</th>
+          <th>N</th>
+          <th>M</th>
+          <th>E</th>
+          <th>N</th>
+          <th>M</th>
+          <th>E</th>
+          <th>N</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Is the dressing intact</td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day1_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day1_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day1_n"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day2_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day2_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day2_n"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day3_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day3_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.dressing_day3_n"></td>
+        </tr>
+
+        <tr>
+          <td>Phlebitis score</td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day1_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day1_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day1_n"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day2_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day2_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day2_n"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day3_m"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day3_e"></td>
+          <td><input [(ngModel)]="consultant.cannula.phlebitis_day3_n"></td>
+        </tr>
+
+        <tr>
+          <td>Actions taken</td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.actions_day1"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.actions_day2"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.actions_day3"></textarea></td>
+        </tr>
+
+        <tr>
+          <td>Name / Signature of staff</td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.staff_day1"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.staff_day2"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.staff_day3"></textarea></td>
+        </tr>
+
+        <tr>
+          <td>Name / Signature of the Doctor</td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.doctor_day1"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.doctor_day2"></textarea></td>
+          <td colspan="3"><textarea [(ngModel)]="consultant.cannula.doctor_day3"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="phlebitis-score">
+      <b>Phlebitis score:</b><br>
+      0-IV site appears healthy<br>
+      1-ONE of the following is evident:<br>
+      &nbsp;&nbsp;Slight pain near I.V. site or slight redness near I.V. site<br>
+      2-TWO of the following is evident<br>
+      &nbsp;&nbsp;Pain near I.V Site<br>
+      &nbsp;&nbsp;Erythema<br>
+      &nbsp;&nbsp;Induration<br>
+      3-ALL of the following is evident and extensive<br>
+      &nbsp;&nbsp;Pain along path of cannula Erythema<br>
+      &nbsp;&nbsp;Induration<br>
+      4- ALL of the following is evident and extensive<br>
+      &nbsp;&nbsp;Pain along path of cannula<br>
+      &nbsp;&nbsp;Erythema<br>
+      &nbsp;&nbsp;Induration<br>
+      &nbsp;&nbsp;Palpable venous cord<br>
+      5-ALL of the following is evident and extensive<br>
+      &nbsp;&nbsp;Pain along path of cannula<br>
+      &nbsp;&nbsp;Erythema<br>
+      &nbsp;&nbsp;Induration<br>
+      &nbsp;&nbsp;Palpable venous cord<br>
+      &nbsp;&nbsp;Pyrexia
+    </div>
+
+  </div>
+
+  <div class="cannula-footer">
+
+    <!-- LEFT SIDE -->
+    <div class="removal-box">
+
+      <h4>Removal Details</h4>
+
+      <div class="field-group">
+
+        <label>Date & Time</label>
+
+        <input class="removal-date-input" type="datetime-local" step="1"
+          [(ngModel)]="consultant.cannula.removal_date_time">
+
+      </div>
+      <div class="field-group">
+        <label>Reasons For Removal</label>
+
+        <div class="removal-check-list">
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_routine">
+            Routine
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_no_longer_required">
+            No longer required / IV Rx discontinued
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_phlebitis">
+            Phlebitis
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_infiltration">
+            Infiltration
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_extravasation">
+            Extravasation
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_pulled_out">
+            Pulled out by patient
+          </label>
+
+          <label>
+            <input type="checkbox" [(ngModel)]="consultant.cannula.removal_others">
+            Others
+          </label>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="remarks-box">
+
+      <div class="field-group">
+        <label>Remarks / Clinical Notes</label>
+
+        <textarea rows="8" placeholder="Enter clinical remarks, complications, observations, patient condition..."
+          [(ngModel)]="consultant.cannula.remarks">
+      </textarea>
+      </div>
+
+      <div class="signature-section">
+
+        <h4>Nursing Staff Signature</h4>
+
+        <input type="text" placeholder="Enter Nurse Name" [(ngModel)]="consultant.cannula.nursing_staff_name">
+
+        <input type="file" accept="image/*"
+          (change)="onSignatureUpload($event, consultant.cannula, 'nursing_staff_signature')">
+
+        <img *ngIf="consultant.cannula.nursing_staff_signature_preview"
+          [src]="consultant.cannula.nursing_staff_signature_preview" class="sign-preview">
+
+        <button type="button" class="clear-sign-btn"
+          *ngIf="consultant.cannula.nursing_staff_signature_file || consultant.cannula.nursing_staff_signature || consultant.cannula.nursing_staff_signature_preview"
+          (click)="clearSignature(consultant.cannula, 'nursing_staff_signature')">
+          Clear
+        </button>
+
+      </div>
+
+      <div class="signature-section">
+
+        <h4>Doctor Signature</h4>
+
+        <input type="text" placeholder="Enter Doctor Name" [(ngModel)]="consultant.cannula.doctor_name">
+
+        <input type="file" accept="image/*"
+          (change)="onSignatureUpload($event, consultant.cannula, 'cannula_doctor_signature')">
+
+      <img
+  *ngIf="consultant.cannula.cannula_doctor_signature_preview"
+  [src]="consultant.cannula.cannula_doctor_signature_preview"
+  class="sign-preview">
+
+<button
+  type="button"
+  class="clear-sign-btn"
+  *ngIf="consultant.cannula.cannula_doctor_signature_file || consultant.cannula.cannula_doctor_signature || consultant.cannula.cannula_doctor_signature_preview"
+  (click)="clearSignature(consultant.cannula, 'cannula_doctor_signature')">
+          Clear
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SOS & STAT MEDICATION PDF SCREEN -->
+
+<div class="sos-model-page">
+
+  <div class="sos-header">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+
+    <h3>
+      SOS & STAT MEDICATION AND ANAESTHESIA PREMEDICATIONS
+    </h3>
+  </div>
+
+  <div class="sos-patient-line">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <table class="sos-model-table">
+    <thead>
+      <tr>
+        <th>Date and Time<br>(Prescribed)</th>
+        <th>Medicines</th>
+        <th>Dose</th>
+        <th>Route</th>
+        <th>Prescriber Sign</th>
+        <th>Time of<br>Administration</th>
+        <th colspan="2">Nursing staff sign</th>
+        <th class="no-print">Action</th>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Given</th>
+        <th>Check</th>
+        <th class="no-print"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of consultant.sosMedications; let i = index; trackBy: trackByIndex">
+        <td><input type="datetime-local" [(ngModel)]="row.prescribed_date_time"></td>
+        <td><textarea [(ngModel)]="row.medicine"></textarea></td>
+        <td><input [(ngModel)]="row.dose"></td>
+        <td><input [(ngModel)]="row.route"></td>
+ <td class="sos-sign-cell">
+  <label class="sos-upload-btn no-print">
+    Upload
+    <input type="file" accept="image/*"
+      (change)="onSignatureUpload($event, row, 'prescriber_sign')">
+  </label>
+
+  <div class="sos-sign-preview" *ngIf="row.prescriber_sign_preview">
+    <img [src]="row.prescriber_sign_preview">
+  </div>
+
+  <input type="text" placeholder="Doctor Name"
+    [(ngModel)]="row.prescriber_name">
+</td>
+
+<td>
+  <input type="time" [(ngModel)]="row.administration_time">
+</td>
+
+<td class="sos-sign-cell">
+  <label class="sos-upload-btn no-print">
+    Upload
+    <input type="file" accept="image/*"
+      (change)="onSignatureUpload($event, row, 'given_sign')">
+  </label>
+
+  <div class="sos-sign-preview" *ngIf="row.given_sign_preview">
+    <img [src]="row.given_sign_preview">
+  </div>
+
+  <input type="text" placeholder="Given Nurse"
+    [(ngModel)]="row.given_name">
+</td>
+
+<td class="sos-sign-cell">
+  <label class="sos-upload-btn no-print">
+    Upload
+    <input type="file" accept="image/*"
+      (change)="onSignatureUpload($event, row, 'check_sign')">
+  </label>
+
+  <div class="sos-sign-preview" *ngIf="row.check_sign_preview">
+    <img [src]="row.check_sign_preview">
+  </div>
+
+  <input type="text" placeholder="Checked Nurse"
+    [(ngModel)]="row.check_name">
+</td>
+
+        <td class="no-print">
+          <button type="button" class="sos-delete-btn" (click)="removeSosMedicationRow(i)">✕</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="sos-add-btn no-print" (click)="addSosMedicationRow()">
+    + Add Row
+  </button>
+
+</div>
+
+
+
+<!-- VERBAL ORDERS PDF SCREEN -->
+<div class="vo-page">
+
+  <div class="vo-logo">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+  </div>
+
+  <div class="vo-patient-line">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="vo-allergy-box">
+    <div class="vo-allergy-row">
+      <span>Allergies Adverse drug reactions:</span>
+
+      <label>Yes <input type="checkbox" [(ngModel)]="consultant.verbalOrders.allergy_yes"></label>
+      <label>No <input type="checkbox" [(ngModel)]="consultant.verbalOrders.allergy_no"></label>
+
+      <span>If yes Medicine (or other) Reaction Type/Date</span>
+    </div>
+
+    <textarea [(ngModel)]="consultant.verbalOrders.allergy_details"></textarea>
+
+    <div class="vo-sign-text">(Sign, Date and Time)</div>
+  </div>
+
+  <table class="vo-weight-table">
+    <tr>
+      <td rowspan="2" class="daily-weight">Daily<br>Weight</td>
+      <td>Date</td>
+      <td *ngFor="let row of consultant.dailyWeights">
+        <input [(ngModel)]="row.date">
+      </td>
+    </tr>
+    <tr>
+      <td>Wt.</td>
+      <td *ngFor="let row of consultant.dailyWeights">
+        <input [(ngModel)]="row.weight">
+      </td>
+    </tr>
+  </table>
+
+  <h3 class="vo-title">
+    Verbal Orders (To be Signed within 24 hrs. of order)
+  </h3>
+
+  <table class="vo-med-table">
+    <thead>
+      <tr>
+        <th rowspan="2">Date and Time<br>(Prescribed)</th>
+        <th rowspan="2">Medicines</th>
+        <th rowspan="2">Dose</th>
+        <th rowspan="2">Route</th>
+        <th rowspan="2">Prescriber Sign</th>
+        <th rowspan="2">Time of<br>Administration</th>
+        <th colspan="2">Nursing staff sign</th>
+        <th rowspan="2" class="no-print">Action</th>
+      </tr>
+      <tr>
+        <th>Given</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of consultant.verbalOrderRows; let i = index; trackBy: trackByIndex">
+        <td><input type="datetime-local" [(ngModel)]="row.prescribed_date_time"></td>
+        <td><textarea [(ngModel)]="row.medicine"></textarea></td>
+        <td><input [(ngModel)]="row.dose"></td>
+        <td><input [(ngModel)]="row.route"></td>
+        <td><input [(ngModel)]="row.prescriber_sign"></td>
+        <td><input type="time" [(ngModel)]="row.administration_time"></td>
+        <td><input [(ngModel)]="row.given"></td>
+        <td><input [(ngModel)]="row.check"></td>
+        <td class="no-print">
+          <button type="button" class="vo-delete-btn" (click)="removeVerbalOrderRow(i)">✕</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="vo-add-btn no-print" (click)="addVerbalOrderRow()">
+    + Add Row
+  </button>
+
+</div>

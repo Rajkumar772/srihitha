@@ -1,0 +1,266 @@
+<div class="anh-med-page">
+
+  <div class="anh-med-header">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+    <h2>MEDICATION CHART</h2>
+  </div>
+
+  <div class="anh-med-patient-line">
+    <div class="anh-patient-field name-field">
+      <span>Patient Name</span>
+      <input [(ngModel)]="header.patient_name">
+    </div>
+
+    <div class="anh-patient-field">
+      <span>UMR No</span>
+      <input [(ngModel)]="header.umr_no">
+    </div>
+
+    <div class="anh-patient-field small-field">
+      <span>Sex</span>
+      <input [(ngModel)]="header.sex">
+    </div>
+
+    <div class="anh-patient-field small-field">
+      <span>Age</span>
+      <input [(ngModel)]="header.age">
+    </div>
+
+    <div class="anh-patient-field">
+      <span>IP No</span>
+      <input [(ngModel)]="header.ip_no">
+    </div>
+  </div>
+
+  <p class="anh-med-note">
+    Any changes in the Medication (i.c., Drug, Dose, Route, Frequency)<br>
+    should be struck with a line and STOP, Date & Time with Sign. to be documented.
+  </p>
+
+  <div class="anh-med-table-wrap">
+
+    <table class="anh-med-table">
+    <colgroup>
+  <col class="col-date">
+  <col class="col-time">
+  <col class="col-drug">
+  <col class="col-dose">
+  <col class="col-route">
+  <col class="col-site">
+  <col class="col-freq">
+  <col class="col-sign">
+  <col class="col-action">
+</colgroup>
+
+      <thead>
+        <tr>
+          <th colspan="2">Start</th>
+          <th rowspan="2">
+            Name of the Drug<br>
+            <small>(Drug Name to be written only in Capitals)</small>
+          </th>
+          <th rowspan="2">Dose</th>
+          <th rowspan="2">Route</th>
+          <th rowspan="2">Site</th>
+          <th rowspan="2">Freq</th>
+          <th rowspan="2">Sign</th>
+          <th rowspan="2" class="no-print">Action</th>
+        </tr>
+
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+
+      <tbody>
+<tr *ngFor="let row of consultant.medicationRows; let i = index; trackBy: trackByIndex">          <td>
+            <input class="date-input" type="date" [(ngModel)]="row.start_date">
+          </td>
+
+          <td>
+            <input class="time-input" type="time" [(ngModel)]="row.start_time">
+          </td>
+
+          <td>
+            <textarea [(ngModel)]="row.drug_name"></textarea>
+          </td>
+
+          <td><input [(ngModel)]="row.dose"></td>
+          <td><input [(ngModel)]="row.route"></td>
+          <td><input [(ngModel)]="row.site"></td>
+          <td><input [(ngModel)]="row.frequency"></td>
+          <td><input [(ngModel)]="row.sign"></td>
+
+          <td class="no-print">
+            <button type="button" class="anh-del-btn" (click)="removeMedicationRow(i)">×</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="anh-intake-table">
+      <thead>
+        <tr>
+          <th colspan="4">
+            <div>(Time Given & Intake)</div>
+<div class="intake-date">
+  Date:
+  <input
+    type="date"
+    [(ngModel)]="consultant.medicationChart.date"
+    [ngModelOptions]="{ standalone: true }">
+</div>          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of consultant.medicationRows">
+          <td><input [(ngModel)]="row.intake_1"></td>
+          <td><input [(ngModel)]="row.intake_2"></td>
+          <td><input [(ngModel)]="row.intake_3"></td>
+          <td><input [(ngModel)]="row.intake_4"></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="anh-med-actions no-print">
+    <button type="button" class="anh-add-btn" (click)="addMedicationRow()">
+      + Add Medication Row
+    </button>
+  </div>
+
+  <div class="anh-med-footer">
+    Do not use abbreviations - U, IU, QD, QOD, MS, MSO4, MgSO4, Trailing Zero, Lack of Leading zero. (eg 1.1)<br>
+    *Site to be written in case of IM Injection & Transdermal Patches<br>
+    *Missed dose is also a medication error, Inform the physician & Raise an incident report.
+  </div>
+
+</div>
+
+
+<!-- MEDICATION CHART PAGE 2 -->
+<div class="anh-med-page">
+
+  <div class="anh-med-header">
+    <img src="assets/back/logo2.png" alt="Hospital Logo">
+    <h2>MEDICATION CHART</h2>
+  </div>
+
+  <div class="anh-med-patient-line">
+    <div class="anh-patient-field name-field">
+      <span>Patient Name</span>
+      <input [(ngModel)]="header.patient_name">
+    </div>
+
+    <div class="anh-patient-field">
+      <span>UMR No</span>
+      <input [(ngModel)]="header.umr_no">
+    </div>
+
+    <div class="anh-patient-field small-field">
+      <span>Sex</span>
+      <input [(ngModel)]="header.sex">
+    </div>
+
+    <div class="anh-patient-field small-field">
+      <span>Age</span>
+      <input [(ngModel)]="header.age">
+    </div>
+
+    <div class="anh-patient-field">
+      <span>IP No</span>
+      <input [(ngModel)]="header.ip_no">
+    </div>
+  </div>
+
+  <table class="allergy-table">
+    <thead>
+      <tr>
+        <th>Drug Allergy : (If any)</th>
+        <th>Typ:</th>
+        <th>Onset Date</th>
+        <th>Primary Reactions</th>
+        <th>Other Reactions</th>
+        <th>Severity</th>
+        <th>Comments</th>
+        <th>Confirm</th>
+        <th class="no-print">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <tr *ngFor="let row of consultant.medicationAllergies; let i = index; trackBy: trackByIndex">
+        <td><input [(ngModel)]="row.drug_allergy"></td>
+        <td><input [(ngModel)]="row.type"></td>
+        <td><input type="date" [(ngModel)]="row.onset_date"></td>
+        <td><input [(ngModel)]="row.primary_reactions"></td>
+        <td><input [(ngModel)]="row.other_reactions"></td>
+        <td><input [(ngModel)]="row.severity"></td>
+        <td><input [(ngModel)]="row.comments"></td>
+        <td><input [(ngModel)]="row.confirm"></td>
+        <td class="no-print">
+          <button type="button" class="anh-del-btn" (click)="removeAllergyRow(i)">×</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="anh-add-btn no-print" (click)="addAllergyRow()">
+    + Add Allergy Row
+  </button>
+
+  <div class="nurse-fill-title">
+    To Be Filled by The Nurse
+  </div>
+
+  <div class="time-intake-title">
+    (Time Given & Intake)
+  </div>
+
+<div class="date-grid-row">
+  <div *ngFor="let d of consultant.intakeDates; let i = index">
+    Date:
+    <input
+      type="date"
+      [(ngModel)]="consultant.intakeDates[i]"
+      [ngModelOptions]="{ standalone: true }">
+  </div>
+</div>
+
+<table class="nurse-intake-grid">
+  <tbody>
+<tr *ngFor="let row of consultant.nurseIntakeRows; let r = index; trackBy: trackByNurseRow">
+        <ng-container *ngFor="let day of [0,1,2,3,4]">
+        <td><input placeholder="8AM" [(ngModel)]="row.values[day * 4 + 0]" [ngModelOptions]="{standalone:true}"></td>
+        <td><input placeholder="12PM" [(ngModel)]="row.values[day * 4 + 1]" [ngModelOptions]="{standalone:true}"></td>
+        <td><input placeholder="4PM" [(ngModel)]="row.values[day * 4 + 2]" [ngModelOptions]="{standalone:true}"></td>
+        <td><input placeholder="8PM" [(ngModel)]="row.values[day * 4 + 3]" [ngModelOptions]="{standalone:true}"></td>
+      </ng-container>
+
+      <td class="no-print intake-action-cell">
+        <button type="button" class="anh-del-btn" (click)="removeNurseIntakeRow(r)">×</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<button
+  type="button"
+  class="add-row-btn"
+  (click)="addNurseIntakeRow()">
+
+  + Add Row
+
+</button>
+
+<div class="medication-notes">
+  <p>Do not use abbreviations - U, IU, QD, QOD, MS, MSO4, MgSO4, Trailing Zero, Lack of Leading zero. (eg 1.1)</p>
+  <p>*Site to be written in case of IM Injection & Transdermal Patches</p>
+  <p>*Missed dose is also a medication error, Inform the physician & Raise an incident report.</p>
+</div>
+</div>
+

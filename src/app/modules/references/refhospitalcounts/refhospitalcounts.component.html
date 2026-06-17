@@ -1,0 +1,453 @@
+<!-- <p>refhospitalcounts works!</p> -->
+<div class="card1">
+
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+            Referrals Hospital Wise Count
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div><br>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','doctors-list')">Excel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="total_count">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Hospital Referral Counts</th>
+                                <td mat-cell *matCellDef="let row" class="centre" (click)="refhospitalcounts(row)"
+                                    class="clickable">
+                                    <span class="para" style="color:blue;text-align:center">{{row.total_count ||
+                                        'NA'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="referaltype">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Choose Referal Type</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.referaltype || 'NA'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="categorytype">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Select Reference</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.categorytype || 'NA'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="hospital_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Hospital Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.hospital_name || 'NA'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="hospital_loc">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Hospital Location</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.hospital_loc || 'NA'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Full Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name}}</span>
+                                </td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="reffered_by">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Doctor Name</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.reffered_by}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="i_ts">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date & Time</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.i_ts}}
+                                </td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <i (click)="viewDetails(row,viewTemplate)" style="color: black;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i>
+                                </td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'total_count' ,value:item.total_count}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.total_count}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'referaltype' ,value:item.referaltype}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.referaltype}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'categorytype' ,value:item.categorytype}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.categorytype}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'hospital_name' ,value:item.hospital_name}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.hospital_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'hospital_loc' ,value:item.hospital_loc}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.hospital_loc}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name' ,value:item.name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select13">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'reffered_by' ,value:item.reffered_by}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.reffered_by}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select14">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i_ts' ,value:item.i_ts}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.i_ts}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>
+
+
+
+
+
+
+<!-- ===== TABLE 1 SEARCH ===== -->
+<div class="controls">
+    <mat-form-field appearance="fill">
+        <mat-label>Search Table 1</mat-label>
+        <input matInput [(ngModel)]="searchKey1" (keyup)="applyFilter1()">
+        <button mat-icon-button matSuffix *ngIf="searchKey1" (click)="clearFilter1()">✕</button>
+    </mat-form-field>
+</div>
+
+<!-- ===== TABLE 1 ===== -->
+<table mat-table [dataSource]="dataSource1" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Id
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="centre">
+            <span class="para">{{ i + 1 }}</span>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="referaltype">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Choose Referal Type
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            <span class="para">{{ row.referaltype || 'NA' }}</span>
+        </td>
+    </ng-container>
+
+    <!-- CATEGORY TYPE -->
+    <ng-container matColumnDef="categorytype">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Select Reference
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            <span class="para">{{ row.categorytype || 'NA' }}</span>
+        </td>
+    </ng-container>
+
+    <!-- HOSPITAL NAME -->
+    <ng-container matColumnDef="hospital_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Hospital Name
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            <span class="para">{{ row.hospital_name || 'NA' }}</span>
+        </td>
+    </ng-container>
+
+    <!-- HOSPITAL LOCATION -->
+    <ng-container matColumnDef="hospital_loc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Hospital Location
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            <span class="para">{{ row.hospital_loc || 'NA' }}</span>
+        </td>
+    </ng-container>
+
+    <!-- NAME -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Full Name
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.name }}
+        </td>
+    </ng-container>
+
+    <!-- AGE -->
+    <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Age
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.age }}
+        </td>
+    </ng-container>
+
+    <!-- GENDER -->
+    <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Gender
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.gender }}
+        </td>
+    </ng-container>
+
+    <!-- PHONE -->
+    <ng-container matColumnDef="phone_number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Number
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.phone_number }}
+        </td>
+    </ng-container>
+
+    <!-- MARITAL STATUS -->
+    <ng-container matColumnDef="marital_status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Marital Status
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.marital_status }}
+        </td>
+    </ng-container>
+
+    <!-- ADDRESS -->
+    <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Address
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.address }}
+        </td>
+    </ng-container>
+
+    <!-- REFERRED BY -->
+    <ng-container matColumnDef="reffered_by">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Doctor Name
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.reffered_by }}
+        </td>
+    </ng-container>
+
+    <!-- DATE -->
+    <ng-container matColumnDef="i_ts">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+            Date & Time
+        </th>
+        <td mat-cell *matCellDef="let row" class="centre">
+            {{ row.i_ts }}
+        </td>
+    </ng-container>
+
+    <!-- ROWS -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<mat-paginator #paginator1></mat-paginator>

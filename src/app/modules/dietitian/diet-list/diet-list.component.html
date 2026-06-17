@@ -1,0 +1,264 @@
+<div class="diet-wrap">
+
+  <!-- Top bar -->
+  <div class="diet-topbar">
+    <div class="left">
+      <div class="icon">🥗</div>
+      <div>
+        <div class="title">Diet Plan List</div>
+        <div class="sub">Track diet plans by patient, date & diet type</div>
+      </div>
+    </div>
+
+    <div class="right">
+      <button class="btn btn-light" type="button" (click)="fetchList()">⟳ Refresh</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="diet-card">
+    <div class="filters">
+      <div class="f">
+        <label>Search</label>
+        <input type="text" [(ngModel)]="search" (input)="applyFilters()" placeholder="Patient ID / Name / Ward..." />
+      </div>
+
+      <div class="f">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="filterDate" (change)="applyFilters()" />
+      </div>
+
+      <div class="f">
+        <label>Diet Type</label>
+        <select [(ngModel)]="filterDietType" (change)="applyFilters()">
+          <option value="">All</option>
+          <option value="Diabetic">Diabetic</option>
+          <option value="Renal">Renal</option>
+          <option value="Low Salt">Low Salt</option>
+        </select>
+      </div>
+
+      <div class="f actions">
+        <button class="btn btn-primary" type="button" (click)="applyFilters()">Apply</button>
+        <button class="btn btn-ghost" type="button" (click)="clearFilters()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="diet-card table-card">
+
+    <!-- Loading -->
+    <div class="state" *ngIf="loading">
+      <div class="spinner"></div>
+      <div>Loading diet plans...</div>
+    </div>
+
+    <!-- Empty -->
+    <div class="state" *ngIf="!loading && filtered.length === 0">
+      <div class="empty-emoji">📭</div>
+      <div class="empty-title">No diet plans found</div>
+      <div class="empty-sub">Try changing filters or add a new diet plan.</div>
+    </div>
+
+    <!-- Data -->
+    <div class="table-wrap" *ngIf="!loading && filtered.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Patient</th>
+            <th>Ward/Room</th>
+            <th>Date</th>
+            <th>Diet Type</th>
+            <th>Calories</th>
+            <th>Meals</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let r of filtered; let i = index">
+            <td class="muted">{{ i + 1 }}</td>
+
+            <td>
+              <div class="pname">{{ r.patientname }}</div>
+              <div class="pid">ID: {{ r.patientid }}</div>
+            </td>
+
+            <td>{{ r.wardroom }}</td>
+            <td>{{ r.dietdate | date:'dd-MMM-yyyy' }}</td>
+            <td><span class="badge">{{ r.diettype }}</span></td>
+            <td>{{ r.calories }}</td>
+
+            <td class="meals">
+              <span title="Breakfast">🍳</span>
+              <span title="Lunch">🍛</span>
+              <span title="Dinner">🍲</span>
+              <span title="Snacks">🍎</span>
+            </td>
+
+            <td class="acts">
+              <div class="act-wrap">
+                <button class="btn-sm btn-view" type="button" (click)="openView(r, $event)">
+                  View
+                </button>
+
+                <button class="btn-sm btn-del" type="button" (click)="editRow(r, $event)">
+                  Edit
+                </button>
+          <button class="btn-sm btn-print" type="button" (click)="printRow(r, $event)">
+  Print
+</button>
+
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ✅ Modal OUTSIDE diet-wrap -->
+<div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()"></div>
+
+<div class="modal" *ngIf="isModalOpen" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+
+  <div class="modal-head">
+    <div>
+      <div class="m-title">
+        {{ modalMode === 'edit' ? 'Edit Diet Plan' : 'Diet Plan Details' }}
+      </div>
+      <div class="m-sub">Patient: {{ selected?.patientname }} ({{ selected?.patientid }})</div>
+    </div>
+
+    <button class="x" type="button" (click)="closeModal()">×</button>
+  </div>
+
+  <!-- ✅ VIEW MODE -->
+  <!-- <div class="modal-body" *ngIf="modalMode === 'view'">
+    <div class="grid">
+      <div class="box"><b>Ward/Room</b><span>{{ selected?.wardroom }}</span></div>
+      <div class="box"><b>Date</b><span>{{ selected?.dietdate | date:'dd-MMM-yyyy' }}</span></div>
+      <div class="box"><b>Diet Type</b><span>{{ selected?.diettype }}</span></div>
+      <div class="box"><b>Calories</b><span>{{ selected?.calories }}</span></div>
+
+      <div class="box wide"><b>Allergies</b><span>{{ selected?.allergies }}</span></div>
+      <div class="box wide"><b>Notes</b><span>{{ selected?.notes }}</span></div>
+
+      <div class="box wide"><b>Breakfast</b><span>{{ selected?.breakfast }}</span></div>
+      <div class="box wide"><b>Lunch</b><span>{{ selected?.lunch }}</span></div>
+      <div class="box wide"><b>Dinner</b><span>{{ selected?.dinner }}</span></div>
+      <div class="box wide"><b>Snacks</b><span>{{ selected?.snacks }}</span></div>
+    </div>
+  </div> -->
+
+
+  <!-- ===== VIEW MODE ===== -->
+<div class="modal-body" *ngIf="modalMode === 'view'">
+
+  <!-- Print button (place where you want: header or top of body) -->
+  <div class="print-actions no-print">
+    <button type="button" class="btn-print" (click)="printDietPlan()">
+      🖨 Print
+    </button>
+  </div>
+
+  <div class="grid print-area" id="dietPrintArea">
+    <div class="box"><b>Ward/Room</b><span>{{ selected?.wardroom || '-' }}</span></div>
+    <div class="box"><b>Date</b><span>{{ selected?.dietdate | date:'dd-MMM-yyyy' }}</span></div>
+    <div class="box"><b>Diet Type</b><span>{{ selected?.diettype || '-' }}</span></div>
+    <div class="box"><b>Calories</b><span>{{ selected?.calories || '-' }}</span></div>
+
+    <div class="box wide"><b>Allergies</b><span>{{ selected?.allergies || '-' }}</span></div>
+    <div class="box wide"><b>Notes</b><span>{{ selected?.notes || '-' }}</span></div>
+
+    <div class="box wide"><b>Breakfast</b><span>{{ selected?.breakfast || '-' }}</span></div>
+    <div class="box wide"><b>Lunch</b><span>{{ selected?.lunch || '-' }}</span></div>
+    <div class="box wide"><b>Dinner</b><span>{{ selected?.dinner || '-' }}</span></div>
+    <div class="box wide"><b>Snacks</b><span>{{ selected?.snacks || '-' }}</span></div>
+  </div>
+</div>
+
+  <div class="modal-foot" *ngIf="modalMode === 'view'">
+    <button class="btn btn-primary" type="button" (click)="startEdit()">Edit</button>
+    <button class="btn btn-ghost" type="button" (click)="closeModal()">Close</button>
+  </div>
+
+  <!-- ✅ EDIT MODE -->
+  <form class="modal-body" *ngIf="modalMode === 'edit'" [formGroup]="editForm" (ngSubmit)="saveEdit()">
+
+    <div class="grid">
+      <div class="field">
+        <label>Ward/Room</label>
+        <input type="text" formControlName="wardroom">
+      </div>
+
+      <div class="field">
+        <label>Date</label>
+        <input type="date" formControlName="dietdate">
+      </div>
+
+      <div class="field">
+        <label>Diet Type</label>
+        <select formControlName="diettype">
+          <option value="Diabetic">Diabetic</option>
+          <option value="Renal">Renal</option>
+          <option value="Low Salt">Low Salt</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Calories</label>
+        <input type="number" formControlName="calories">
+      </div>
+
+      <div class="field wide">
+        <label>Allergies</label>
+        <input type="text" formControlName="allergies">
+      </div>
+
+      <div class="field wide">
+        <label>Notes</label>
+        <input type="text" formControlName="notes">
+      </div>
+
+      <div class="field wide">
+        <label>Breakfast</label>
+        <input type="text" formControlName="breakfast">
+      </div>
+
+      <div class="field wide">
+        <label>Lunch</label>
+        <input type="text" formControlName="lunch">
+      </div>
+
+      <div class="field wide">
+        <label>Dinner</label>
+        <input type="text" formControlName="dinner">
+      </div>
+
+      <div class="field wide">
+        <label>Snacks</label>
+        <input type="text" formControlName="snacks">
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn btn-primary" type="submit">Update</button>
+      <button class="btn btn-ghost" type="button" (click)="cancelEdit()">Cancel</button>
+    </div>
+
+    
+  </form>
+
+
+  
+</div>
+
+

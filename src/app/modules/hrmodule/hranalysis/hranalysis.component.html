@@ -1,0 +1,530 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Department Wise Analysis
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<!-- ///new code starts -->
+<!-- <div class="row da-row-gap">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let dept of departmentwisecounts; let i = index">
+           <div class="card da-stat-card border-0 text-white"
+     [style.background]="getCardGradient(i)">
+            <div class="card-body" (click)="ondeparmentselect(dept)">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <p class="mb-2 fw-semibold" style="color:black">
+                            {{ dept.department }}
+                        </p>
+                        <h4 class="mb-0" style="color:black">
+                            {{ dept.employee_count }}
+                        </h4>
+                    </div>
+                    <div class="ms-auto">
+                        <i class="bx bx-group fs-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12" *ngFor="let dept of departmentwisecounts; let i = index">
+
+        <div class="card border-0">
+            <div class="da-stat-card" [ngStyle]="{'background': getCardGradient(i), 'color': 'white'}">
+
+                <div class="card-body" (click)="ondeparmentselect(dept)">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <p class="mb-2 fw-semibold">{{ dept.department }}</p>
+                            <h4 class="mb-0">{{ dept.employee_count }}</h4>
+                        </div>
+                        <div class="ms-auto">
+                            <i class="bx bx-group fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div>
+    <h2 style="text-align:center">
+  {{ selectedDepartmentTitle }} 
+</h2>
+</div> -->
+<div class="card" *ngIf="masterdata && masterdata.length > 0">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; 
+                   text-align: center; background: blue; color: white;">
+          {{ selectedDepartmentTitle }}
+            <span style="float: right;">
+                <a href="javaScript:;" 
+                   style="color: black; background-color:white;
+                          text-decoration: none; font-size: 25px;
+                          border-radius: 20px;">
+                </a>
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <!-- <button mat-raised-button class="btn btn-secondary m-1"
+                  (click)="exporter.exportTable('xlsx', {fileName:'Employee Registration Report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button> -->
+                                <div class="btns">
+                                    <button mat-raised-button class="btn btn-secondary m-1"
+                                        (click)="exportTable('ExampleMaterialTable','Employee Registration Report')">Excel</button>
+                                    <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- serch header end -->
+                        <div class="example-container">
+                            <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                                #exporter="matTableExporter" id="ExampleMaterialTable">
+                                <ng-container matColumnDef="i">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                        style="width:30px"> S.No
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="department">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Department</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.department || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="designation">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Designation</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.designation || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="date_of_joining">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Date of Joining</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.date_of_joining | date:'dd-MM-yyyy'}}</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="employeementthrough">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Employeement Through</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.employeementthrough || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="empidmanual">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Employee Code </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.empidmanual || '__'}}</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="title">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Title</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.title || '__'}}</span>
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="full_name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Full Name</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.full_name.toUpperCase() || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                 <ng-container matColumnDef="gender">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Gender</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.gender || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Email</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.email || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="phone">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Mobile Number</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.phone || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="address_1">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Address </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.address_1.toUpperCase() || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="emergency_name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Primary Contact Name</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.emergency_name.toUpperCase() || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="emergency_phone">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Primary Mobile Number </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.emergency_phone || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="secondaryemergency_name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Secondary Contact Name </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.emergency_phone || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="secondaryemergency_phone">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Secondary Mobile Number </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.secondaryemergency_phone || '__'}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="qualification">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Qualification </th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.qualification || '__'}}</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="referaldetails">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                        Referal Details</th>
+                                    <td mat-cell *matCellDef="let row" class="centre">
+                                        <span class="para">{{row.referaldetails || '__' }}</span>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Select Start -->
+                                <ng-container matColumnDef="selectSlno" sticky:true>
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'i' ,value:item.i}"
+                                                    *ngFor="let item of clonedata; let int = index">
+                                                    {{item.i}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="select11">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'department',value:item.department}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'department'; let int = index">
+                                                    {{item.department}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select12">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'designation',value:item.designation}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'designation'; let int = index">
+                                                    {{item.designation}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select13">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'date_of_joining',value:item.date_of_joining}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'date_of_joining'; let int = index">
+                                                    {{item.date_of_joining}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="select16">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'employeementthrough',value:item.roomtype}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'employeementthrough'; let int = index">
+                                                    {{item.employeementthrough}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select17">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'empidmanual',value:item.empidmanual}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'empidmanual'; let int = index">
+                                                    {{item.empidmanual}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select18">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'',value:item.title}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'title'; let int = index">
+                                                    {{item.title}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select2">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'full_name',value:item.full_name}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'full_name'; let int = index">
+                                                    {{item.full_name}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                 <ng-container matColumnDef="select24">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'gender',value:item.gender}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'gender'; let int = index">
+                                                    {{item.gender}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select3">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'email',value:item.email}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'email'; let int = index">
+                                                    {{item.email}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select4">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'phone',value:item.phone}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'phone'; let int = index">
+                                                    {{item.phone}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select5">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'address_1',value:item.address_1}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'address_1'; let int = index">
+                                                    {{item.address_1}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select6">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'emergency_name',value:item.emergency_name}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'emergency_name'; let int = index">
+                                                    {{item.emergency_name}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select7">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'emergency_phone',value:item.emergency_phone}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'emergency_phone'; let int = index">
+                                                    {{item.emergency_phone}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select8">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option
+                                                    [value]="{key:'secondaryemergency_name',value:item.secondaryemergency_name}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'secondaryemergency_name'; let int = index">
+                                                    {{item.secondaryemergency_name}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select9">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option
+                                                    [value]="{key:'secondaryemergency_phone',value:item.secondaryemergency_phone}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'secondaryemergency_phone'; let int = index">
+                                                    {{item.secondaryemergency_phone}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+                                <ng-container matColumnDef="select10">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'qualification',value:item.qualification}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'qualification'; let int = index">
+                                                    {{item.qualification}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+
+
+
+                                <ng-container matColumnDef="select19">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="cell">
+                                            <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                [clearable]="true">
+                                                <ng-option [value]="{key:'referaldetails',value:item.referaldetails}"
+                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'referaldetails'; let int = index">
+                                                    {{item.referaldetails}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </th>
+                                </ng-container>
+
+
+
+
+
+                                <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                                <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                    class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                    <!-- No data row -->
+
+                                    <!-- Footer end -->
+                            </table>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,1256 @@
+/* ================= FALL + PAIN WRAPPER ================= */
+
+.fall-pain-wrapper {
+  width: 100%;
+  background: #eef7ff;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #001f3f;
+}
+
+/* ================= FALL RISK PAGE ================= */
+
+.fall-risk-page {
+  width: 100%;
+  max-width: 1420px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 26px 34px;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.fall-header {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.fall-logo {
+  width: 150px;
+  height: auto;
+}
+
+.fall-header h2 {
+  text-align: center;
+  margin: 0;
+  color: #008b91;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.fall-patient-line {
+  border: 1px solid #222;
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: auto 1.4fr auto 1.2fr auto 90px auto 90px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  margin-bottom: 26px;
+  font-size: 25px;
+  color: #111;
+  white-space: nowrap;
+}
+
+.fall-patient-line span {
+  white-space: nowrap;
+}
+
+.fall-patient-line input {
+  border: none;
+  border-bottom: 1px solid #111;
+  outline: none;
+  height: 30px;
+  font-size: 18px;
+  background: transparent;
+  min-width: 0;
+}
+
+/* ================= FALL RISK TABLE ================= */
+
+
+.fall-risk-table {
+  width: 1600px !important;
+  min-width: 1600px !important;
+}
+
+
+.param-col {
+  width: 125px;
+}
+
+.score-col {
+  width: 36px;
+}
+
+.condition-col {
+  width: 280px;
+}
+
+.box-col {
+  width: 58px !important;
+}
+
+
+.fall-risk-table th,
+.fall-risk-table td {
+  border: 1px solid #222;
+  padding: 3px 5px;
+  font-size: 12px;
+  line-height: 1.15;
+  vertical-align: top;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+.fall-risk-table th {
+  font-weight: 500;
+  text-align: left;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.vertical-score {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 2px !important;
+}
+
+.param-cell {
+  font-size: 12px;
+  color: #001f3f;
+}
+
+.score-cell {
+  text-align: center;
+  font-size: 12px;
+  vertical-align: middle !important;
+}
+
+.condition-cell {
+  font-size: 18px !important;
+  color: #001f3f;
+  white-space: pre-line;
+  vertical-align: middle !important;
+}
+
+.group-note {
+  font-size: 13px !important;
+  color: #001f3f;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bottom-label {
+  font-size: 18px !important;
+  color: #001f3f;
+}
+
+.fall-note {
+  font-size: 12px !important;
+  color: #001f3f;
+}
+
+.fall-risk-table input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 12px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= FALL DATE + TIME FIX ================= */
+
+.date-time-head {
+  padding: 0 !important;
+  height: 72px !important;
+  overflow: visible !important;
+}
+
+.date-picker-clean {
+  width: 100% !important;
+  height: 30px !important;
+  font-size: 11px !important;
+  text-align: center;
+  border: none !important;
+  border-bottom: 1px solid #222 !important;
+  padding: 0 2px !important;
+  background: #fff;
+}
+
+.time-slot-row {
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  height: 40px;
+}
+
+
+.time-slot-row input {
+  width: 100% !important;
+  height: 34px !important;
+  min-width: 0 !important;
+  border: none !important;
+  border-right: 1px solid #222 !important;
+  padding: 0 !important;
+  font-size: 10px !important;
+  text-align: center;
+  background: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.time-slot-row input:last-child {
+  border-right: none !important;
+}
+
+.time-slot-row input::-webkit-calendar-picker-indicator,
+.date-picker-clean::-webkit-calendar-picker-indicator {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.condition-head {
+  text-align: left !important;
+  padding-left: 10px !important;
+}
+
+.time_wdt {
+  float: right;
+  padding-right: 65px;
+}
+
+/* ================= FALL ENTRY CELLS ================= */
+
+.entry-cell {
+  padding: 0 !important;
+  position: relative;
+  vertical-align: middle !important;
+}
+
+.tick-btn {
+  width: 100%;
+  height: 42px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  color: #006400;
+}
+
+.tick-btn:hover {
+  background: #e8f7ff;
+}
+
+.tick-btn.selected {
+  background: #d9f7d9;
+}
+
+.total-score-input {
+  width: 100%;
+  height: 38px;
+  border: none;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  background: #fff;
+}
+
+.score-entry-cell {
+  padding: 0 !important;
+}
+
+/* ================= SIGNATURE ================= */
+
+.signature-row td {
+  height: 74px;
+}
+
+.sign-upload-cell {
+  padding: 10px !important;
+  vertical-align: top;
+}
+
+.sign-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.sign-upload-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sign-name-input {
+  width: 240px !important;
+  height: 34px !important;
+  border: 1px solid #999 !important;
+  padding: 4px 10px !important;
+  font-size: 14px !important;
+  background: #fff !important;
+}
+
+.sign-file-input {
+  width: 240px;
+  font-size: 12px;
+}
+
+.signature-preview {
+  width: 120px;
+  height: 60px;
+  object-fit: contain;
+  border: 1px solid #999;
+  background: #fff;
+  padding: 4px;
+}
+
+/* ================= PAIN PAGE ================= */
+
+.pain-page {
+  width: 100%;
+  max-width: 1420px;
+  margin: 0 auto 30px;
+  background: #fff;
+  padding: 26px 34px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111;
+  overflow-x: auto;
+}
+
+.pain-main-header {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.pain-logo {
+  width: 150px;
+  height: auto;
+}
+
+.pain-main-header h2 {
+  text-align: center;
+  color: #008b91;
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.pain-patient-line {
+  border: 1px solid #222;
+  height: 68px;
+  display: grid;
+  grid-template-columns: auto 1.4fr auto 1.2fr auto 90px auto 90px auto 1.2fr;
+  gap: 8px;
+  align-items: center;
+  padding: 0 24px;
+  margin-bottom: 28px;
+  font-size: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pain-patient-line span {
+  white-space: nowrap;
+}
+
+.pain-patient-line input {
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  height: 30px;
+  font-size: 18px;
+  background: transparent;
+}
+
+/* ================= PAIN ENTRY TABLE ================= */
+
+.pain-entry-table {
+  width: 100%;
+  min-width: 1150px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.pain-entry-table th,
+.pain-entry-table td {
+  border: 1px solid #222;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pain-entry-table th {
+  height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #fff;
+}
+
+.pain-entry-table td {
+  height: 54px;
+}
+
+.pain-entry-table input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 13px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.pain-add-row-btn {
+  height: 36px;
+  margin: 10px 0 18px;
+  padding: 0 16px;
+  border: 1px solid #008b91;
+  background: #008b91;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pain-add-row-btn:hover {
+  background: #006f74;
+}
+
+.pain-action-cell {
+  text-align: center;
+}
+
+.pain-delete-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #dc2626;
+  background: #fff;
+  color: #dc2626;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pain-delete-btn:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* ================= PAIN TOOL LAYOUT ================= */
+
+.pain-bottom-layout {
+  display: block !important;
+  width: 100%;
+  min-width: 1150px;
+  border: 1px solid #222;
+  border-top: none;
+  margin-top: 8px !important;
+}
+
+.pain-tool-box {
+  width: 100%;
+  border-right: none !important;
+  border-bottom: 1px solid #222;
+  padding: 26px 18px 0;
+  box-sizing: border-box;
+}
+
+.pain-tool-box h3,
+.faces-title {
+  text-align: center;
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0 0 22px;
+  color: #0f172a;
+}
+
+.faces-title {
+  margin-top: 30px !important;
+}
+
+.pain-line-scale {
+  width: 82%;
+  margin: 0 auto 24px;
+}
+
+.dynamic-scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 25px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.dynamic-scale::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #22c55e, #facc15, #ef4444);
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.pain-score-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  color: #475569;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.pain-score-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.pain-score-btn.active {
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff;
+  transform: scale(1.12);
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.35);
+}
+
+.tick-line {
+  display: none;
+}
+
+.scale-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+}
+
+.faces-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.face-select-btn {
+  border: none;
+  border-radius: 18px;
+  background: #f8fafc;
+  padding: 16px 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  min-height: 130px;
+  border: 2px solid transparent;
+}
+
+.face-select-btn:hover {
+  transform: translateY(-5px);
+  background: #f1f5f9;
+}
+
+.face-select-btn.active {
+  background: linear-gradient(180deg, #ecfeff, #cffafe);
+  border-color: #06b6d4;
+  box-shadow: 0 10px 20px rgba(6, 182, 212, 0.15);
+}
+
+.draw-face {
+  width: 58px;
+  height: 58px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  font-size: 34px;
+  line-height: 54px;
+}
+
+.face-select-btn div {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.face-select-btn strong {
+  display: inline-block;
+  margin-top: 8px;
+  background: #0f172a;
+  color: white;
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 13px;
+}
+
+.pain-note {
+  margin: 24px -18px 0;
+  background: #fff7ed;
+  border-top: 1px solid #fed7aa;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #9a3412;
+}
+
+/* ================= BEHAVIOURAL TABLE ================= */
+
+.behaviour-scale-box {
+  width: 100%;
+  padding: 20px 18px 14px;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.behaviour-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.behaviour-table th,
+.behaviour-table td {
+  border: 1px solid #222;
+  padding: 9px 8px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #000;
+  background: #fff;
+  vertical-align: middle;
+}
+
+.behaviour-table th {
+  font-weight: 700;
+  text-align: center;
+  background: #f8fbfc;
+}
+
+.behaviour-table td:nth-child(1) {
+  width: 150px;
+  font-weight: 700;
+}
+
+.score-cell {
+  width: 70px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.compliance-cell {
+  width: 130px;
+  text-align: center;
+  font-size: 13px !important;
+  font-weight: 700;
+  background: #eefafa !important;
+}
+
+.vent-option {
+  width: 180px;
+  cursor: pointer;
+  font-size: 13px !important;
+  transition: 0.2s ease;
+}
+
+.vent-option:hover {
+  background: #e8f7ff !important;
+}
+
+.vent-option.active {
+  background: #008b91 !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.vent-option strong {
+  float: right;
+  background: #111;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 50%;
+}
+
+.vent-option.active strong {
+  background: #fff;
+  color: #008b91;
+}
+
+.selected-row td:not(.compliance-cell):not(.vent-option) {
+  background: #dff7f8 !important;
+  color: #004f54 !important;
+  font-weight: 700;
+}
+
+.behaviour-total-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.behaviour-total-box label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.behaviour-total-box input {
+  width: 90px;
+  height: 34px;
+  border: 1px solid #222;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  background: #eafffb;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1300px) {
+  .fall-risk-page,
+  .pain-page {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .fall-header,
+  .pain-main-header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .fall-logo,
+  .pain-logo {
+    width: 260px;
+    margin: auto;
+  }
+
+  .fall-patient-line,
+  .pain-patient-line {
+    min-width: 1050px;
+  }
+
+  .pain-entry-table,
+  .pain-bottom-layout {
+    min-width: 1150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .fall-risk-page,
+  .pain-page {
+    padding: 12px;
+  }
+
+  .fall-logo,
+  .pain-logo {
+    width: 180px;
+  }
+
+  .fall-header h2,
+  .pain-main-header h2 {
+    font-size: 20px;
+  }
+}
+
+@media print {
+  .fall-risk-page,
+  .pain-page {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .fall-risk-table {
+    width: 1325px;
+    min-width: 1325px;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+/* FIX: show time value clearly in fall risk table */
+
+.time-slot-row input[type="time"] {
+  width: 58px !important;
+  height: 40px !important;
+  font-size: 11px !important;
+  text-align: center !important;
+  color: #000 !important;
+  background: #fff !important;
+  border: none !important;
+  border-right: 1px solid #222 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.time-slot-row input[type="time"]:last-child {
+  border-right: none !important;
+}
+
+.time-slot-row input[type="time"]::-webkit-calendar-picker-indicator {
+  width: 13px;
+  height: 13px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* hide clock icon because column is small */
+
+
+/* remove default extra spacing */
+.time-slot-row input[type="time"]::-webkit-datetime-edit {
+  padding: 0 !important;
+}
+
+.time-slot-row input[type="time"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0 !important;
+}
+
+.time-slot-row input[type="time"]::-webkit-datetime-edit-hour-field,
+.time-slot-row input[type="time"]::-webkit-datetime-edit-minute-field {
+  padding: 0 !important;
+}
+
+.time-slot-row input {
+  width: 100% !important;
+  height: 34px !important;
+  min-width: 0 !important;
+  border: none !important;
+  border-right: 1px solid #222 !important;
+  padding: 0 2px !important;
+  font-size: 11px !important;
+  text-align: center !important;
+  color: #000 !important;
+  background: #fff !important;
+  box-sizing: border-box;
+}
+
+.time-slot-row input:last-child {
+  border-right: none !important;
+}
+
+
+
+
+.nursing-page {
+  width: 100%;
+  background: #ffffff;
+  padding: 20px 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+}
+
+.nursing-sheet {
+  width: 1085px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.nursing-logo-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+
+.nursing-logo {
+  width: 360px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.nursing-patient-line {
+  width: 100%;
+  border: 1px solid #222;
+  height: 62px;
+  display: grid;
+  grid-template-columns: auto 1.8fr auto 1fr auto .7fr auto .7fr auto 1fr;
+  align-items: center;
+  padding: 0 16px;
+  column-gap: 4px;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.nursing-patient-line label {
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+.nursing-patient-line input {
+  border: none;
+  border-bottom: 1px solid #111;
+  outline: none;
+  font-size: 20px;
+  height: 34px;
+  width: 100%;
+  background: transparent;
+}
+
+.nursing-title {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.nursing-title h2 {
+  margin: 0;
+  color: #008996;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+
+.nursing-title p {
+  margin: 3px 0 0;
+  font-size: 18px;
+  color: #111827;
+}
+
+.nursing-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.nursing-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #222;
+}
+
+.label-col {
+  width: 155px;
+}
+
+.shift-col {
+  width: 155px;
+}
+
+.nursing-table th,
+.nursing-table td {
+  border: 1px solid #222;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 21px;
+  font-weight: 400;
+  color: #111827;
+}
+
+.nursing-table th {
+  height: 42px;
+  background: #ffffff;
+}
+
+.date-head {
+  text-align: left !important;
+  padding: 0 10px;
+  font-size: 20px !important;
+}
+
+.date-head input {
+  width: 170px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  background: transparent;
+}
+
+.nursing-table thead tr:nth-child(2) th {
+  height: 54px;
+}
+
+.nursing-table thead input[type="time"] {
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  background: transparent;
+}
+
+.row-label {
+  text-align: left !important;
+  padding: 10px 8px;
+  font-size: 21px !important;
+  line-height: 1.15;
+}
+
+.nursing-table tbody tr:nth-child(1) td,
+.nursing-table tbody tr:nth-child(2) td {
+  height: 64px;
+}
+
+.nursing-table tbody tr:nth-child(3) td {
+  height: 135px;
+}
+
+.nursing-table tbody tr:nth-child(4) td {
+  height: 90px;
+}
+
+.nursing-table tbody tr:nth-child(5) td {
+  height: 135px;
+}
+
+.nursing-table tbody tr:nth-child(6) td {
+  height: 135px;
+}
+
+.nursing-table tbody tr:nth-child(7) td,
+.nursing-table tbody tr:nth-child(8) td {
+  height: 64px;
+}
+
+.nursing-table tbody tr:nth-child(9) td {
+  height: 132px;
+}
+
+.nursing-table tbody tr:nth-child(10) td {
+  height: 78px;
+}
+
+.nursing-table tbody tr:nth-child(11) td,
+.nursing-table tbody tr:nth-child(12) td,
+.nursing-table tbody tr:nth-child(13) td {
+  height: 76px;
+}
+
+.nursing-table textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 8px;
+  font-size: 17px;
+  text-align: center;
+  background: transparent;
+  font-family: inherit;
+}
+
+.nursing-table select {
+  width: 96%;
+  height: 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  background: #fff;
+}
+
+.fixed-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 100%;
+  padding: 8px 4px;
+}
+
+.fixed-options label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 21px;
+  line-height: 1.08;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.fixed-options input {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+}
+
+@media print {
+  .nursing-page {
+    padding: 0;
+  }
+
+  .nursing-sheet {
+    width: 100%;
+  }
+
+  .nursing-table-scroll {
+    overflow: visible;
+  }
+
+  input,
+  textarea,
+  select {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media (max-width: 1200px) {
+  .nursing-sheet {
+    width: 96%;
+  }
+
+  .nursing-logo {
+    width: 320px;
+  }
+
+  .nursing-patient-line {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .nursing-sheet {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .nursing-patient-line {
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+    height: auto;
+    row-gap: 10px;
+    padding: 12px;
+  }
+
+  .nursing-title h2 {
+    font-size: 24px;
+  }
+
+  .nursing-title p {
+    font-size: 16px;
+  }
+
+  .nursing-table {
+    min-width: 1085px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nursing-logo {
+    width: 260px;
+  }
+
+  .nursing-patient-line {
+    grid-template-columns: 1fr;
+    font-size: 17px;
+  }
+
+  .nursing-patient-line input {
+    font-size: 16px;
+  }
+
+  .nursing-title h2 {
+    font-size: 21px;
+  }
+
+  .nursing-table th,
+  .nursing-table td {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nursing-page {
+    padding: 10px 0;
+  }
+
+  .nursing-logo {
+    width: 220px;
+  }
+
+  .nursing-title h2 {
+    font-size: 19px;
+  }
+
+  .nursing-title p {
+    font-size: 14px;
+  }
+
+  .nursing-table {
+    min-width: 1040px;
+  }
+}
+
+.nursing-cell-input {
+  width: 100%;
+  height: 100%;
+  min-height: 58px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 6px;
+  font-size: 18px;
+  text-align: center;
+  color: #111;
+}
+
+.nursing-entry-cell {
+  padding: 0 !important;
+  vertical-align: middle !important;
+}
+
+.fixed-text-display {
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1.15;
+  text-align: center;
+}
+.fall-page-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.fall-delete-page-btn {
+  border: 0;
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fall-delete-page-btn:hover {
+  background: #fecaca;
+}

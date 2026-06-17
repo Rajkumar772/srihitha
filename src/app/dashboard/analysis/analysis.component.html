@@ -1,0 +1,733 @@
+<div class="modern-dashboard">
+  <!-- ========= MODERN HEADER ========= -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="main-title">
+          <i class='bx bx-bar-chart-alt-2'></i>
+          Analytics Dashboard
+        </h1>
+        <p class="subtitle">Real-time revenue & patient insights across all departments</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="view-toggle-btn" (click)="openid()">
+          <span class="pulse-dot"></span>
+          <i class='bx' [ngClass]="shoescard == 0 ? 'bx-grid-alt' : 'bx-time'"></i>
+          <span>{{ shoescard == 0 ? 'Overall View' : 'Overall View' }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========= TODAY'S SUMMARY CARDS ========= -->
+  <div class="stats-grid" *ngIf="shoescard==0">
+
+    <div class="stat-card stat-card-los" (click)="openLosPatients()">
+      <div class="stat-icon">
+        <i class='bx bx-time-five'></i>
+      </div>
+
+      <div class="stat-content">
+        <h3 class="stat-label">AVERAGE LENGTH OF STAY</h3>
+
+        <div class="stat-values">
+          <span class="stat-count">
+            {{ losData?.avg_los_days || 0 }}
+          </span>
+          <span class="stat-amount">Days</span>
+        </div>
+      </div>
+
+      <div class="stat-trend">
+        <i class='bx bx-bed'></i>
+      </div>
+    </div>
+    <div class="stat-card stat-card-op" (click)="onTodayOpClick(todayscountdata[0],'op')">
+      <div class="stat-icon">
+        <i class='bx bx-user-check'></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Today OP</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{todayscountdata[0]?.today_op_count}}</span>
+          <span class="stat-amount">₹{{todayscountdata[0]?.today_op_amount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-ip" (click)="openOpsReport('current_ip')">
+      <div class="stat-icon">
+        <i class='bx bx-bed'></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">CURRENT IP CENSUS</h3>
+
+        <div class="stat-values">
+          <span class="stat-count">
+            {{ hospitalOps?.current_ip || 0 }}
+          </span>
+
+          <span class="stat-amount">
+            Patients
+          </span>
+        </div>
+      </div>
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-lab" (click)="onTodayOpClick(todayscountdata[0],'lab')">
+      <div class="stat-icon">
+        <i class='bx bx-test-tube'></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Today Lab</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{todayscountdata[0]?.today_lab_count}}</span>
+          <span class="stat-amount">₹{{todayscountdata[0]?.today_lab_amount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-pharma-purchase" (click)="onTodayOpClick(todayscountdata[0],'pharma')">
+      <div class="stat-icon">
+        <i class='bx bx-shopping-bag'></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Pharmacy Purchase</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{todayscountdata[0]?.today_pharma_purchase_count}}</span>
+          <span class="stat-amount">₹{{todayscountdata[0]?.today_pharma_purchase_amount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-pharma-sale" (click)="onTodayOpClick(todayscountdata[0],'sale')">
+      <div class="stat-icon">
+        <i class='bx bx-capsule'></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Pharmacy Sale</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{todayscountdata[0]?.today_pharma_sale_count}}</span>
+          <span class="stat-amount">₹{{todayscountdata[0]?.today_pharma_sale_amount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+
+    <div class="stat-card stat-card-op" (click)="openOpsReport('today_admissions')">
+      <div class="stat-icon">
+        <i class='bx bx-user-plus'></i>
+      </div>
+
+      <div class="stat-content">
+        <h3 class="stat-label">TODAY ADMISSIONS</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{ hospitalOps?.today_admissions || 0 }}</span>
+          <span class="stat-amount">Patients</span>
+        </div>
+      </div>
+
+      <div class="stat-trend">
+        <i class='bx bx-trending-up'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-lab" (click)="openOpsReport('nurse_assessment_time')">
+      <div class="stat-icon">
+        <i class='bx bx-time-five'></i>
+      </div>
+
+      <div class="stat-content">
+        <h3 class="stat-label">AVG NURSE ASSESSMENT TIME</h3>
+
+        <div class="stat-values">
+          <span class="stat-count">
+            {{ formatMinutes(hospitalOps?.avg_assessment_minutes) }}
+          </span>
+
+          <span class="stat-amount">
+            Average
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-trend">
+        <i class='bx bx-timer'></i>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card-ip" (click)="openOpsReport('pending_nurse_assessment')">
+      <div class="stat-icon">
+        <i class='bx bx-clipboard'></i>
+      </div>
+
+      <div class="stat-content">
+        <h3 class="stat-label">PENDING NURSE ASSESSMENT</h3>
+        <div class="stat-values">
+          <span class="stat-count">{{ hospitalOps?.pending_nurse_assessment || 0 }}</span>
+          <span class="stat-amount">Patients</span>
+        </div>
+      </div>
+
+      <div class="stat-trend">
+        <i class='bx bx-error-circle'></i>
+      </div>
+    </div>
+
+    <!-- <div class="stat-card stat-card-pharma-sale" (click)="openOpsReport('pending_consultant_plan')">
+    <div class="stat-icon">
+    <i class='bx bx-file'></i>
+  </div>
+
+  <div class="stat-content">
+    <h3 class="stat-label">DOCTOR PLAN PENDING</h3>
+    <div class="stat-values">
+      <span class="stat-count">{{ hospitalOps?.pending_plan || 0 }}</span>
+      <span class="stat-amount">Patients</span>
+    </div>
+  </div>
+
+  <div class="stat-trend">
+    <i class='bx bx-file-find'></i>
+  </div>
+</div> -->
+  </div>
+
+  <div class="modern-table-card" *ngIf="showLosTable" #losTableSection>
+    <div class="table-header">
+      <h2>
+        <i class='bx bx-time-five'></i>
+        Patient Stay / LOS Details
+      </h2>
+
+      <button class="view-toggle-btn" type="button" (click)="showLosTable=false">
+        Close
+      </button>
+    </div>
+
+    <h3>Total Patients: {{ losPatients.length }}</h3>
+
+    <div class="scrollable-table" *ngIf="losPatients.length > 0">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Patient</th>
+            <th>IP No</th>
+            <th>UHID</th>
+            <th>Admit Date</th>
+            <th>Room / Bed</th>
+            <th>Stay Days</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let p of losPatients; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><b>{{ p.name }}</b></td>
+            <td>{{ p.ip_number }}</td>
+            <td>{{ p.uh_id }}</td>
+            <td>{{ p.admin_date | date:'dd-MM-yyyy hh:mm a' }}</td>
+            <td>{{ p.room_number }} / {{ p.bed_no }}</td>
+            <td><b>{{ p.stay_days }}</b> Days</td>
+            <td>
+              <button class="view-eye-btn" (click)="viewRevenue(p)" [style.--blinkDelay]="p.blinkDelay"
+                [style.--moveDelay]="p.moveDelay">
+
+                <span class="eye-ball">👁️</span>
+
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="no-data" *ngIf="losPatients.length === 0">
+      <p>No LOS patient data found</p>
+    </div>
+
+  </div>
+
+
+  <div class="modern-table-card" *ngIf="opsReportRows.length > 0" id="opsReportSection">
+    <div class="table-header">
+      <h2>{{ opsReportTitle }}</h2>
+      <button class="view-toggle-btn" (click)="opsReportRows=[]">Close</button>
+    </div>
+
+    <div class="scrollable-table">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Patient</th>
+            <th>UHID</th>
+            <th>IP No</th>
+            <th>Admit Time</th>
+            <th *ngIf="opsReportType === 'today_admissions' || opsReportType === 'current_ip'">Doctor</th>
+            <th *ngIf="opsReportType === 'today_admissions' || opsReportType === 'current_ip'">Ward / Bed</th>
+            <th *ngIf="opsReportType === 'nurse_assessment_time'">Assessment Time</th>
+            <th *ngIf="opsReportType === 'consultant_plan'">Plan Time</th>
+            <th *ngIf="opsReportType !== 'today_admissions' && opsReportType !== 'current_ip'">Assessment Delay</th>
+            <th *ngIf="opsReportType !== 'today_admissions' && opsReportType !== 'current_ip'">Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let row of opsReportRows; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><b>{{ row.name }}</b></td>
+            <td>{{ row.uh_id }}</td>
+            <td>{{ row.ip_number }}</td>
+            <td>{{ row.admin_date | date:'dd-MM-yyyy hh:mm a' }}</td>
+
+            <td *ngIf="opsReportType === 'today_admissions' || opsReportType === 'current_ip'">
+              {{ row.doctor_name }}
+            </td>
+
+            <td *ngIf="opsReportType === 'today_admissions' || opsReportType === 'current_ip'">
+              {{ row.room_number }} / {{ row.bed_no }}
+            </td>
+
+            <td *ngIf="opsReportType === 'nurse_assessment_time'">
+              {{ row.assessment_time ? (row.assessment_time | date:'dd-MM-yyyy hh:mm a') : 'Not Done' }}
+            </td>
+
+            <td *ngIf="opsReportType === 'consultant_plan'">
+              {{ row.plan_time ? (row.plan_time | date:'dd-MM-yyyy hh:mm a') : 'Not Done' }}
+            </td>
+
+            <td *ngIf="opsReportType !== 'today_admissions' && opsReportType !== 'current_ip'"> {{
+              formatDelay(row.delay_minutes) }}
+            </td>
+
+            <td *ngIf="opsReportType !== 'today_admissions' && opsReportType !== 'current_ip'">
+              <span class="status-pill" [ngClass]="getAssessmentStatus(row).class">
+                {{ getAssessmentStatus(row).label }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="revenue-modal-backdrop" *ngIf="showRevenueModal">
+    <div class="revenue-modal">
+
+      <div class="revenue-modal-head">
+        <h2>{{ selectedRevenuePatient?.name }}</h2>
+        <button (click)="showRevenueModal=false">×</button>
+      </div>
+
+      <p>
+        IP: {{ selectedRevenuePatient?.ip_number }} |
+        UHID: {{ selectedRevenuePatient?.uh_id }}
+      </p>
+
+      <div class="revenue-grid">
+        <div>
+          <span>IP Revenue</span>
+          <b>₹{{ patientRevenue?.admission_amount || 0 }}</b>
+        </div>
+
+        <div>
+          <span>Lab Revenue</span>
+          <b>₹{{ patientRevenue?.lab_revenue || 0 }}</b>
+        </div>
+
+        <div>
+          <span>Pharmacy Revenue</span>
+          <b>₹{{ patientRevenue?.pharmacy_revenue || 0 }}</b>
+        </div>
+
+        <div class="total">
+          <span>Total Revenue</span>
+          <b>₹{{ patientRevenue?.total_revenue || 0 }}</b>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========= CHARTS SECTION (Overall View) ========= -->
+  <div class="charts-container" *ngIf="shoescard==1">
+
+    <!-- OP DEPARTMENT CHART -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon-wrapper op-icon">
+            <i class='bx bx-user-check'></i>
+          </div>
+          <div>
+            <h2>Outpatient Department</h2>
+            <p>Patient visits and revenue analytics</p>
+          </div>
+        </div>
+        <div class="time-filter">
+          <button [class.active]="opChartView === 'weekly'" (click)="changeChartView('op', 'weekly')">
+            <i class='bx bx-calendar-week'></i> Weekly
+          </button>
+          <button [class.active]="opChartView === 'monthly'" (click)="changeChartView('op', 'monthly')">
+            <i class='bx bx-calendar'></i> Monthly
+          </button>
+          <button [class.active]="opChartView === 'yearly'" (click)="changeChartView('op', 'yearly')">
+            <i class='bx bx-calendar-star'></i> Yearly
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[0][0],'total')">
+          <span class="label">Total</span>
+          <span class="value">{{patientscountdata[0][0]?.total_orders}}</span>
+          <span class="amount">₹{{patientscountdata[0][0]?.totalamountop | number:'1.0-0'}}</span>
+        </div>
+        <!-- <div class="mini-stat" (click)="OpClickoverall(patientscountdata[0][0],'yesterday')">
+          <span class="label">Yesterday</span>
+          <span class="value">{{patientscountdata[0][0]?.current_orders}}</span>
+          <span class="amount">₹{{patientscountdata[0][0]?.yesterdayopamount | number:'1.0-0'}}</span>
+        </div> -->
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[0][0],'month')">
+          <span class="label">This Month</span>
+          <span class="value">{{patientscountdata[0][0]?.seven_amount}}</span>
+          <span class="amount">₹{{patientscountdata[0][0]?.thismonthopamount | number:'1.0-0'}}</span>
+        </div>
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[0][0],'year')">
+          <span class="label">This Year</span>
+          <span class="value">{{patientscountdata[0][0]?.thirty_amount}}</span>
+          <span class="amount">₹{{patientscountdata[0][0]?.thisyearopamount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="opChart"></canvas>
+      </div>
+    </div>
+
+    <!-- IP DEPARTMENT CHART -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon-wrapper ip-icon">
+            <i class='bx bx-bed'></i>
+          </div>
+          <div>
+            <h2>Inpatient Department</h2>
+            <p>Admissions and revenue tracking</p>
+          </div>
+        </div>
+        <div class="time-filter">
+          <button [class.active]="ipChartView === 'weekly'" (click)="changeChartView('ip', 'weekly')">
+            <i class='bx bx-calendar-week'></i> Weekly
+          </button>
+          <button [class.active]="ipChartView === 'monthly'" (click)="changeChartView('ip', 'monthly')">
+            <i class='bx bx-calendar'></i> Monthly
+          </button>
+          <button [class.active]="ipChartView === 'yearly'" (click)="changeChartView('ip', 'yearly')">
+            <i class='bx bx-calendar-star'></i> Yearly
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[1][0],'totalip')">
+          <span class="label">Total</span>
+          <span class="value">{{patientscountdata[1][0]?.total_ordersip}}</span>
+          <span class="amount">₹{{patientscountdata[1][0]?.totalamountip | number:'1.0-0'}}</span>
+        </div>
+        <!-- <div class="mini-stat" (click)="OpClickoverall(patientscountdata[1][0],'yesterdayip')">
+          <span class="label">Yesterday</span>
+          <span class="value">{{patientscountdata[1][0]?.current_ordersip}}</span>
+          <span class="amount">₹{{patientscountdata[1][0]?.yesterdayipamount | number:'1.0-0'}}</span>
+        </div> -->
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[1][0],'monthlyip')">
+          <span class="label">This Month</span>
+          <span class="value">{{patientscountdata[1][0]?.seven_amountip}}</span>
+          <span class="amount">₹{{patientscountdata[1][0]?.thismonthipamount | number:'1.0-0'}}</span>
+        </div>
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[1][0],'yearlyip')">
+          <span class="label">This Year</span>
+          <span class="value">{{patientscountdata[1][0]?.thirty_amountip}}</span>
+          <span class="amount">₹{{patientscountdata[1][0]?.thisyearipamount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="ipChart"></canvas>
+      </div>
+    </div>
+
+    <!-- LAB DEPARTMENT CHART -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon-wrapper lab-icon">
+            <i class='bx bx-test-tube'></i>
+          </div>
+          <div>
+            <h2>Laboratory</h2>
+            <p>Tests conducted and revenue analysis</p>
+          </div>
+        </div>
+        <div class="time-filter">
+          <button [class.active]="labChartView === 'weekly'" (click)="changeChartView('lab', 'weekly')">
+            <i class='bx bx-calendar-week'></i> Weekly
+          </button>
+          <button [class.active]="labChartView === 'monthly'" (click)="changeChartView('lab', 'monthly')">
+            <i class='bx bx-calendar'></i> Monthly
+          </button>
+          <button [class.active]="labChartView === 'yearly'" (click)="changeChartView('lab', 'yearly')">
+            <i class='bx bx-calendar-star'></i> Yearly
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[2][0],'totallabs')">
+          <span class="label">Total</span>
+          <span class="value">{{patientscountdata[2][0]?.total_orderslabs}}</span>
+          <span class="amount">₹{{patientscountdata[2][0]?.totalamountlabs | number:'1.0-0'}}</span>
+        </div>
+        <!-- <div class="mini-stat" (click)="OpClickoverall(patientscountdata[2][0],'yesterdaylabs')">
+          <span class="label">Yesterday</span>
+          <span class="value">{{patientscountdata[2][0]?.current_orderslabs}}</span>
+          <span class="amount">₹{{patientscountdata[2][0]?.yesterdaylabsamount | number:'1.0-0'}}</span>
+        </div> -->
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[2][0],'monthlylabs')">
+          <span class="label">This Month</span>
+          <span class="value">{{patientscountdata[2][0]?.seven_amountlabs}}</span>
+          <span class="amount">₹{{patientscountdata[2][0]?.thismonthlabsamount | number:'1.0-0'}}</span>
+        </div>
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[2][0],'yearlylabs')">
+          <span class="label">This Year</span>
+          <span class="value">{{patientscountdata[2][0]?.thirty_amountlabs}}</span>
+          <span class="amount">₹{{patientscountdata[2][0]?.thisyearlabsamount | number:'1.0-0'}}</span>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="labChart"></canvas>
+      </div>
+    </div>
+
+    <!-- PHARMACY DEPARTMENT CHART -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon-wrapper pharma-icon">
+            <i class='bx bx-capsule'></i>
+          </div>
+          <div>
+            <h2>Pharmacy</h2>
+            <p>Purchase and sales revenue tracking</p>
+          </div>
+        </div>
+        <div class="time-filter">
+          <button [class.active]="pharmaChartView === 'weekly'" (click)="changeChartView('pharma', 'weekly')">
+            <i class='bx bx-calendar-week'></i> Weekly
+          </button>
+          <button [class.active]="pharmaChartView === 'monthly'" (click)="changeChartView('pharma', 'monthly')">
+            <i class='bx bx-calendar'></i> Monthly
+          </button>
+          <button [class.active]="pharmaChartView === 'yearly'" (click)="changeChartView('pharma', 'yearly')">
+            <i class='bx bx-calendar-star'></i> Yearly
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[3][0],'totalpharma')">
+          <span class="label">Total Purchase</span>
+          <span class="value">{{patientscountdata[3][0]?.total_orderspharma}}</span>
+          <span class="amount">₹{{patientscountdata[3][0]?.totalamountpharma | number:'1.0-0'}}</span>
+        </div>
+        <!-- <div class="mini-stat" (click)="OpClickoverall(patientscountdata[3][0],'yesterdaypharma')">
+          <span class="label">Yesterday</span>
+          <span class="value">{{patientscountdata[3][0]?.current_orderspharma}}</span>
+          <span class="amount">₹{{patientscountdata[3][0]?.yesterdaypharmaamount | number:'1.0-0'}}</span>
+        </div> -->
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[4][0],'totalpharmasale')">
+          <span class="label">Total Sale</span>
+          <span class="value">{{patientscountdata[4][0]?.total_orderspharma_sale_count}}</span>
+          <span class="amount">₹{{patientscountdata[4][0]?.totalamountpharma_sale | number:'1.0-0'}}</span>
+        </div>
+        <div class="mini-stat" (click)="OpClickoverall(patientscountdata[4][0],'yearlypharmasale')">
+          <span class="label">Year Sale</span>
+          <span class="value">{{patientscountdata[4][0]?.thisyear_orderspharma_sale_count}}</span>
+          <span class="amount">₹{{patientscountdata[4][0]?.thisyearpharmaamount_sale | number:'1.0-0'}}</span>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="pharmaChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========= EXISTING TABLE SECTIONS ========= -->
+  <div *ngIf="showtodayreport" #todayReportSection>
+    <div class="modern-table-card" *ngIf="selectedType">
+      <div class="table-header">
+        <h2>
+          <i class='bx bx-file-find'></i>
+          {{ reportTitle }}
+        </h2>
+      </div>
+
+      <div class="scrollable-table">
+        <table mat-table [dataSource]="dataSource" class="modern-table" *ngIf="dataSource.data.length > 0">
+          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ columnHeaderMap[column] || (column | titlecase) }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="column === 'group_test_details'; else normalCell">
+                <div *ngFor="let test of element.group_test_details">
+                  {{ test.group_name }} - {{ test.group_amount }}
+                </div>
+              </ng-container>
+              <ng-template #normalCell>
+                {{ element[column] || '_' }}
+              </ng-template>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <div class="no-data" *ngIf="hasSearched && dataSource.data.length === 0">
+        <i class='bx bx-search-alt'></i>
+        <p>No data available</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep existing table sections with wrapper -->
+  <div class="tables-wrapper">
+    <!-- OP Table -->
+    <div class="modern-table-card" *ngIf="tableType === 'op'" #opTable>
+      <div class="table-header">
+        <h2><i class='bx bx-user-check'></i> {{ displayTitle }}</h2>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilterop($event)">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="scrollable-table">
+        <table mat-table [dataSource]="dataSourceop" matSort class="modern-table">
+          <!-- Your existing OP table columns -->
+          <ng-container matColumnDef="i">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
+            <td mat-cell *matCellDef="let row">{{row.i}}</td>
+          </ng-container>
+          <ng-container matColumnDef="uh_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>UH ID</th>
+            <td mat-cell *matCellDef="let row">{{row.uh_id}}</td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let row">{{row.date | date:'dd-MM-yyyy'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let row">{{row.name}}</td>
+          </ng-container>
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+            <td mat-cell *matCellDef="let row">{{row.gender}}</td>
+          </ng-container>
+          <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+            <td mat-cell *matCellDef="let row">{{row.age}} {{row.yandm}}</td>
+          </ng-container>
+          <ng-container matColumnDef="phone_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+            <td mat-cell *matCellDef="let row">{{row.phone_number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="aadhar">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhar</th>
+            <td mat-cell *matCellDef="let row">{{row.aadhar || '-'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+            <td mat-cell *matCellDef="let row">{{row.address}}</td>
+          </ng-container>
+          <ng-container matColumnDef="doctor_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor</th>
+            <td mat-cell *matCellDef="let row">{{row.doctor_name}}</td>
+          </ng-container>
+          <ng-container matColumnDef="doctor_department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+            <td mat-cell *matCellDef="let row">{{row.doctor_department}}</td>
+          </ng-container>
+          <ng-container matColumnDef="card_type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Card Type</th>
+            <td mat-cell *matCellDef="let row">{{row.card_type}}</td>
+          </ng-container>
+          <ng-container matColumnDef="card_appointment_type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment</th>
+            <td mat-cell *matCellDef="let row">{{row.card_appointment_type}}</td>
+          </ng-container>
+          <ng-container matColumnDef="patient_type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient Type</th>
+            <td mat-cell *matCellDef="let row">{{row.patient_type}}</td>
+          </ng-container>
+          <ng-container matColumnDef="payment_way">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Way</th>
+            <td mat-cell *matCellDef="let row">{{row.payment_way}}</td>
+          </ng-container>
+          <ng-container matColumnDef="payment_types">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type</th>
+            <td mat-cell *matCellDef="let row">{{row.payment_types}}</td>
+          </ng-container>
+          <ng-container matColumnDef="consultant_fee">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fee</th>
+            <td mat-cell *matCellDef="let row">₹{{row.consultant_fee}}</td>
+          </ng-container>
+          <ng-container matColumnDef="discount_amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Discount</th>
+            <td mat-cell *matCellDef="let row">₹{{row.discount_amount}}</td>
+          </ng-container>
+          <ng-container matColumnDef="after_discount_total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Final Amount</th>
+            <td mat-cell *matCellDef="let row">₹{{row.after_discount_total}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsop; sticky:true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsop"></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- IP Table (similar wrapper) -->
+    <!-- Lab Table (similar wrapper) -->
+    <!-- Pharmacy Table (similar wrapper) -->
+    <!-- Sales Table (similar wrapper) -->
+  </div>
+
+</div>

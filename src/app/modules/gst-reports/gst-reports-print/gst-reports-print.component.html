@@ -1,0 +1,235 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:5px;" (click)="openPDF()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:5px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div *ngIf="dateRangeDisplay2" style="font-size: 30px;text-align: center;color: black;text-decoration: underline;">
+    <p>{{ dateRangeDisplay2 }}</p>
+</div>
+
+<div class="table-container p-3">
+    <!-- Block 1: GST Purchases -->
+    <div class="block">
+        <div *ngFor="let item of gstPurchaseData; let i = index">
+            <table class="table table-striped" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="font-size: 25px;">GST Purchases
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="color: white;">
+                        <td>5% </td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>8% </td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>12% </td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>18% </td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>28% </td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sum</td>
+                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                            item.total_18_percent +item.total_28_percent
+                            | number:'1.2-2' }}</td>
+                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                            item.tax_18_percent +item.tax_28_percent
+                            | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr *ngFor="let item of gstPurchaseData; let i = index">
+                        <td></td>
+                        <td>Total Input Tax : </td>
+                        <td class="total">
+                            {{item.net_total | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div *ngFor="let item of gstPurchaseData; let i = index" style="font-size: 18px;color: black;">
+                No Of Bills Generated : {{item.total_bills_generated}}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Block 2: IGST Purchases -->
+    <div class="block">
+        <div *ngFor="let item of igstPurchaseData; let i = index">
+
+            <table class="table table-striped" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="font-size: 25px;">IGST Purchases
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sum</td>
+                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                            item.total_18_percent +item.total_28_percent
+                            | number:'1.2-2' }}</td>
+                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                            item.tax_18_percent +item.tax_28_percent
+                            | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Total Input Tax : </td>
+                        <td class="total">
+                            {{item.total_net_amount | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="font-size: 18px;color: black;">
+                No Of Bills Generated : {{item.total_bills_generated}}
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Block 3: GST Sales -->
+    <div class="block">
+        <div *ngFor="let item of gstSalesData; let i = index">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="font-size: 25px;">GST Sales
+                            <span>
+                                <i *ngIf="user_id=='1'|| user_id=='26'"
+                                    style="font-size: 20px; cursor: pointer;display: flex;justify-content: end;margin-top: -30px;margin-bottom: 10px;"
+                                    (click)="editgstvalue(openmodel)" class="fa-solid fa-pen-to-square"></i></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr style="color: white;">
+                        <td></td>
+                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sum</td>
+                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                            item.total_18_percent +item.total_28_percent
+                            | number:'1.2-2' }}</td>
+                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                            item.tax_18_percent +item.tax_28_percent
+                            | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Total Input Tax : </td>
+                        <td class="total">
+                            {{item.net_total | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="font-size: 18px;color: black;">
+                No Of Bills Generated : {{item.total_bills_generated}}
+            </div>
+        </div>
+
+    </div>
+
+</div>

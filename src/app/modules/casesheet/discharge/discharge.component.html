@@ -1,0 +1,488 @@
+<div class="discharge-actions no-print">
+    <button class="btn fetch" (click)="getDischargeByUMR()">Get Data</button>
+    <button class="btn save" (click)="saveDischarge()">Save Discharge</button>
+    <button class="btn print" onclick="window.print()">Print</button>
+</div>
+
+<section class="discharge-page">
+
+    <!-- PAGE 1 -->
+    <div class="sheet">
+        <div class="top-header">
+            <img src="assets/back/logo2.png" class="logo" alt="ANH Logo">
+            <h2>DISCHARGE SUMMARY</h2>
+        </div>
+
+        <div class="patient-box">
+            <div class="line">
+                <label>Name :</label><input [(ngModel)]="header.patient_name">
+                <label>Age :</label><input class="small" [(ngModel)]="header.age">
+                <label>Sex :</label><input class="small" [(ngModel)]="header.sex">
+                <label>Unit :</label><input [(ngModel)]="header.unit">
+            </div>
+            <div class="line">
+                <label>UMR No :</label><input [(ngModel)]="header.umr_no">
+                <label>IP No :</label><input [(ngModel)]="header.ip_no">
+                <label>MLC No :</label><input [(ngModel)]="header.mlc_no">
+            </div>
+        </div>
+
+        <div class="date-box">
+            <div>
+                <p>Date of Admission</p>
+                <input type="date" [(ngModel)]="dischargeSummary.admission_date">
+            </div>
+            <div>
+                <p>Date of Operation</p>
+                <input type="date" [(ngModel)]="dischargeSummary.operation_date">
+            </div>
+            <div>
+                <p>Date & Time if Discharge</p>
+                <input type="datetime-local" [(ngModel)]="dischargeSummary.discharge_date_time">
+            </div>
+        </div>
+
+        <div class="summary-box diagnosis">
+            <label>FINAL DIAGNOSIS :</label>
+            <textarea [(ngModel)]="dischargeSummary.final_diagnosis"></textarea>
+        </div>
+
+        <div class="summary-box clinical">
+            <label>CLINICAL SUMMARY :</label>
+            <textarea [(ngModel)]="dischargeSummary.clinical_summary"></textarea>
+        </div>
+
+        <div class="summary-box investigation">
+            <label>INVESTIGATION DONE :</label>
+            <textarea [(ngModel)]="dischargeSummary.investigation_done"></textarea>
+        </div>
+
+        <div class="summary-box treatment">
+            <label>TREATMENT GIVEN HOSPITAL :</label>
+            <textarea [(ngModel)]="dischargeSummary.treatment_given_hospital"></textarea>
+        </div>
+
+        <div class="summary-box progress">
+            <label>PROGRESS IN HOSPITAL :</label>
+            <textarea [(ngModel)]="dischargeSummary.progress_in_hospital"></textarea>
+        </div>
+
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="sheet">
+        <div class="top-header">
+            <img src="assets/back/logo2.png" class="logo" alt="ANH Logo">
+            <h2>DISCHARGE SUMMARY</h2>
+        </div>
+
+        <div class="patient-box single">
+            <div class="line">
+                <label>Patient Name</label><input [(ngModel)]="header.patient_name">
+                <label>UMR No</label><input [(ngModel)]="header.umr_no">
+                <label>Sex</label><input class="small" [(ngModel)]="header.sex">
+                <label>Age</label><input class="small" [(ngModel)]="header.age">
+                <label>IP No</label><input [(ngModel)]="header.ip_no">
+            </div>
+        </div>
+
+        <div class="condition">
+            <label>CONDITION AT THE TIME OF DISCHARGE:</label>
+            <textarea [(ngModel)]="dischargeSummary.condition_at_discharge"></textarea>
+        </div>
+
+        <h3 class="medicine-title">
+            DISCHARGE MEDICINES ADVISED
+
+            <button type="button" class="add-med-btn" (click)="addMedicineRow()">
+
+                <i class="fa fa-plus"></i> Add Row
+            </button>
+        </h3>
+
+        <table class="medicine-table">
+            <thead>
+                <tr>
+                    <th>Sl.No</th>
+                    <th>MEDICINE NAME:</th>
+                    <th>MORNING</th>
+                    <th>AFTER<br>NOON</th>
+                    <th>EVENING</th>
+                    <th>No. of<br>Days</th>
+                    <th>Remarks<br>if any</th>
+                    <th class="no-print">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let med of dischargeSummary.medicines; let i = index">
+                    <td>{{ i + 1 }}.</td>
+                    <td><input [(ngModel)]="med.medicine_name"></td>
+                    <td><input [(ngModel)]="med.morning"></td>
+                    <td><input [(ngModel)]="med.afternoon"></td>
+                    <td><input [(ngModel)]="med.evening"></td>
+                    <td><input [(ngModel)]="med.no_of_days"></td>
+                    <td><input [(ngModel)]="med.remarks"></td>
+
+                    <td class="no-print">
+                        <button type="button" class="delete-icon-btn" (click)="removeMedicineRow(i)"
+                            [disabled]="dischargeSummary.medicines.length === 1" title="Delete Row">
+
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="preventive">
+            <b>PREVENTIVE CARE:</b>
+            <textarea [(ngModel)]="dischargeSummary.preventive_care"></textarea>
+
+            <p>DIET:</p>
+            <input class="full-line" [(ngModel)]="dischargeSummary.diet">
+
+            <p>When and how to obtain urgent care:</p>
+            <input class="full-line" [(ngModel)]="dischargeSummary.urgent_care">
+
+            <p>
+                follow up / Review: Reviewed after
+                <input class="inline-input" [(ngModel)]="dischargeSummary.review_after_days">
+                days. in
+                <input class="inline-input" [(ngModel)]="dischargeSummary.review_in_opd">
+                opd
+            </p>
+
+            <p>with all medical documents.</p>
+
+            <p class="symptoms">
+                Symptoms of emergency:
+                <span>(if observed, please report to Emergency Dept (Casualty)</span>
+            </p>
+
+            <div class="symptom-row">
+                <label>1.</label><input [(ngModel)]="dischargeSummary.emergency_symptoms[0]">
+                <label>2.</label><input [(ngModel)]="dischargeSummary.emergency_symptoms[1]">
+                <label>3.</label><input [(ngModel)]="dischargeSummary.emergency_symptoms[2]">
+            </div>
+
+            <p>in case any emergency, contact: 0891-2821111/8008901242</p>
+
+         <div class="sign-grid">
+
+  <!-- Prepared By -->
+  <div>
+    <p>Prepared By</p>
+
+    <p>
+      Dr.
+      <input [(ngModel)]="dischargeSummary.prepared_doctor">
+    </p>
+
+    <div class="signature-row">
+      <label>Signature :</label>
+
+      <label class="upload-sign-btn no-print">
+        Upload Signature
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onPreparedSignatureUpload($event)">
+      </label>
+
+   <img *ngIf="dischargeSummary.prepared_signature_preview" [src]="dischargeSummary.prepared_signature_preview">
+    </div>
+
+    <p>
+      Date:
+      <input
+        type="date"
+        [(ngModel)]="dischargeSummary.prepared_date">
+    </p>
+  </div>
+
+  <!-- Treating Doctor -->
+  <div>
+    <p>Treating Doctor</p>
+
+    <div class="signature-row">
+      <label>Signature :</label>
+
+      <label class="upload-sign-btn no-print">
+        Upload Signature
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onTreatingSignatureUpload($event)">
+      </label>
+
+    <img *ngIf="dischargeSummary.treating_signature_preview" [src]="dischargeSummary.treating_signature_preview">
+    </div>
+
+    <p>
+      Name of Dr.
+      <input [(ngModel)]="dischargeSummary.treating_doctor_name">
+    </p>
+
+    <p>
+      Regn No.
+      <input [(ngModel)]="dischargeSummary.regn_no">
+    </p>
+  </div>
+
+</div>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="sheet checklist-sheet">
+        <div class="top-header">
+            <img src="assets/back/logo2.png" class="logo" alt="ANH Logo">
+            <h2>DISCHARGE CHECKLIST</h2>
+        </div>
+
+        <div class="patient-box single">
+            <div class="line">
+                <label>Patient Name</label><input [(ngModel)]="header.patient_name">
+                <label>UMR No</label><input [(ngModel)]="header.umr_no">
+                <label>Sex</label><input class="small" [(ngModel)]="header.sex">
+                <label>Age</label><input class="small" [(ngModel)]="header.age">
+                <label>IP No</label><input [(ngModel)]="header.ip_no">
+            </div>
+        </div>
+
+        <div class="checklist-body">
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.id_band_off"> ID band off</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.iv_tubes_removed"> Intercath (IV) and other
+                tubes removed</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.summary_explained"> Discharge summary given &
+                explained to the patient</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.wound_dressing_explained"> Patient explained
+                about wound dressing needs, if any</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.vulnerable_safety_explained"> Vulnerable
+                patient explained about safety measures</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.followup_contact_explained"> Patient explained
+                process of follow up visits & contact numbers</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.emergency_contact_explained"> Patient
+                explained on who & how to contact in case of emergency</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.equipment_usage_explained"> Patient briefed on
+                usage of medical equipment</label>
+            <label><input type="checkbox" [(ngModel)]="dischargeChecklist.feedback_collected"> Feed back form
+                collected</label>
+
+            <div class="patient-declaration">
+                <p>I have received my discharge summary and understand my medication schedule<br>
+                    and the follow-up procedure<br>
+                    I have also been explained about the emergency contact procedures.
+                </p>
+
+                <div class="decl-row">
+                    <span>Patient Sign & Name:</span>
+                    <input [(ngModel)]="dischargeChecklist.patient_sign_name">
+                    <span>Date & Time:</span>
+                    <input type="datetime-local" [(ngModel)]="dischargeChecklist.patient_date_time">
+                </div>
+
+                <p><b>Nursing Discharge Note:</b> The patient understands about his medication, dressings<br>
+                    and contact procedures a demonstrated by
+                </p>
+
+                <div class="demo-row">
+                    <label><input type="checkbox" [(ngModel)]="dischargeChecklist.return_demonstrated"> Return
+                        demonstrated</label>
+                    <label><input type="checkbox" [(ngModel)]="dischargeChecklist.verbalization_understanding">
+                        Verbalization Understanding</label>
+                </div>
+
+                <p class="nurse-sign">
+                    Nurse’s sign (with Name, Date & Time).
+                    <input [(ngModel)]="dischargeChecklist.nurse_sign">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4 : HANDING OVER REPORTS -->
+<div class="sheet report-sheet">
+
+  <div class="anh-header">
+    <img src="assets/back/logo2.png" class="anh-logo">
+    <div>
+      <h2>HANDING OVER OF REPORTS</h2>
+      <h4>(Excluding MLC CLASS)</h4>
+    </div>
+  </div>
+
+  <div class="patient-line-box">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="report-note">
+    I <input [(ngModel)]="handingOverReports.receiver_name"> hereby acknowledge having received all films and original reports for the treatment given to me / my relative
+    <input [(ngModel)]="handingOverReports.patient_or_relative_name">
+    and hereby undertake to produce the documents as and when required by the hospital authorities.
+  </div>
+
+  <button type="button" class="add-med-btn no-print" (click)="addReportDocumentRow()">+ Add Row</button>
+
+  <table class="handover-table">
+    <thead>
+      <tr>
+        <th>Sl.No</th>
+        <th>Documents</th>
+        <th>Nos.</th>
+        <th class="no-print">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let doc of handingOverReports.documents; let i = index">
+        <td>{{ i + 1 }}.</td>
+        <td><input [(ngModel)]="doc.document_name"></td>
+        <td><input [(ngModel)]="doc.nos"></td>
+        <td class="no-print">
+          <button class="delete-icon-btn" (click)="removeReportDocumentRow(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="handover-sign-grid">
+    <div>
+      <label>Signature of Ward Sec. / Sister:</label>
+      <label class="upload-sign-btn no-print">
+        Upload
+        <input type="file" accept="image/*" (change)="onWardSignatureUpload($event)">
+      </label>
+<img *ngIf="handingOverReports.ward_signature_preview" [src]="handingOverReports.ward_signature_preview" class="signature-preview">
+      <p>Emp, No.</p>
+      <input [(ngModel)]="handingOverReports.emp_no">
+
+      <p>Date & Time :</p>
+      <input type="datetime-local" [(ngModel)]="handingOverReports.ward_date_time">
+    </div>
+
+    <div>
+      <label>Signature of Recipient :</label>
+      <label class="upload-sign-btn no-print">
+        Upload
+        <input type="file" accept="image/*" (change)="onRecipientSignatureUpload($event)">
+      </label>
+<img *ngIf="handingOverReports.recipient_signature_preview" [src]="handingOverReports.recipient_signature_preview" class="signature-preview">
+      <p>Relationship with Patient :</p>
+      <input [(ngModel)]="handingOverReports.relationship">
+
+      <p>Date & Time :</p>
+      <input type="datetime-local" [(ngModel)]="handingOverReports.recipient_date_time">
+    </div>
+  </div>
+
+  <p class="report-footer">
+    ALL THE REPORTS PERTAINING TO MLC’S SHOULD BE SUBMITTED TO MEDICAL RECORDS DEPARTMENT ON DISCHARGE OR DEATH
+  </p>
+</div>
+
+
+<!-- PAGE 5 : MEDICO LEGAL DATA -->
+<div class="sheet mlc-sheet">
+
+  <div class="anh-header">
+    <img src="assets/back/logo2.png" class="anh-logo">
+    <h2>MEDICO LEGAL DATA</h2>
+  </div>
+
+  <div class="patient-line-box">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <table class="mlc-info-table">
+    <tr>
+      <td>Name of the Informant <input [(ngModel)]="medicoLegalData.informant_name"></td>
+      <td>Brought By : <input [(ngModel)]="medicoLegalData.brought_by"></td>
+    </tr>
+    <tr>
+      <td>PC No. <input [(ngModel)]="medicoLegalData.pc_no"></td>
+      <td>Dying Declaration Recorded: <input [(ngModel)]="medicoLegalData.dying_declaration"></td>
+    </tr>
+    <tr>
+      <td>Police Station <input [(ngModel)]="medicoLegalData.police_station"></td>
+      <td>DD recorded by <input [(ngModel)]="medicoLegalData.dd_recorded_by"></td>
+    </tr>
+    <tr>
+      <td>Discharge Intimation to police station: <input [(ngModel)]="medicoLegalData.police_intimation"></td>
+      <td>Nature of Injury: <input [(ngModel)]="medicoLegalData.nature_of_injury"></td>
+    </tr>
+    <tr>
+      <td>
+        Signature with name:
+        <label class="upload-sign-btn no-print">
+          Upload
+          <input type="file" accept="image/*" (change)="onMLCSignatureUpload($event)">
+        </label>
+<img *ngIf="medicoLegalData.signature_preview" [src]="medicoLegalData.signature_preview" class="signature-preview">
+      </td>
+      <td>Date & Time <input type="datetime-local" [(ngModel)]="medicoLegalData.date_time"></td>
+    </tr>
+  </table>
+
+  <h3 class="movement-title">PATIENT MOVEMENT (SHIFTING) INFORMATION</h3>
+
+  <button type="button" class="add-med-btn no-print" (click)="addMovementRow()">+ Add Row</button>
+
+  <table class="movement-table">
+    <thead>
+      <tr>
+        <th>Sl.No</th>
+        <th>Shifted from</th>
+        <th>Patient Handed over by<br>(Sign, with name)</th>
+        <th>Shifted to</th>
+        <th>Patient received by<br>(Sign, with name)</th>
+        <th>Date & Time</th>
+        <th>Remarks<br>(if any)</th>
+        <th class="no-print">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of medicoLegalData.movements; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td><input [(ngModel)]="row.shifted_from"></td>
+        <td><input [(ngModel)]="row.handed_over_by"></td>
+        <td><input [(ngModel)]="row.shifted_to"></td>
+        <td><input [(ngModel)]="row.received_by"></td>
+        <td><input type="datetime-local" [(ngModel)]="row.date_time"></td>
+        <td><input [(ngModel)]="row.remarks"></td>
+        <td class="no-print">
+          <button class="delete-icon-btn" (click)="removeMovementRow(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<div class="ns-sign">
+  <span>N/S Signature :</span>
+
+  <label class="upload-sign-btn no-print">
+    Upload Signature
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onNurseSignatureUpload($event)">
+  </label>
+<img *ngIf="medicoLegalData.nurse_signature_preview" [src]="medicoLegalData.nurse_signature_preview" class="signature-preview">
+</div>
+</div>
+
+</section>

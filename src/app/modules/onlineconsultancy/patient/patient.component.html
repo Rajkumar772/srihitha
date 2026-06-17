@@ -1,0 +1,12 @@
+<h2>Patient Online Consultation</h2>
+
+<form [formGroup]="patientForm">
+  <input placeholder="Patient Name" formControlName="patientName">
+  <input placeholder="Mobile Number" formControlName="mobile">
+  <input type="date" formControlName="appointmentDate">
+  <input type="time" formControlName="appointmentTime">
+
+  <button type="button" (click)="joinCall()">
+    Join Consultation
+  </button>
+</form>

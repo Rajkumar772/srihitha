@@ -1,0 +1,128 @@
+<!-- ================= HEADER ================= -->
+<div class="page-header">
+  <h3>Lab Test Results</h3>
+</div>
+
+<div class="container-fluid">
+
+  <div class="card main-card">
+    <div class="card-body">
+
+      <!-- ================= PATIENT FORM ================= -->
+      <form [formGroup]="form">
+
+        <div class="patient-card">
+
+          <div class="patient-box">
+            <label>OP Patient ID *</label>
+            <ng-select formControlName="uh_id" appendTo="body" (change)="selectId($event)">
+              <ng-option *ngFor="let p of patients_data" [value]="{id:p.id ,pid:p.uh_id}">
+                {{p.uh_id}},{{p.main_uh_id}}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="patient-box">
+            <label>Name</label>
+            <input class="form-control" formControlName="name" readonly>
+          </div>
+
+          <div class="patient-box">
+            <label>Age</label>
+            <input class="form-control" formControlName="age" readonly>
+          </div>
+
+          <div class="patient-box">
+            <label>Mobile</label>
+            <input class="form-control" formControlName="number" readonly>
+          </div>
+
+        </div>
+
+      </form>
+
+      <!-- ================= LAB TEST TABS ================= -->
+      <div class="card test-card">
+        <div class="card-body">
+
+          <mat-tab-group>
+
+            <mat-tab *ngFor="let category of uniqueCategories" [label]="category.category_name">
+
+              <mat-tab-group>
+
+                <mat-tab *ngFor="let labTest of category.labTests" [label]="labTest.labtest_name">
+
+                  <!-- ================= TABLE ================= -->
+                  <table mat-table [dataSource]="labTest.fields" class="lab-table">
+
+                    <!-- FIELD -->
+                    <ng-container matColumnDef="field">
+                      <th mat-header-cell *matHeaderCellDef>Field</th>
+                      <td mat-cell *matCellDef="let element">
+                        <input class="form-control" readonly [(ngModel)]="element.field">
+                      </td>
+                    </ng-container>
+
+                    <!-- VALUE -->
+                    <ng-container matColumnDef="value">
+                      <th mat-header-cell *matHeaderCellDef>Value</th>
+                      <td mat-cell *matCellDef="let element">
+                        <input class="form-control" [readonly]="element.status" [(ngModel)]="element.value"
+                          (keypress)="preventLeadingTrailingSpace($event)">
+                      </td>
+                    </ng-container>
+
+                    <!-- RANGE -->
+                    <ng-container matColumnDef="ranges">
+                      <th mat-header-cell *matHeaderCellDef>Range</th>
+                      <td mat-cell *matCellDef="let element">
+                        <input class="form-control" readonly [(ngModel)]="element.ranges">
+                      </td>
+                    </ng-container>
+
+                    <!-- UNITS -->
+                    <ng-container matColumnDef="units">
+                      <th mat-header-cell *matHeaderCellDef>Units</th>
+                      <td mat-cell *matCellDef="let element">
+                        <input class="form-control" readonly [(ngModel)]="element.units">
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                  </table>
+
+                  <!-- ================= SUBMIT TEST ================= -->
+                  <div class="test-submit">
+                    <button class="btn btn-primary" [disabled]="!canSubmitTest(labTest.fields)"
+                      (click)="submitOneTest(labTest.fields)">
+                      {{ getButtonLabel(labTest.fields) }}
+                    </button>
+                  </div>
+
+                </mat-tab>
+
+              </mat-tab-group>
+            </mat-tab>
+
+          </mat-tab-group>
+
+        </div>
+      </div>
+
+      <!-- ================= MAIN SUBMIT ================= -->
+      <div *ngIf="forOneTestLab.length" class="final-submit">
+        <button class="main-submit" (click)="MegaSubmit()">Final Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOADER ================= -->
+<div class="my-overlay" *ngIf="showSpinner">
+  <span class="loader"></span>
+  <h6>Loading</h6>
+</div>

@@ -1,0 +1,191 @@
+<div class="all-bills-wrapper">
+
+    <div class="all-bills-card no-print">
+        <div class="all-bills-search-box">
+
+            <div class="all-bills-title">
+                <h2>Patient All Bills</h2>
+                <p>Search and print OP, IP, Lab, Pharmacy bills in one place</p>
+            </div>
+
+            <div class="all-bills-search-actions">
+                <input type="text" placeholder="Enter UHID / IP No / Mobile" [(ngModel)]="searchValue">
+
+                <button class="search-btn" type="button" (click)="getPatientAllBills()">
+                    Search
+                </button>
+
+                <button class="print-btn" type="button" (click)="printAllBills()" [disabled]="!bills.length">
+                    Print
+                </button>
+            </div>
+
+            <div class="loading-card" *ngIf="loading">
+                Loading bills, please wait...
+            </div>
+
+            <div class="no-bills-found" *ngIf="searched && !loading && !bills.length">
+                <h3>No Bills Found</h3>
+                <p>No OP/IP/Lab/Pharmacy bill entries found for this patient.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bill-print-area" *ngIf="bills.length">
+
+        <div class="hospital-header">
+            <h1>SRIHITHA CHILDREN'S HOSPITAL</h1>
+            <h3>Patient Complete Billing Summary</h3>
+        </div>
+
+        <div class="patient-info-card">
+            <div>
+                <label>Patient Name</label>
+                <b>{{ patient.patient_name || '-' }}</b>
+            </div>
+
+            <div>
+                <label>UHID</label>
+                <b>{{ patient.uh_id || '-' }}</b>
+            </div>
+
+            <div>
+                <label>IP No</label>
+                <b>{{ patient.ip_number || '-' }}</b>
+            </div>
+
+            <div>
+                <label>Mobile</label>
+                <b>{{ patient.mobile || '-' }}</b>
+            </div>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card total">
+                <span>Total Bill</span>
+                <h2>₹ {{ summary.gross_total || 0 }}</h2>
+            </div>
+
+            <div class="summary-card discount">
+                <span>Discount</span>
+                <h2>₹ {{ summary.discount_total || 0 }}</h2>
+            </div>
+
+            <div class="summary-card paid">
+                <span>Paid Amount</span>
+                <h2>₹ {{ summary.paid_total || 0 }}</h2>
+            </div>
+
+            <div class="summary-card balance">
+                <span>Balance</span>
+                <h2>₹ {{ summary.balance_total || 0 }}</h2>
+            </div>
+        </div>
+
+        <div class="department-tabs no-print">
+            <button type="button" *ngFor="let d of departments" [class.active]="activeDept === d"
+                (click)="filterBills(d)">
+                {{ d }}
+            </button>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Date</th>
+                        <th>Department</th>
+                        <th>Bill No</th>
+                        <th>Description</th>
+                        <th>Gross</th>
+                        <th>Discount</th>
+                        <th>Paid</th>
+                        <th>Balance</th>
+                        <th>Mode</th>
+                        <th class="no-print">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let row of filteredBills; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ row.bill_date | date:'dd-MM-yyyy hh:mm a' }}</td>
+                        <td>
+                            <span class="dept-badge">{{ row.bill_source }}</span>
+                        </td>
+                        <td>{{ row.bill_no || '-' }}</td>
+                        <td>{{ row.description || '-' }}</td>
+                        <td>₹ {{ row.gross_amount || 0 }}</td>
+                        <td>₹ {{ row.discount_amount || 0 }}</td>
+                        <td>₹ {{ row.paid_amount || 0 }}</td>
+                        <td class="balance-text">₹ {{ row.balance_amount || 0 }}</td>
+                        <td>{{ row.payment_mode || '-' }}</td>
+                        <td class="no-print">
+                            <button class="view-btn" type="button" (click)="viewBillDetails(row)">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="bill-details-overlay no-print" *ngIf="showDetailsPopup">
+    <div class="bill-details-popup">
+
+        <div class="popup-header">
+            <div>
+                <h3>{{ selectedBill?.bill_source }} Bill Details</h3>
+                <p>Bill No: {{ selectedBill?.bill_no }}</p>
+            </div>
+
+            <button type="button" class="close-btn" (click)="closeDetailsPopup()">×</button>
+        </div>
+
+        <div class="popup-body">
+
+            <table class="details-table" *ngIf="billDetails.length">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Item / Service</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of billDetails; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.qty }}</td>
+                        <td>₹ {{ item.rate }}</td>
+                        <td>₹ {{ item.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="no-detail-data" *ngIf="!billDetails.length">
+                No item details found for this bill.
+            </div>
+
+        </div>
+
+        <div class="popup-footer">
+            <button class="invoice-btn" type="button" *ngIf="selectedBill?.bill_source === 'PHARMACY'"
+                (click)="openPharmacyInvoice(selectedBill)">
+                Open Pharmacy Invoice
+            </button>
+
+            <b>Total: ₹ {{ billDetailsTotal }}</b>
+        </div>
+
+    </div>
+</div>

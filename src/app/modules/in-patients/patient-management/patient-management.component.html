@@ -1,0 +1,2576 @@
+
+<div class="row">
+              <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+Patient-Management          <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+       <br>
+            <div class="card-body" class="gth">
+                <form [formGroup]="byUHidPatientForm">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group p-2 mb-4">
+                                <label>OP Patient ID/ IN Patient No / Patient Name <span
+                                        style="color: red;">*</span></label>
+                                <ng-select (change)="selectuhidget($event)" formControlName="uh_id"
+                                    [ngClass]="{'is-invalid': submitt && validId['uh_id'].errors }">
+                                    <ng-option *ngFor="let p of patients_data"
+                                        [value]="[p.uh_id , p.ip_number]">{{p.uh_id}} - {{p.ip_number}} - {{p.name}}
+                                    </ng-option>
+                                </ng-select>
+                                <div *ngIf="submitt && validId['uh_id'].errors" class="invalid-feedback">
+                                    <div *ngIf="validId['uh_id'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                            <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                    
+                    
+
+                        <div class="col">
+                            <div class="btns">
+                               <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="uh_id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    OP Patient ID</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span style="font-weight: 600;font-size: 14px;" class="para">{{row.uh_id}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="ip_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    IN Patient No</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span style="font-weight: 600;font-size: 14px;"
+                                        class="para">{{row.ip_number}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Patient Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Age</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.age}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Gender</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.gender}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="phone_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Phone number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.phone_number}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="room_no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Room No</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+                                    <span class="para">{{row.room_no}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complaint">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Reason for Admit</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.complaint == ''|| row.complaint == null "> _ </div>
+                                    <div *ngIf="row.complaint!='' || row.complaint != null "> {{row.complaint}}
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_of_admission">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date of Admission</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span class="para">{{row.date_of_admission | date: 'dd/MM/yyyy , hh:mm a' }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_of_discharge_orders">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date of Discharge Orders</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div
+                                        *ngIf="row.date_of_discharge_orders == ''|| row.date_of_discharge_orders == null ">
+                                        * </div>
+                                    <div
+                                        *ngIf="row.date_of_discharge_orders!='' || row.date_of_discharge_orders != null ">
+                                        {{row.date_of_discharge_orders | date: 'dd/MM/yyyy , hh:mm a'}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_of_discharge">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Date of Discharge</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.date_of_discharge == ''|| row.date_of_discharge == null "> * </div>
+                                    <div *ngIf="row.date_of_discharge!='' || row.date_of_discharge != null ">
+                                        {{row.date_of_discharge | date: 'dd/MM/yyyy , hh:mm a'}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="bed_days">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Bed Days</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+                                    {{row.bed_days}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="time_for_discharge">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Time Taken for Discharge</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.time_for_discharge || '*'}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    IP-SHEET</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <img (click)="openIpSheet(inpatientsheetmodal, row)" src="assets/back/file-case.png"
+                                        style="height: 45px;width: 45px;cursor: pointer;" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="discharge_summary">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Discharge Summary</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <img (click)="dischargePrint(row)" src="assets/back/profile.png"
+                                        style="height: 45px;width: 45px;cursor: pointer;" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="final_bill">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Bill</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <span class="para">
+                                        <img src="assets/back/transaction.png" (click)="finalbillprint(row)"
+                                            style="height: 50px;width:50px;cursor: pointer;" />
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'uh_id',value:item.uh_id}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'uh_id'; let int = index">
+                                                {{item.uh_id}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select22">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'ip_number',value:item.ip_number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'ip_number'; let int = index">
+                                                {{item.ip_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name',value:item.name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'name'; let int = index">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'age',value:item.age}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'age'; let int = index">
+                                                {{item.age}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'gender',value:item.gender}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'gender'; let int = index">
+                                                {{item.gender}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'phone_number',value:item.phone_number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'phone_number'; let int = index">
+                                                {{item.phone_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<ng-template #inpatientsheetmodal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">In-Patient File</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" class="gth">
+        <div class="text-center" style="background-color: blue;color: white;">
+            <h4>IP - CASE SHEET</h4>
+        </div>
+
+        <div class="p-2" style="overflow: auto;height: 450px;">
+            <div class="text-center p-2">
+                <h5 style="font-weight: 600;">IP-Patient Form</h5>
+            </div>
+            <form [formGroup]="inpatientform">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Patient Name<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="name"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.name.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.name.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.name.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Mobile Number<span style="color:red;">*</span></label>
+                                <input (keypress)="numericOnly($event)" minlength="10" maxlength="10" type="text"
+                                    class="form-control" formControlName="phone_number"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.phone_number.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.phone_number.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.phone_number.errors.required">This value is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Address<span style="color:red;">*</span></label>
+                                <textarea placeholder="Type Address" class="form-control" formControlName="address"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.address.errors}">
+                                    </textarea>
+                                <div *ngIf="typesubmit && typePateint.address.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.address.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Occupation<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="occupation"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.occupation.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.occupation.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.occupation.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Complaint<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="complaint"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.complaint.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.complaint.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.complaint.errors.required">This value is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Referred By<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="reffered_doctor_by"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.reffered_doctor_by.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.reffered_doctor_by.errors"
+                                    class="invalid-feedback">
+                                    <span *ngIf="typePateint.reffered_doctor_by.errors.required">This value is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Diagnosis</label>
+                                <input type="text" class="form-control" formControlName="diagnosis"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Surgery/Procedure</label>
+                                <textarea placeholder="Type Procedure" class="form-control"
+                                    formControlName="surgery_procedure">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>OT Assistant</label>
+                                <input type="text" class="form-control" formControlName="ot_assistant"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Surgeon</label>
+                                <input type="text" class="form-control" formControlName="surgeon"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Anaesthetist</label>
+                                <input type="text" class="form-control" formControlName="anaesthetist"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group p-2">
+                                        <label>Age<span style="color:red;">*</span></label>
+                                        <input maxlength="3" (keypress)="numericOnly($event)" type="text"
+                                            class="form-control" formControlName="age"
+                                            [ngClass]="{'is-invalid': typesubmit && typePateint.age.errors}"
+                                            placeholder="Type something" />
+                                        <div *ngIf="typesubmit && typePateint.age.errors" class="invalid-feedback">
+                                            <span *ngIf="typePateint.age.errors.required">This value is required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group p-2">
+                                        <label>Sex<span style="color:red;">*</span></label>
+                                        <ng-select formControlName="gender"
+                                            [ngClass]="{'is-invalid': typesubmit && typePateint.gender.errors}">
+                                            <ng-option>Male</ng-option>
+                                            <ng-option>Female</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="typesubmit && typePateint.gender.errors" class="invalid-feedback">
+                                            <span *ngIf="typePateint.gender.errors.required">This value is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>OP Patient ID<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="uh_id" readonly
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.uh_id.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.uh_id.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.uh_id.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>IN Patient No<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="ip_number" readonly
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.ip_number.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.ip_number.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.ip_number.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Bed No<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="bed_no"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.bed_no.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.bed_no.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.bed_no.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Room No<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="room_no"
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.room_no.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.room_no.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.room_no.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>DOA<span style="color:red;">*</span></label>
+                                <input type="datetime-local" class="form-control" formControlName="doa" readonly
+                                    [ngClass]="{'is-invalid': typesubmit && typePateint.doa.errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && typePateint.doa.errors" class="invalid-feedback">
+                                    <span *ngIf="typePateint.doa.errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>DOS</label>
+                                <input type="datetime-local" class="form-control" formControlName="doo_operations"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>DOD Orders</label>
+                                <input type="datetime-local" class="form-control" formControlName="doo"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>DOD</label>
+                                <input readonly type="datetime-local" class="form-control" formControlName="dod"
+                                    [min]="currentDate" placeholder="Type something" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Anaesthesia</label>
+                                <input type="text" class="form-control" formControlName="anaesthesia"
+                                    placeholder="Type something" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="p-2">
+            <form [formGroup]="InvestigationForm">
+                <div class="row">
+
+                    <div class="text-center p-2">
+                        <h5 style="font-weight: 600;">INVESTIGATIONS</h5>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Blood Tests:</label>
+                                <ng-select formControlName="blood_tests">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>CT - Scan:</label>
+                                <ng-select formControlName="scanning">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>X-Ray:</label>
+                                <ng-select formControlName="x_ray">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>ECG:</label>
+                                <ng-select formControlName="ecg_echo">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>ECHO:</label>
+                                <ng-select formControlName="pta">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>MRI:</label>
+                                <ng-select formControlName="MRI">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Ultrasound:</label>
+                                <ng-select formControlName="ultra_sound">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Doppler scan:</label>
+                                <ng-select formControlName="doppler_scan">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Culture & Sensitivity:</label>
+                                <ng-select formControlName="culture_sensitivity">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-12">
+                            <div class="form-group p-2">
+                                <label>Biopsy:</label>
+                                <ng-select formControlName="biopsy">
+                                    <ng-option value="Yes">Yes</ng-option>
+                                    <ng-option value="No">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="p-2">
+            <div class="row">
+                <div class="text-center p-2">
+                    <h5 style="font-weight: 600;">ASSESSMENTS</h5>
+                </div>
+                <div>
+                    <mat-tab-group>
+
+                        <mat-tab label="Initial Doctor's Assessement">
+                            <form [formGroup]="initaldctrsForm">
+                                <div class="row">
+
+                                    <div class="text-center p-2">
+                                        <h5 style="font-weight: 600;">Initial Doctor's Assessement</h5>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Complaint & Duration:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="complaint_duration">
+                                                    </textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>H/O Present Illness:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="h_o_present_illness">
+                                                    </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Family History:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="family_history">
+                                                    </textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Drug History:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="drug_history">             </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group p-2">
+                                            <label>Previous Surgeries,if any:</label>
+                                            <textarea placeholder="Type Something" class="form-control"
+                                                formControlName="previous_surgeries">
+                                                </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="m-2">
+                                            <button (click)="openModalPastillness(templateofPastillness)"
+                                                style="font-weight: bold" class="b23 btn-sm">
+                                                PAST ILLNESS
+                                            </button>
+
+                                            <button (click)="openModalPersonltem(templateofPersonAL)"
+                                                style="font-weight: bold" class="b23 btn-sm">
+                                                PERSONAL HISTORY
+                                            </button>
+
+                                            <button (click)="openModalgeneralExam(templateofgenerlExm)"
+                                                style="font-weight: bold" class="b23 btn-sm">
+                                                GENERAL EXAMINATION
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </mat-tab>
+
+                        <mat-tab label="Local Examination">
+                            <!-- <mat-tab-group>
+
+                                <mat-tab label=""> -->
+
+                            <form [formGroup]="earexaminationForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Examination Brief</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="pinna"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- </mat-tab> -->
+
+                            <!--  <mat-tab label="A.Ear">
+
+                                    <form [formGroup]="earexaminationForm">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Pinna</label>
+                                                    <input type="text" class="form-control" formControlName="pinna" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>E.A.C</label>
+                                                    <input type="text" class="form-control" formControlName="e_a_c" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>T.M</label>
+                                                    <input type="text" class="form-control" formControlName="t_m" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Preauricular region</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="preauricular_region" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Post auricular region</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="postauricular_region" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Mastoid Tenderness</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="masthoid_tenderness" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Rinne's</label>
+                                                    <input type="text" class="form-control" formControlName="rinnes" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Weber's</label>
+                                                    <input type="text" class="form-control" formControlName="webers" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>ABC</label>
+                                                    <input type="text" class="form-control" formControlName="abc" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+                                </mat-tab>
+                               
+                               <mat-tab label="B.Nose">
+
+                                    <form [formGroup]="NoseexaminationForm">
+
+                                        <div class="row">
+
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Dorsum</label>
+                                                    <input type="text" class="form-control" formControlName="dorsum" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Vestibute</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="vestibute" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>A.R</label>
+                                                    <input type="text" class="form-control" formControlName="a_r" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>P.R</label>
+                                                    <input type="text" class="form-control" formControlName="p_r" />
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </form>
+
+
+                                </mat-tab>
+
+                                <mat-tab label="C.Throat">
+
+                                    <form [formGroup]="ThroatexaminationForm">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Lips</label>
+                                                    <input type="text" class="form-control" formControlName="lips" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Tongue</label>
+                                                    <input type="text" class="form-control" formControlName="tongue" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Buccal mucosa</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="buccal_mucosa" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Teeth</label>
+                                                    <input type="text" class="form-control" formControlName="teeth" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Gums</label>
+                                                    <input type="text" class="form-control" formControlName="gums" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Palate</label>
+                                                    <input type="text" class="form-control" formControlName="palate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Anterior Pillars</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="anterior_pillars" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Tonsils</label>
+                                                    <input type="text" class="form-control" formControlName="tonsils" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Posterior Pillars</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="posterior_pillars" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>Posterior Pharyngeal wall</label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="posterioir_pharyngeal_wall" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group p-2">
+                                                    <label>I.D.L</label>
+                                                    <input type="text" class="form-control" formControlName="idl" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </mat-tab> -->
+
+
+                            <!-- </mat-tab-group> -->
+                            <form [formGroup]="systemicExaminationForm">
+                                <div class="row">
+
+                                    <div class="text-center p-2">
+                                        <h5 style="font-weight: 600;">SYSTEMIC EXAMINATION</h5>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Respiratory System:</label>
+
+
+                                                <ng-select formControlName="respiratory_system">
+                                                    <ng-option value="Normal Vascular Breath Sounds">Normal Vasicular
+                                                        Breath Sounds</ng-option>
+                                                    <ng-option value="Normal">Normal</ng-option>
+                                                    <ng-option value="Abnormal">Abnormal</ng-option>
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Gastro Intestinal System:</label>
+
+
+                                                <ng-select formControlName="gastro_intestinal_system">
+
+                                                    <ng-option value="Soft">Soft</ng-option>
+                                                    <ng-option value="Non-render">Non-render</ng-option>
+                                                    <ng-option value="No Hepatomagaly">No Hepatomagaly</ng-option>
+                                                    <ng-option value="Normal">Normal</ng-option>
+                                                    <ng-option value="Abnormal">Abnormal</ng-option>
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Cardio Vasicular System:</label>
+                                                <ng-select formControlName="cardio_vascular_system">
+                                                    <ng-option value="S1,S2 Sounds">
+                                                        S<sub>1</sub> , S<sub>2</sub> Sounds</ng-option>
+                                                    <ng-option value="No Murmurs">No Murmurs</ng-option>
+                                                    <ng-option value="S1,S2 Sounds No Murmurs">
+                                                        S<sub>1</sub> , S<sub>2</sub> Sounds No Murmurs</ng-option>
+                                                    <ng-option value="Normal">Normal</ng-option>
+                                                    <ng-option value="Abnormal">Abnormal</ng-option>
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Skeletal System:</label>
+                                                <ng-select formControlName="skelton_system">
+                                                    <ng-option value="Normal">Normal</ng-option>
+                                                    <ng-option value="Abnormal">Abnormal</ng-option>
+                                                </ng-select>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Central Nervous System:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="central_nervous_system">
+                                                        </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-tab>
+
+                        <mat-tab label="Plan of Primary Consultant">
+
+                            <div class="text-center p-2">
+                                <h5 style="font-weight: 600;">Plan of Primary Consultant</h5>
+                            </div>
+
+
+                            <mat-tab-group>
+                                <mat-tab label="Investigations">
+                                    <div class="mt-4" style="overflow: auto;height: 350px;">
+                                        <form [formGroup]="investigationsDoneForm">
+                                            <div class="p-2" style="display: flex;justify-content: space-between;">
+                                                <h5 style="font-weight: 600;">Investigations Done</h5>
+                                                <h5 style="font-weight: 600;">Reports</h5>
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>X-Ray Chest</td>
+                                                        <td>
+                                                            <input type="text" formControlName="xray_adenoids"
+                                                                class="form-control" />
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Plain X-Ray</td>
+                                                        <td>
+                                                            <input type="text" formControlName="vo"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Blood Tests</td>
+                                                        <td>
+                                                            <input type="text" formControlName="xray_pns"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CT - Scan</td>
+                                                        <td>
+                                                            <input type="text" formControlName="xray_nasal_bones"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ultrasound</td>
+                                                        <td>
+                                                            <input type="text" formControlName="pta"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MRI</td>
+                                                        <td>
+                                                            <input type="text" formControlName="ia"
+                                                                class="form-control" />
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Doppler scan</td>
+                                                        <td>
+                                                            <input type="text" formControlName="ct_pns"
+                                                                class="form-control" />
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Culture & Sensitivity</td>
+                                                        <td>
+                                                            <input type="text" formControlName="ct_temporal_bones"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <!-- <tr>
+                                                        <td>VLS</td>
+                                                        <td>
+                                                            <input type="text" formControlName="vls"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr> 
+
+                                                    <tr>
+                                                        <td>U / S Neck</td>
+                                                        <td>
+                                                            <input type="text" formControlName="us_neck"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr> -->
+
+                                                    <tr>
+                                                        <td>FNAC</td>
+                                                        <td>
+                                                            <input type="text" formControlName="fnac"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>ECG</td>
+                                                        <td>
+                                                            <input type="text" formControlName="ecg"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>ECHO</td>
+                                                        <td>
+                                                            <input type="text" formControlName="echo"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Biopsy</td>
+                                                        <td>
+                                                            <input type="text" formControlName="xray_both_mastoids"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Other</td>
+                                                        <td>
+                                                            <input type="text" formControlName="dne"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Blood Tests">
+                                    <div class="mt-4" style="overflow: auto;height: 350px;">
+                                        <form [formGroup]="bloodtestsForm">
+                                            <div class="p-2">
+                                                <h5 style="font-weight: 600;">Blood Tests</h5>
+
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Hb :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="hb"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>BT :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="bt"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>BL Group :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="bl_group"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TC :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="tc"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>CT :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="ct"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>HIV :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="hiv"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>DC :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="dc"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>RBS :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="rbs"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>HCV :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="hcv"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ESR :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="esr"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>Blood Urea :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="blood_urea"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>HBS Ag :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="hbs_ag"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Platelet Count :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="platelet_count"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>Sr.Creatinine :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="sr_creatinine"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                        <td>T3,T4,TSH :</td>
+                                                        <td>
+                                                            <input type="text" formControlName="t3_t4_tsh"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Any other Investigations :</td>
+                                                        <td>
+                                                            <input type="text"
+                                                                formControlName="any_other_investigations"
+                                                                class="form-control" />
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>NBM :</td>
+                                                        <td>
+                                                            <input type="datetime-local" formControlName="nbm_from"
+                                                                class="form-control" />
+
+                                                        </td>
+                                                        <td class="text-center">till</td>
+                                                        <td>
+                                                            <input type="datetime-local" formControlName="nbm_till"
+                                                                class="form-control" />
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Plan for :</td>
+                                                        <td>
+                                                            <textarea class="form-control"
+                                                                formControlName="plan_for"></textarea>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+
+                            <form [formGroup]="primaryConsltntForm">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Provisional Diagnosis :</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="provisional_diagnsis">
+                                                    </textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Plan of Care:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="plan_of_care">
+                                                    </textarea>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Expected Outcome (Prognosis):</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="expected_outcome">
+                                                    </textarea>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group p-2">
+                                                <label>Preventive Aspects of Care:</label>
+                                                <textarea placeholder="Type Something" class="form-control"
+                                                    formControlName="preventive_care">
+                                                    </textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </mat-tab>
+
+                        <mat-tab label="Progress report">
+                            <div class="text-center p-2">
+                                <h5 style="font-weight: 600;">Progress Report</h5>
+                            </div>
+                            <mat-tab-group>
+
+                                <mat-tab label="Add Points">
+                                    <form [formGroup]="doctorProgressReportForm">
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-group p-2">
+                                                    <label for="input-2">Text :
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                        formControlName="progress_point"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-group p-2">
+                                                    <button style="background-color: blue;
+                                                    color: white;
+                                                    width: 60px;
+                                                    margin-top: 30px;
+                                                    height: 38px;
+                                                    font-size: 16px;
+                                                    border: none;
+                                                    border-radius: 5px;" (click)="addapoint()">Add</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-group p-2">
+                                                    <button class="btn btn-warning mt-4"
+                                                        *ngIf="doctorProgressArray.length"
+                                                        (click)="AddDoctorProgrespoints()">Submit</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="m-2">
+                                            <table class="table table-bordered" *ngIf="doctorProgressArray.length">
+                                                <thead style="background-color: blue;">
+                                                    <tr>
+                                                        <th style="color: white;text-align: center;">S.No</th>
+                                                        <th style="color: white;text-align: center">Point </th>
+                                                        <th style="color: white;text-align: center">Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="tr" *ngFor="let a of doctorProgressArray; let i =index;">
+                                                        <td class="text-center ">{{i+1}}</td>
+                                                        <td class="text-center ">{{a.progress_point}}</td>
+                                                        <td class="text-center "><i (click)="removePoint(i)"
+                                                                class="fa-solid fa-trash"></i></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </form>
+                                </mat-tab>
+
+                                <mat-tab label="Points List">
+
+
+                                    <div class="m-2">
+                                        <table class="table table-bordered" *ngIf="pointsofPatientsDctr.length">
+                                            <thead style="background-color: blue;">
+                                                <tr>
+                                                    <th style="color: white;text-align: center;">S.No</th>
+                                                    <th style="color: white;text-align: center">Point </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="tr" *ngFor="let a of pointsofPatientsDctr; let i =index;">
+                                                    <td class="text-center ">{{i+1}}</td>
+                                                    <td class="text-center ">{{a.progress_point}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </mat-tab>
+
+                            </mat-tab-group>
+                        </mat-tab>
+
+                        <mat-tab label="Drug Chart">
+                            <mat-tab-group>
+
+                                <mat-tab label="Add Drug">
+                                    <div class="mt-2" style="overflow: auto;">
+                                        <div class="text-center p-2">
+                                            <h5 style="font-weight: 600;">Add vitals/drugs</h5>
+                                        </div>
+
+                                        <form [formGroup]="drugVitalsCheckForm">
+
+                                            <div class="row">
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Date<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="datetime-local" class="form-control"
+                                                            formControlName="date"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.date.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.date.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.date.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">BP<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" formControlName="bp"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.bp.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.bp.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.bp.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Pulus Rate <span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" formControlName="pulus"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.pulus.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.pulus.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.pulus.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Temperature<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="temperature"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.temperature.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.temperature.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.temperature.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Respirorate<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="respirorate"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.respirorate.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.respirorate.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.respirorate.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">SPO<sub>2</sub> <span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" formControlName="spo2"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.spo2.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.spo2.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.spo2.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Lungs<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" formControlName="lungs"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.lungs.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.lungs.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.lungs.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group p-2">
+                                                        <label for="input-2">Heart Sounds<span
+                                                                style="color:red;">&nbsp;&nbsp;*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="heart_sounds"
+                                                            [ngClass]="{'is-invalid': submitVitals && typeVitals.heart_sounds.errors}" />
+                                                        <div *ngIf="submitVitals && typeVitals.heart_sounds.errors"
+                                                            class="invalid-feedback">
+                                                            <span *ngIf="typeVitals.heart_sounds.errors.required">This
+                                                                value is
+                                                                required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </form>
+
+
+                                        <div class="m-3">
+                                            <div class="p-2">
+                                                <h5 style="font-weight: 600;">Schedule Drugs :</h5>
+                                            </div>
+                                            <form [formGroup]="addingMultipleDrug">
+
+                                                <div class="row">
+
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group p-2">
+                                                            <label for="input-2">Medicine Name<span
+                                                                    style="color:red;">&nbsp;&nbsp;*</span>
+                                                            </label>
+                                                            <ng-select formControlName="medicine_name">
+                                                                <ng-option disabled>Select Medicine</ng-option>
+                                                                <ng-option *ngFor="let a of medicine_data;"
+                                                                    value="{{a.medicine_name}}">{{a.medicine_name}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+
+
+                                                        <div class="form-group p-2">
+                                                            <label for="input-2">Doses<span
+                                                                    style="color:red;">&nbsp;&nbsp;*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="doses" />
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group p-2">
+                                                            <label for="input-2">Route<span
+                                                                    style="color:red;">&nbsp;&nbsp;*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="route" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group p-2">
+                                                            <label for="input-2">Freq<span
+                                                                    style="color:red;">&nbsp;&nbsp;*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="freq" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3" style="margin-top: 30px;">
+                                                        <button (click)="addoneDrugdiet()" style="background-color: blue;
+                                                        color: white;
+                                                        width: 60px;
+                                                        margin-top: -3px;
+                                                        height: 35px;
+                                                        font-size: 16px;
+                                                        border: none;
+                                                        border-radius: 5px;">Add</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-2">
+                                                    <table class="table table-bordered" *ngIf="drugandDietArray.length">
+                                                        <thead style="background-color: blue;">
+                                                            <tr>
+                                                                <th style="color: white;text-align: center;">S.No</th>
+                                                                <th style="color: white;text-align: center">Name of the
+                                                                    Drug
+                                                                </th>
+                                                                <th style="color: white;text-align: center">Doses</th>
+                                                                <th style="color: white;text-align: center">Route</th>
+                                                                <th style="color: white;text-align: center">Freq</th>
+
+                                                                <th style="color: white;text-align: center">Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="tr"
+                                                                *ngFor="let a of drugandDietArray;let i=index;">
+                                                                <td class="text-center ">{{i+1}}</td>
+
+                                                                <td class="text-center ">{{a.medicine_name}}</td>
+                                                                <td class="text-center ">{{a.doses}}</td>
+                                                                <td class="text-center ">{{a.route}}</td>
+                                                                <td class="text-center ">{{a.freq}}</td>
+
+                                                                <td class="text-center "><i (click)="remove(i)"
+                                                                        class="fa-solid fa-trash"></i></td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+
+                                        <div class="text-center p-2">
+                                            <button [disabled]="drugVitalsCheckForm.invalid"
+                                                (click)="submitDayWiseMedicinesSchdl()"
+                                                class="btn btn-warning">Schedule</button>
+                                        </div>
+
+                                    </div>
+
+                                </mat-tab>
+
+                                <mat-tab label="Check Drugs List">
+                                    <div class="mt-2">
+                                        <div class="text-center p-2">
+                                            <h5 style="font-weight: 600;">Day Wise Drugs List</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-2">
+                                        <table class="table table-bordered">
+                                            <thead style="background-color: blue;">
+                                                <tr>
+                                                    <th style="color: white;text-align: center;">S.No</th>
+                                                    <th style="color: white;text-align: center">Date
+                                                    </th>
+                                                    <th style="color: white;text-align: center">BP</th>
+                                                    <th style="color: white;text-align: center">Pulus Rate</th>
+                                                    <th style="color: white;text-align: center">Temperature</th>
+
+                                                    <th style="color: white;text-align: center">Respirorate</th>
+                                                    <th style="color: white;text-align: center">SPO2</th>
+                                                    <th style="color: white;text-align: center">Lungs</th>
+                                                    <th style="color: white;text-align: center">Heart Sounds</th>
+                                                    <th style="color: white;text-align: center">View Medicines</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container
+                                                    *ngIf="particularPatientVitalRecord.length > 0; else noData">
+                                                    <tr class="tr"
+                                                        *ngFor="let a of particularPatientVitalRecord;let i = index;">
+                                                        <td class="text-center ">{{i+1}}</td>
+                                                        <td class="text-center ">{{ a.date_of_vital | date:'dd-MM-YYYY
+                                                            HH:mm:ss'}}</td>
+                                                        <td class="text-center ">{{ a.bp}}</td>
+                                                        <td class="text-center ">{{ a.pulus_rate}}</td>
+                                                        <td class="text-center ">{{ a.temperature}}</td>
+                                                        <td class="text-center ">{{ a.respirorate}}</td>
+                                                        <td class="text-center ">{{ a.spoTwo}}</td>
+                                                        <td class="text-center ">{{ a.lungs}}</td>
+                                                        <td class="text-center ">{{ a.heart_sounds}}</td>
+                                                        <td style="text-align: center;"
+                                                            (click)="viewNseeMedicines(showDaywiseMedicines,a )"><i
+                                                                style="font-size: 20px;cursor: pointer;"
+                                                                class="fa-solid fa-eye"></i></td>
+                                                    </tr>
+
+                                                </ng-container>
+                                                <ng-template #noData>
+                                                    <tr>
+                                                        <td colspan="10" style="text-align: center;">No data available
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </mat-tab>
+
+
+                            </mat-tab-group>
+                        </mat-tab>
+
+
+                        <mat-tab label="Patient Brief">
+
+                            <div class="text-center p-2">
+                                <h5 style="font-weight: 600;">Operation Theatres Notes</h5>
+                            </div>
+
+                            <form [formGroup]="inpatientform">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group p-2">
+                                            <label for="input-2">Brief :
+                                            </label>
+                                            <textarea rows="6" class="form-control"
+                                                formControlName="patient_brief"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </mat-tab>
+
+                    </mat-tab-group>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="text-center p-3">
+            <button (click)="SubmitTotalIPsheet(inpatientsheetmodal)" [disabled]="inpatientform.invalid" style="background-color: blue;
+                color: white;
+                width: 98px;
+                height: 38px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;">Save File</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #templateofPastillness let modal>
+    <div class="modal-header"
+        style="background-color: #e6e4e4;color: black;font-weight: 800;border-bottom: 2px solid black;">
+        <h5 class="modal-title mt-0" style="
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+            sans-serif;">
+            PAST ILLNESS
+        </h5>
+        <button style="background-color: transparent; border: 0px" type="button" class="close" aria-hidden="true"
+            (click)="closeSmallboxes(pastillnestempo)">
+            <i style="font-size: 24px" class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="modal-body for-smallboxes">
+        <div>
+            <form class="row" [formGroup]="pastIllnessForm">
+                <div class="col-12">
+
+                    <div class="for-in-popup">
+
+                        <div class="for-radios">
+                            <label>Hypertension</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="hypertension" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="hypertension" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Allergies</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="allergies" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="allergies" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Diabetes</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="diabetes" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="diabetes" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="for-radios">
+                            <label>Deafness-Family History</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="deafness_family_history" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="deafness_family_history" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="for-radios">
+                            <label>Consanguinity-Family History</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="consanguinity_family_history" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="consanguinity_family_history" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>APD (Gastric Problems)</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="apd_gastric" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="apd_gastric" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Kochs (TB)</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="kochs_tb" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="kochs_tb" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Asthma</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="asthma" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="asthma" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Thyroid Prob</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="thyroid_prob" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="thyroid_prob" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Vertigo</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="vertigo" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="vertigo" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Epilepsy</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="epilepsy" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="epilepsy" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label> CAD (Coronary Artery Disease)</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="coronary_disease" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="coronary_disease" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>CVA (Cerebrovascular Accident)</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="cerebrovascular_accident" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="cerebrovascular_accident" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div style="text-align: center">
+                    <button class="b23 btn-sm m-4" (click)="clear(pastIllnessForm)">
+                        Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #templateofPersonAL let modal>
+    <div class="modal-header"
+        style="background-color: #e6e4e4;color: black;font-weight: 800;border-bottom: 2px solid black;">
+        <h5 class="modal-title mt-0" style="
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+            sans-serif;">
+            PERSONAL HISTORY
+        </h5>
+        <button style="background-color: transparent; border: 0px" type="button" class="close" aria-hidden="true"
+            (click)="closeSmallboxes(pesonalHstrytempo)">
+            <i style="font-size: 24px" class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="modal-body for-smallboxes">
+        <div>
+            <form class="row" [formGroup]="persnlhstryForm">
+                <div class="col-12">
+
+                    <div class="for-in-popup">
+
+                        <div class="for-radios">
+                            <label>NVD</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="cleaning_ears" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="cleaning_ears" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>LSCS</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="oil_in_ears" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="oil_in_ears" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="for-radios">
+                            <label>Smoking</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="smoking" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="smoking" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Alcohol</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="alcohol" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="alcohol" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Pan / Tobacco Chewing</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="pan_or_tobacco_chewing" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="pan_or_tobacco_chewing" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Tubectomy</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="swimming" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="swimming" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="for-radios">
+                            <label>Snoring</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="snoring" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="snoring" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+                        <div class="for-radios">
+                            <label>Menses</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="REGULAR" formControlName="menses" />
+                                    <label>Regular</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="IRREGULAR" formControlName="menses" />
+                                    <label>Irregular</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div style="text-align: center">
+                    <button class="b23 btn-sm m-4" (click)="clear(persnlhstryForm)">
+                        Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #templateofgenerlExm let modal>
+    <div class="modal-header"
+        style="background-color: #e6e4e4;color: black;font-weight: 800;border-bottom: 2px solid black;">
+        <h5 class="modal-title mt-0" style="
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+            sans-serif;">
+            GENERAL EXAMINATION
+        </h5>
+        <button style="background-color: transparent; border: 0px" type="button" class="close" aria-hidden="true"
+            (click)="closeSmallboxes(generalExamtempo)">
+            <i style="font-size: 24px" class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="modal-body for-smallboxes">
+        <div>
+            <form class="row" [formGroup]="generalexaminationForm">
+                <div class="col-12">
+
+                    <div class="for-in-popup">
+
+
+                        <div class="m-1 for-radios">
+                            <label>BUILT</label>
+                            <div style="width: 150px; display: flex; justify-content: space-between">
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="LEAN" formControlName="built" />
+                                    <label>Lean</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="MEDIUM" formControlName="built" />
+                                    <label>Medium</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="OBESE" formControlName="built" />
+                                    <label>Obese</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="m-1 for-radios">
+                            <label>Nourishment</label>
+                            <div style="width: 150px; display: flex; justify-content: space-between">
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="LEAN" formControlName="nourishment" />
+                                    <label>Lean</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="MEDIUM" formControlName="nourishment" />
+                                    <label>Medium</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <input type="radio" value="OBESE" formControlName="nourishment" />
+                                    <label>Obese</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Pallor</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="pallor" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="pallor" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Icterus</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="icterus" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="icterus" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Cyanosis</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="cyanosis" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="cyanosis" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Clubbing</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="clubbing" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="clubbing" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="for-radios">
+                            <label>Pedal Oedama</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="pedal_oedama" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="pedal_oedama" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="for-radios">
+                            <label>Lymphadenopathy</label>
+                            <div style="width: 120px;display: flex;justify-content: space-between;">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="YES" formControlName="lymphadenopathy" />
+                                    <label>Yes</label>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <input type="radio" value="NO" formControlName="lymphadenopathy" />
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div style="text-align: center">
+                    <button class="b23 btn-sm m-4" (click)="clear(generalexaminationForm)">
+                        Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+<!-- /////////////////////////// -->
+
+<ng-template #showDaywiseMedicines let modal>
+    <div class="modal-header"
+        style="background-color: #e6e4e4;color: black;font-weight: 800;border-bottom: 2px solid black;">
+        <h5 class="modal-title mt-0" style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;">
+            Medicines List
+        </h5>
+        <button style="background-color: transparent; border: 0px" type="button" class="close" aria-hidden="true"
+            (click)="closeSmallboxes(medicineslistTempo)">
+            <i style="font-size: 24px" class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="modal-body for-smallboxes">
+        <div class="m-2">
+            <table class="table table-bordered">
+                <thead style="background-color: blue;">
+                    <tr>
+                        <th style="color: white;text-align: center;">S.No</th>
+                        <th style="color: white;text-align: center">Name of the
+                            Drug
+                        </th>
+                        <th style="color: white;text-align: center">Doses</th>
+                        <th style="color: white;text-align: center">Route</th>
+                        <th style="color: white;text-align: center">Freq</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="particularMedicinesforVitals.length > 0; else noData">
+                        <tr class="tr" *ngFor="let a of particularMedicinesforVitals;let i = index;">
+                            <td class="text-center ">{{i+1}}</td>
+                            <td class="text-center ">{{ a.medicine_name}}</td>
+                            <td class="text-center ">{{ a.doses}}</td>
+                            <td class="text-center ">{{ a.route}}</td>
+                            <td class="text-center ">{{ a.freq}}</td>
+                        </tr>
+                    </ng-container>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">No data available
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

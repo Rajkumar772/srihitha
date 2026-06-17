@@ -1,0 +1,74 @@
+<div class="meet-wrap">
+  <div class="card">
+    <h2>Tele Consultation (Google Meet)</h2>
+
+    <div class="actions">
+      <button class="btn primary" (click)="connectGoogle()">Connect Google Calendar</button>
+      <button class="btn" (click)="loadMeetings()">Refresh</button>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Patient Email (optional)</label>
+        <input type="email" [(ngModel)]="patientEmail" placeholder="patient@gmail.com" />
+        <small>If you provide email, Google sends invite automatically.</small>
+      </div>
+
+      <div class="field">
+        <label>Title</label>
+        <input [(ngModel)]="title" />
+      </div>
+
+      <div class="field">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="date" />
+      </div>
+
+      <div class="field">
+        <label>Start Time</label>
+        <input type="time" [(ngModel)]="startTime" />
+      </div>
+
+      <div class="field">
+        <label>Duration (min)</label>
+        <input type="number" [(ngModel)]="durationMin" min="5" step="5" />
+      </div>
+
+      <div class="field full">
+        <label>Description</label>
+        <textarea rows="3" [(ngModel)]="description" placeholder="UHID, symptoms, notes..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn success" (click)="createMeet()">Create Meet Link</button>
+
+    <div class="result" *ngIf="createdMeetLink">
+      <div><b>Meet Link:</b> <a href="javascript:void(0)" (click)="openLink(createdMeetLink!)">{{createdMeetLink}}</a></div>
+      <div><b>Event ID:</b> {{createdEventId}}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Upcoming Meetings (next 7 days)</h3>
+
+    <div class="list" *ngIf="meetings?.length; else noData">
+      <div class="row" *ngFor="let m of meetings">
+        <div class="col">
+          <div class="title">{{m.summary || 'Meeting'}}</div>
+          <div class="sub">
+            {{m.start?.dateTime || m.start?.date}} → {{m.end?.dateTime || m.end?.date}}
+          </div>
+        </div>
+
+        <div class="col right">
+          <button class="btn" [disabled]="!m.meetLink" (click)="openLink(m.meetLink)">Join</button>
+          <button class="btn" (click)="openLink(m.htmlLink)">Calendar</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <div class="muted">No meetings found.</div>
+    </ng-template>
+  </div>
+</div>

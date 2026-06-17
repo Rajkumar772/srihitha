@@ -1,0 +1,42 @@
+@media print {
+    #printPageButton {
+        display: none;
+    }
+}
+
+.button-customize {
+    text-align: center;
+    margin: 20px;
+    height: 2.5rem;
+    width: 9rem;
+    text-align: center;
+    font-family: Gilroy !important;
+    font-size: 1rem !important;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+}
+
+
+table {
+    width: 100%;
+}
+
+th {
+    text-transform: uppercase;
+}
+
+th,
+td,
+tr {
+    border: 1px solid black;
+    padding: 6px;
+    text-align: center;
+}

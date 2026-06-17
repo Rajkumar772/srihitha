@@ -1,0 +1,461 @@
+
+<div class="card user-mgmt-card">
+  <div>
+    <h3 class="h3 user-mgmt-title">
+      User Management
+      <span>
+        <a href="javaScript:;" (click)="openusercreat(openpermission)">
+          <i class="bx bx-user" aria-hidden="true"></i>
+        </a>
+      </span>
+    </h3>
+  </div>
+
+ 
+  <ng-template #openpermission let-modal>
+ 
+    <div class="modal-header um-add-header">
+      <h5 class="modal-title mt-0">ADD User Details</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">
+        ×
+      </button>
+    </div>
+
+
+    <div class="modal-body um-add-body">
+      <div class="card-body">
+        <form [formGroup]="addemployeedetails" (ngSubmit)="submitemployeedata()">
+          <div class="row">
+        
+            <div class="col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="input-name">
+                  Full Name<span class="required-star">*</span>
+                </label>
+                <input type="text" class="form-control" id="input-name" formControlName="name"
+                  oninput="this.value = this.value.toUpperCase()"
+                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Name is required</div>
+                </div>
+              </div>
+            </div>
+
+        
+            <div class="col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="input-number">
+                  Mobile No.<span class="required-star">*</span>
+                </label>
+                <input (keypress)="numericOnly($event)" minlength="10" maxlength="10" type="text" class="form-control"
+                  id="input-number" formControlName="number" (paste)="$event.preventDefault()"
+                  [ngClass]="{ 'is-invalid': submitted && f.number.errors }" />
+                <div *ngIf="submitted && f.number.errors" class="invalid-feedback">
+                  <div *ngIf="f.number.errors.required">
+                    Mobile Number is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        
+            <div class="col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="input-email">Address</label>
+                <input type="text" class="form-control" id="input-email" formControlName="email"
+                  oninput="this.value = this.value.toUpperCase()" style="text-transform: none" />
+              </div>
+            </div>
+          </div>
+          <div class="row um-module-list" *ngIf="totalprojectlist.length > 0">
+            <div class="col-12 col-lg-12 col-xl-12 modal-module-block"
+              *ngFor="let item of totalprojectlist; let i = index">
+              
+              <div class="row um-module-header">
+                <div class="col-md-10">
+                  <div class="um-module-header-main" (click)="openprojectmodules(item.subcollopescnd, item)">
+                    <h5 class="um-module-title">{{ item.title }}</h5>
+                    <i class="bx um-module-chevron"
+                      [ngClass]="item.subcollopescnd ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                  </div>
+                </div>
+
+                <div class="col-md-2 um-module-toggle">
+                  <label class="container um-select-all-container" for="user-checkbox{{ item.title }}00">
+                    <span class="um-select-all-text">{{ item.checkallstatus }}</span>
+                    <input type="checkbox" [checked]="item.checkallmodules" id="user-checkbox{{ item.title }}00"
+                      (change)="checkallmoduledata(item.checkallmodules, item.submenu, item)" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+
+            
+              <div class="row um-submodule-row" *ngIf="item.subcollopescnd">
+                <div class="col-md-3" *ngFor="let subitem of item.submenu; let j = index">
+                  <label class="container um-sub-perm-label"
+                    for="user-checkbox{{ item.title }}{{ subitem.check_sub_menu }}{{ i }}{{ j }}">
+                    <span class="um-sub-perm-text">{{ subitem.title }}</span>
+                    <input type="checkbox" id="user-checkbox{{ item.title }}{{ subitem.check_sub_menu }}{{ i }}{{ j }}"
+                      [checked]="subitem.check_sub_menu"
+                      (change)="selectedsubmodules(subitem.check_sub_menu, subitem, item)" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="row text-center um-add-footer">
+            <div class="col-lg-12">
+              <button type="submit" class="b23">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+
+
+<div class="mat-elevation-z8">
+  <div id="content" #content class="example-container">
+    <table id="table-to-copied" matTableExporter #tab mat-table [dataSource]="permissions" matSort
+      #exporter="matTableExporter">
+
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          S.No
+        </th>
+        <td mat-cell *matCellDef="let p; let i = index" class="cell-center">
+          {{ p.i }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          Full Name
+        </th>
+        <td mat-cell *matCellDef="let p; let i = index" class="cell-left">
+          {{ p.name }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          Phone Number
+        </th>
+        <td mat-cell *matCellDef="let p; let i = index" class="cell-center">
+          {{ p.number }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          E-Mail
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="cell-center">
+          <div *ngIf="row.email == ''"><b>-</b></div>
+          <div *ngIf="row.email != ''" style="text-transform: none">
+            {{ row.email }}
+          </div>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="module_nm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          Modules
+        </th>
+
+        <td mat-cell *matCellDef="let p" class="cell-left">
+          <div class="um-chip-wrapper" *ngIf="p.module_nm?.length">
+
+            <span class="um-chip um-chip--module" *ngFor="let item of p.module_nm | slice: 0: 2">
+              {{ item }}
+            </span>
+
+
+            <button *ngIf="p.module_nm.length > 2" type="button" class="um-chip um-chip--more"
+              (click)="openModulesModal(viewModulesModal, p)">
+              +{{ p.module_nm.length - 2 }} more
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="sub_menu">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          Sub menus
+        </th>
+
+        <td mat-cell *matCellDef="let p" class="cell-left">
+          <div class="um-chip-wrapper" *ngIf="p.sub_menu?.length">
+
+            <span class="um-chip um-chip--submenu" *ngFor="let item2 of p.sub_menu | slice: 0: 2">
+              {{ item2 }}
+            </span>
+
+
+            <button *ngIf="p.sub_menu.length > 2" type="button" class="um-chip um-chip--more"
+              (click)="openSubMenusModal(viewSubMenusModal, p)">
+              +{{ p.sub_menu.length - 2 }} more
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+
+      <ng-template #viewModulesModal let-modal>
+        <div class="modal-header um-pill-header">
+          <h5 class="modal-title">
+            Modules – {{ selectedRow?.name }}
+          </h5>
+          <button type="button" class="close um-pill-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            ×
+          </button>
+        </div>
+
+        <div class="modal-body um-pill-body">
+          <div class="um-pill-container">
+            <span class="um-pill um-pill--module" *ngFor="let m of selectedRow?.module_nm">
+              {{ m }}
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+
+      <ng-template #viewSubMenusModal let-modal>
+        <div class="modal-header um-pill-header">
+          <h5 class="modal-title">
+            Sub Menus – {{ selectedRow?.name }}
+          </h5>
+          <button type="button" class="close um-pill-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            ×
+          </button>
+        </div>
+
+        <div class="modal-body um-pill-body">
+          <div class="um-pill-container">
+            <span class="um-pill um-pill--submenu" *ngFor="let s of selectedRow?.sub_menu">
+              {{ s }}
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell-center" [ngStyle]="headerclass1">
+          Action
+        </th>
+        <td mat-cell *matCellDef="let p; let i = index" class="cell-center">
+          <a href="javaScript:;" (click)="editusermodules(usermoduleModel, p)">
+            <i class="bx bx-pencil action-icon-edit" aria-hidden="true"></i>
+          </a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="javaScript:;">
+            <i class="bx bx-trash action-icon-delete" aria-hidden="true" (click)="deleteAlert(p.id)"></i>
+          </a>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="select0">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'i', value: item.i }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'i';
+                  let int = index
+                ">
+                {{ item.i }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'name', value: item.name }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'name';
+                  let int = index
+                ">
+                {{ item.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="select1">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'number', value: item.number }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'number';
+                  let int = index
+                ">
+                {{ item.number }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="select2">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'email', value: item.email }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'email';
+                  let int = index
+                ">
+                {{ item.email }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="select3">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'module_nm', value: item.module_nm }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'module_nm';
+                  let int = index
+                ">
+                {{ item.module_nm }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="select4">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="cell">
+            <ng-select [(ngModel)]="reset1" class="select" appendTo="body" (change)="columnfilterdata1($event, 0)"
+              [searchable]="true" [clearable]="true">
+              <ng-option [value]="{ key: 'sub_menu', value: item.sub_menu }" *ngFor="
+                  let item of clonedata1
+                    | removeDuplicateJsonObject: 'sub_menu';
+                  let int = index
+                ">
+                {{ item.sub_menu }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </th>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-header-row *matHeaderRowDef="selectColumns; sticky: true" class="example-second-header-row"
+        [ngClass]="{ hide: !hideselect1 }"></tr>
+
+
+      <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns"></tr>
+
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<ng-template #usermoduleModel let-modal>
+
+  <div class="modal-header um-edit-header">
+    <h5 class="modal-title mt-0">User:- {{ userdetails.name }} {{ userdetails.number }} </h5>
+    <button type="button" class="close um-pill-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="modal-body um-edit-body">
+    <div class="card-body">
+      <div class="row um-module-list" *ngIf="totalprojectlist.length > 0">
+        <div class="col-12 col-lg-12 col-xl-12 modal-module-block" *ngFor="let item of totalprojectlist; let i = index">
+
+          <div class="row um-module-header">
+            <div class="col-md-10">
+              <div class="um-module-header-main" (click)="openprojectmodules(item.subcollopescnd, item)">
+                <h5 class="um-module-title">{{ item.title }}</h5>
+                <i class="bx um-module-chevron"
+                  [ngClass]="item.subcollopescnd ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+              </div>
+            </div>
+
+            <div class="col-md-2 um-module-toggle">
+              <label class="container um-select-all-container" for="user-checkbox{{ item.title }}00">
+                <span class="um-select-all-text">{{ item.checkallstatus }}</span>
+                <input type="checkbox" [checked]="item.checkallmodules" id="user-checkbox{{ item.title }}00"
+                  (change)="checkallmoduledata(item.checkallmodules, item.submenu, item)" />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="row um-submodule-row" *ngIf="item.subcollopescnd">
+            <div class="col-md-3" *ngFor="let subitem of item.submenu; let j = index">
+              <label class="container um-sub-perm-label"
+                for="user-checkbox{{ item.title }}{{ subitem.check_sub_menu }}{{ i }}{{ j }}">
+                <span class="um-sub-perm-text">{{ subitem.title }}</span>
+                <input type="checkbox" id="user-checkbox{{ item.title }}{{ subitem.check_sub_menu }}{{ i }}{{ j }}"
+                  [checked]="subitem.check_sub_menu"
+                  (change)="selectedsubmodules(subitem.check_sub_menu, subitem, item)" />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row text-center um-edit-footer">
+        <div class="col-lg-12">
+          <button type="submit" class="b23" (click)="updateuserpermissionlist(user_id)">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<div class="my-overlay" *ngIf="loadingpart">
+  <div class="cusloader"></div>
+  <h5 style="color: white">Please Wait...</h5>
+</div>

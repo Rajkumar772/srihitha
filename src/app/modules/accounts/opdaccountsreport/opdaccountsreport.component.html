@@ -1,0 +1,1237 @@
+<div class="da-page">
+
+
+  <div class="card da-header-card">
+    <div class="da-header-inner">
+      <div class="da-header-text">
+        <h3 class="da-header-title">
+          Analysis
+        </h3>
+        <p class="da-header-subtitle">
+          Real-time OP, IP, Lab & Pharmacy revenue overview
+        </p>
+      </div>
+
+      <span class="da-header-toggle da-hint" (click)="openid()" openid>
+        <a href="javaScript:;" class="da-toggle-btn" aria-label="Switch view">
+          <!-- ✅ hint rings -->
+          <span class="hint-ring"></span>
+          <span class="hint-ring ring2"></span>
+
+          <i class="bx bx-transfer-alt"></i>
+        </a>
+
+        <!-- ✅ small tooltip -->
+        <span class="da-tooltip">Click here</span>
+      </span>
+
+
+    </div>
+  </div>
+
+
+  <div class="card da-header-card">
+    <div class="da-header-inner">
+      <div class="da-header-text">
+        <h3 class="da-header-title1">
+          Total Op Patients </h3>
+        <p class="da-header-subtitle">
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row da-row-gap" *ngIf="shoescard==0">
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--op" *ngIf="shoescard==0">
+        <div class="card-body" (click)="onTodayOpClick(todayscountdata[0],'op')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Today OP</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{todayscountdata[0].today_op_count}}</span>
+                <span style="margin-left:100px"> ₹{{todayscountdata[0].today_op_amount}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-check"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--op" *ngIf="shoescard==0">
+        <div class="card-body" (click)="onTodayOpClick(todayscountdata[0],'ip')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Today IP</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{todayscountdata[0].today_ip_count}}</span>
+                <span style="margin-left:100px">₹{{todayscountdata[0].today_ip_amount}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-check"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--lab" *ngIf="shoescard==0">
+        <div class="card-body" (click)="onTodayOpClick(todayscountdata[0],'lab')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Today Lab</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{todayscountdata[0].today_lab_count}}</span>
+                <span style="margin-left:100px"> ₹{{todayscountdata[0].today_lab_amount}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-test-tube"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--pharma" *ngIf="shoescard==0">
+        <div class="card-body" (click)="onTodayOpClick(todayscountdata[0],'pharma')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Today Pharmacy Purchase</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{todayscountdata[0].today_pharma_purchase_count}}</span>
+                <span style="margin-left:100px"> ₹{{todayscountdata[0].today_pharma_purchase_amount}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-capsule"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--ip" *ngIf="shoescard==0">
+        <div class="card-body" (click)="onTodayOpClick(todayscountdata[0],'sale')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Today Pharmacy Sale</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{todayscountdata[0].today_pharma_sale_count}}</span>
+                <span style="margin-left:100px">₹ {{todayscountdata[0].today_pharma_sale_amount}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-bed"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========= PATIENT COUNTS (shoescard == 1) ========= -->
+  <div class="row da-row-gap" *ngIf="shoescard==1">
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--op">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[0][0],'total')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Total Op Patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span>{{patientscountdata[0][0]?.total_orders }} </span>
+                <span style="margin-left:100px">₹{{patientscountdata[0][0]?.totalamountop | number:'1.0-2'}}</span>
+
+              </h5>
+
+
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--danger">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[0][0],'yesterday')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Yesterday OP Patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[0][0]?.current_orders }} </span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[0][0]?.yesterdayopamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-voice"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--success">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[0][0],'month')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Month OP patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span>{{patientscountdata[0][0]?.seven_amount }}</span>
+                <span style="margin-left:100px">₹{{patientscountdata[0][0]?.thismonthopamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-event"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--warning">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[0][0],'year')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Year OP patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span>{{patientscountdata[0][0]?.thirty_amount }} </span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[0][0]?.thisyearopamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- /////////////ip patient count starts -->
+  <div class="row da-row-gap" *ngIf="shoescard==1">
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--ip">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[1][0],'totalip')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Total IP patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[1][0]?.total_ordersip }} </span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[1][0]?.totalamountip | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div style="background-color: rgb(17, 109, 148);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[1][0],'yesterdayip')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Yesterday IP Patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[1][0]?.current_ordersip }} </span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[1][0]?.yesterdayipamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-voice"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div style="background-color: rgb(55, 86, 140);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[1][0],'monthlyip')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Month IP patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[1][0]?.seven_amountip }}</span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[1][0]?.thismonthipamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-event"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div style="background-color: rgb(167, 45, 98);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[1][0],'yearlyip')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Year IP patients</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span>{{patientscountdata[1][0]?.thirty_amountip }}</span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[1][0]?.thisyearipamount | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /////////////lap cards starts -->
+  <div class="row da-row-gap" *ngIf="shoescard==1">
+    <div class="col-md-3">
+      <div style="background-color: rgb(190, 149, 45);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[2][0],'totallabs')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Total Labs</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[2][0]?.total_orderslabs }}</span>&nbsp;&nbsp;&nbsp;
+                <span style="margin-left:80px"> ₹{{patientscountdata[2][0]?.totalamountlabs | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div style="background-color: rgb(30, 147, 116);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[2][0],'yesterdaylabs')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Yesterday Labs </p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span>{{patientscountdata[2][0]?.current_orderslabs }}</span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[2][0]?.yesterdaylabsamount |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-voice"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--success">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[2][0],'monthlylabs')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Month Labs</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[2][0]?.seven_amountlabs }} </span>&nbsp;&nbsp;&nbsp;
+                <span style="margin-left:80px">₹{{patientscountdata[2][0]?.thismonthlabsamount |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-event"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div style="background-color: rgb(196, 51, 155);border-radius:10px">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[2][0],'yearlylabs')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Year Labs</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[2][0]?.thirty_amountlabs }}</span>&nbsp;&nbsp;&nbsp;
+                <span style="margin-left:80px"> ₹{{patientscountdata[2][0]?.thisyearlabsamount |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row da-row-gap" *ngIf="shoescard==1">
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--warning">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[3][0],'totalpharma')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Total Pharmacy Purchase</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[3][0]?.total_orderspharma }} </span>
+                <span style="margin-left:100px">₹{{patientscountdata[3][0]?.totalamountpharma | number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--success">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[3][0],'yesterdaypharma')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Yesterday Pharmacy Purchase</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[3][0]?.current_orderspharma }}</span>
+                <span style="margin-left:100px">₹{{patientscountdata[3][0]?.yesterdaypharmaamount | number:'1.0-2'
+                  }}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-voice"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--danger">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[3][0],'monthlypharma')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Month Pharmacy Purchase</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[3][0]?.seven_amountpharma }}</span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[3][0]?.thismonthpharmaamount |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-event"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--op">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[3][0],'yearlypharma')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Year Pharmacy Purchase</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[3][0]?.thirty_amountpharma }} </span> &nbsp;&nbsp;
+                <span style="margin-left:100px"> ₹{{patientscountdata[3][0]?.thisyearpharmaamount |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ////Pharmacy sale starts -->
+
+  <div class="row da-row-gap" *ngIf="shoescard==1">
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--warning">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[4][0],'totalpharmasale')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Total Pharmacy Sale</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[4][0]?.total_orderspharma_sale_count }} </span>
+                <span style="margin-left:100px">₹{{patientscountdata[4][0]?.totalamountpharma_sale |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--success">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[4][0],'yesterdaypharmasale')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">Yesterday Pharmacy Sale</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[4][0]?.yesterday_orderspharma_sale_count }}</span>
+                <span style="margin-left:100px">₹{{patientscountdata[4][0]?.yesterdaypharmaamount_sale | number:'1.0-2'
+                  }}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-user-voice"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--danger">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[4][0],'monthlypharmasale')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Month Pharmacy Sale</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[4][0]?.thismonth_orderspharma_sale_count }}</span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[4][0]?.thismonthpharmaamount_sale |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-event"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card da-stat-card da-stat-card--op">
+        <div class="card-body" (click)="OpClickoverall(patientscountdata[4][0],'yearlypharmasale')">
+          <div class="d-flex">
+            <div class="flex-1 overflow-hidden">
+              <p class="da-stat-label text-truncate mb-2" [ngClass]="class">This Year Pharmacy Sale</p>
+              <h5 class="da-stat-value mb-0" [ngClass]="class">
+                <span> {{patientscountdata[4][0]?.thisyear_orderspharma_sale_count }} </span>
+                <span style="margin-left:100px"> ₹{{patientscountdata[4][0]?.thisyearpharmaamount_sale |
+                  number:'1.0-2'}}</span>
+              </h5>
+            </div>
+            <div class="da-stat-icon ms-auto">
+              <i class="bx bx-calendar-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showtodayreport">
+    <div class="card" *ngIf="selectedType" style="padding:10px">
+      <div class="report-container">
+        <h1>
+          Today {{ selectedType | uppercase }} REPORT
+        </h1>
+        <div class="scrollable-table">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
+            <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+
+              <th mat-header-cell *matHeaderCellDef>
+                <!-- {{ column | titlecase }} -->
+                {{ columnHeaderMap[column] || (column | titlecase) }}
+
+              </th>
+              <td mat-cell *matCellDef="let element">
+
+
+                <ng-container *ngIf="column === 'group_test_details'; else normalCell">
+                  <div *ngFor="let test of element.group_test_details">
+                    {{ test.group_name }} - {{ test.group_amount }}
+                  </div>
+                </ng-container>
+
+                <ng-template #normalCell>
+                  {{ element[column] || '_' }}
+                </ng-template>
+
+
+
+              </td>
+
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          </table>
+        </div>
+
+        <div class="no-data" *ngIf="hasSearched && dataSource.data.length === 0">
+          No data available
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- /////op all counts starts -->
+  <div class="mat-elevation-z8" *ngIf="tableType === 'op'" #opTable style="padding:10px">
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilterop($event)">
+    </mat-form-field>
+    <div class="scrollable-table">
+
+      <h2 *ngIf="tableType" class="table-title">
+        {{ displayTitle }}
+      </h2>
+
+      <table mat-table [dataSource]="dataSourceop" matSort>
+
+        <!-- S.No -->
+        <ng-container matColumnDef="i">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
+          <td mat-cell *matCellDef="let row">{{row.i}}</td>
+        </ng-container>
+
+        <!-- UH ID -->
+        <ng-container matColumnDef="uh_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>UH ID</th>
+          <td mat-cell *matCellDef="let row">{{row.uh_id}}</td>
+        </ng-container>
+
+        <!-- Date -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Op Registration Date</th>
+          <td mat-cell *matCellDef="let row">{{row.date | date:'dd-MM-yyyy'}}</td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{row.name}}</td>
+        </ng-container>
+
+        <!-- Gender -->
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+          <td mat-cell *matCellDef="let row">{{row.gender}}</td>
+        </ng-container>
+
+        <!-- Age -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+          <td mat-cell *matCellDef="let row">{{row.age}} {{row.yandm}}</td>
+        </ng-container>
+
+
+        <!-- Phone -->
+        <ng-container matColumnDef="phone_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+          <td mat-cell *matCellDef="let row">{{row.phone_number}}</td>
+        </ng-container>
+
+        <!-- Aadhar -->
+        <ng-container matColumnDef="aadhar">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhar</th>
+          <td mat-cell *matCellDef="let row">{{row.aadhar || '-'}}</td>
+        </ng-container>
+
+        <!-- Address -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+          <td mat-cell *matCellDef="let row">{{row.address}}</td>
+        </ng-container>
+
+        <!-- Doctor -->
+        <ng-container matColumnDef="doctor_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor Name</th>
+          <td mat-cell *matCellDef="let row">{{row.doctor_name}}</td>
+        </ng-container>
+
+        <!-- Department -->
+        <ng-container matColumnDef="doctor_department">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+          <td mat-cell *matCellDef="let row">{{row.doctor_department}}</td>
+        </ng-container>
+
+        <!-- Card Type -->
+        <ng-container matColumnDef="card_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Card Type</th>
+          <td mat-cell *matCellDef="let row">{{row.card_type}}</td>
+        </ng-container>
+
+        <!-- Appointment Type -->
+        <ng-container matColumnDef="card_appointment_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment</th>
+          <td mat-cell *matCellDef="let row">{{row.card_appointment_type}}</td>
+        </ng-container>
+
+        <!-- Patient Type -->
+        <ng-container matColumnDef="patient_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient Type</th>
+          <td mat-cell *matCellDef="let row">{{row.patient_type}}</td>
+        </ng-container>
+
+        <!-- Payment -->
+        <ng-container matColumnDef="payment_way">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Way</th>
+          <td mat-cell *matCellDef="let row">{{row.payment_way}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_types">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type</th>
+          <td mat-cell *matCellDef="let row">{{row.payment_types}}</td>
+        </ng-container>
+
+        <!-- Amount -->
+        <ng-container matColumnDef="consultant_fee">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fee</th>
+          <td mat-cell *matCellDef="let row">₹{{row.consultant_fee}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="discount_amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Discount</th>
+          <td mat-cell *matCellDef="let row">₹{{row.discount_amount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="after_discount_total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Final Amount</th>
+          <td mat-cell *matCellDef="let row">₹{{row.after_discount_total}}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsop; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsop"></tr>
+
+      </table>
+    </div>
+    <!-- <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator> -->
+
+  </div>
+  <!-- /////ip table starts -->
+  <div class="mat-elevation-z8" *ngIf="tableType === 'ip'" #ipTable style="padding:10px">
+
+    <!-- Search Box -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilterip($event)">
+    </mat-form-field>
+
+    <div class="scrollable-table">
+      <h2 *ngIf="tableType" class="table-title">
+        {{ displayTitle }}
+      </h2>
+      <table mat-table [dataSource]="dataSourceip" matSort #ipSort="matSort">
+
+        <!-- S.No -->
+        <ng-container matColumnDef="i">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
+          <td mat-cell *matCellDef="let row">{{ row.i }}</td>
+        </ng-container>
+
+        <!-- UH ID -->
+        <ng-container matColumnDef="uh_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>UH ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.uh_id }}</td>
+        </ng-container>
+
+        <!-- IP Number -->
+        <ng-container matColumnDef="ip_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>IP No</th>
+          <td mat-cell *matCellDef="let row">{{ row.ip_number }}</td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <!-- Gender -->
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+          <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+        </ng-container>
+
+        <!-- Age -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+          <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+        </ng-container>
+
+        <!-- Phone -->
+        <ng-container matColumnDef="phone_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+          <td mat-cell *matCellDef="let row">{{ row.phone_number }}</td>
+        </ng-container>
+        <!-- Admin Date -->
+        <ng-container matColumnDef="admin_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Admit Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.admin_date | date:'dd-MM-yyyy HH:mm' }}</td>
+        </ng-container>
+
+        <!-- Discharge Date -->
+        <ng-container matColumnDef="discharge_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Discharge Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.discharge_date | date:'dd-MM-yyyy HH:mm' }}</td>
+        </ng-container>
+
+        <!-- Aadhar -->
+        <ng-container matColumnDef="aadhar">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhar</th>
+          <td mat-cell *matCellDef="let row">{{ row.aadhar || '-' }}</td>
+        </ng-container>
+
+        <!-- Address -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+          <td mat-cell *matCellDef="let row">{{ row.address }}</td>
+        </ng-container>
+
+        <!-- Doctor -->
+        <ng-container matColumnDef="doctor_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.doctor_name }}</td>
+        </ng-container>
+
+        <!-- Bed No -->
+        <ng-container matColumnDef="bed_no">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Bed</th>
+          <td mat-cell *matCellDef="let row">{{ row.bed_no }}</td>
+        </ng-container>
+
+        <!-- Room Number -->
+        <ng-container matColumnDef="room_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room No</th>
+          <td mat-cell *matCellDef="let row">{{ row.room_number }}</td>
+        </ng-container>
+
+        <!-- Less Advance -->
+        <ng-container matColumnDef="lessadvance">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Less Advance</th>
+          <td mat-cell *matCellDef="let row">{{ row.lessadvance }}</td>
+        </ng-container>
+
+        <!-- Room Type -->
+        <ng-container matColumnDef="room_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.room_type }}</td>
+        </ng-container>
+
+        <!-- Total Days -->
+        <ng-container matColumnDef="t_days">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Days</th>
+          <td mat-cell *matCellDef="let row">{{ row.t_days }}</td>
+        </ng-container>
+
+        <!-- Price -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+          <td mat-cell *matCellDef="let row">₹{{ row.price }}</td>
+        </ng-container>
+
+        <!-- Amount -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell *matCellDef="let row">₹{{ row.amount }}</td>
+        </ng-container>
+
+        <!-- Discharge Amount -->
+        <ng-container matColumnDef="discharge_amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Discharge Amount(Balance)</th>
+          <td mat-cell *matCellDef="let row">₹{{ row.discharge_amount }}</td>
+        </ng-container>
+
+        <!-- Payment Type -->
+        <ng-container matColumnDef="payment_types">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment</th>
+          <td mat-cell *matCellDef="let row">{{ row.payment_types }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsip; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsip"></tr>
+      </table>
+    </div>
+
+  </div>
+  <!-- ///labs table code starts -->
+  <div class="mat-elevation-z8" *ngIf="tableType == 'labs'" #labsTable style="padding:10px">
+    <!-- Search Box -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilterlabs($event)">
+    </mat-form-field>
+
+    <div class="scrollable-table">
+      <h2 *ngIf="tableType" class="table-title">
+        {{ displayTitle }}
+      </h2>
+      <table mat-table [dataSource]="dataSourcelabs" matSort #labsSort="matSort">
+
+        <!-- S.No -->
+        <ng-container matColumnDef="i">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
+          <td mat-cell *matCellDef="let row">{{ row.i }}</td>
+        </ng-container>
+
+        <!-- UH ID -->
+        <ng-container matColumnDef="uh_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>UH ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.uh_id }}</td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <!-- Gender -->
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+          <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+        </ng-container>
+
+        <!-- Age -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+          <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+        </ng-container>
+
+        <!-- Phone Number -->
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+          <td mat-cell *matCellDef="let row">{{ row.number }}</td>
+        </ng-container>
+
+        <!-- Payment Mode -->
+        <ng-container matColumnDef="payment_mode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Mode</th>
+          <td mat-cell *matCellDef="let row">{{ row.payment_mode }}</td>
+        </ng-container>
+
+        <!-- Cash Amount -->
+        <ng-container matColumnDef="cash_amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cash Amount</th>
+          <td mat-cell *matCellDef="let row">{{ row.cash_amount || '-' }}</td>
+        </ng-container>
+
+        <!-- UPI Amount -->
+        <ng-container matColumnDef="upi_amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>UPI Amount</th>
+          <td mat-cell *matCellDef="let row">{{ row.upi_amount || '-' }}</td>
+        </ng-container>
+
+        <!-- Transaction ID -->
+        <ng-container matColumnDef="transaction_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.transaction_id || '-' }}</td>
+        </ng-container>
+
+        <!-- Discount Amount -->
+        <ng-container matColumnDef="discount_amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Discount</th>
+          <td mat-cell *matCellDef="let row">₹{{ row.discount_amount }}</td>
+        </ng-container>
+
+        <!-- Discount % -->
+        <ng-container matColumnDef="discount_per">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Discount %</th>
+          <td mat-cell *matCellDef="let row">{{ row.discount_per }}%</td>
+        </ng-container>
+
+        <!-- Final Amount -->
+        <ng-container matColumnDef="after_discount_total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Final Amount</th>
+          <td mat-cell *matCellDef="let row">₹{{ row.after_discount_total }}</td>
+        </ng-container>
+
+        <!-- Test Status -->
+        <ng-container matColumnDef="test_status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Test Completed</th>
+          <td mat-cell *matCellDef="let row">{{ row.test_status === 'true' ? 'Yes' : 'No' }}</td>
+        </ng-container>
+
+        <!-- Completed Date -->
+        <ng-container matColumnDef="completed_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Completed Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.completed_date ? (row.completed_date | date:'dd-MM-yyyy HH:mm') :
+            '-' }}</td>
+        </ng-container>
+
+
+
+        <!-- Date -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.date | date:'dd-MM-yyyy HH:mm' }}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="group_test_details">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Group Tests
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <ng-container *ngFor="let group of row.group_test_details">
+              {{ group.group_name }} - ₹{{ group.group_amount }} <br />
+            </ng-container>
+          </td>
+        </ng-container>
+
+
+        <!-- Header & Rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnslabs; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnslabs"></tr>
+      </table>
+    </div>
+
+  </div>
+
+
+  <div class="mat-elevation-z8" *ngIf="tableType === 'pharmacy'" #pharmacyTable style="padding:10px">
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilterpharmacy($event)">
+    </mat-form-field>
+    <div class="scrollable-table">
+      <h2 *ngIf="tableType" class="table-title">
+        {{ displayTitle }}
+      </h2>
+      <table mat-table [dataSource]="dataSourcepharmacy" matSort>
+        <ng-container matColumnDef="i">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let r">{{ r.i }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="medicine_name">
+          <th mat-header-cell *matHeaderCellDef>Medicine Name</th>
+          <td mat-cell *matCellDef="let r">{{ r.medicine_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="company_name">
+          <th mat-header-cell *matHeaderCellDef>Company Name</th>
+          <td mat-cell *matCellDef="let r">{{ r.company_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="category_name">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let r">{{ r.category_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="batch_no">
+          <th mat-header-cell *matHeaderCellDef>Batch No</th>
+          <td mat-cell *matCellDef="let r">{{ r.batch_no }}</td>
+        </ng-container>
+        <ng-container matColumnDef="sale_and_purchase_date">
+          <th mat-header-cell *matHeaderCellDef>Purchase Date</th>
+          <td mat-cell *matCellDef="let r">{{ r.sale_and_purchase_date | date:'dd-MM-yyyy' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="expirydate">
+          <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+          <td mat-cell *matCellDef="let r">{{ r.expirydate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pack">
+          <th mat-header-cell *matHeaderCellDef>Pack</th>
+          <td mat-cell *matCellDef="let r">{{ r.pack }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Qty</th>
+          <td mat-cell *matCellDef="let r">{{ r.quantity }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_tabs">
+          <th mat-header-cell *matHeaderCellDef>Total Tabs</th>
+          <td mat-cell *matCellDef="let r">{{ r.total_tabs }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="free_tabs">
+          <th mat-header-cell *matHeaderCellDef>Free</th>
+          <td mat-cell *matCellDef="let r">{{ r.free_tabs }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="mrp_rate">
+          <th mat-header-cell *matHeaderCellDef>MRP</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.mrp_rate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="eachcost">
+          <th mat-header-cell *matHeaderCellDef>Each Cost</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.eachcost }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="purchase_rate">
+          <th mat-header-cell *matHeaderCellDef>Purchase Rate</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.purchase_rate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="purchase_eachcost">
+          <th mat-header-cell *matHeaderCellDef>Purchase Each</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.purchase_eachcost }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="gst_per">
+          <th mat-header-cell *matHeaderCellDef>GST %</th>
+          <td mat-cell *matCellDef="let r">{{ r.gst_per }}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="with_gst_price">
+          <th mat-header-cell *matHeaderCellDef>With GST</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.with_gst_price }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="without_gst_medicine_price">
+          <th mat-header-cell *matHeaderCellDef>Without GST</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.without_gst_medicine_price }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hsncode">
+          <th mat-header-cell *matHeaderCellDef>HSN</th>
+          <td mat-cell *matCellDef="let r">{{ r.hsncode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="schedule_drugs">
+          <th mat-header-cell *matHeaderCellDef>Schedule</th>
+          <td mat-cell *matCellDef="let r">{{ r.schedule_drugs }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnspharma; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnspharma"></tr>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ////sales code start -->
+  <div class="mat-elevation-z8" *ngIf="tableType === 'sale'" #salesTable style="padding:10px">
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFiltersale($event)">
+    </mat-form-field>
+
+    <div class="scrollable-table">
+      <h2 *ngIf="tableType" class="table-title">
+        {{ displayTitle }}
+      </h2>
+      <table mat-table [dataSource]="dataSourcesale" matSort>
+
+        <ng-container matColumnDef="i">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let r">{{ r.i }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="medicine_name">
+          <th mat-header-cell *matHeaderCellDef>Medicine</th>
+          <td mat-cell *matCellDef="let r">{{ r.medicine_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="company_name">
+          <th mat-header-cell *matHeaderCellDef>Company</th>
+          <td mat-cell *matCellDef="let r">{{ r.company_name }}</td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="batch_no">
+          <th mat-header-cell *matHeaderCellDef>Batch No</th>
+          <td mat-cell *matCellDef="let r">{{ r.batch_no }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expirydate">
+          <th mat-header-cell *matHeaderCellDef>Expiry</th>
+          <td mat-cell *matCellDef="let r">{{ r.expirydate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pack">
+          <th mat-header-cell *matHeaderCellDef>Pack</th>
+          <td mat-cell *matCellDef="let r">{{ r.pack || '_'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Qty</th>
+          <td mat-cell *matCellDef="let r">{{ r.quantity || '_'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_tabs">
+          <th mat-header-cell *matHeaderCellDef>Total Tabs</th>
+          <td mat-cell *matCellDef="let r">{{ r.total_tabs }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="free_tabs">
+          <th mat-header-cell *matHeaderCellDef>Free</th>
+          <td mat-cell *matCellDef="let r">{{ r.free_tabs }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="mrp_rate">
+          <th mat-header-cell *matHeaderCellDef>MRP</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.mrp_rate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="eachcost">
+          <th mat-header-cell *matHeaderCellDef>Each Cost</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.eachcost }}</td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="gst_per">
+          <th mat-header-cell *matHeaderCellDef>GST %</th>
+          <td mat-cell *matCellDef="let r">{{ r.gst_per }}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="with_gst_price">
+          <th mat-header-cell *matHeaderCellDef>With GST</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.with_gst_price }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="without_gst_medicine_price">
+          <th mat-header-cell *matHeaderCellDef>Without GST</th>
+          <td mat-cell *matCellDef="let r">₹{{ r.without_gst_medicine_price }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hsncode">
+          <th mat-header-cell *matHeaderCellDef>HSN</th>
+          <td mat-cell *matCellDef="let r">{{ r.hsncode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="schedule_drugs">
+          <th mat-header-cell *matHeaderCellDef>Schedule</th>
+          <td mat-cell *matCellDef="let r">{{ r.schedule_drugs }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="sale_and_purchase_date">
+          <th mat-header-cell *matHeaderCellDef>Sale Date</th>
+          <td mat-cell *matCellDef="let r">{{ r.sale_and_purchase_date | date:'dd-MM-yyyy' }}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnssale; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnssale"></tr>
+
+      </table>
+    </div>
+
+
+  </div>

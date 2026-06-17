@@ -1,0 +1,72 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+<div class="table-responsive p-2">
+    <table class="table">
+        <tbody>
+            <tr style="text-align: center;">
+                <th colspan="18"><strong>Supplier Purchase Reports</strong></th>
+            </tr>
+            <tr>
+                <th><strong>S.No</strong></th>
+                <th><strong>Supplier Name</strong></th>
+                <th><strong>Supplier GST</strong></th>
+                <th><strong>Invoice Number</strong></th>
+                <th><strong>Invoice Date</strong></th>
+                <th><strong>Bill No</strong></th>
+                <th><strong>Total Net Amount</strong></th>
+                <th><strong>Payment Date</strong></th>
+                <th><strong>Payment Mode</strong></th>
+                <th><strong>Transaction ID</strong></th>
+                <th><strong>Cheque Number</strong></th>
+                <th><strong>Payment Status</strong></th>
+            </tr>
+            <tr *ngFor="let a of SupplierpurchaseReports; let i = index;">
+                <td>{{i+1}}</td>
+                <td><strong>{{a.supplier_name }}</strong></td>
+                <td>{{a.supplier_gst}}</td>
+                <td>{{a.invoice_number }}</td>
+                <td>{{a.invoice_date | date : 'dd-MM-YYYY' }}</td>
+                <td><strong>{{a.purchase_bill_no}}</strong></td>
+                <td>{{a.grandtotal | number:'1.2-2'}}</td>
+                <td>{{a.purchase_payment_date | date:'dd-MM-YYYY' || '-'}}</td>
+                <td>{{a.purchase_payment_mode || '-'}}</td>
+                <td>{{a.purchase_transcation_id || '-'}}</td>
+                <td>{{a.purchase_check_number || '-'}}</td>
+                <td>
+                    <span *ngIf="a.purchase_payment_ind == 'NOT CLEARED'">
+                        <h6 style="font-weight: 600;font-size: 13px;" class="text-danger">
+                            {{a.purchase_payment_ind || '-'}}</h6>
+                    </span>
+                    <span *ngIf="a.purchase_payment_ind == 'CLEARED'">
+                        <h6 style="font-weight: 600;font-size: 13px;" class="text-success">
+                            {{a.purchase_payment_ind || '-'}}</h6>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><span style="font-weight: 800;font-size: 18px;">Cleared Amount : </span></td>
+                <td><span style="font-weight: 800;font-size: 18px;">{{cleared |
+                        currency:'INR':'symbol':'1.0-0'}}</span></td>
+                <td><span style="font-weight: 800;font-size: 18px;">Due Amount : </span></td>
+                <td><span style="font-weight: 800;font-size: 18px;">{{notcleared |
+                        currency:'INR':'symbol':'1.0-0'}}</span></td>
+                <td> <span style="font-weight: 800;font-size: 18px;">Grand Total : </span></td>
+                <td> <span style="font-weight: 800;font-size: 18px;">{{getTotalCost() | number:'1.2-2'}}</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

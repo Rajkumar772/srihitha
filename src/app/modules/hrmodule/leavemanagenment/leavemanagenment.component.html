@@ -1,0 +1,442 @@
+<div class="card">
+  <div>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+      Leave Managenment
+      <span style="float: right;">
+        <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+        </a> &nbsp;&nbsp;
+      </span>
+    </h3>
+  </div>
+</div>
+
+
+<div class="card" style="padding:10px">
+  <form (ngSubmit)="categoryubmit()" [formGroup]="Registerform">
+    <div class="row">
+      <div class="mb-3 col-lg-3">
+        <label> From Date<span style="color:red">*</span>
+        </label>
+        <div>
+          <input type="date" formControlName="fromdate" class="form-control mt-1" place="Enter Image"
+            [ngClass]="{'is-invalid': submitted && f['fromdate'].errors}" />
+          <div class="invalid-feedback" *ngIf="submitted && f['fromdate'].errors?.['required']">
+            From Date is required
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-lg-3">
+        <label>To Date<span style="color:red">*</span>
+        </label>
+        <div>
+          <input type="date" formControlName="todate" class="form-control mt-1" place="Enter Image"
+            [ngClass]="{'is-invalid': submitted && f['todate'].errors}" />
+          <div class="invalid-feedback" *ngIf="submitted && f['todate'].errors?.['required']">
+            To Date is required
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-lg-3">
+        <label>Choose Leave Type<span style="color:red">*</span>
+        </label>
+        <div>
+          <ng-select class="rounded-select" formControlName="leavetype"
+            [ngClass]="{'is-invalid': submitted && f['leavetype'].errors}" appendTo="body" dropdownPosition="auto">
+            <ng-option value="" disabled Selected>Select</ng-option>
+            <ng-option value="Casual Leave">Casual Leave</ng-option>
+            <ng-option value="Sick Leave">Sick Leave</ng-option>
+            <ng-option value="Paid Leave">Paid Leave</ng-option>
+          </ng-select>
+          <div class="invalid-feedback" *ngIf="submitted && f['leavetype'].errors?.['required']">
+            Choose Leave Type is required
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-lg-3">
+        <label>Session <span style="color:red">*</span></label>
+        <select formControlName="session" class="form-control">
+          <option value="FULL">Full Day</option>
+          <option value="HALF_AM" [disabled]="isMultiDayRange">Half Day (AM)</option>
+          <option value="HALF_PM" [disabled]="isMultiDayRange">Half Day (PM)</option>
+        </select>
+      </div>
+
+      <div class="mb-3 col-lg-3">
+        <label>Number of Days</label>
+        <!-- <input type="text" class="form-control" formControlName="noofdays"  [value]="daysText" readonly /> -->
+        <input type="text" formControlName="noofdays" class="form-control" readonly />
+      </div>
+
+      <div class="mb-3 col-lg-3">
+        <label>Reason<span style="color:red">*</span>
+        </label>
+        <div>
+          <textarea class="form-control" formControlName="reason" placeholder="Enter Reason" rows="2"
+            [ngClass]="{'is-invalid': submitted && f['reason'].errors}"></textarea>
+          <div class="invalid-feedback" *ngIf="submitted && f['reason'].errors?.['required']">
+            Reason is required
+          </div>
+
+        </div>
+      </div>
+      <div class="mb-3 col-lg-3">
+        <label> Upload Any Evidence Certificate
+          <!-- <span style="color: red">*Image size 2853 x 1275 pixels!</span> -->
+        </label>
+        <div>
+          <input type="file" accept="image/*,.pdf,application/pdf" (change)="onImageChange($event)"
+            formControlName="category_image" class="form-control mt-1" place="Enter Image" />
+          <img *ngIf="review" [src]="reviewimg" alt="Preview" style="width:100px;height:100px" />
+        </div>
+      </div>
+      <div class="mb-3 col-lg-3" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-primary">ADD</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- /////leave management code starts -->
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="card-body">
+      <div class="row toppad" style="background: white;">
+        <div class="mat-elevation-z8" #TABLE style="width:100%">
+          <div class="row buttonhide">
+            <div class="col">
+              <mat-form-field class="sea">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <div class="btns">
+                <!-- <button mat-raised-button class="btn btn-secondary m-1"
+                  (click)="exporter.exportTable('xlsx', {fileName:'Roomtype report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button> -->
+                <button mat-raised-button class="btn btn-secondary m-1"
+                  (click)="exportTable('ExampleMaterialTable','Leave Management Report')">Excel</button>
+
+              </div>
+            </div>
+          </div>
+          <div class="example-container">
+            <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+              #exporter="matTableExporter" id="ExampleMaterialTable">
+              <ng-container matColumnDef="i">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass" style="width:30px"> S.No
+                </th>
+                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+              </ng-container>
+              <ng-container matColumnDef="usr_nm">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Name</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.usr_nm.toUpperCase()}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Mobile Number</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.number}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fromdate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  From Date</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.fromdate | date:'dd-MM-yyyy'}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="todate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  To Date</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.todate | date:'dd-MM-yyyy'}}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="leavetype">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Leave Type</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.leavetype || '__' }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="reason">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Reason</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.reason}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="noofdays">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  No of Days Leave</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.noofdays || '__'
+                    }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="statusupdate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Status</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.status || '__'}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="reject_reason">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Reason for Rejection</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.reject_reason || '__'}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Document/Image
+                </th>
+                <td mat-cell *matCellDef="let element" (click)="imagepopup(element.image)" style="cursor:pointer;">
+                  <ng-container *ngIf="isPdf(element.image); else showImg">
+                    <div class="pdf-thumb">
+                      <i class="bx bxs-file-pdf"></i>
+                      <span>PDF</span>
+                    </div>
+                  </ng-container>
+                  <ng-template #showImg>
+                    <img [src]="element.image" alt="Document/Image" width="120" height="120"
+                      style="object-fit:cover;border-radius:8px;">
+                  </ng-template>
+                </td>
+              </ng-container>
+              <!-- <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="headerclass">Action</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <ng-select *ngIf="user_idadmin == 1" [items]="statusList" bindLabel="label" bindValue="value"
+                    [(ngModel)]="row.status" placeholder="Select Status" appendTo="body" class="status-select"
+                    [ngClass]="getStatusClass(row.status)" (change)="onStatusChange(row)">
+                  </ng-select>
+                  <span *ngIf="user_idadmin == 1" class="badge" [ngClass]="getStatusClass(row.status)">
+                    {{ row.status || 'NULL' }}
+                  </span>
+                </td>
+              </ng-container> -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="headerclass">Action</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <ng-select *ngIf="user_idadmin == 1" [items]="statusList" bindLabel="label" bindValue="value"
+                    [(ngModel)]="row.status" placeholder="Select Status" appendTo="body" class="status-select"
+                    [ngClass]="getStatusClass(row.status)" (change)="onStatusChange(row)">
+                  </ng-select>
+                  <span *ngIf="user_idadmin != 1" class="badge" [ngClass]="getStatusClass(row.status)">
+                    {{ getStatusLabel(row.status) }}
+                  </span>
+                </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="selectSlno" sticky:true>
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                      (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'i' ,value:item.i}" *ngFor="let item of clonedata; let int = index">
+                        {{item.i}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select1">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'usr_nm',value:item.usr_nm}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'usr_nm'; let int = index">
+                        {{item.usr_nm}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select2">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'number',value:item.number}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'number'; let int = index">
+                        {{item.number}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select3">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'fromdate',value:item.fromdate}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'fromdate'; let int = index">
+                        {{item.fromdate}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select4">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'leavetype',value:item.leavetype}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'leavetype'; let int = index">
+                        {{item.leavetype}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+
+              <ng-container matColumnDef="select5">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'reason',value:item.reason}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'reason'; let int = index">
+                        {{item.reason}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select12">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'noofdays',value:item.noofdays}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'noofdays'; let int = index">
+                        {{item.noofdays}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select6">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'reason',value:item.reason}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'reason'; let int = index">
+                        {{item.reason}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select7">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'status',value:item.status}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'status'; let int = index">
+                        {{item.status}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select8">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'reject_reason',value:item.reject_reason}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'reject_reason'; let int = index">
+                        {{item.reject_reason}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+
+
+              <ng-container matColumnDef="select9">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'image',value:item.image}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'image'; let int = index">
+                        {{item.image}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select10">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'status',value:item.status}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'status'; let int = index">
+                        {{item.status}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+              <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true" class="example-second-header-row"
+                [ngClass]="{'hide': !hideselect}">
+            </table>
+          </div>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ///image popup code starts -->
+<!-- ===== Image Popup (same component) ===== -->
+<div class="img-modal" *ngIf="isImgPopupOpen" (click)="closeImgPopup()">
+  <div class="img-modal-card" (click)="$event.stopPropagation()">
+
+    <div class="img-modal-head">
+      <div class="img-modal-title">Preview</div>
+
+      <div class="img-modal-actions">
+        <a class="btn-open" [href]="popupImgUrl" target="_blank" rel="noopener">Open</a>
+        <button type="button" class="btn-close" (click)="closeImgPopup()">✕</button>
+      </div>
+    </div>
+
+    <div class="img-modal-body">
+      <img [src]="popupImgUrl" alt="Preview Image">
+    </div>
+
+  </div>
+</div>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+  <div class="for-spin">
+    <span class="loader"></span>
+    <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+    </p>
+  </div>
+</div>

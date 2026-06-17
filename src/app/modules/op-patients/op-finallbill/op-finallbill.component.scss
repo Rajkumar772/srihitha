@@ -1,0 +1,300 @@
+@media print {
+  #printPageButton {
+    display: none;
+  }
+
+  .hide-on-print {
+    display: none;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .inputs,
+  input {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    overflow: hidden;
+  }
+
+  /* PAGE/BILL SIZE */
+  .bill-editor {
+    overflow: visible !important;
+  }
+
+  .bill-wrapper {
+    width: 190mm;
+    max-width: 190mm;
+    min-width: 190mm;
+    margin: 0 auto;
+    padding: 0 5mm;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .btns {
+    display: none !important;
+  }
+
+  /* PATIENT INFO TABLE */
+  .bill-meta {
+    font-size: 12px;              /* slightly smaller so everything fits */
+  }
+
+  .bill-meta-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .bill-meta-table tr {
+    display: table-row !important;
+  }
+
+  .bill-meta-table td {
+    display: table-cell !important;
+    padding: 2px 3px;
+    white-space: nowrap;
+  }
+
+  /* force nicer column widths for 3 groups:
+     [label][colon][value] x 3 = 9 tds */
+  .bill-meta-table tr td:nth-child(1),
+  .bill-meta-table tr td:nth-child(4),
+  .bill-meta-table tr td:nth-child(7) {
+    width: 18%;                     /* labels */
+  }
+
+  .bill-meta-table tr td:nth-child(2),
+  .bill-meta-table tr td:nth-child(5),
+  .bill-meta-table tr td:nth-child(8) {
+    width: 3%;                      /* colons */
+    text-align: center;
+  }
+
+  .bill-meta-table tr td:nth-child(3),
+  .bill-meta-table tr td:nth-child(6),
+  .bill-meta-table tr td:nth-child(9) {
+    width: 12%;                     /* values */
+  }
+}
+
+
+.button-customize {
+    text-align: center;
+    margin: 20px;
+    height: 2.5rem;
+    width: 9rem;
+    text-align: center;
+    font-family: Gilroy !important;
+    font-size: 1rem !important;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+        margin-left: auto;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.loader {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #0077b6;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border-bottom: 4px solid #0077b6;
+    border-left: 4px solid transparent;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.my-overlay {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: space-between;
+    opacity: 0.6;
+}
+/* ===== BILL LAYOUT (PRINT + SCREEN) ===== */
+
+.bill-editor {
+  padding: 0 !important;
+  overflow-x: auto;           /* horizontal scroll on small screens */
+}
+
+.bill-wrapper {
+  max-width: 900px;           /* bill page width */
+  min-width: 900px;           /* don't shrink – force scroll */
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 24px 32px 40px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+/* ----- Header ----- */
+.bill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* NEW */
+  gap: 16px;
+  border-bottom: 1px solid #dcdcdc;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+.bill-hospital {
+  flex: 1;
+  text-align: right;           /* NEW – force full right */
+}
+
+.bill-hospital-name {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.bill-hospital-address,
+.bill-hospital-contact,
+.bill-hospital-gstin {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+
+/* ----- Title ----- */
+.bill-title-wrap {
+  text-align: center;
+  margin: 16px 0 12px;
+}
+
+.bill-title {
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* shrink the whole info box a bit */
+.bill-meta {
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 6px 10px;      /* moves text away from border */
+  margin: 0 auto 24px;
+  font-size: 14px;
+}
+/* give extra breathing room to the last (rightmost) cell */
+.bill-meta-table tr td:last-child {
+  padding-right: 16px;         /* 👈 pushes OP ID / Date away from border */
+}
+/* and/or shrink the inner table a bit more */
+.bill-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;     /* prevents overflow on print */
+}
+
+.bill-meta-table td {
+  padding: 2px 4px;
+  font-size: 11px;
+  vertical-align: top;
+  word-wrap: break-word;   /* long values won’t push outside */
+}
+
+/* label – little bolder */
+.bill-meta-label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* colon column – very small fixed width */
+.bill-meta-colon {
+  width: 8px;
+  text-align: center;
+}
+
+/* value – takes remaining space */
+.bill-meta-value {
+  padding-right: 8px;
+  white-space: nowrap;        /* keep in one line */
+  word-break: normal;         /* don't split words */
+}
+/* ----- Statement table (just spacing consistency) ----- */
+table {
+  font-size: 14px;
+}
+
+table th,
+table td {
+  padding: 6px 8px;
+}
+
+/* ----- Responsive: for small screens before print ----- */
+@media print {
+  .bill-editor {
+    overflow: visible !important;   /* no scrollbars in print */
+  }
+
+  .bill-wrapper {
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    padding: 0 10mm;
+    max-width: none;
+    min-width: 0;                   /* allow to fit page width */
+  }
+
+  .btns {
+    display: none !important;
+  }
+
+  .bill-meta-table {
+    width: 100%;
+  }
+
+  .bill-meta-table tr {
+    display: table-row !important;
+  }
+
+  .bill-meta-table td {
+    display: table-cell !important;
+    white-space: nowrap;
+    padding: 3px 4px;
+  }
+}

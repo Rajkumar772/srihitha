@@ -1,0 +1,507 @@
+<section class="nutrition-page">
+
+  <div class="nutrition-header">
+    <img src="assets/back/logo2.png" class="nutrition-logo" alt="Hospital Logo">
+
+    <h2>
+      NUTRITION RISK SCREENING FORM
+    </h2>
+  </div>
+
+  <div class="nutrition-patient-line">
+    <span>Patient Name</span>
+    <input [(ngModel)]="header.patient_name">
+
+    <span>UMR No</span>
+    <input [(ngModel)]="header.umr_no">
+
+    <span>Sex</span>
+    <input [(ngModel)]="header.sex">
+
+    <span>Age</span>
+    <input [(ngModel)]="header.age">
+
+    <span>IP No</span>
+    <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="nutrition-box">
+
+    <div class="screening-title-row">
+      <b>Nutritional Risk Screening</b>
+
+      <div>
+        Date :
+        <input type="date" [(ngModel)]="consultant.nutritionDietary.date">
+      </div>
+    </div>
+
+    <table class="initial-table">
+      <thead>
+        <tr>
+          <th colspan="2" class="table-title">Table 1. Initial Screening</th>
+          <th class="yes-no-col">YES</th>
+          <th class="yes-no-col">NO</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="sno">1</td>
+          <td>Is BMI &lt;20.5?</td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.bmi_yes"></td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.bmi_no"></td>
+        </tr>
+
+        <tr>
+          <td class="sno">2</td>
+          <td>Has the patient lost weight within the last 3 months?</td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.weight_loss_yes"></td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.weight_loss_no"></td>
+        </tr>
+
+        <tr>
+          <td class="sno">3</td>
+          <td>Has the patient had a reduced dietary intake in the last week?</td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.reduced_intake_yes"></td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.reduced_intake_no"></td>
+        </tr>
+
+        <tr>
+          <td class="sno">4</td>
+          <td>Is the patient severely ill.? (e.g.in intensive therapy)</td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.severely_ill_yes"></td>
+          <td><input type="checkbox" [(ngModel)]="consultant.nutritionDietary.initial.severely_ill_no"></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="screening-note">
+            Yes: If the answer is ‘Yes’ to any question, the screening in Table 2 is performed.<br>
+            No: If the answer is ‘No’ to all questions, the patient is re-screened at weekly intervals. If the patient
+            e.g. is scheduled for a major operation or has presented any complications as listed in Column 2 of Table 2,
+            a preventive nutritional care plan is considered to avoid the associated risk status.
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="final-table">
+      <thead>
+        <tr>
+          <th colspan="4" class="table-title">Table 2. Final Screening</th>
+        </tr>
+
+        <tr>
+          <th colspan="2">Impaired nutritional status</th>
+          <th colspan="2">Severity of disease (increase in requirements)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Absent Score 0</td>
+          <td>Normal nutritional status:</td>
+          <td>Absent<br>Score 0</td>
+          <td>Normal nutritional requirements</td>
+        </tr>
+
+        <tr>
+          <td>Mild Score 1</td>
+          <td>Wt. loss &gt; 5% in 3 months or Food intake below 50-75% of normal requirement in preceding week.</td>
+          <td>Mild Score 1</td>
+          <td>Chronic diseases like diabetes, hypertension, Kidney diseases, obesity, cancer, COPD, liver diseases</td>
+        </tr>
+
+        <tr>
+          <td>Moderate<br>Score 2</td>
+          <td>Wt loss 5% in 2 months or BMI 18.5-20.5+ impaired general condition or Food intake 25-60% of normal requirement in preceding week.</td>
+          <td>Moderate<br>Score 2</td>
+          <td>Major abdominal surgery, Neurological diseases, severe pneumonia, hematologic malignancy</td>
+        </tr>
+
+        <tr>
+          <td>Severe<br>Score 3</td>
+          <td>Wl. loss &gt; 5% in 1 month (&gt;15% in 3 months) or BMI &lt;18.5 %+ impaired general condition or Food intake 0-25% of normal requirement in preceding week.</td>
+          <td>Severe<br>Score 3</td>
+          <td>Head injury, kidney transplantations, Intensive care patients (APACHE&gt;10)</td>
+        </tr>
+
+        <tr>
+          <td colspan="4" class="score-line">
+            Score (nutritional status)
+            <input [(ngModel)]="consultant.nutritionDietary.nutritional_score">
+            + Score (disease severity)
+            <input [(ngModel)]="consultant.nutritionDietary.disease_score">
+            = Total Score
+            <input [(ngModel)]="consultant.nutritionDietary.total_score">
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="4" class="center-line">
+            Adjustment for age: if ≥ 70 years; add 1 to total score above
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="4" class="center-line">
+            Age adjusted (if applicable) Total score.
+            <input [(ngModel)]="consultant.nutritionDietary.age_adjusted_score">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="nutrition-bottom">
+
+      <div class="line-input-row">
+        Any other diseases:
+        <input [(ngModel)]="consultant.nutritionDietary.other_diseases">
+      </div>
+
+      <p>Based on total patient score, the following evaluations and actions are recommended:</p>
+
+      <p>Score &lt;3: No risk.</p>
+
+      <p>
+        Weekly rescreening of the patient, if the patient is scheduled for major surgery, a preventive nutritional
+        care plan is considered to prevent the associated risk status.
+      </p>
+
+      <p>Score ≥3: High risk.</p>
+
+      <p>The patient is nutritionally at risk and a nutritional care plan is initiated.</p>
+
+      <div class="risk-choice">
+        <span>Nutrition Risk assessment is required:</span>
+
+        <label>
+          <input
+            type="radio"
+            name="nutritionRiskRequired"
+            value="Yes"
+            [(ngModel)]="consultant.nutritionDietary.risk_assessment_required">
+          Yes
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="nutritionRiskRequired"
+            value="No"
+            [(ngModel)]="consultant.nutritionDietary.risk_assessment_required">
+          No
+        </label>
+      </div>
+
+    <div class="line-input-row signature-line">
+
+  <span>Staff’s Signature with name</span>
+
+  <div class="signature-upload-box">
+
+    <input
+      type="text"
+      [(ngModel)]="consultant.nutritionDietary.staff_signature_name"
+      placeholder="Enter Staff Name">
+
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onSignatureUpload(
+        $event,
+        consultant.nutritionDietary,
+        'staff_signature'
+      )">
+
+    <img
+      *ngIf="consultant.nutritionDietary.staff_signature_preview"
+      [src]="consultant.nutritionDietary.staff_signature_preview"
+      class="signature-preview">
+
+  </div>
+
+</div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="nutrition-assessment-page">
+
+  <div class="na-header">
+    <img src="assets/back/logo2.png" class="na-logo">
+
+    <h2>
+      NUTRITION RISK ASSESSMENT
+    </h2>
+  </div>
+
+  <div class="na-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="na-box">
+
+    <h3>Weight changes in last 6 Months -- Yes/No</h3>
+    <h4>(if yes)</h4>
+
+    <div class="na-row">
+      <span>Increased:</span>
+      <label><input type="radio" name="gain" value=">5" [(ngModel)]="consultant.nutritionDietary.assessment.increased_gain"> a) &gt; 5% Gain</label>
+      <label><input type="radio" name="gain" value="5-10" [(ngModel)]="consultant.nutritionDietary.assessment.increased_gain"> b) 5-10% Gain</label>
+      <label><input type="radio" name="gain" value=">10" [(ngModel)]="consultant.nutritionDietary.assessment.increased_gain"> c)&gt; 10% gain</label>
+    </div>
+
+    <div class="na-row">
+      <span>Decreased:</span>
+      <label><input type="radio" name="loss" value="<5" [(ngModel)]="consultant.nutritionDietary.assessment.decreased_loss"> a) &lt; 5% Loss</label>
+      <label><input type="radio" name="loss" value="5-10" [(ngModel)]="consultant.nutritionDietary.assessment.decreased_loss"> b) 5-10% Loss</label>
+      <label><input type="radio" name="loss" value=">10" [(ngModel)]="consultant.nutritionDietary.assessment.decreased_loss"> c) &gt; 10% Loss</label>
+    </div>
+
+    <h3 class="mt-large">Bio-chemical Markers</h3>
+
+    <p>Albumin- <b>3.5-5g/dl</b> Normal: 2.8-3.4 g/dl - Mild Depletion: 2.1-2.7 g/dl</p>
+    <p>Prealbumin- <b>18-45 mg/dl</b> - Normal: 15-17 mg/d! - Mild Depletion: 11 - 14 mg/dl</p>
+
+    <div class="na-line">
+      Nutrionally at Risk: Yes/No
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.nutritionally_at_risk">
+    </div>
+
+    <div class="na-line">
+      Specific Nutrition Intervention Planned: Yes/No
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.specific_intervention">
+    </div>
+
+    <h3>Nutrient Requirement Estimation:</h3>
+
+    <div class="na-tables">
+
+      <table>
+        <thead>
+          <tr><th colspan="2">STRESS FACTOR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Minor injury, clean</td><td>1.2</td></tr>
+          <tr><td>Chronic disease, Bone</td><td>1.3</td></tr>
+          <tr><td>Major Trauma, Infection</td><td>1.5</td></tr>
+          <tr><td>Severe burns</td><td>2</td></tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr><th colspan="2">PROTEIN REQUIREMENT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Normal</td><td>0.8 - 10</td></tr>
+          <tr><td>Burns & Major Trauma</td><td>1.5 - 2.0</td></tr>
+          <tr><td>Hepatic failure with grade</td><td>0.55</td></tr>
+          <tr><td>Renal Failure without Dialysis</td><td>0.6 - 0.8</td></tr>
+          <tr><td>Renal failure with dialysis</td><td>1.2 - 1.5</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <p>Energy: 25-30 K Cal/Kg BW x Stress</p>
+
+    <div class="na-line">
+      Current feeding pattern:
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.current_feeding_pattern">
+    </div>
+
+    <div class="na-line short">
+      Energy Requirement/day
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.energy_requirement_day">
+    </div>
+
+    <div class="na-line short">
+      Protein Requirement/day
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.protein_requirement_day">
+    </div>
+
+    <div class="na-line short">
+      Instruction if any
+      <input [(ngModel)]="consultant.nutritionDietary.assessment.instruction">
+    </div>
+
+    <div class="na-bottom-sign">
+    <div>
+
+  <div class="signature-title">
+    Dietician Name & Signature
+  </div>
+
+  <div class="signature-upload-box">
+
+    <input
+      type="text"
+      [(ngModel)]="consultant.nutritionDietary.assessment.dietician_name_signature"
+      placeholder="Enter Dietician Name">
+
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onSignatureUpload(
+        $event,
+        consultant.nutritionDietary.assessment,
+        'dietician_signature'
+      )">
+
+    <img
+      *ngIf="consultant.nutritionDietary.assessment.dietician_signature_preview"
+      [src]="consultant.nutritionDietary.assessment.dietician_signature_preview"
+      class="signature-preview">
+
+  </div>
+
+</div>
+
+      <div>
+        Date/Time
+        <input type="datetime-local" [(ngModel)]="consultant.nutritionDietary.assessment.date_time">
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="dietary-notes-page">
+
+  <div class="dietary-header">
+    <img src="assets/back/logo2.png" class="dietary-logo" alt="Hospital Logo">
+    <h2>DIETARY NOTES</h2>
+  </div>
+
+<div class="dietary-patient-line">
+
+  <span>Patient Name :</span>
+  <input type="text" [(ngModel)]="header.patient_name">
+
+  <span>UMR No :</span>
+  <input type="text" [(ngModel)]="header.umr_no">
+
+  <span>Sex :</span>
+  <input type="text" [(ngModel)]="header.sex">
+
+  <span>Age :</span>
+  <input type="text" [(ngModel)]="header.age">
+
+  <span>IP No :</span>
+  <input type="text" [(ngModel)]="header.ip_no">
+
+</div>
+
+  <div class="dietary-allergy-line">
+    <span>Food/Drug Allergy</span>
+
+    <label>
+      <input type="radio" name="dietaryAllergy" value="Yes"
+        [(ngModel)]="consultant.nutritionDietary.dietaryNotes.allergy">
+      Yes
+    </label>
+
+    <label>
+      <input type="radio" name="dietaryAllergy" value="No"
+        [(ngModel)]="consultant.nutritionDietary.dietaryNotes.allergy">
+      No
+    </label>
+
+    <span>if yes please specify</span>
+    <input [(ngModel)]="consultant.nutritionDietary.dietaryNotes.allergy_specify">
+  </div>
+
+  <table class="dietary-table">
+    <thead>
+      <tr>
+        <th class="dt-date">Date & Time</th>
+        <th>Dietary Notes / Re Assessment</th>
+        <th class="dt-sign">Signature with<br>Name</th>
+      </tr>
+    </thead>
+
+ <tbody>
+
+  <tr
+    *ngFor="let row of consultant.nutritionDietary.dietaryNotes.rows; let i = index">
+
+    <!-- DATE COLUMN -->
+    <td class="dietary-date-cell">
+
+      <input
+        type="datetime-local"
+        class="dietary-date-input"
+        [(ngModel)]="row.date_time">
+
+    </td>
+
+    <!-- NOTES COLUMN -->
+    <td class="dietary-notes-cell">
+
+      <textarea
+        class="dietary-notes-textarea"
+        [(ngModel)]="row.notes"
+        placeholder="Write Dietary Notes / Re Assessment">
+      </textarea>
+
+    </td>
+
+    <!-- SIGNATURE COLUMN -->
+    <td class="dietary-sign-cell">
+
+   <div class="dietary-sign-wrapper">
+
+  <input
+    type="text"
+    class="dietary-sign-name"
+    [(ngModel)]="row.signature_name"
+    placeholder="Signature Name">
+
+  <input
+    type="file"
+    accept="image/*"
+    (change)="onSignatureUpload($event, row, 'signature')">
+
+  <img
+    *ngIf="row.signature_preview"
+    [src]="row.signature_preview"
+    class="dietary-sign-preview">
+
+</div>
+
+      <button
+        type="button"
+        class="dietary-delete-btn no-print"
+        *ngIf="consultant.nutritionDietary.dietaryNotes.rows.length > 1"
+        (click)="removeDietaryNoteRow(i)">
+
+        Delete
+
+      </button>
+
+    </td>
+
+  </tr>
+
+</tbody>
+  </table>
+
+  <button type="button" class="dietary-add-btn no-print" (click)="addDietaryNoteRow()">
+    + Add Dietary Note
+  </button>
+
+</section>

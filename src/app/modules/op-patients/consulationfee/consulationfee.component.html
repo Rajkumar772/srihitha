@@ -1,0 +1,288 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+         Card Fee Setup
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <div class="card-body" class="gth">
+            <form [formGroup]="addemployeedetailsform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-lg-3 p-2">
+                        <div class="form-group">
+                            <label>Choose Department<span style="color: red;"> * </span></label>
+                            <ng-select formControlName="card_name" (change)="changepn($event)"  appendTo="body"
+                                dropdownPosition="auto"
+                                [ngClass]="{'is-invalid': submitted && f['card_name'].errors }">
+                                <ng-option value="" disabled>Select Department Name </ng-option>
+                                <ng-option value="{{a.roomtype}},{{a.id}}"
+                                    *ngFor="let a of getcardoptions">{{a.roomtype}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['card_name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['card_name'].errors.required"> Department is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Card Type<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="name" placeholder="Ex: General Ward"
+                               [ngClass]="{'is-invalid': submitted && f['name'].errors }" >
+                            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['name'].errors.required"> Add Consultant Type is required
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Consultation Fee<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" id="input-2" formControlName="amount" placeholder="Ex: 1000"
+                                [ngClass]="{'is-invalid': submitted && f['amount'].errors }">
+                            <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
+                                <div *ngIf="f['amount'].errors.required"> Amount is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">ADD</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Card Fee Setup report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="card_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.card_name}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="roomtype">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Card Type</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.roomtype}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Fee</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.amount}}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="edit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Edit </th>
+                                <td style="background-color: white;" mat-cell *matCellDef="let data" class="centre">
+                                    <i style="cursor: pointer;font-size: 20px;" class="fa fa-pencil"
+                                        (click)="editdata(data,openmodel)" aria-hidden="true"></i>
+                                </td>
+                            </ng-container> -->
+
+                            <!-- <ng-container matColumnDef="delete">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Delete
+                                </th>
+                                <td mat-cell *matCellDef="let data" class="centre">
+                                    <i style="cursor: pointer;font-size: 20px;" class="fa fa-trash bg_clr"
+                                        (click)="delete(data)" aria-hidden="true"></i>
+                                </td>
+                            </ng-container> -->
+
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'card_name',value:item.card_name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'card_name'; let int = index">
+                                                {{item.card_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'roomtype',value:item.roomtype}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'roomtype'; let int = index">
+                                                {{item.roomtype}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'amount',value:item.amount}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'amount'; let int = index">
+                                                {{item.amount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<ng-template #openmodel let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Add Type Form</h5>
+            <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="updateform" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Consultancy Type <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="update_roomtype" required
+                                placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submitted && f.update_roomtype.errors }">
+                            <div *ngIf="submitted && f.update_roomtype.errors" class="invalid-feedback">
+                                <div *ngIf="f.update_roomtype.errors.required">Consultancy is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Amount <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="amount" required
+                                placeholder="Enter Amount" [ngClass]="{'is-invalid': submitted && f.amount.errors }">
+                            <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                                <div *ngIf="f.amount.errors.required">Amount is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <br>
+                        <button (click)="editaddroomtype()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+    <div class="for-spin">
+        <span class="loader"></span>
+        <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+        </p>
+    </div>
+</div>

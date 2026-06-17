@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.invoice-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+.company-details h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+.company-details p {
+    margin: 5px 0;
+}
+
+.invoice-details p {
+    margin: 5px 0;
+    text-align: right;
+}
+
+.billing-details h2 {
+    margin-top: 0;
+    font-size: 40px;
+}
+
+.invoice-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-items th,
+.invoice-items td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.invoice-items th {
+    background-color: #f7f7f7;
+}
+
+footer {
+    text-align: left;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #ddd;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+@media print {
+    .invoice-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .btns {
+        display: none;
+    }
+
+    .button-customize {
+        display: none;
+    }
+
+
+    .invoice-items td,
+    .invoice-items th {
+        font-size: 15px;
+    }
+
+    footer {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .invoice-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .company-details {
+        margin-bottom: 10px;
+    }
+
+    .invoice-details {
+        text-align: center;
+    }
+
+    .invoice-items th,
+    .invoice-items td {
+        padding: 6px 8px;
+    }
+}
+
+
+.button-customize {
+    text-align: center;
+    margin: 20px;
+    height: 2.5rem;
+    width: 9rem;
+    text-align: center;
+    font-family: Gilroy !important;
+    font-size: 1rem !important;
+}
+
+@media print {
+    #printPageButton {
+        display: none;
+    }
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+}

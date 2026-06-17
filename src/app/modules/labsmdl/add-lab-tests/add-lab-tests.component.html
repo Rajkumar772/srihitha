@@ -1,0 +1,385 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue ; color: white;">
+            Add Lab Tests
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" style="padding:1%">
+            <div class="card-body" class="gth">
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Category Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select formControlName="category" [formControl]="ngSelectControl"
+                                    (change)="changeType($event, opentimings)" [appendTo]="'body'"
+                                    [dropdownPosition]="'auto'">
+                                    <ng-option *ngFor="let p of category" [value]="[p.id, p.new_type]">
+                                        {{ p.new_type }}
+                                    </ng-option>
+
+                                    <ng-option [value]="'ADD'">Add New Category</ng-option>
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Lab Test Type <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <input type="text" class="form-control" formControlName="lab_type"
+                                    placeholder="Enter Lab Test Type"
+                                    [ngClass]="{'is-invalid': typesubmit && type['lab_type'].errors}" />
+                                <div *ngIf="typesubmit && type['lab_type'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['lab_type'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <input type="text" min="0" class="form-control" formControlName="amount"
+                                    placeholder="Enter Amount" (keypress)="numericOnly($event)"
+                                    [ngClass]="{'is-invalid': typesubmit && type['amount'].errors}" />
+                                <div *ngIf="typesubmit && type['amount'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['amount'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <form [formGroup]="forFieldsform"><br>
+                            <h5 style="font-weight: 800;text-align: center;">ADD FIELD'S FOR THE LAB TEST</h5>
+                            <div class="row">
+                                <div class="col-lg-3 m-2">
+                                    <label>Field Name<span style="color: red;">*</span></label>
+                                    <input formControlName="field_name" class="form-control" type="text" />
+                                </div>
+                                <div class="col-lg-3 m-2">
+                                    <label>UNITS<span style="color: red;">*</span></label>
+                                    <input formControlName="field_units" class="form-control" type="text"
+                                        style="text-transform: none;" />
+                                </div>
+                                <div class="col-lg-3 m-2">
+                                    <label>Field Range Values<span style="color: red;">*</span></label>
+                                    <input formControlName="field_range" class="form-control" type="text" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <button class="btn btn-secondary" style="margin-top:25px;background-color: blue;
+                                    color: white;
+                                    width: 65px;
+                                    height: 38px;
+                                    font-size: 16px;
+                                    border: none;
+                                    border-radius: 5px;" (click)="addBothFields()">ADD</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="m-2">
+                        <table class="w-75" *ngIf="forStoringFields.length">
+                            <thead style="background-color: blue ;">
+                                <tr>
+                                    <th style="color: white;text-align: center;">S.No</th>
+                                    <th style="color: white;text-align: center;">FIELD NAME</th>
+                                    <th style="color: white;text-align: center;">FIELD UNITS</th>
+                                    <th style="color: white;text-align: center;">FIELD RANGE</th>
+                                    <th style="color: white;text-align: center;">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let a of forStoringFields;let i =index;">
+                                    <td style="text-align: center;">{{i+1}}</td>
+                                    <td style="text-align: center;">{{a.field_name}}</td>
+                                    <td style="text-align: center;">{{a.field_units}}</td>
+                                    <td style="text-align: center;">{{a.field_range}}</td>
+                                    <td style="text-align: center;"><i (click)="remove(i)"
+                                            class="fa-solid fa-trash"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <div style="text-align: center;">
+                            <div class="form-group">
+                                <br>
+                                <button type="submit"
+                                    style="background-color: blue;color: white;width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;"
+                                    (click)="typeSubmit()"> Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #opentimings let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Add New Category</h5>
+        <button type="button" (click)="dis()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addCategory">
+            <div class="row">
+                <div class="col-10">
+                    <label>ADD Category<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="new_type"
+                        [ngClass]="{'is-invalid': subs && valid['new_type'].errors}" />
+                    <div *ngIf="subs && valid['new_type'].errors" class="invalid-feedback">
+                        <span *ngIf="valid['new_type'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label></label>
+                    <button (click)="submitCategory()" style="background-color: blue;
+                    color: white;
+                    width: 58px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">ADD</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #centerDataModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" style="font-weight: bold">Edit Details</h5>
+        <button type="button" class="btn-close" (click)="close23()" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" class="gth">
+        <form [formGroup]="Editform" style="height: 80px;">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Labtest Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="lab_type" oninput="this.value = this.value.toUpperCase()"
+                            placeholder="Type something" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Amount<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="amount" placeholder="Type something" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <br>
+                    <button type="submit" style="background-color: blue;
+                    color: white;
+                    width: 98px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;" (click)="edit()">UPDATE</button>&nbsp;
+                    <button type="submit" class="btn btn-danger " (click)="delete()">DELETE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Category Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.category_name}}</span>
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="labtest">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Lab test Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.labtest}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Lab test Amount
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.amount}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="record123(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="edit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Edit</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="centerModal(centerDataModal,row)"
+                                        style="font-size: 20px;cursor: pointer;" class="fa fa-pencil"></i></td>
+                            </ng-container>
+
+
+
+                            <!-- Select Start -->
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'category' ,value:item.category}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.category_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'labtest' ,value:item.labtest}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.labtest}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'amount' ,value:item.amount}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.amount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <!-- <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}"> -->
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View Lab Tests Fields</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <thead style="background-color: blue;">
+                <tr>
+                    <th style="color: white;text-align: center;">S.No</th>
+                    <th style="color: white;text-align: center;">Field Name</th>
+                    <th style="color: white;text-align: center;">Field Units</th>
+                    <th style="color: white;text-align: center;">Field Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="tr" *ngFor="let a of labtestdlsData;let i=index;">
+                    <td style="text-align: center;">{{i+1}}</td>
+                    <td style="text-align: center;">{{a.field}}</td>
+                    <td style="text-align: center; text-transform: none;">{{a.units}}</td>
+                    <td style="text-align: center;">{{a.ranges}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

@@ -1,0 +1,1103 @@
+<div class="row">
+        <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+     Medicine-Sale-Reports
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<br>
+
+<mat-tab-group>
+    <mat-tab label="Sales Form">
+        <div class="card" style="padding: 1%;">
+            <div class="card-body" class="gth">
+                <form>
+                    <div class="row">
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>Search Medicine Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select (change)="changeMedicineName($event)">
+                                    <ng-option *ngFor="let p of data"
+                                        [value]="{'medicine_name': p.medicine_name , 'medicine_id':p.medicine_id }">{{p.medicine_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>Set Favourite Sales Medicine<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select (change)="setAnmedicinetoTrue($event)">
+                                    <ng-option *ngFor="let p of data"
+                                        [value]="{'medicine_name': p.medicine_name, 'medicine_id': p.medicine_id}">
+                                        {{p.medicine_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="heading2" role="alert">
+                                <h3><span class="selected-medicine">{{ FavouriteMedicine }}</span></h3>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                       <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                               <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable">
+                                    <ng-container matColumnDef="i">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            S.No
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="medicine_name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Medicine Name</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.medicine_name}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="gst_per">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Gst Tax(%)</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.gst_per}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_date">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Sale Date</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_date | date:'dd/MM/YYYY'}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="sale_bill_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Bill No</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_bill_no}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="patient_type">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Type</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+                                            <span *ngIf="row.patient_type=='1'"
+                                                style="font-weight: bold;text-transform: uppercase;">
+                                                PHARMACY
+                                            </span>
+                                            <span *ngIf="row.patient_type=='2'"
+                                                style="font-weight: bold;text-transform: uppercase;">
+                                                DOCTOR
+                                            </span>
+                                            <span *ngIf="row.patient_type=='3'"
+                                                style="font-weight: bold;text-transform: uppercase;">
+                                                DIRECT
+                                            </span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="uh_id">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            OP Patient ID</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            <span
+                                                *ngIf="row.uh_id !== 'null' && row.uh_id !== '' && row.uh_id !== null;else noTransactionId">
+                                                {{row.uh_id}}
+                                            </span>
+                                            <ng-template #noTransactionId>_</ng-template>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="patient_name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Patient Name</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.patient_name}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="patient_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Mobile Number</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.patient_number}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+
+                                    <ng-container matColumnDef="payment_mode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Payment Mode</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.payment_mode}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="sale_without_discount_total">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Without Discount total</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_without_discount_total |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="sale_gst_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            GST Tax Amount</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_gst_amount | number:'1.2-2'}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_disc_percnt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Discount (%)</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_disc_percnt }}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="sale_grandtotal">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            GrandTotal</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_grandtotal | number:'1.2-2' }}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="no_of_items">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            No of Items</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.no_of_items}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="latest_sale">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Latest Sale</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">
+                                                <img (click)="getLatestBill(row,popupTempoBilldts)"
+                                                    src="assets/back/invoice.png"
+                                                    style="height: 45px;width: 45px;cursor: pointer;" />
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="select1">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell">
+                                                <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                    (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                    [clearable]="true">
+                                                    <ng-option [value]="{key:'i' ,value:item.i}"
+                                                        *ngFor="let item of clonedata; let int = index">
+                                                        {{item.i}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                                    <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                        class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </mat-tab>
+
+    <mat-tab label="Purchase Form">
+        <div class="card" style="padding: 1%;">
+
+            <div class="card-body" class="gth">
+                <form>
+                    <div class="row">
+
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>Search Medicine Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select (change)="changeMedicinePurchasName($event)">
+                                    <ng-option *ngFor="let p of purchaseData"
+                                        [value]="{'medicine_name': p.medicine_name , 'medicine_id':p.medicine_id }">{{p.medicine_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                             <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                               <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSourceTwo" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable">
+                                    <ng-container matColumnDef="i">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            S.No
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="medicine_name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Medicine Name</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.medicine_name}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="gst_per">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Gst Tax(%)</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.gst_per}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="purchase_bill_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Bill No</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.purchase_bill_no}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="invoice_date">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Invoice Date</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.invoice_date | date:'dd-MM-YYYY'}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="invoice_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Invoice No </th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.invoice_number}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="supplier_name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Supplier Name</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.supplier_name}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+
+                                    <ng-container matColumnDef="supplier_gst">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Supplier GST</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.supplier_gst}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+
+                                    <ng-container matColumnDef="no_of_items">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            NOI</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.no_of_items}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="grandtotal">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Grand Total</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.grandtotal}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="latest_purchase">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Latest Purchase</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">
+                                                <img (click)="getLastPurchaseDts(row,poputoPurchsdts)"
+                                                    src="assets/back/add-to-cart.png"
+                                                    style="height: 45px;width: 45px;cursor: pointer;" />
+                                            </span>
+
+
+                                        </td>
+                                    </ng-container>
+
+
+
+
+                                    <ng-container matColumnDef="select1">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell">
+                                                <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                    (change)="columnfilterdataTwo($event, 0)" [searchable]="true"
+                                                    [clearable]="true">
+                                                    <ng-option [value]="{key:'i' ,value:item.i}"
+                                                        *ngFor="let item of clonedataTwo; let int = index">
+                                                        {{item.i}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="nextdisplayedColumnsSecnd;sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumnsSecnd;sticky: true">
+                                    </tr>
+                                    <tr mat-header-row *matHeaderRowDef="selectColumnsSecnd;sticky: true"
+                                        class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-tab>
+
+    <mat-tab label="Schedule Drugs">
+        <div class="card" style="padding: 1%;">
+
+
+            <div class="card-body" class="gth">
+                <form>
+                    <div class="row">
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>Search Schedule Category<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select (change)="SlectCatgy($event)">
+                                    <ng-option *ngFor="let category of categorizedMedicines"
+                                        [value]="category.medicines">{{category.category}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <div class="row toppad" style="background: white;">
+                            <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                                    <div class="col-2">
+                                        <div class="btns">
+                                            <button mat-raised-button class="btn btn-secondary m-1"
+                                                (click)="exportTable('ExampleMaterialTable','medicine items')">Excel</button>
+                                            <button mat-raised-button style="background-color: blue;
+                                                            color: white;
+                                                            width: 75px;
+                                                            height: 38px;
+                                                            font-size: 16px;
+                                                            border: none;
+                                                            border-radius: 5px;"
+                                                (click)="Printmedicinewise(dataSourceThree)">Print</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="example-container">
+                                    <table mat-table matTableExporter #tab mat-table [dataSource]="dataSourceThree"
+                                        matSort #exporter="matTableExporter" id="ExampleMaterialTable">
+                                        <ng-container matColumnDef="i">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                S.No
+                                            </th>
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sale_date">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Sale Date</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">{{row.sale_date | date:'dd-MM-YYYY'}}</span>
+                                            </td>
+                                        </ng-container>
+
+
+                                        <ng-container matColumnDef="sale_bill_no">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Bill No</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">{{row.sale_bill_no}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="uh_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                OP Patient ID</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span
+                                                    *ngIf="row.uh_id !== 'null' && row.uh_id !== '' && row.uh_id !== null;else noTransactionId">
+                                                    {{row.uh_id}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+                                        </ng-container>
+
+
+                                        <ng-container matColumnDef="patient_name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Patient Name</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para"><b
+                                                        style="text-transform: uppercase;">{{row.patient_name}}</b></span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="patient_number">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Patient Number </th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span
+                                                    *ngIf="row.patient_number !== 'null' && row.patient_number !== '' && row.patient_number !== null;else noTransactionId">
+                                                    {{row.patient_number}}
+                                                </span>
+                                                <ng-template #noTransactionId>_</ng-template>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="payment_mode">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Payment Mode</th>
+
+                                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+
+                                                <span *ngIf="row.payment_mode == 'CASH'">
+                                                    <h6 style="font-weight: 600;" class="text-success">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'UPI'">
+                                                    <h6 style="font-weight: 600;" class="text-info">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'E - CARD'">
+                                                    <h6 style="font-weight: 700;color: #8a0bf2;">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'BOTH'">
+                                                    <h6 style="font-weight: 600;" class="text-dark">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                                <span *ngIf="row.payment_mode == 'CREDIT'">
+                                                    <h6 style="font-weight: 600;" class="text-danger">
+                                                        {{row.payment_mode}}</h6>
+                                                </span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="medicine_name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Medicine Name</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para"><b
+                                                        style="text-transform: uppercase;">{{row.medicine_name}}</b></span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="schedule_drugs">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Schedule</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">
+                                                    <span *ngIf="row.schedule_drugs == 'G'">
+                                                        <h6 style="font-weight: 600;" class="text-success">
+                                                            {{row.schedule_drugs}}</h6>
+                                                    </span>
+                                                    <span *ngIf="row.schedule_drugs == 'H'">
+                                                        <h6 style="font-weight: 600;" class="text-info">
+                                                            {{row.schedule_drugs}}</h6>
+                                                    </span>
+                                                    <span *ngIf="row.schedule_drugs == 'H1'">
+                                                        <h6 style="font-weight: 600;" class="text-dark">
+                                                            {{row.schedule_drugs}}</h6>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="expirydate">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Expiry Date</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">{{row.expirydate}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="eachcost">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Unit Cost</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">{{row.eachcost | number:'1.2-2'}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="total_tabs">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                [ngStyle]="headerclass">
+                                                Quantity / Tabs</th>
+                                            <td mat-cell *matCellDef="let row" class="centre">
+                                                <span class="para">{{row.total_tabs}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="select1">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div class="cell">
+                                                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                        (change)="columnfilterdataThree($event, 0)" [searchable]="true"
+                                                        [clearable]="true">
+                                                        <ng-option [value]="{key:'i' ,value:item.i}"
+                                                            *ngFor="let item of clonedataThree; let int = index">
+                                                            {{item.i}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </th>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="nextdisplayedColumnsThree;sticky: true">
+                                        </tr>
+                                        <tr mat-row
+                                            *matRowDef="let row; columns: nextdisplayedColumnsThree;sticky: true">
+                                        </tr>
+                                        <tr mat-header-row *matHeaderRowDef="selectColumnsThree;sticky: true"
+                                            class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                    </table>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
+<ng-template #popupTempoBilldts let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Full Patient Sale Bill Details</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Latest Medicine Bill Details</h5>
+            </div>
+
+            <div class="table-responsive" style="height: 400px;">
+                <table class="table table-bordered mb-0 ">
+                    <thead>
+                        <tr style="background-color:blue ;font-size: 17px;color: white;">
+                            <th style="color: white;">S.No</th>
+                            <th style="color: white;">Medicine Name</th>
+                            <th style="color: white;">Batch No</th>
+                            <th style="color: white;">Exp Date</th>
+                            <th style="color: white;">MRP Rate / Tab</th>
+                            <th style="color: white;">Quantity</th>
+                            <th style="color: white;">GST %</th>
+                            <th style="color: white;">Gross (Rs)</th>
+                            <th style="color: white;">CGST</th>
+                            <th style="color: white;">SGST</th>
+                            <th style="color: white;">Total Amount</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let i of medicinearr;let y = index">
+                            <tr [ngClass]="i.matched_medicine ? 'active-user' : 'inactive-user'">
+                                <td>{{y+1}}</td>
+                                <td>{{i.medicine_name}}</td>
+                                <td>{{i.batch_no}}</td>
+                                <td>{{i.expirydate}}</td>
+                                <td>{{i.eachcost | number:'1.2-2'}}</td>
+                                <td>{{i.total_tabs }}</td>
+                                <td>{{i.gst_per}}</td>
+                                <td>{{i.sale_without_mrp_total | number:'1.2-2'}}</td>
+                                <td>{{i.sale_cgst_amount | number:'1.2-2'}}</td>
+                                <td>{{i.sale_sgst_amount | number:'1.2-2'}}</td>
+                                <td>{{i.sale_with_mrp_total | number:'1.2-2'}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Patient Full Sale Bills</h5>
+            </div>
+
+
+            <div class="table-responsive" style="height: 400px;">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr style="background-color:blue ;font-size: 17px;color: white;">
+                            <th style="color: white;">S.No</th>
+                            <th style="color: white;">Sale Date</th>
+                            <th style="color: white;">Bill no</th>
+                            <th style="color: white;">OP Patient ID</th>
+                            <th style="color: white;">Name</th>
+                            <th style="color: white;">Number</th>
+                            <th style="color: white;">Mode</th>
+                            <th style="color: white;">Without Discount</th>
+                            <th style="color: white;">GST Tax Amount</th>
+                            <th style="color: white;width: 1%;">Dis (%)</th>
+                            <th style="color: white;"> GrandTotal</th>
+                            <th style="color: white;">NOI</th>
+                            <th style="color: white;">view</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [ngClass]="i.matched_bill ? 'active-user' : 'inactive-user'"
+                            *ngFor="let i of fullPatientSaleBillsdts;let y =index;">
+                            <td>{{y+1}}</td>
+                            <td>{{i.sale_date | date:'dd-MM-YYYY'}}</td>
+                            <td>{{i.sale_bill_no}}</td>
+                            <td>
+                                <span
+                                    *ngIf="i.uh_id !== 'null' && i.uh_id !== '' && i.uh_id !== null;else noTransactionId">
+                                    {{i.uh_id}}
+                                </span>
+                                <ng-template #noTransactionId>_</ng-template>
+                            </td>
+                            <td>{{i.patient_name }}</td>
+                            <td>{{i.patient_number}}</td>
+                            <td>
+                                <span *ngIf="i.payment_mode == 'CASH'">
+                                    <h6 style="font-weight: 600;" class="text-warning">
+                                        {{i.payment_mode}}</h6>
+                                </span>
+                                <span *ngIf="i.payment_mode == 'UPI'">
+                                    <h6 style="font-weight: 600;" class="text-info">
+                                        {{i.payment_mode}}</h6>
+                                </span>
+                                <span *ngIf="i.payment_mode == 'E - CARD'">
+                                    <h6 style="font-weight: 700;color: #8a0bf2;">
+                                        {{i.payment_mode}}</h6>
+                                </span>
+                                <span *ngIf="i.payment_mode == 'BOTH'">
+                                    <h6 style="font-weight: 600;" class="text-dark">
+                                        {{i.payment_mode}}</h6>
+                                </span>
+                                <span *ngIf="i.payment_mode == 'CREDIT'">
+                                    <h6 style="font-weight: 600;" class="text-danger">
+                                        {{i.payment_mode}}</h6>
+                                </span>
+                            </td>
+                            <td>{{i.sale_without_discount_total | number:'1.2-2'}}</td>
+                            <td>{{i.sale_gst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_disc_percnt }}</td>
+                            <td>{{i.sale_grandtotal | number:'1.2-2'}}</td>
+                            <td>{{i.no_of_items}}</td>
+                            <td>
+                                <i style="font-size: 18px;cursor: pointer;"
+                                    (click)="getPatientEachsaledts(centerDataModal, i)" class="fa-solid fa-eye"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #centerDataModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Medicines List </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" style="background-color:azure">
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Bill Details</h5>
+            </div>
+        </div>
+
+
+        <div class="table-responsive" style="height: 400px;">
+            <table class="table table-bordered mb-0 ">
+                <thead>
+                    <tr style="background-color:blue;font-size: 17px;color: white;">
+                        <th style="color: white;">S.No</th>
+                        <th style="color: white;">Medicine Name</th>
+                        <th style="color: white;">Batch No</th>
+                        <th style="color: white;">Exp Date</th>
+                        <th style="color: white;">MRP Rate / Tab</th>
+                        <th style="color: white;">Quantity</th>
+                        <th style="color: white;">GST %</th>
+                        <th style="color: white;">Gross (Rs)</th>
+                        <th style="color: white;">CGST</th>
+                        <th style="color: white;">SGST</th>
+                        <th style="color: white;">Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let i of medicinearrForEach;let y = index">
+                        <tr>
+                            <td>{{y+1}}</td>
+                            <td>{{i.medicine_name}}</td>
+                            <td>{{i.batch_no}}</td>
+                            <td>{{i.expirydate}}</td>
+                            <td>{{i.eachcost | number:'1.2-2'}}</td>
+                            <td>{{i.total_tabs }}</td>
+                            <td>{{i.gst_per}}</td>
+                            <td>{{i.sale_without_mrp_total | number:'1.2-2'}}</td>
+                            <td>{{i.sale_cgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_sgst_amount | number:'1.2-2'}}</td>
+                            <td>{{i.sale_with_mrp_total | number:'1.2-2'}}</td>
+
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #poputoPurchsdts let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Full Supplier Purchase Bill Details</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Latest Purchase Bill Details</h5>
+            </div>
+
+
+            <div class="table-responsive" style="height: 400px;">
+                <table class="table table-bordered mb-0 ">
+                    <thead>
+                        <tr style="background-color:blue;font-size: 17px;color: white;">
+                            <th style="color: white;">S.No</th>
+                            <th style="color: white;">Medicine Name</th>
+                            <th style="color: white;">Batch No</th>
+                            <th style="color: white;">Exp Date</th>
+                            <th style="color: white;">Pack</th>
+                            <th style="color: white;">MRP Rate / Tab</th>
+                            <th style="color: white;">Each cost</th>
+                            <th style="color: white;">GST %</th>
+                            <th style="color: white;">Quantity</th>
+                            <th style="color: white;">Purchase rate</th>
+                            <th style="color: white;">Free Strips</th>
+                            <th style="color: white;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let i of medicinearrPurchase;let y = index">
+                            <tr [ngClass]="i.matched_medicine ? 'active-user' : 'inactive-user'">
+                                <td>{{y+1}}</td>
+                                <td>{{i.medicine_name}}</td>
+                                <td>{{i.batch_no}}</td>
+                                <td>{{i.expirydate}}</td>
+                                <td>{{i.pack }}</td>
+                                <td>{{i.mrp_rate | number:'1.2-2'}}</td>
+                                <td>{{i.eachcost | number:'1.2-2'}}</td>
+                                <td>{{i.gst_per}}</td>
+                                <td>{{i.quantity}}</td>
+                                <td>{{i.purchase_rate}}</td>
+                                <td>
+                                    <span *ngIf="i?.free_tabs !== 'null' && i?.free_tabs !== '' && 
+                            i?.free_tabs !== null;else noTransactionId">
+                                        <b>{{i?.free_tabs || 0}}</b>
+                                    </span>
+                                    <ng-template #noTransactionId>0</ng-template>
+                                </td>
+                                <td>{{i.with_gst_price}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Supplier Full Purchase Bills</h5>
+            </div>
+
+            <div class="table-responsive" style="height: 400px;">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr style="background-color:blue ;font-size: 17px;color: white;">
+                            <th style="color: white;">S.No</th>
+                            <th style="color: white;">Bill no</th>
+                            <th style="color: white;">Invoice Date</th>
+                            <th style="color: white;">Invoice No</th>
+                            <th style="color: white;">Supplier Name</th>
+                            <th style="color: white;">Supplier Number</th>
+                            <!-- <th style="color: white;">Supplier GST</th> -->
+                            <th style="color: white;">Without Discount</th>
+                            <th style="color: white;width: 1%;">Dis (%)</th>
+                            <th style="color: white;">With Discount</th>
+                            <th style="color: white;">CGST </th>
+                            <th style="color: white;">SGST </th>
+                            <th style="color: white;"> GrandTotal</th>
+                            <th style="color: white;">NOI</th>
+                            <th style="color: white;">view</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <ng-container *ngFor="let i of fullSupplrPurchasBillsdts;let y = index">
+                            <tr [ngClass]="i.matched_bill ? 'active-user' : 'inactive-user'">
+                                <td>{{y+1}}</td>
+                                <td>{{i.purchase_bill_no}}</td>
+                                <td>{{i.invoice_date | date:'dd-MM-YYYY'}}</td>
+                                <td>{{i.invoice_number}}</td>
+                                <td>{{i.supplier_name }}</td>
+                                <td>{{i.supplier_number}}</td>
+
+                                <!-- <td>{{i.supplier_gst}}</td> -->
+                                <td>{{i.total_gross | number:'1.2-2' }}</td>
+                                <td>{{i.discount_percent}}</td>
+                                <td>{{i.total_wth_discount | number:'1.2-2'}}</td>
+                                <td>{{i.cgst_amount | number:'1.2-2'}}</td>
+                                <td>{{i.sgst_amount | number:'1.2-2'}}</td>
+                                <td>{{i.grandtotal | number:'1.2-2'}}</td>
+                                <td>{{i.no_of_items}}</td>
+                                <td>
+
+                                    <i style="font-size: 18px;cursor: pointer;"
+                                        (click)="getSuplrEachPrchsdts(centerPurchsModal, i)"
+                                        class="fa-solid fa-eye"></i>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #centerPurchsModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Items List</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" style="background-color:azure">
+
+        <div class="card p-2 mt-3 mb-3" style="border: 1px solid black;">
+            <div class="text-center p-2">
+                <h5 class="modal-title mt-0" style="font-weight: 600;">Bill Details</h5>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered mb-0 ">
+            <thead>
+                <tr style="background-color:blue;font-size: 17px;color: white;">
+                    <th style="color: white;">S.No</th>
+                    <th style="color: white;">Medicine Name</th>
+                    <th style="color: white;">Batch No</th>
+                    <th style="color: white;">Exp Date</th>
+                    <th style="color: white;">Pack</th>
+                    <th style="color: white;">MRP Rate / Tab</th>
+                    <th style="color: white;">Each cost</th>
+                    <th style="color: white;">GST %</th>
+                    <th style="color: white;">Quantity</th>
+                    <th style="color: white;">Purchase rate</th>
+                    <th style="color: white;">Free Strips</th>
+                    <th style="color: white;">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let i of medicinePrchsForEach;let y = index">
+                    <tr>
+                        <td>{{y+1}}</td>
+                        <td>{{i.medicine_name}}</td>
+                        <td>{{i.batch_no}}</td>
+                        <td>{{i.expirydate}}</td>
+                        <td>{{i.pack }}</td>
+                        <td>{{i.mrp_rate | number:'1.2-2'}}</td>
+                        <td>{{i.eachcost | number:'1.2-2'}}</td>
+                        <td>{{i.gst_per}}</td>
+                        <td>{{i.quantity}}</td>
+                        <td>{{i.purchase_rate}}</td>
+                        <td>
+                            <span *ngIf="i?.free_tabs !== 'null' && i?.free_tabs !== '' && 
+                            i?.free_tabs !== null;else noTransactionId">
+                                <b>{{i?.free_tabs || 0}}</b>
+                            </span>
+                            <ng-template #noTransactionId>0</ng-template>
+                        </td>
+                        <td>{{i.with_gst_price}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="cusloader"></div>
+    <h5 style="color: white;">Please Wait...</h5>
+</div>

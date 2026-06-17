@@ -1,0 +1,173 @@
+<section class="analysis-page">
+
+  <div class="analysis-header">
+    <div>
+      <h2>NABH Formula Wise KPI Analysis</h2>
+      <p>Each KPI calculated using its own formula</p>
+    </div>
+
+    <button class="refresh-btn" type="button" (click)="loadFormulaAnalysis()">
+      <i class="fa-solid fa-rotate"></i>
+      Refresh Dashboard
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-box">
+    Loading formula wise analysis...
+  </div>
+
+  <div class="summary-grid" *ngIf="!loading">
+
+    <div class="summary-card total-card">
+      <div class="card-icon">
+        <i class="fa-solid fa-chart-simple"></i>
+      </div>
+      <div>
+        <span>Total KPIs</span>
+        <h3>{{ totalKpis }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card success-card">
+      <div class="card-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <span>Achieved</span>
+        <h3>{{ achievedCount }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card warning-card">
+      <div class="card-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div>
+        <span>Need Attention</span>
+        <h3>{{ attentionCount }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card danger-card">
+      <div class="card-icon">
+        <i class="fa-solid fa-bell"></i>
+      </div>
+      <div>
+        <span>Critical</span>
+        <h3>{{ criticalCount }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card nodata-card">
+      <div class="card-icon">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
+      <div>
+        <span>No Data</span>
+        <h3>{{ noDataCount }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="charts-grid" *ngIf="!loading">
+
+    <div class="chart-card">
+      <div class="card-title">
+        <div>
+          <h3>Formula Calculated KPI Values</h3>
+          <p>Indicator wise calculated values</p>
+        </div>
+      </div>
+
+      <apx-chart *ngIf="barChartOptions" [series]="barChartOptions.series" [chart]="barChartOptions.chart"
+        [xaxis]="barChartOptions.xaxis" [dataLabels]="barChartOptions.dataLabels">
+      </apx-chart>
+    </div>
+
+    <div class="chart-card">
+      <div class="card-title">
+        <div>
+          <h3>KPI Status Distribution</h3>
+          <p>Achieved / Critical / No Data</p>
+        </div>
+      </div>
+
+      <apx-chart *ngIf="pieChartOptions" [series]="pieChartOptions.series" [chart]="pieChartOptions.chart"
+        [labels]="pieChartOptions.labels" [legend]="pieChartOptions.legend">
+      </apx-chart>
+    </div>
+
+  </div>
+
+  <div class="analysis-card" *ngIf="!loading">
+
+    <div class="card-title">
+      <div>
+        <h3>Formula Wise Indicator Analysis</h3>
+        <p>One KPI calculated with one formula</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Indicator</th>
+            <th>Formula</th>
+            <th>Numerator</th>
+            <th>Denominator</th>
+            <th>Value</th>
+            <th>Target</th>
+            <th>Status</th>
+            <th>Analysis</th>
+            <th>Suggested Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of analysisList; let i = index">
+            <td>{{ i + 1 }}</td>
+
+            <td class="indicator-name">
+              {{ item.indicator_no }}. {{ item.indicator_name }}
+            </td>
+
+            <td>
+              <span class="formula-box">
+                {{ item.formula_text }}
+              </span>
+            </td>
+
+            <td>{{ item.numerator_total }}</td>
+
+            <td>{{ item.denominator_total || '-' }}</td>
+
+            <td class="value-bold">
+              {{ item.calculated_value }}
+              {{ getUnit(item.formula_type) }}
+            </td>
+
+            <td>
+              {{ item.target }}
+              {{ item.target_type === 'less' ? 'or less' : 'or more' }}
+            </td>
+
+            <td>
+              <span class="status" [ngClass]="getStatusClass(item.status)">
+                {{ item.status }}
+              </span>
+            </td>
+
+            <td>{{ item.analysis }}</td>
+
+            <td>{{ item.suggested_action }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</section>

@@ -1,0 +1,55 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;">
+        <mat-card class="card">
+
+            <div class="table-responsive p-2" style="margin-top: -20px;">
+
+                <table class="table">
+                    <tbody>
+                        <tr style="text-align: center;">
+                            <th colspan="18"><strong>OT Return Report</strong></th>
+
+                        </tr>
+
+                        <tr>
+                            <th><strong>S.NO</strong></th>
+                            <th><strong>Date</strong></th>
+                            <th><strong>Bill No</strong></th>
+                            <th><strong>Source Name</strong></th>
+                            <th><strong>Total Items</strong></th>
+                            <th><strong>Total Net Amount</strong></th>
+                        </tr>
+
+                        <tr *ngFor="let a of otreturnsReports; let i = index;">
+                            <td>{{a.i}}</td>
+                            <td>{{a.invoice_date | date : 'dd-MM-YYYY' }}</td>
+                            <td>{{a.invoice_number }}</td>
+                            <td>{{a.supplier_name }}</td>
+                            <td>{{a.no_of_items }}</td>
+                            <td>{{a.grandtotal | number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> <span style="font-weight: 800;font-size: 18px;">Grand Total</span></td>
+                            <td> <span style="font-weight: 800;font-size: 18px;">{{getTotalCost() | number:'1.2-2'
+                                    }}</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>

@@ -1,0 +1,460 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Fire Safety & Management
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+                                <!-- ✅ HIDDEN TABLE ONLY FOR EXCEL EXPORT (NO EDIT/DELETE) -->
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Type of Product</th>
+                                            <th>Name of the Equipment</th>
+                                            <th>Company Name</th>
+                                            <th>Model</th>
+                                            <th>Location</th>
+                                            <th>Department</th>
+                                            <!-- <th>Purchase Date</th> -->
+                                            <th>Purchase Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.typeofproduct }}</td>
+                                            <td>{{ row.nameofequipment }}</td>
+                                            <td>{{ row.companyname }}</td>
+                                            <td>{{ row.model }}</td>
+                                            <td>{{ row.location }}</td>
+                                            <td>{{ row.department }}</td>
+                                            <!-- <td>{{ row.purchase_date }}</td> -->
+                                            <td>{{ row.purchase_rate }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="edit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Type of Use
+                                </th>
+
+                                <td mat-cell *matCellDef="let data" class="status-cell">
+                                    <div class="status-date">
+                                        {{ data.warranty_date | date:'yyyy-MM-dd' }}
+                                    </div>
+                                    <div class="status-badge" [ngClass]="getStatusBadgeClass(data.typeofuse)">
+                                        {{ data.typeofuse || 'IN_USE' }}
+                                    </div>
+                                    <i class="fa fa-pencil status-edit-icon"
+                                        [ngClass]="getStatusIconClass(data.typeofuse)"
+                                        (click)="editdata(data, openmodel)">
+                                    </i>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="record123(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+                            <ng-container matColumnDef="typeofproduct">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Type of Product</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.typeofproduct || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="nameofequipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name of the Equipment</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.nameofequipment || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="companyname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Company Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.companyname || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="model">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Model</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.model || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Location</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.location || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.department || '__'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_rate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Purchase Rate</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.purchase_rate || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="quantity">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Quantity</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.quantity || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="assetcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Asset Code</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.assetcode || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="suppliervendorname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier/Vendor Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.suppliervendorname || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="i_ts">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Issued Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.i_ts || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'typeofproduct',value:item.typeofproduct}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'typeofproduct'; let int = index">
+                                                {{item.typeofproduct}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'nameofequipment',value:item.nameofequipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'nameofequipment'; let int = index">
+                                                {{item.nameofequipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'companyname',value:item.companyname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'companyname'; let int = index">
+                                                {{item.companyname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'model',value:item.model}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'model'; let int = index">
+                                                {{item.model}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'location',value:item.location}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'location'; let int = index">
+                                                {{item.location}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'department',value:item.department}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'department'; let int = index">
+                                                {{item.department}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'purchase_rate',value:item.purchase_rate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_rate'; let int = index">
+                                                {{item.purchase_rate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'quantity',value:item.quantity}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'quantity'; let int = index">
+                                                {{item.quantity}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'assetcode',value:item.assetcode}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'assetcode'; let int = index">
+                                                {{item.assetcode}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'suppliervendorname',value:item.suppliervendorname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'suppliervendorname'; let int = index">
+                                                {{item.suppliervendorname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select12">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i_ts',value:item.i_ts}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'i_ts'; let int = index">
+                                                {{item.i_ts}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+<ng-template #openmodel let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Type of Use</h5>
+        <button type="button" class="close" (click)="modalDismiss()">
+            <i class="fa fa-window-close" style="font-size:24px;"></i>
+        </button>
+    </div>
+
+    <div class="modal-body gth">
+        <form [formGroup]="updateform">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" formControlName="assigned_date"
+                            [ngClass]="{'is-invalid': submitted && f.assigned_date.errors}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Choose Type of Use <span class="text-danger">*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="typeofuse"
+                            [ngClass]="{'is-invalid': typesubmit && type['typeofuse'].errors}">
+                            <ng-option value="" disabled Selected>Select Type of Use</ng-option>
+                            <ng-option value="IN_USE">In Use</ng-option>
+                            <ng-option value="NOT_USED">Not Used</ng-option>
+                            <ng-option value="REFILLING">Refilling</ng-option>
+                            <!-- <ng-option value="BROKEN">Broken</ng-option> -->
+                            <ng-option value="EXPIRED">Expired</ng-option>
+                            <ng-option value="DISPOSED">Disposed</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Remarks <span class="text-danger">*</span></label>
+                        <textarea class="form-control" formControlName="remarks" rows="3"
+                            placeholder="Enter Remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- Button -->
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-primary px-4" (click)="editaddroomtype()">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View History</h5>
+        <!-- <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button> -->
+        <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+            <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: #0d6efd;">
+                <tr>
+                    <th style="color:white; text-align:center;">S.No</th>
+                    <th style="color:white; text-align:center;">Date</th>
+                    <th style="color:white; text-align:center;">Type of Use</th>
+                    <th style="color:white; text-align:center;">Remarks</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let a of equipmentData; let i = index">
+                    <td style="text-align:center;">{{ i + 1 }}</td>
+                    <td style="text-align:center;">{{ a.assigned_date || '__'}}</td>
+                    <td style="text-align:center;">{{ a.typeofuse || '__'}}</td>
+                    <td style="text-align:center;">{{ a.remarks || '__'}}</td>
+
+                </tr>
+                <tr *ngIf="!equipmentData || equipmentData.length === 0">
+                    <td colspan="5" class="text-center text-muted fw-bold">
+                        No data available
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

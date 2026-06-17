@@ -1,0 +1,211 @@
+<div class="action-bar no-print">
+    <button mat-raised-button color="primary" class="action-btn" (click)="print()">
+        Print
+    </button>
+
+    <button mat-raised-button color="primary" class="action-btn" (click)="Back()">
+        Back
+    </button>
+</div>
+
+<div class="bill-page" *ngIf="bill_data?.length">
+
+    <div class="bill-header">
+        <div class="logo-box">
+            <img src="assets/back/PRINTLOGO.png" alt="Hospital Logo">
+        </div>
+
+        <div class="hospital-info">
+            <h2>SRIHITHA CHILDREN'S HOSPITAL</h2>
+            <p>46-7-23, Danavaipeta, Park Road</p>
+            <p><b>RAJAHMUNDRY.</b> PH:-244666</p>
+        </div>
+    </div>
+
+    <h3 class="bill-title">RECEIPT</h3>
+
+    <div class="patient-card">
+        <table>
+            <tr>
+                <td><b>Patient Name</b></td>
+                <td>: {{ bill_data[0]?.name || '-' }}</td>
+                <td><b>Age / Sex</b></td>
+                <td>: {{ bill_data[0]?.age || '-' }} / {{ bill_data[0]?.gender?.charAt(0) || '-' }}</td>
+            </tr>
+
+            <tr>
+                <td><b>UHID</b></td>
+                <td>: {{ bill_data[0]?.uh_id || '-' }}</td>
+                <td><b>IP No</b></td>
+                <td>: {{ bill_data[0]?.ip_number || '-' }}</td>
+            </tr>
+
+            <tr>
+                <td><b>Address</b></td>
+                <td>: {{ bill_data[0]?.address || '-' }}</td>
+                <td><b>Mobile No</b></td>
+                <td>: {{ bill_data[0]?.phone_number || '-' }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bill-table-wrapper">
+        <table class="bill-table">
+            <thead>
+                <tr>
+                    <th>Statement of Bill</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr [ngClass]="{'hide-on-print': rent_room == 0}">
+                    <td>Room Rent</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="rent_room" (keypress)="numericOnly($event)"
+                            (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': treatment_charges == 0}">
+                    <td>Treatment Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="treatment_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': equipment_charges == 0}">
+                    <td>Equipment Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="equipment_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': blood == 0}">
+                    <td>Blood</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="blood" (keypress)="numericOnly($event)"
+                            (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': drug_charges == 0}">
+                    <td>Drugs Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="drug_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': nursing_charges == 0}">
+                    <td>Nursing Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="nursing_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': misc_charges == 0}">
+                    <td>Misc. Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="misc_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': pulse_oximeter == 0}">
+                    <td>Pulse-Oximeter</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="pulse_oximeter"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr [ngClass]="{'hide-on-print': oxygen_charges == 0}">
+                    <td>Oxygen Charges</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="oxygen_charges"
+                            (keypress)="numericOnly($event)" (ngModelChange)="calculateGrandTotal()">
+                    </td>
+                </tr>
+
+                <tr class="grand-total-row">
+                    <td>Grand Total</td>
+                    <td>
+                        <input class="amount-input total-input" type="text" [value]="grandTotal" readonly>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Paid Amount In Words</td>
+                    <td class="words-cell">
+                        {{ INwords }} RUPEES ONLY /-
+                    </td>
+                </tr>
+
+                <tr class="no-print">
+                    <td>Payment Mode</td>
+                    <td>
+                        <label class="pay-mode">
+                            <input type="radio" [(ngModel)]="paymentMode" value="CASH" (change)="onPaymentModeChange()">
+                            Cash
+                        </label>
+
+                        <label class="pay-mode">
+                            <input type="radio" [(ngModel)]="paymentMode" value="UPI" (change)="onPaymentModeChange()">
+                            UPI
+                        </label>
+
+                        <label class="pay-mode">
+                            <input type="radio" [(ngModel)]="paymentMode" value="BOTH" (change)="onPaymentModeChange()">
+                            Both
+                        </label>
+                    </td>
+                </tr>
+
+                <tr class="no-print" *ngIf="paymentMode === 'BOTH'">
+                    <td>Cash Amount</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="cash" (keypress)="numericOnly($event)">
+                    </td>
+                </tr>
+
+                <tr class="no-print" *ngIf="paymentMode === 'BOTH'">
+                    <td>UPI Amount</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="upi" (keypress)="numericOnly($event)">
+                    </td>
+                </tr>
+
+                <tr class="no-print" *ngIf="paymentMode === 'UPI' || paymentMode === 'BOTH'">
+                    <td>Transaction ID</td>
+                    <td>
+                        <input class="amount-input" type="text" [(ngModel)]="transactionId">
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="footer-section">
+            <p><b>Printed By:</b> {{ usr_nm || '-' }}</p>
+
+            <div class="signature-box">
+                <p>Authorized Signature</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-box no-print">
+        <button type="button" class="btn btn-primary" (click)="submitFinallBill()">
+            Submit
+        </button>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5>Loading</h5>
+</div>

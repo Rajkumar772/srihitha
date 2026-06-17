@@ -1,0 +1,82 @@
+<section class="login-shell">
+  <!-- full page blurred background -->
+  <div class="bg-layer" aria-hidden="true"></div>
+
+  <div class="login-wrap">
+    <!-- LEFT SIDE -->
+    <aside class="login-left">
+      <div class="img-frame">
+        <img class="left-img" src="../../../assets/back/logos.png" alt="Hospital" loading="eager" />
+      </div>
+    </aside>
+
+    <!-- RIGHT FORM -->
+    <main class="login-right">
+      <div class="login-card">
+        <form class="login-form" [formGroup]="loginForms" (ngSubmit)="onSubmit1()" *ngIf="showPasswordForm">
+          <div class="form-head">
+            <h2>WELCOME TO HIMS</h2>
+            <!-- <p>Login in to continue to Hospital Management.</p> -->
+          </div>
+
+          <!-- Mobile -->
+          <div class="field">
+            <label>Mobile Number <span class="req">*</span></label>
+            <div class="control">
+              <input type="text" maxlength="10" minlength="10" formControlName="phone" placeholder="Mobile Number"
+                autocomplete="off" autocorrect="off" spellcheck="false" (keypress)="numericOnly($event)"
+                (paste)="$event.preventDefault()" [class.invalid]="submitted && f['phone'].errors" />
+            </div>
+
+            <div class="error" *ngIf="submitted && f['phone'].errors">
+              <span *ngIf="f['phone'].errors['required']">Please Enter Mobile Number</span>
+              <span *ngIf="f['phone'].errors['minlength'] || f['phone'].errors['maxlength']">
+                Mobile Number must be 10 digits
+              </span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="field">
+            <label>Password <span class="req">*</span></label>
+
+            <div class="control with-icon">
+              <input [type]="passwordFieldType" formControlName="usr_pwd" placeholder="Enter Password"
+                autocomplete="off" autocorrect="off" spellcheck="false" (paste)="$event.preventDefault()"
+                [class.invalid]="submitted && f['usr_pwd'].errors" />
+
+              <button type="button" class="eye-btn" (click)="togglePasswordVisibility()"
+                aria-label="Toggle password visibility">
+                <i [class]="passwordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </button>
+            </div>
+
+            <div class="error" *ngIf="submitted && f['usr_pwd'].errors">
+              <span *ngIf="f['usr_pwd'].errors['required']">Please Enter Your Password</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-submit">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="login-footer">
+        <div class="footer-inner">
+          <span>© {{ 2025 }} HIMS</span>
+          <span>Designed & Developed by <b>QTOP Global</b></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Overlay Loader -->
+  <div class="overlay" *ngIf="showOverlay">
+    <div class="overlay-card">
+      <mat-spinner diameter="44"></mat-spinner>
+      <div class="overlay-text">Please Wait...</div>
+    </div>
+  </div>
+</section>

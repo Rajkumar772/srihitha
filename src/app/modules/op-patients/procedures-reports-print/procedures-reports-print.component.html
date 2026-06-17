@@ -1,0 +1,169 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill">
+    <div class="invoice-container" style="width: 100%;">
+        <header>
+            <div class="row" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div class="company-details">
+                    <img src="assets/back/PRINTLOGO.png"
+                        style="height: 90px; margin-top: -10px; margin-bottom: 10px; width: 240px;margin-left: -50px;">
+                    <p><strong>Invoice No: </strong>{{TakingObject. procedure_bill_no }} </p>
+                    <p><strong>Bill Date : </strong> {{ TakingObject.date | date: 'dd-MM-yyyy' }}</p>
+                    <p><strong>GSTIN : 7729079781</strong></p>
+                </div>
+                <div class="invoice-details" style="text-align: right;margin-top: -120px;margin-bottom: 80px;">
+                    <p style="font-size: 16px; font-weight: bold;">Hospial Managemet</p>
+                    <p
+                        style="font-size: 12px; font-weight: bold; line-height: 18px; letter-spacing: normal; margin-top: 0; margin-bottom: 0;">
+                         <br> RAJAMAHENDRAVARM <br>7729079781
+                    </p>
+                </div>
+            </div>
+
+        </header>
+        <section class="billing-details">
+            <!-- <h2>Billed To</h2>
+        <p>Client: 1234 Clients Street, City, California, 90210, United States</p>
+        <p>1-888-123-8910</p> -->
+
+            <table
+                style="margin-left: 10px;width: 100%;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                <tr>
+                    <td style="padding: 3px 3px;"><b>Patient Name</b></td>
+                    <td style="padding: 3px 3px;"> : {{TakingObject.name}}</td>
+                    <td style="padding: 3px 3px;"><b>Age/Sex</b></td>
+                    <td style="padding: 3px 3px;"> : {{TakingObject.age}} / {{TakingObject?.gender}}</td>
+                    <td style="padding: 3px 3px;"><b>Mobile No</b></td>
+                    <td style="padding: 3px 3px;"> : {{TakingObject.phone_number}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px 3px; "><b>OP Patient ID</b></td>
+                    <td style="padding: 3px 3px; "> : {{TakingObject.old_uhid_no}}</td>
+                    <td style="padding: 3px 3px;"><b>Address</b></td>
+                    <td style="padding: 3px 3px;"> : {{TakingObject.address}}</td>
+                    <td style="padding: 3px 3px;"><b>Consultant Name</b></td>
+                    <td style="padding: 3px 3px;"> : {{TakingObject.d_name}}</td>
+                </tr>
+
+            </table>
+        </section>
+        <br>
+        <section class="invoice-items">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="color: black;padding: 1px;">S.No</th>
+                        <th
+                            style="color: black;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            Procedure Types</th>
+                        <th
+                            style="color: black;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            Procedure Category Type</th>
+                        <th
+                            style="color: black;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            Procedure Sub Category Type</th>
+                        <th
+                            style="color: black;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            Amount</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of procedurepatientdata;let y = index">
+                        <td>{{y+1}}</td>
+                        <td>{{i.procedure_type || '-'}}</td>
+                        <td>{{i.der_aes_procedure_type || '-'}}</td>
+                        <td>
+                            <span *ngIf="i.sub_der_aes_procedure_type !== 'null' && i.sub_der_aes_procedure_type !== ''
+                            && i.sub_der_aes_procedure_type !== null ; else noTransactionId">
+                                <b>{{i.sub_der_aes_procedure_type }} </b>
+                            </span>
+                            <ng-template #noTransactionId>-</ng-template>
+                        </td>
+                        <td>{{i.amount}}</td>
+                    </tr>
+
+                    <tr class="total">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">Total
+                            Amount</td>
+                        <td>{{TakingObject.grandtotal + " " +
+                            "/-"}}</td>
+                    </tr>
+                    <tr class="discount">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;"> GST
+                            (%)
+                        </td>
+                        <td>{{TakingObject.gst_amount + " " + "%"}}</td>
+                    </tr>
+                    <tr class="tax">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">GST
+                            Tax Amount
+                        </td>
+                        <td>{{TakingObject.gst_percentage |
+                            number:'1.2-2'}}</td>
+                    </tr>
+
+                    <tr class="tax">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">
+                          Total CGST 
+                        </td>
+                        <td>
+                            {{TakingObject.gst_percentage/2}}
+                        </td>
+                    </tr>
+
+                    <tr class="tax">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">
+                          Total SGST 
+                        </td>
+                        <td>
+                            {{TakingObject.gst_percentage /2}}
+                        </td>
+                    </tr>
+
+                    <tr class="total">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;"> Net
+                            Amount
+                        </td>
+                        <td style="font-size: 20px;font-weight: 600;">{{TakingObject.totalAmountAftrgst + " " +
+                            "/-"}}</td>
+                    </tr>
+                    <tr class="deposit">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">
+                            Payment Mode </td>
+                        <td><span *ngIf="TakingObject.payment_mode === 'BOTH'; else normalMode">
+                                BOTH (cash & UPI)
+                            </span>
+                            <ng-template #normalMode>
+                                {{ TakingObject.payment_mode || '-' }}
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr class="tax">
+                        <td colspan="4" style="font-size: 15px;font-weight: bold;text-align: right;border: none;">Paid
+                            Amount(In Words)</td>
+                        <td
+                            style="font-size: 13px;text-transform: uppercase;width: 30%;letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            {{INwords + " " + 'Rupees Only'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div style="text-align: end;padding: 5px;margin-top: 30px;">
+            <h6 style="font-weight: 600;">(Authorized Signature)</h6>
+        </div>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

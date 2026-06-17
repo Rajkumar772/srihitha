@@ -1,0 +1,1721 @@
+<br>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">OverAll GST Reports</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+
+                    <li class="breadcrumb-item"><a href="javascript: void(0);" style="color: black;">OverAll GST
+                            Reports</a></li>
+                    <li class="breadcrumb-item active">OverAll GST Reports</li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<mat-tab-group>
+
+    <!-- OP / IP / LAB Reports -->
+
+    <mat-tab label="OP / IP / LAB Reports">
+        <div class="card p-4">
+            <div class="card-body" class="gth">
+                <form [formGroup]="OpIpLabSrchForm" (ngSubmit)="OpIpLabSearchDATE()">
+                    <div class="row">
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="from_date"
+                                    [ngClass]="{'is-invalid': submitt && valid['from_date'].errors }">
+                                <div *ngIf="submitt && valid['from_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['from_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submitt && valid['to_date'].errors }">
+                                <div *ngIf="submitt && valid['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card p-3">
+            <div class="card-body" class="gth">
+                <div *ngIf="dateRangeDisplay"
+                    style="font-size: 30px;text-align: center;color: black;text-decoration: underline;">
+                    <p>{{ dateRangeDisplay }}</p>
+                </div>
+
+                <div class="table-container p-3">
+                    <!-- Block 1: OP GST -->
+                    <div class="block">
+                        <div *ngFor="let item of Op_Gst_data; let i = index">
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">OP GST</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="color: white;">
+                                        <td>0% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_month_sum_zeros | number:'1.2-2'}}</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>5% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>28% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum</td>
+                                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of Op_Gst_data; let i = index">
+                                        <td></td>
+                                        <td>Total Input Tax : </td>
+                                        <td class="total">
+                                            {{item.net_total | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div *ngFor="let item of Op_Gst_data; let i = index" style="font-size: 18px;color: black;">
+                                No Of Bills Generated : {{item.total_bills_generated}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Block 2: IP GST -->
+                    <div class="block">
+                        <div *ngFor="let item of Ip_Gst_data; let i = index">
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">IP GST</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="color: white;">
+                                        <td>0%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_month_sum_zeros | number:'1.2-2'}}</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>5%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>28%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum</td>
+                                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of Ip_Gst_data; let i = index">
+                                        <td></td>
+                                        <td>Total Input Tax : </td>
+                                        <td class="total">
+                                            {{item.net_total | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div *ngFor="let item of Ip_Gst_data; let i = index" style="font-size: 18px;color: black;">
+                                No Of Bills Generated : {{item.total_bills_generated}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Block 2: LAB GST -->
+
+                    <div class="block">
+                        <div *ngFor="let item of Lab_Gst_data; let i = index">
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">LABS</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">No's</th>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Total Bills Generated</td>
+                                        <td>{{item.total_bills_generated}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>2</td>
+                                        <td>After Discount Total</td>
+                                        <td>{{item.after_discount_total | number:'1.2-2'}}</td>
+                                    </tr>
+
+                                    <tr *ngFor="let item of Lab_Gst_data; let i = index">
+                                        <td></td>
+                                        <td>Total Input : </td>
+                                        <td class="total">
+                                            {{item.after_discount_total | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--  -->
+                <br><br>
+
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <!-- tax -->
+                        <div class="col-6">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; color: black; font-size: 25px;" colspan="3">OP /
+                                            IP &nbsp; TAX DETAILS
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height: 10px;">
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);text-align: center;">Taxable
+                                            Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);text-align: center;">Tax
+                                            Claimed</th>
+                                    </tr>
+                                    <tr *ngFor="let item of Op_Gst_data; let i = index"
+                                        style="font-size: 16px;color: black;height: 20px;">
+                                        <td>OP Amount</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;text-align: end;">
+                                            {{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td style="text-align: end;">{{item.tax_5_percent + item.tax_8_percent +
+                                            item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of Ip_Gst_data; let i = index"
+                                        style="font-size: 16px;color: black;height: 20px;">
+                                        <td>IP Amount</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;text-align: end;">
+                                            {{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td style="text-align: end;">{{item.tax_5_percent + item.tax_8_percent +
+                                            item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+
+                                    <tr style="font-size: 25px;color: black;height: 45px;">
+                                        <td>Sum</td>
+                                        <td style="text-align: end;height:45px;font-size: 22px;">
+                                            {{combined_sum.total_sum_both | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: end;height:45px;font-size: 22px;">
+                                            {{combined_sum.total_tax_sum | number:'1.2-2'}}
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 25px;color: black;text-align: end;">
+                                        <td></td>
+                                        <td style="font-size: 22px;">Total Amount : </td>
+                                        <td class="total" style="text-align: end;height:45px;font-size: 22px;">
+                                            {{combined_sum.total_combined_sum | number:'1.2-2'}}
+                                        </td>
+                                    </tr>
+
+                                    <tr style="font-size: 25px;color: black;height: 45px;">
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- exempted -->
+                        <div class="col-6">
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; color: black; font-size: 25px;" colspan="3">
+                                            OP / IP / LAB &nbsp; EXEMPTED DETAILS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of Op_Gst_data; let i = index"
+                                        style="font-size: 16px;color: black;height: 20px;">
+                                        <td> OP Amount</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_month_sum_zeros | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of Ip_Gst_data; let i = index"
+                                        style="font-size: 16px;color: black;height: 20px;">
+                                        <td> IP Amount</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_month_sum_zeros | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of Lab_Gst_data; let i = index"
+                                        style="font-size: 16px;color: black;height: 20px;">
+                                        <td> LAB Amount</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.after_discount_total | number:'1.2-2' }}</td>
+                                    </tr>
+
+                                    <tr style="font-size: 25px;color: black;height: 45px;">
+                                        <td style="font-size: 22px;">Total Amount : </td>
+                                        <td class="total" style="font-size: 22px;">
+                                            {{combined_sum_op_ip_lab.total_combined_sum_op_ip_lab |
+                                            number:'1.2-2'}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+
+                <div style="text-align: end;">
+                    <button class="btn btn-success" (click)="printOpIpLabgstreports()">Print Report</button>
+                </div>
+
+            </div>
+        </div>
+
+    </mat-tab>
+
+    <!-- Pharmacy Reports -->
+
+    <mat-tab label="Pharmacy Reports">
+        <div class="card p-4">
+            <div class="card-body" class="gth">
+                <form [formGroup]="PharmacySrchForm" (ngSubmit)="PharmacySearchDATE()">
+                    <div class="row">
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="fromdate"
+                                    [ngClass]="{'is-invalid': submitted && validDate['fromdate'].errors }">
+                                <div *ngIf="submitted && validDate['fromdate'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['fromdate'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="todate"
+                                    [ngClass]="{'is-invalid': submitted && validDate['todate'].errors }">
+                                <div *ngIf="submitted && validDate['todate'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['todate'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card p-3">
+            <div class="card-body" class="gth">
+
+                <div *ngIf="dateRangeDisplay2"
+                    style="font-size: 30px;text-align: center;color: black;text-decoration: underline;">
+                    <p>{{ dateRangeDisplay2 }}</p>
+
+                </div>
+
+                <div class="table-container p-3">
+                    <!-- Block 1: GST Purchases -->
+                    <div class="block">
+                        <div *ngFor="let item of gstPurchaseData; let i = index">
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">GST Purchases
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="color: white;">
+                                        <td>5% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>28% </td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum</td>
+                                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr *ngFor="let item of gstPurchaseData; let i = index">
+                                        <td></td>
+                                        <td>Total Input Tax : </td>
+                                        <td class="total">
+                                            {{item.net_total | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div *ngFor="let item of gstPurchaseData; let i = index"
+                                style="font-size: 18px;color: black;">
+                                No Of Bills Generated : {{item.total_bills_generated}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Block 2: IGST Purchases -->
+                    <div class="block">
+                        <div *ngFor="let item of igstPurchaseData; let i = index">
+
+                            <table class="table table-striped" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">IGST Purchases
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="color: white;">
+                                        <td>5%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>8%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>12%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>18%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>28%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum</td>
+                                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Total Input Tax : </td>
+                                        <td class="total">
+                                            {{item.total_net_amount | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="font-size: 18px;color: black;">
+                                No Of Bills Generated : {{item.total_bills_generated}}
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Block 3: GST Sales -->
+                    <div class="block">
+                        <div *ngFor="let item of gstSalesData; let i = index">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" style="font-size: 25px;">GST Sales
+                                            <span>
+                                                <i *ngIf="user_id=='1'|| user_id=='26'"
+                                                    style="font-size: 20px; cursor: pointer;display: flex;justify-content: end;margin-top: -30px;margin-bottom: 10px;"
+                                                    (click)="editgstvalue(openmodel)"
+                                                    class="fa-solid fa-pen-to-square"></i></span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Taxable Value</th>
+                                        <th style="font-size: 20px;color: rgb(35, 38, 35);">Tax Claimed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="color: white;">
+                                        <td>5%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_5_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_5_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>8%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_8_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_8_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>12%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_12_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_12_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>18%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_18_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_18_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr style="color: white;">
+                                        <td>28%</td>
+                                        <td style="background-color:  rgb(10, 206, 190);color: white;">
+                                            {{item.total_28_percent | number:'1.2-2'}}</td>
+                                        <td>{{item.tax_28_percent | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sum</td>
+                                        <td>{{item.total_5_percent + item.total_8_percent + item.total_12_percent +
+                                            item.total_18_percent +item.total_28_percent
+                                            | number:'1.2-2' }}</td>
+                                        <td>{{item.tax_5_percent + item.tax_8_percent + item.tax_12_percent +
+                                            item.tax_18_percent +item.tax_28_percent
+                                            | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Total Input Tax : </td>
+                                        <td class="total">
+                                            {{item.net_total | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="font-size: 18px;color: black;">
+                                No Of Bills Generated : {{item.total_bills_generated}}
+                            </div>
+
+                            <div style="font-size: 18px;color: black;">
+                                <h5>Reduction Percentage : <span>{{reduction || 0}}%</span></h5>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <br><br>
+                <div style="text-align: end;">
+                    <button class="btn btn-success" (click)="printgstreports()">Print Report</button>
+                </div>
+
+            </div>
+        </div>
+
+    </mat-tab>
+
+    <!-- Individual GST Reports -->
+
+    <mat-tab label="Individual GST Reports">
+        <div class="row">
+            <div class="col-xl-12 mx-auto">
+
+                <div class="card border-top border-0 border-4">
+
+                    <div class="card-body p-5">
+                        <form [formGroup]="dateSearchForAuditTwo">
+                            <div class="row">
+                                <h4 style="font-weight: 600;">Current Month Wise / Search By Date Wise :</h4>
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>From Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="from_date"
+                                            [ngClass]="{'is-invalid': submittedd && validdd['from_date'].errors }">
+                                        <div *ngIf="submittedd && validdd['from_date'].errors" class="invalid-feedback">
+                                            <div *ngIf="validdd['from_date'].errors['required']">From Date required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>To Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="to_date"
+                                            [ngClass]="{'is-invalid': submittedd && validdd['to_date'].errors }">
+                                        <div *ngIf="submittedd && validdd['to_date'].errors" class="invalid-feedback">
+                                            <div *ngIf="validdd['to_date'].errors['required']">To Date required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3">
+                                    <i style="font-size: 30px;margin-top: 35px;cursor: pointer;" class="fa fa-search"
+                                        aria-hidden="true" (click)="gotSaleAuditReportTwo()"></i>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                            <!-- serch header start -->
+
+                            <div class="row buttonhide">
+
+
+                                <div class="col-6">
+                                    <mat-paginator #paginatorTwo [pageSizeOptions]="[35,50,100,500]"
+                                        showFirstLastButton>
+                                    </mat-paginator>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="btns">
+                                        <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable('ExampleMaterialTable',
+                                            'Individual GST Reports')">Excel</button>
+                                        <i *ngIf="user_id=='1'|| user_id=='26'" class="fa-solid fa-pen-to-square"
+                                            style="font-size: 20px; margin-right: 100px; cursor: pointer;display: flex;justify-content: end;margin-top: -30px;margin-bottom: 10px;"
+                                            (click)="editIndividualgstvalue(openmodel2)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- serch header end -->
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSourceTwo" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                                    <ng-container matColumnDef="i">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">S.NO
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_and_purchase_date">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Sale Date</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_and_purchase_date | date :
+                                                'dd-MM-YYYY'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_bills_generated">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">Bills Generated
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_bills_generated | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="total_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            5 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_8_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">12
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_18_percent |
+                                            number:'1.2-2' }}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_28_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">5
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_8_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            12 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_18_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_28_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">Grand Total</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="net_total">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Total</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.net_total |
+                                            number:'1.2-2'}}</td>
+
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">{{grandTotalTwo |
+                                                number:'1.2-2'
+                                                }}</span>
+
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- /////////////////////// -->
+
+                                    <ng-container matColumnDef="header-row-second-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> GROSS(Rs) </th>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="header-row-third-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> TAX(Rs) </th>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="['i', 'sale_and_purchase_date' ,  'total_bills_generated' ,
+                                         'header-row-second-group' , 'header-row-third-group' , 'net_total' ]">
+                                    </tr>
+
+                                    <tr mat-header-row *matHeaderRowDef="restOfColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumnsTwo;sticky: true">
+                                    </tr>
+
+                                    <tr mat-footer-row *matFooterRowDef="nextdisplayedColumnsTwo"></tr>
+                                    <!-- Footer end -->
+
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                            <!-- serch header start -->
+
+                            <div class="row p-2">
+                                <div class="col-6">
+                                    <div *ngIf="MonthlyDataTotal && MonthlyDataTotal.length > 0">
+                                        <h4 style="font-weight: 600;">Total Month Wise :
+                                            {{MonthlyDataTotal[0].sale_and_purchase_month}} -
+                                            {{MonthlyDataTotal[0].sale_and_purchase_year}}</h4>
+                                    </div>
+                                    <div *ngIf="!MonthlyDataTotal || MonthlyDataTotal.length === 0">
+                                        Loading...
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="btns">
+                                        <button mat-raised-button class="btn btn-secondary m-1"
+                                            (click)="exportTable('ExampleMaterialTable2','Audit Sale Total Month Wise')">Excel</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- serch header end -->
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource2" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable2">
+
+                                    <ng-container matColumnDef="i">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            S.NO
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_and_purchase_month">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Sales</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_and_purchase_month }} -
+                                                {{row.sale_and_purchase_year
+                                                }}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_bills_generated">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Bills
+                                            Generated
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_bills_generated | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="total_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            5 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_8_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">12
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_18_percent |
+                                            number:'1.2-2' }}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_28_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">5
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_8_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            12 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_18_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_28_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">Grand Total</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="net_total">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Total</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.net_total |
+                                            number:'1.2-2'}}</td>
+
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+
+                                            <span style="font-weight: 800;font-size: 18px;">{{grandTotalTwo |
+                                                number:'1.2-2'
+                                                }}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <!-- /////////////////////// -->
+
+                                    <ng-container matColumnDef="header-row-first-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3" [ngStyle]="headerclass"
+                                            style="text-align: center;">
+                                            <div
+                                                style="display: flex;width:100%;justify-content: space-between;align-items: center;">
+                                                <p>From : {{ dateSearchForAuditTwo.get('from_date').value }}</p>
+                                                <p>To : {{ dateSearchForAuditTwo.get('to_date').value }}</p>
+                                                <p>Type : Month</p>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="header-row-second-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> GROSS(Rs) </th>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="header-row-third-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> TAX(Rs) </th>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="[ 
+                                    'header-row-first-group'
+                                       ,  'header-row-second-group' , 'header-row-third-group' , 'net_total' ]">
+                                    </tr>
+
+                                    <tr mat-header-row *matHeaderRowDef="restOfColumnsMonth"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumnsMonth;sticky: true">
+                                    </tr>
+                                    <tr mat-footer-row *matFooterRowDef="nextdisplayedColumnsMonth"></tr>
+                                    <!-- Footer end -->
+
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-tab>
+
+    <!-- HSN Reports -->
+
+    <mat-tab label="HSN Reports">
+        <div class="card p-4">
+            <div class="card-body" class="gth">
+                <form [formGroup]="HSNSrchForm" (ngSubmit)="HSNSearchDATE()">
+                    <div class="row">
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="from_date"
+                                    [ngClass]="{'is-invalid': submittedtype && validedtype['from_date'].errors }">
+                                <div *ngIf="submittedtype && validedtype['from_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validedtype['from_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <div class="form-group">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submittedtype && validedtype['to_date'].errors }">
+                                <div *ngIf="submittedtype && validedtype['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validedtype['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-1">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" style="padding: 1%;">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row toppad" style="background: white;">
+                                    <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                        <!-- serch header start -->
+
+                                        <div class="row buttonhide">
+                                            <div class="col-3">
+                                                <mat-form-field class="sea">
+                                                    <mat-label>Search</mat-label>
+                                                    <input matInput (keyup)="applyFilterthree($event)"
+                                                          #input>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-5">
+                                                <mat-paginator #paginatorThree [pageSizeOptions]="[100,500,1000,2000]"
+                                                    showFirstLastButton>
+                                                </mat-paginator>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="btns">
+                                                    <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable('ExampleMaterialTable',
+                                            'HSN Reports')">Excel</button>
+                                                    <i *ngIf="user_id=='1'|| user_id=='26'"
+                                                        class="fa-solid fa-pen-to-square"
+                                                        style="font-size: 20px; cursor: pointer;margin-right: 100px; display: flex;justify-content: end;margin-top: -30px;margin-bottom: 10px;"
+                                                        (click)="editHSNgstvalue(openmodel3)"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- serch header end -->
+                                        <div class="example-container">
+                                            <table mat-table matTableExporter #tab mat-table
+                                                [dataSource]="dataSourceThree" matSort #exporter="matTableExporter"
+                                                id="ExampleMaterialTable">
+
+                                                <ng-container matColumnDef="i">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">S.No
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.i}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="hsncode">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        HSN Code</th>
+                                                    <td mat-cell *matCellDef="let row" class="right"
+                                                        style="font-weight: bold;font-size: 16px;">
+                                                        <span class="para">{{row.hsncode || '-'}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="gst_per">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        GST Per
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre"
+                                                        style="font-weight: bold;font-size: 16px;">
+                                                        {{row.gst_per}} %
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="total_units_sold">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        Total Units Sold</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre"
+                                                        style="font-weight: bold;font-size: 16px;">
+                                                        {{row.total_units_sold}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="total_gross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        Total Gross</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{ row.total_gross | number:'1.3-3'}}</td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="tax_percent">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        Tax Percent</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.tax_percent | number:'1.3-3'}}</td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="cgst_amount">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        CSGT Amount</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.cgst_amount | number:'1.3-3'}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="sgst_amount">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        SGST Amount</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.sgst_amount | number:'1.3-3'}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="total_sum">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        Total Amount</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre"
+                                                        style="font-weight: bold;font-size: 16px;">
+                                                        {{row.total_sum | number:'1.3-3'}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- Select Start -->
+
+                                                <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true">
+                                                </tr>
+                                                <tr mat-row
+                                                    *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                                                </tr>
+
+                                                <!-- Footer end -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" style="padding: 1%;">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row toppad" style="background: white;">
+                                    <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                        <!-- serch header start -->
+
+                                        <div class="row buttonhide">
+                                            <div class="col-6">
+                                                <div *ngIf="MonthlyDataTotal && MonthlyDataTotal.length > 0">
+                                                    <h4 style="font-weight: 600;">Total Month Wise :
+                                                        {{HsnMonth}} -
+                                                        {{HsnYear}}</h4>
+                                                </div>
+                                                <div *ngIf="!MonthlyDataTotal || MonthlyDataTotal.length === 0">
+                                                    Loading...
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="btns">
+                                                    <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable1('exportTableToExcell',
+                                            'HSN Monthly Reports')">Excel</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- serch header end -->
+                                        <div class="example-container">
+                                            <table mat-table matTableExporter #tab mat-table
+                                                [dataSource]="dataSourceFour" matSort #exporter="matTableExporter"
+                                                id="exportTableToExcell">
+
+                                                <ng-container matColumnDef="i">
+                                                    <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef
+                                                        mat-sort-header [ngStyle]="headerclass">S.NO
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        1</td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="totalHSNCodeCount">
+                                                    <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef
+                                                        mat-sort-header [ngStyle]="headerclass">Total HSN's
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.totalHSNCodeCount}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst5perGross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        5 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst5perGross |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst8perGross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        8 %</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.HsnGst8perGross |
+                                                            number:'1.2-2'}}</span>
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst12perGross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">12 %
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst12perGross |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst18perGross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        18 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst18perGross |
+                                                        number:'1.2-2' }}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst28perGross">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        28 %</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.HsnGst28perGross |
+                                                            number:'1.2-2'}}</span>
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst5perTax">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">5 %
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst5perTax |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst8perTax">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        8 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst8perTax |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst12perTax">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        12 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst12perTax | number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst18perTax">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        18 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst18perTax |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef></td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="HsnGst28perTax">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        28 %</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.HsnGst28perTax |
+                                                        number:'1.2-2'}}
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                                        <span style="font-weight: 800;font-size: 18px;">Grand
+                                                            Total</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="TotalHsnGrossPlusTaxSum">
+                                                    <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef
+                                                        mat-sort-header [ngStyle]="headerclass">
+                                                        Total</th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.TotalHsnGrossPlusTaxSum |
+                                                        number:'1.2-2'}}</td>
+                                                    <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                                        <span
+                                                            style="font-weight: 800;font-size: 18px;">{{grandTotal|number:'1.2-2'}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- Select Start -->
+
+                                                <ng-container matColumnDef="header-row-second-group">
+                                                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"
+                                                        [ngStyle]="headerclass" style="text-align: center;"> GROSS(Rs)
+                                                    </th>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="header-row-third-group">
+                                                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"
+                                                        [ngStyle]="headerclass" style="text-align: center;"> TAX(Rs)
+                                                    </th>
+                                                </ng-container>
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="['i', 'totalHSNCodeCount' ,
+                                         'header-row-second-group' , 'header-row-third-group' , 'TotalHsnGrossPlusTaxSum' ]">
+                                                </tr>
+
+                                                <tr mat-header-row *matHeaderRowDef="restOfColumnsFour"></tr>
+                                                <tr mat-row
+                                                    *matRowDef="let row; columns: nextdisplayedColumnsFour;sticky: true">
+                                                </tr>
+
+                                                <tr mat-footer-row *matFooterRowDef="nextdisplayedColumnsFour"></tr>
+                                                <!-- Footer end -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </mat-tab>
+
+</mat-tab-group>
+
+<ng-template #openmodel let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 " style="font-weight: bold">Edit GST Sales Reports</h5>
+            <button type="button" class="btn-close" (click)="dismiss(viewTemplate)" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="editForm">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Select Option<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <div>
+                                <input type="text" class="form-control" formControlName="gst_sales" minlength="1"
+                                    maxlength="3" (keypress)="numericOnly($event)"
+                                    [ngClass]="{'is-invalid': submit && validd['gst_sales'].errors}" />
+                                <div *ngIf="submit && validd['gst_sales'].errors" class="invalid-feedback">
+                                    <span *ngIf="validd['gst_sales'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" style="margin-bottom: 20px;">
+                        <br>
+                        <button (click)="editgstsales()"
+                            style="background-color: blue;
+                        color: white;width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #openmodel2 let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 " style="font-weight: bold">Edit Individual GST Reports</h5>
+            <button type="button" class="btn-close" (click)="dismiss2(viewTemplate)" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="editIndividualForm">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Select Option<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <div>
+                                <input type="text" class="form-control" formControlName="individual_gst_report"
+                                    minlength="1" maxlength="3" (keypress)="numericOnly($event)"
+                                    [ngClass]="{'is-invalid': submittype && validtype['individual_gst_report'].errors}" />
+                                <div *ngIf="submittype && validtype['individual_gst_report'].errors"
+                                    class="invalid-feedback">
+                                    <span *ngIf="validtype['individual_gst_report'].errors.required">This value is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" style="margin-bottom: 20px;">
+                        <br>
+                        <button (click)="editIndividualGst()"
+                            style="background-color: blue;
+                        color: white;width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #openmodel3 let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 " style="font-weight: bold">Edit HSN Reports</h5>
+            <button type="button" class="btn-close" (click)="dismiss3(viewTemplate)" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="editHSNForm">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Select Option<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <div>
+                                <input type="text" class="form-control" formControlName="hsn_gst_value" minlength="1"
+                                    maxlength="3" (keypress)="numericOnly($event)"
+                                    [ngClass]="{'is-invalid': submittyped && validtyped['hsn_gst_value'].errors}" />
+                                <div *ngIf="submittyped && validtyped['hsn_gst_value'].errors" class="invalid-feedback">
+                                    <span *ngIf="validtyped['hsn_gst_value'].errors.required">This value is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" style="margin-bottom: 20px;">
+                        <br>
+                        <button (click)="editHSNGst()"
+                            style="background-color: blue;
+                        color: white;width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

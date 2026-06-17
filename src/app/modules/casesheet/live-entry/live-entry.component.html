@@ -1,0 +1,1264 @@
+<div class="case-shell">
+  <section class="search-card">
+    <div class="brand-block app-brand-block">
+      <img class="hospital-logo-img" src="assets/back/logo2.png" alt="HOSPITAL">
+      <div>
+        <h2>IP Case Sheet Entry</h2>
+        <p>QTOP MATRIX</p>
+      </div>
+    </div>
+    <div class="search-grid">
+      <div class="form-group">
+        <label><i class="bx bx-search"></i> Search Patient</label>
+        <ng-select [items]="ipPatients" bindLabel="ip_number" bindValue="ip_number" [(ngModel)]="selected_uhid"
+          [searchFn]="customSearchFn" placeholder="IP No / UHID / Patient Name" [searchable]="true" [clearable]="true">
+          <ng-template ng-label-tmp let-item="item">{{ item.name }} - {{ item.ip_number }}</ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            <div class="patient-option"><b>{{ item.name }}</b><small>IP: {{ item.ip_number }} | UHID: {{ item.uh_id }} |
+                Bed: {{ item.bed_no }}</small></div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <button class="primary-btn" (click)="searchPatient()"><i class="bx bx-user-check"></i> Load Patient</button>
+    </div>
+  </section>
+
+<section class="today-ip-card" *ngIf="!header.patient_name">
+  <div class="today-ip-head">
+    <div>
+      <h3>Today IP Admissions</h3>
+      <p>{{ todayAdmissions.length }} admitted patients today</p>
+    </div>
+
+    <input
+      class="today-search"
+      type="text"
+      placeholder="Search name / IP / UHID / bed"
+      [(ngModel)]="todaySearch">
+  </div>
+
+  <div class="today-table-wrap">
+    <table class="today-ip-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Patient</th>
+          <th>IP No</th>
+          <th>UHID</th>
+          <th>Bed</th>
+              <th>Admit Date</th>
+
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of filteredTodayAdmissions(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><b>{{ p.name }}</b></td>
+          <td>{{ p.ip_number }}</td>
+          <td>{{ p.uh_id }}</td>
+          <td>{{ p.bed_no }}</td>
+          <td>
+  {{ p.admin_date | date:'dd-MM-yyyy' }}
+  <br>
+  <small>
+    {{ p.admin_date | date:'hh:mm a' }}
+  </small>
+</td>
+          <td>
+            <button class="mini-load-btn" (click)="loadTodayPatient(p)">
+              Load
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+  <ng-container *ngIf="header.patient_name">
+    <section class="patient-strip">
+      <div class="avatar">
+        <i class='bx bx-user'></i>
+        <span>{{ header.patient_name | slice:0:1 }}</span>
+      </div>
+      <div class="patient-main">
+        <h1>{{ header.patient_name }}</h1>
+        <div class="mini-grid"><span>UMR: <b>{{ header.umr_no }}</b></span><span>IP: <b>{{ header.ip_no
+              }}</b></span><span>Sex/Age: <b>{{ header.sex }} / {{ header.age }}</b></span><span>Ward/Bed: <b>{{
+              header.ward }} / {{ header.bed_no }}</b></span><span class="admit-badge">
+  🏥 Admit:
+  <b>{{ patient.admin_date | date:'dd-MMM-yyyy' }}</b>
+  |
+  <b>{{ patient.admin_date | date:'hh:mm a' }}</b>
+</span></div>
+      </div>
+      <!-- <div class="status-pill">{{ patient.allergy || 'No Allergy' }}</div> -->
+    </section>
+
+    <nav class="stepper">
+      <button *ngFor="let s of steps" [class.active]="activeStep === s.id" [ngClass]="getStepClass(s.id)"
+        (click)="setStep(s.id)">
+        <i class="bx" [ngClass]="s.icon"></i>
+        <span>{{ s.title }}</span>
+      </button>
+    </nav>
+
+    <section class="pdf-form-card" id="caseSheetPrintArea">
+
+
+      <div *ngIf="activeStep === 1">
+        <h3 class="page-title">Medical Record Checklist</h3>
+
+        <div class="checklist-grid mrd-checklist-grid">
+          <div class="check-row head">
+            <b>S.No</b>
+            <b>Content</b>
+            <b>Nursing Yes</b>
+            <b>Nursing No</b>
+            <b>MRD Yes</b>
+            <b>MRD No</b>
+          </div>
+
+          <div class="check-row" *ngFor="let item of checklist; let i = index; trackBy: trackByIndex">
+            <span>{{ i + 1 }}</span>
+
+            <span class="checklist-link" (click)="openChecklistPage(item.label || item.content)">
+              {{ item.label || item.content }}
+            </span>
+
+            <input type="checkbox" [checked]="item.nursing_yes || item.yes"
+              (change)="markChecklist(item, 'nursing_yes')">
+
+            <input type="checkbox" [checked]="item.nursing_no || item.no" (change)="markChecklist(item, 'nursing_no')">
+
+            <input type="checkbox" [checked]="item.mrd_yes" (change)="markChecklist(item, 'mrd_yes')">
+
+            <input type="checkbox" [checked]="item.mrd_no" (change)="markChecklist(item, 'mrd_no')">
+          </div>
+        </div>
+
+        <h4 class="sub-title">Surgical Booklet</h4>
+
+        <div class="compact-checks surgical-mrd-checks">
+          <label *ngFor="let item of surgicalChecklist; trackBy: trackByIndex">
+
+            <span class="checklist-link" (click)="openSurgicalPage(item.label || item.content)">
+              {{ item.label || item.content }}
+            </span>
+
+            <div class="surgical-check-row">
+
+              <div>
+                <b>Nursing</b>
+                <input type="checkbox" [checked]="item.nursing_yes || item.yes"
+                  (change)="markSurgicalChecklist(item, 'nursing_yes')">
+                Yes
+
+                <input type="checkbox" [checked]="item.nursing_no || item.no"
+                  (change)="markSurgicalChecklist(item, 'nursing_no')">
+                No
+              </div>
+
+              <div>
+                <b>MRD</b>
+                <input type="checkbox" [checked]="item.mrd_yes" (change)="markSurgicalChecklist(item, 'mrd_yes')">
+                Yes
+
+                <input type="checkbox" [checked]="item.mrd_no" (change)="markSurgicalChecklist(item, 'mrd_no')">
+                No
+              </div>
+
+            </div>
+          </label>
+        </div>
+
+        <h3 class="section-title">For Consents</h3>
+
+        <table class="case-table consent-table">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Consent Name / Remarks</th>
+              <th>Nursing Yes</th>
+              <th>Nursing No</th>
+              <th>MRD Yes</th>
+              <th>MRD No</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let row of consentRows; let i = index; trackBy: trackByIndex">
+              <td>{{ i + 1 }}</td>
+
+              <td>
+                <input
+  type="text"
+  [(ngModel)]="row.consent_name"
+  (ngModelChange)="autoUpdateChecklist()"
+  placeholder="Consent name / remarks"
+  class="case-input"
+/>
+              </td>
+
+              <td><input type="checkbox" [(ngModel)]="row.nursing_yes" /></td>
+              <td><input type="checkbox" [(ngModel)]="row.nursing_no" /></td>
+              <td><input type="checkbox" [(ngModel)]="row.mrd_yes" /></td>
+              <td><input type="checkbox" [(ngModel)]="row.mrd_no" /></td>
+
+              <td class="action-cell">
+                <button type="button" class="row-delete-btn" (click)="removeConsentRow(i)">
+                  <i class="bx bx-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button type="button" class="add-row-btn" (click)="addConsentRow()">
+          + Add Consent
+        </button>
+
+        <div class="signature-row upload-signature-row">
+
+          <div class="signature-upload-box">
+            <label>Staff Nurse Signature</label>
+            <input type="file" accept="image/*"
+              (change)="onSignatureUpload($event, checklistSignatures, 'staff_nurse_signature')">
+
+            <img *ngIf="checklistSignatures.staff_nurse_signature_preview"
+              [src]="checklistSignatures.staff_nurse_signature_preview" class="saved-sign-img">
+
+            <button type="button" class="clear-sign-btn"
+              *ngIf="checklistSignatures.staff_nurse_signature_file || checklistSignatures.staff_nurse_signature || checklistSignatures.staff_nurse_signature_preview"
+              (click)="clearSignature(checklistSignatures, 'staff_nurse_signature')">
+              Clear
+            </button>
+          </div>
+
+          <div class="signature-upload-box">
+            <label>MRD Executive Sign</label>
+            <input type="file" accept="image/*"
+              (change)="onSignatureUpload($event, checklistSignatures, 'mrd_executive_signature')">
+
+            <img *ngIf="checklistSignatures.mrd_executive_signature_preview"
+              [src]="checklistSignatures.mrd_executive_signature_preview" class="saved-sign-img"
+              alt="MRD executive signature">
+
+            <button type="button" class="clear-sign-btn"
+              *ngIf="checklistSignatures.mrd_executive_signature_file || checklistSignatures.mrd_executive_signature || checklistSignatures.mrd_executive_signature_preview"
+              (click)="clearSignature(checklistSignatures, 'mrd_executive_signature')">
+              Clear
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div *ngIf="activeStep === 2">
+        <h3 class="page-title">Doctor’s Signature Verification Form</h3>
+        <div class="responsive-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Sl.No</th>
+                <th>Name of Doctor</th>
+                <th>Emp ID No.</th>
+                <th>Registration No.</th>
+                <th>Signature</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of doctorSignatures; let i = index; trackBy: trackByIndex">
+                <td>{{ i + 1 }}</td>
+
+                <td><input [(ngModel)]="d.name"></td>
+
+                <td><input [(ngModel)]="d.emp_id"></td>
+
+                <td><input [(ngModel)]="d.registration_no"></td>
+
+                <td>
+                  <div class="signature-upload-box">
+                    <input type="file" accept="image/*" (change)="onSignatureUpload($event, d, 'signature')">
+
+                    <img *ngIf="d.signature_preview" [src]="d.signature_preview" class="saved-sign-img">
+
+                    <button type="button" class="clear-sign-btn"
+                      *ngIf="d.signature_file || d.signature || d.signature_preview"
+                      (click)="clearSignature(d, 'signature')">
+                      Clear
+                    </button>
+                  </div>
+                </td>
+
+                <td class="action-cell">
+                  <button type="button" class="row-delete-btn" (click)="removeDoctorRow(i)">
+                    <i class="bx bx-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="secondary-btn" (click)="addDoctorRow()">+ Add Doctor</button>
+        <h3 class="page-title mt">Patient Movement / Shifting Information</h3>
+        <div class="responsive-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Sl.No</th>
+                <th>Shifted From</th>
+                <th>Shifted To</th>
+                <th>Date & Time</th>
+                <th>Remarks</th>
+                <th>Handed Over By</th>
+                <th>Received By</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let m of movements; let i = index; trackBy: trackByIndex">
+                <td>{{ i + 1 }}</td>
+                <td><input [(ngModel)]="m.shifted_from"></td>
+                <td><input [(ngModel)]="m.shifted_to"></td>
+                <td><input type="datetime-local" [(ngModel)]="m.date_time"></td>
+                <td><input [(ngModel)]="m.remarks"></td>
+                <td><input [(ngModel)]="m.handed_by"></td>
+                <td><input [(ngModel)]="m.received_by"></td>
+
+                <td class="action-cell">
+                  <button type="button" class="row-delete-btn" (click)="removeMovementRow(i)">
+                    <i class="bx bx-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="secondary-btn" (click)="addMovementRow()">+ Add Movement</button>
+      </div>
+
+      <div *ngIf="activeStep === 3">
+
+        <h3 class="page-title telugu-title">సాధారణ అంగీకార పత్రము</h3>
+
+        <div class="telugu-consent-box">
+          <p class="telugu-line">
+            <b>1.</b>
+            నేను <input [(ngModel)]="consent.telugu_patient_name">
+            (రోగి పేరు) వయస్సు <input [(ngModel)]="consent.telugu_age">
+            లింగం <input [(ngModel)]="consent.telugu_gender">
+          </p>
+
+          <p class="telugu-line">
+            కుమారుడు / కుమార్తె / భార్య
+            <input [(ngModel)]="consent.telugu_relation_name">
+          </p>
+
+          <p class="telugu-line">
+            నేను <input [(ngModel)]="consent.telugu_consent_given_by">
+            (అంగీకారమిచ్చు వారి పేరు) వయస్సు
+            <input [(ngModel)]="consent.telugu_consent_age">
+            లింగం <input [(ngModel)]="consent.telugu_consent_gender">
+          </p>
+
+          <p class="telugu-line">
+            ఫోన్ నెం.
+            <input [(ngModel)]="consent.telugu_phone">
+
+            <span class="telugu-small-note">
+              (దయచేసి తప్పులు లేకుండా పూర్తి వివరాలు ఇవ్వగలరు.
+              తప్పులను సరిచేయడం తర్వాత వీలుపడదు)
+            </span>
+
+            నా కోసం / రోగి కోసం క్రింద సూచించిన అన్ని విషయాలకు సంపూర్ణ అంగీకారము తెలుపుచున్నాను.
+          </p>
+
+          <p><b>(a)</b> అవసరమైన శస్త్ర చికిత్స, దాని కోసం అవసరమైన మత్తుమందు కోసం.</p>
+          <p><b>(b)</b> ఏ విధమైన చికిత్సా ఔషధాలు కూడా నోటి ద్వారా గాని ఇంకే ఇతర విధంగా (పేరెంటల్) గాని ఇవ్వడం కోసం.</p>
+          <p><b>(c)</b> అవసరమైతే రక్తం, లేదా రక్త సంబంధిత భాగాలు (కాంపోనెంట్లు) శరీరంలోకి పంపించడం కోసం.</p>
+          <p><b>(d)</b> రోగి, ఐడింటిటీ కాపాడుతూ వైద్య విజ్ఞాన వికాసం కొరకై ఫోటోలు, టీవీ రికార్డులు మరియు వైద్య విజ్ఞాన
+            వికాసం కొరకు చికిత్స
+            జరిగేటప్పుడు అనుమతించబడ్డ వ్యక్తులు హాజరు కోసం పూర్ణ అంగీకారము తెలుపుచున్నాన.</p>
+
+          <p><b>2.</b> నేను, నా రోగి సంబంధీకులు మరియు మిత్రులు ఆసుపత్రి యొక్క పూర్తి విధి విధానములు, రోగి సందర్శన,
+            సమయములు మరియు ఇతర
+            నిర్దేశములు పాటించి సహకరించగలమని అంగీకారము తెలుపుచున్నాము.</p>
+
+          <p class="telugu-line">
+            <b>3.</b> పైన సూచించిన విషయాలను డా॥/శ్రీ
+            <input [(ngModel)]="consent.telugu_explained_by">
+            గారు నాకు చదివి వినిపించి నాకు తెలిసిన భాషలో
+            అర్ధంమయ్యేటట్టు వివరించారని ధ్రువీకరించుచున్నాను.
+          </p>
+
+          <p><b>4.</b> పైన సూచించిన విషయాలన్నిటికీ నేను పూర్తి స్పృహలో ఉండి మనస్ఫూర్తిగా ఇచ్చిన అంగీకారం పత్రము ఇది అని
+            ధ్రువీకరించుచున్నాను.</p>
+
+          <div class="telugu-sign-grid">
+            <div>
+              <label>స్థలము</label>
+              <input [(ngModel)]="consent.telugu_place">
+            </div>
+
+            <div>
+              <label>తేది</label>
+              <input type="date" [(ngModel)]="consent.telugu_date">
+            </div>
+
+            <div>
+              <label>రోగి / రోగి సంబంధీకుని సంతకం</label>
+              <div class="signature-upload-box">
+                <input type="file" accept="image/*"
+                  (change)="onSignatureUpload($event, consent, 'telugu_patient_signature')">
+                <img *ngIf="consent.telugu_patient_signature_preview" [src]="consent.telugu_patient_signature_preview">
+                <button type="button" class="clear-sign-btn"
+                  *ngIf="consent.telugu_patient_signature_file || consent.telugu_patient_signature || consent.telugu_patient_signature_preview"
+                  (click)="clearSignature(consent, 'telugu_patient_signature')">Clear</button>
+              </div>
+            </div>
+
+            <div>
+              <label>రోగితో గల సంబంధం</label>
+              <input [(ngModel)]="consent.telugu_patient_relation">
+            </div>
+          </div>
+
+          <p class="telugu-line mt">
+            చదివి వినిపించి, వివరించిన డాక్టర్ / అడ్మిషన్ అధికారి గారి సంతకం :
+            <span class="signature-upload-box inline-signature-upload">
+              <input type="file" accept="image/*"
+                (change)="onSignatureUpload($event, consent, 'telugu_doctor_signature')">
+              <img *ngIf="consent.telugu_doctor_signature_preview" [src]="consent.telugu_doctor_signature_preview">
+              <button type="button" class="clear-sign-btn"
+                *ngIf="consent.telugu_doctor_signature_file || consent.telugu_doctor_signature || consent.telugu_doctor_signature_preview"
+                (click)="clearSignature(consent, 'telugu_doctor_signature')">Clear</button>
+            </span>
+          </p>
+        </div>
+
+        <div class="consent-pdf-top">
+          <div class="consent-logo-row">
+            <img class="case-page-logo" src="assets/back/logo2.png" alt=" HOSPITAL">
+
+            <h3>GENERAL CONSENT</h3>
+          </div>
+
+          <div class="consent-patient-line">
+            Patient Name <input [(ngModel)]="header.patient_name">
+            UMR No <input [(ngModel)]="header.umr_no">
+            Sex <input [(ngModel)]="header.sex">
+            Age <input [(ngModel)]="header.age">
+            IP No <input [(ngModel)]="header.ip_no">
+          </div>
+        </div>
+        <div class="english-consent-box">
+
+          <p class="english-line">
+            I <input [(ngModel)]="consent.patient_name">
+            (Patient name), Age <input [(ngModel)]="consent.patient_age">
+            Gender <input [(ngModel)]="consent.patient_gender">
+          </p>
+
+          <p class="english-line">
+            S/o W/o, D/o <input [(ngModel)]="consent.patient_relation_name">
+          </p>
+
+          <p class="english-line">
+            I <input [(ngModel)]="consent.representative_name">
+            (patient Representative’s Name), Age
+            <input [(ngModel)]="consent.representative_age">
+            Gender <input [(ngModel)]="consent.representative_gender">
+          </p>
+
+          <p class="english-line">
+            S/o, W/o, D/o <input [(ngModel)]="consent.representative_relation_name">
+            (Relation to Patient) <input [(ngModel)]="consent.relation_to_patient">
+          </p>
+
+          <p class="english-line">
+            Address of <input [(ngModel)]="consent.address">
+          </p>
+
+          <p class="english-line">
+            Consenter <input [(ngModel)]="consent.consenter">
+          </p>
+
+          <p class="english-line">
+            Phone no <input [(ngModel)]="consent.phone_no">
+            <span class="english-small-note">
+              (Please give full and correct particulars of the patient. Subsequent alternation in Name & Age etc., will
+              not be possible)
+            </span>
+            do hereby consent self/above mentioned patient for the following.
+          </p>
+
+          <ol class="english-alpha" type="a">
+            <li>For any operation performed under any anaesthesia as deemed necessary</li>
+            <li>For any procedure, including therapeutic and/or investigation, by medical, nursing and technical staff
+              of ANH, Visakhapatnam as deemed necessary for the diagnosis and treatment</li>
+            <li>For administration of any medication, including medical and nursing of ANH, Visakhapatnam as deemed
+              necessary for the treatment</li>
+            <li>For transfusion of blood components as deemed necessary for the treatment</li>
+            <li>For still photography/TV recording, telecasting and publication of same in medical journals of
+              procedure(s), which would be performed, for the purpose of advancing medical education with provision of
+              safeguarding my patient identity</li>
+          </ol>
+
+          <ol class="english-number">
+            <li>I agree and I will make all others related to me patient to agree to abide by the regulations of the
+              hospital including visiting hours, which are conveyed to us by the hospital staff</li>
+            <li>I undertake full responsibility to clear all dues to the hospital and promise to deposit insufficient
+              advance amounts to meet emergency treatment also as and when payment requisition slips are issued</li>
+            <li>
+              I also certify that all the above have been read over and explained to me in the language I understand by
+              Dr/Sri <input [(ngModel)]="consent.explained_by"> ANH, Visakhapatnam
+            </li>
+            <li>I certify that this consent is given by me in my full senses and on my own free will</li>
+          </ol>
+
+          <div class="english-sign-grid">
+            <div>
+              <label>Signature</label>
+              <div class="signature-upload-box">
+                <input type="file" accept="image/*" (change)="onSignatureUpload($event, consent, 'signature')">
+                <img *ngIf="consent.signature_preview" [src]="consent.signature_preview">
+                <button type="button" class="clear-sign-btn"
+                  *ngIf="consent.signature_file || consent.signature || consent.signature_preview"
+                  (click)="clearSignature(consent, 'signature')">Clear</button>
+              </div>
+            </div>
+
+            <div>
+              <label>Date</label>
+              <input type="date" [(ngModel)]="consent.date">
+            </div>
+
+            <div>
+              <label>Place</label>
+              <input [(ngModel)]="consent.place">
+            </div>
+
+            <div>
+              <label>Signature of patient or patient’s representative</label>
+              <div class="signature-upload-box">
+                <input type="file" accept="image/*"
+                  (change)="onSignatureUpload($event, consent, 'patient_or_representative_signature')">
+                <img *ngIf="consent.patient_or_representative_signature_preview"
+                  [src]="consent.patient_or_representative_signature_preview">
+                <button type="button" class="clear-sign-btn"
+                  *ngIf="consent.patient_or_representative_signature_file || consent.patient_or_representative_signature || consent.patient_or_representative_signature_preview"
+                  (click)="clearSignature(consent, 'patient_or_representative_signature')">Clear</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="activeStep === 4">
+        <h3 class="page-title">Doctor Initial Assessment Form</h3>
+        <div class="form-grid four">
+          <div class="form-group"><label>Admission No</label><input [(ngModel)]="assessment.admission_no"></div>
+          <div class="form-group"><label>Ward</label><input [(ngModel)]="assessment.ward"></div>
+          <div class="form-group"><label>Bed No</label><input [(ngModel)]="assessment.bed_no"></div>
+          <div class="form-group"><label>Date/Time</label><input type="datetime-local"
+              [(ngModel)]="assessment.admission_time"></div>
+        </div>
+        <div class="form-grid two">
+          <div class="form-group"><label>* Presenting Complaints</label><textarea
+              [(ngModel)]="assessment.presenting_complaints"></textarea></div>
+          <div class="form-group"><label>* History of Present Illness</label><textarea
+              [(ngModel)]="assessment.present_illness"></textarea></div>
+          <div class="form-group"><label>* Past History</label><textarea
+              [(ngModel)]="assessment.past_history"></textarea></div>
+          <div class="form-group"><label>Pre-Admission Investigation / Treatment</label><textarea
+              [(ngModel)]="assessment.pre_admission_treatment"></textarea></div>
+        </div>
+        <h4 class="sub-title">Co-Morbid Conditions</h4>
+        <div class="form-grid four">
+          <div class="form-group"><label>Diabetes</label><input [(ngModel)]="assessment.diabetes"></div>
+          <div class="form-group"><label>Hypertension</label><input [(ngModel)]="assessment.hypertension"></div>
+          <div class="form-group"><label>Cardiac Illness</label><input [(ngModel)]="assessment.cardiac_illness"></div>
+          <div class="form-group"><label>Thyroid Disorder</label><input [(ngModel)]="assessment.thyroid_disorder"></div>
+          <div class="form-group"><label>Bronchial Asthma</label><input [(ngModel)]="assessment.bronchial_asthma"></div>
+          <div class="form-group"><label>TB</label><input [(ngModel)]="assessment.tb"></div>
+          <div class="form-group"><label>Epilepsy</label><input [(ngModel)]="assessment.epilepsy"></div>
+          <div class="form-group"><label>Other</label><input [(ngModel)]="assessment.other_comorbid"></div>
+        </div>
+        <h4 class="sub-title">Family / Personal History</h4>
+
+        <div class="assessment-box-grid">
+
+          <div class="assessment-box">
+            <div class="form-group">
+              <label>* Family History</label>
+              <input [(ngModel)]="assessment.family_history">
+            </div>
+
+            <div class="form-group">
+              <label>Diabetes</label>
+              <input [(ngModel)]="assessment.family_diabetes">
+            </div>
+
+            <div class="form-group">
+              <label>HTN</label>
+              <input [(ngModel)]="assessment.family_htn">
+            </div>
+
+            <div class="form-group">
+              <label>Heart Disease</label>
+              <input [(ngModel)]="assessment.family_heart_disease">
+            </div>
+
+            <div class="form-group">
+              <label>Bronchial Asthma</label>
+              <input [(ngModel)]="assessment.family_bronchial_asthma">
+            </div>
+
+            <div class="form-group">
+              <label>Psychiatric</label>
+              <input [(ngModel)]="assessment.family_psychiatric">
+            </div>
+
+            <div class="form-group">
+              <label>Any Other</label>
+              <textarea [(ngModel)]="assessment.family_other"></textarea>
+            </div>
+          </div>
+
+          <div class="assessment-box">
+            <div class="form-group">
+              <label>* Personal / Occupational History</label>
+              <input [(ngModel)]="assessment.personal_occupational_history">
+            </div>
+
+            <div class="form-group">
+              <label>Single / Married</label>
+              <input [(ngModel)]="assessment.marital_status">
+            </div>
+
+            <div class="form-group">
+              <label>Appetite</label>
+              <input [(ngModel)]="assessment.appetite">
+            </div>
+
+            <div class="form-group">
+              <label>Bowel</label>
+              <input [(ngModel)]="assessment.bowel">
+            </div>
+
+            <div class="form-group">
+              <label>Micturition</label>
+              <input [(ngModel)]="assessment.micturition">
+            </div>
+
+            <div class="form-group">
+              <label>Smoking</label>
+              <input [(ngModel)]="assessment.smoking">
+            </div>
+
+            <div class="form-group">
+              <label>Alcohol</label>
+              <input [(ngModel)]="assessment.alcohol">
+            </div>
+          </div>
+
+          <div class="assessment-box large-box">
+            <label>* Obstetrics and Menstrual History</label>
+            <textarea [(ngModel)]="assessment.obstetrics_menstrual_history"></textarea>
+          </div>
+
+          <div class="assessment-box large-box">
+            <label>* Immunization History / Birth History</label>
+            <textarea [(ngModel)]="assessment.immunization_birth_history"></textarea>
+          </div>
+
+          <div class="assessment-box large-box">
+            <label>* Drug Allergies</label>
+            <textarea [(ngModel)]="assessment.drug_allergies"></textarea>
+          </div>
+
+          <div class="assessment-box large-box">
+            <label>* Development History</label>
+            <textarea [(ngModel)]="assessment.development_history"></textarea>
+          </div>
+
+        </div>
+        <h4 class="sub-title">* General Physical Examination: (A V P U)</h4>
+
+        <div class="physical-exam-box">
+
+          <div class="form-group span-6">
+            <label>Level of consciousness</label>
+            <input [(ngModel)]="assessment.consciousness">
+          </div>
+
+          <div class="form-grid six">
+            <div class="form-group"><label>Pulse</label><input [(ngModel)]="assessment.pulse"></div>
+            <div class="form-group"><label>BP</label><input [(ngModel)]="assessment.bp"></div>
+            <div class="form-group"><label>RR</label><input [(ngModel)]="assessment.rr"></div>
+            <div class="form-group"><label>Weight</label><input [(ngModel)]="assessment.weight"></div>
+            <div class="form-group"><label>SpO2</label><input [(ngModel)]="assessment.spo2"></div>
+            <div class="form-group"><label>Temperature</label><input [(ngModel)]="assessment.temperature"></div>
+
+            <div class="form-group"><label>Lymphadenopathy</label><input [(ngModel)]="assessment.lymphadenopathy"></div>
+            <div class="form-group"><label>BMI</label><input [(ngModel)]="assessment.bmi"></div>
+            <div class="form-group"><label>Pallor</label><input [(ngModel)]="assessment.pallor"></div>
+            <div class="form-group"><label>Cyanosis</label><input [(ngModel)]="assessment.cyanosis"></div>
+            <div class="form-group"><label>Icterus</label><input [(ngModel)]="assessment.icterus"></div>
+            <div class="form-group"><label>Clubbing</label><input [(ngModel)]="assessment.clubbing"></div>
+
+            <div class="form-group"><label>Pedal oedema</label><input [(ngModel)]="assessment.pedal_oedema"></div>
+            <div class="form-group"><label>JVP</label><input [(ngModel)]="assessment.jvp"></div>
+            <div class="form-group span-4"><label>Any other findings</label><input
+                [(ngModel)]="assessment.any_other_findings"></div>
+          </div>
+
+        </div>
+        <h4 class="sub-title">Pain & Systematic Examination</h4>
+
+        <div class="pain-assessment-box">
+
+          <div class="pain-head">
+            <b>Patient has pain:</b>
+            <label>
+              <input type="radio" name="hasPain" value="Yes" [(ngModel)]="assessment.has_pain">
+              Yes
+            </label>
+            <label>
+              <input type="radio" name="hasPain" value="No" [(ngModel)]="assessment.has_pain">
+              No
+            </label>
+          </div>
+
+          <div class="pain-grid">
+            <div class="form-group">
+              <label>Site of Pain</label>
+              <input [(ngModel)]="assessment.pain_site">
+            </div>
+
+            <div class="form-group">
+              <label>Pain Assessment</label>
+              <input [(ngModel)]="assessment.pain_assessment">
+            </div>
+
+            <div class="form-group">
+              <label>Frequency</label>
+              <input [(ngModel)]="assessment.pain_frequency">
+            </div>
+
+            <div class="form-group">
+              <label>Referral</label>
+              <input [(ngModel)]="assessment.pain_referral">
+            </div>
+
+            <div class="form-group span-2">
+              <label>Duration</label>
+              <input [(ngModel)]="assessment.pain_duration">
+            </div>
+          </div>
+
+          <label class="pain-label">Pain Assessment</label>
+
+          <div class="pain-scale-ui">
+            <div class="pain-side">No<br>Pain</div>
+
+            <div class="pain-scale-center">
+              <div class="faces">
+                <span>😊</span>
+                <span>🙂</span>
+                <span>😐</span>
+                <span>☹️</span>
+                <span>😣</span>
+                <span>😭</span>
+              </div>
+
+              <input type="range" min="0" max="10" [(ngModel)]="assessment.pain_score" (input)="onPainScoreChange()">
+
+              <div class="pain-numbers">
+                <span *ngFor="let n of painNumbers">{{ n }}</span>
+              </div>
+
+              <div class="pain-category">
+                <span>None</span>
+                <span>Mild</span>
+                <span>Moderate</span>
+                <span>Severe</span>
+              </div>
+            </div>
+
+            <div class="pain-side">Worst<br>Possible<br>Pain</div>
+          </div>
+
+          <div class="form-group">
+            <label>If Yes, mention the scale in intensity of pain</label>
+            <input [(ngModel)]="assessment.pain_intensity_note">
+          </div>
+
+        </div>
+
+        <div class="systematic-box">
+
+          <h4>* Systematic Examination:</h4>
+
+          <div class="form-group">
+            <label>Chest</label>
+            <textarea [(ngModel)]="assessment.chest"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>CVS</label>
+            <textarea [(ngModel)]="assessment.cvs"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>P/A</label>
+            <textarea [(ngModel)]="assessment.pa"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>CNS (GCS)</label>
+            <textarea [(ngModel)]="assessment.cns"></textarea>
+          </div>
+
+          <div class="form-grid two">
+            <div class="form-group">
+              <label>Expand on to system</label>
+              <textarea [(ngModel)]="assessment.expand_system"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Other Systems</label>
+              <textarea [(ngModel)]="assessment.other_systems"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <h4 class="sub-title">Plan of Care</h4>
+
+        <div class="form-grid two">
+          <div class="form-group">
+            <label>a) Goal to be achieved</label>
+            <textarea [(ngModel)]="assessment.plan_goal"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>b) Investigations ordered</label>
+            <textarea [(ngModel)]="assessment.investigations"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>c) Medications advised</label>
+            <textarea [(ngModel)]="assessment.medications_advised"></textarea>
+          </div>
+          <div class="doctor-continuation-sheet">
+
+            <div class="doctor-box">
+              <label>d) Diet Advised:</label>
+              <textarea [(ngModel)]="assessment.diet_advised"></textarea>
+            </div>
+
+            <div class="doctor-box">
+              <label>e) Procedures Planned (if any):</label>
+              <textarea [(ngModel)]="assessment.procedures_planned"></textarea>
+            </div>
+
+            <div class="doctor-box">
+              <label>f) Special Care:</label>
+
+              <label>i) Respiratory Therapy:</label>
+              <input [(ngModel)]="assessment.respiratory_therapy">
+
+              <label>ii) Physiotherapy:</label>
+              <input [(ngModel)]="assessment.physiotherapy">
+
+              <label>iii) Other:</label>
+              <textarea [(ngModel)]="assessment.special_other"></textarea>
+
+              <p>Psychological Elements</p>
+              <p>Preventive Aspects</p>
+            </div>
+
+            <div class="doctor-box">
+              <label>g) Patient Counselling:</label>
+              <textarea [(ngModel)]="assessment.counselling"></textarea>
+            </div>
+
+            <div class="signature-grid">
+              <div>
+                <p>Signature of Doctor:</p>
+                <div class="signature-upload-box">
+                  <input type="file" accept="image/*"
+                    (change)="onSignatureUpload($event, assessment, 'doctor_signature')">
+                  <img *ngIf="assessment.doctor_signature_preview" [src]="assessment.doctor_signature_preview"
+                    class="saved-sign-img">
+
+                  <button type="button" class="clear-sign-btn"
+                    *ngIf="assessment.doctor_signature_file || assessment.doctor_signature || assessment.doctor_signature_preview"
+                    (click)="clearSignature(assessment, 'doctor_signature')">Clear</button>
+                </div>
+
+                <p>Doctor’s Name</p>
+                <input [(ngModel)]="assessment.doctor_name">
+
+                <p>Date:</p>
+                <input type="date" [(ngModel)]="assessment.doctor_date">
+
+                <p>Time:</p>
+                <input type="time" [(ngModel)]="assessment.doctor_time">
+              </div>
+
+              <div>
+                <p>Signature of the Consultant:</p>
+                <div class="signature-upload-box">
+                  <input type="file" accept="image/*"
+                    (change)="onSignatureUpload($event, assessment, 'consultant_signature')">
+
+                  <img *ngIf="assessment.consultant_signature_preview" [src]="assessment.consultant_signature_preview"
+                    class="saved-sign-img">
+
+                  <button type="button" class="clear-sign-btn"
+                    *ngIf="assessment.consultant_signature_file || assessment.consultant_signature || assessment.consultant_signature_preview"
+                    (click)="clearSignature(assessment, 'consultant_signature')">
+                    Clear
+                  </button>
+                </div>
+
+                <p>Consultant’s Name:</p>
+                <input [(ngModel)]="assessment.consultant_name">
+
+                <p>Date:</p>
+                <input type="date" [(ngModel)]="assessment.consultant_date">
+
+                <p>Time:</p>
+                <input type="time" [(ngModel)]="assessment.consultant_time">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="activeStep === 5">
+        <h3 class="page-title">Medication & Nurse Notes</h3>
+        <div class="responsive-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Dose</th>
+                <th>Route</th>
+                <th>Frequency</th>
+                <th>Status</th>
+                <th>Remarks</th>
+                <th>Nurse</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let med of medications; let i = index; trackBy: trackByIndex">
+                <td class="medicine-cell"><ng-select [items]="medicineList" bindLabel="medicine_name"
+                    bindValue="medicine_id" [(ngModel)]="med.medicine_id" placeholder="Search" appendTo="body"
+                    (change)="onMedicineChange($event, med)"></ng-select></td>
+                <td><input [(ngModel)]="med.dose"></td>
+                <td><input [(ngModel)]="med.route"></td>
+                <td><input [(ngModel)]="med.frequency"></td>
+                <td><select [(ngModel)]="med.status">
+                    <option>GIVEN</option>
+                    <option>PENDING</option>
+                    <option>REFUSED</option>
+                    <option>STOPPED</option>
+                  </select></td>
+                <td><input [(ngModel)]="med.remarks"></td>
+                <td><input [(ngModel)]="med.nurse_name"></td>
+                <td><button class="icon-btn" (click)="removeMedicationRow(i)"><i class="bx bx-trash"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="secondary-btn" (click)="addMedicationRow()">+ Add Medicine</button>
+        <div class="form-grid two mt">
+          <div class="form-group"><label>Nurse Name</label><input [(ngModel)]="nurse_name"></div>
+          <div class="form-group"><label>Nurse Notes</label><textarea [(ngModel)]="nurse_note"></textarea></div>
+        </div>
+      </div>
+
+      <div *ngIf="activeStep === 6">
+
+        <app-patient-casesheet [header]="header" [consultant]="consultant">
+        </app-patient-casesheet>
+
+      </div>
+
+      <!-- NEW MEDICATION CHART TAB -->
+      <div *ngIf="activeStep === 7">
+
+        <app-primary-consultant [header]="header" [consultant]="consultant">
+        </app-primary-consultant>
+
+      </div>
+      <div *ngIf="activeStep === 8">
+        <app-nurse-assessment [header]="header" [consultant]="consultant"></app-nurse-assessment>
+      </div>
+
+      <div *ngIf="activeStep === 9">
+        <app-fall-pain-assessment [header]="header" [consultant]="consultant"></app-fall-pain-assessment>
+      </div>
+
+      <div *ngIf="activeStep === 10">
+        <app-nursing-assessment-care [header]="header" [consultant]="consultant"></app-nursing-assessment-care>
+      </div>
+
+      <div *ngIf="activeStep === 11">
+        <app-nutrition-dietary [header]="header" [consultant]="consultant"></app-nutrition-dietary>
+      </div>
+
+      <div *ngIf="activeStep === 12">
+        <app-charts-investigation-handoff [header]="header"
+          [consultant]="consultant"></app-charts-investigation-handoff>
+      </div>
+
+      <!-- NURSING COMMUNICATION -->
+      <div *ngIf="activeStep === 13">
+
+        <app-nursing-communication [header]="header" [consultant]="consultant">
+        </app-nursing-communication>
+
+      </div>
+
+      <!-- RISK ASSESSMENT -->
+      <div *ngIf="activeStep === 14">
+
+        <app-risk-assessment [header]="header" [consultant]="consultant">
+        </app-risk-assessment>
+
+      </div>
+
+      <!-- DISCHARGE -->
+      <div *ngIf="activeStep === 15">
+
+        <app-discharge [header]="header" [consultant]="consultant">
+        </app-discharge>
+
+      </div>
+
+      <!-- REVIEW -->
+      <!-- <div *ngIf="activeStep === 16">
+
+        <h3 class="page-title">Review & Save</h3>
+
+        <div class="review-grid">
+
+          <div>
+            <b>Patient</b>
+            <span>{{ header.patient_name }} / {{ header.ip_no }}</span>
+          </div>
+
+          <div>
+            <b>Checklist</b>
+            <span>{{ checklist.length }} items completed</span>
+          </div>
+
+          <div>
+            <b>Doctors</b>
+            <span>{{ doctorSignatures.length }} rows</span>
+          </div>
+
+          <div>
+            <b>Movements</b>
+            <span>{{ movements.length }} rows</span>
+          </div>
+
+          <div>
+            <b>Consent</b>
+            <span>Telugu & English consent added</span>
+          </div>
+
+          <div>
+            <b>Assessment</b>
+            <span>Doctor initial assessment ready</span>
+          </div>
+
+          <div>
+            <b>Medicines</b>
+            <span>{{ medications.length }} rows</span>
+          </div>
+
+          <div>
+            <b>Nurse</b>
+            <span>{{ nurse_name || 'Not entered' }}</span>
+          </div>
+
+        </div>
+
+        <div class="history" *ngIf="casesheetHistory.length">
+          <h4>Previous Case Sheets</h4>
+
+          <div *ngFor="let h of casesheetHistory">
+            {{ h.created_date || h.visit_date | date:'short' }}
+            -
+            {{ h.patient_name || h.diagnosis }}
+          </div>
+        </div>
+
+        <div class="upload-section">
+          <label>Patient Images</label>
+
+          <input type="file" multiple accept="image/*" (change)="onPatientImagesSelect($event)">
+
+          <div class="upload-preview" *ngIf="selectedPatientImages.length">
+            <div *ngFor="let file of selectedPatientImages" class="saved-file-item">
+              <span>{{ file.name }}</span>
+            </div>
+          </div>
+
+          <div class="upload-preview" *ngIf="savedPatientImages.length">
+            <div *ngFor="let file of savedPatientImages" class="saved-file-item">
+              <img *ngIf="file.file_type?.startsWith('image/')" [src]="file.url" class="saved-upload-img">
+
+              <a [href]="file.url" target="_blank">
+                {{ file.original_name || file.file_name }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="upload-section">
+          <label>Documents</label>
+
+          <input type="file" multiple accept=".pdf,.doc,.docx,image/*" (change)="onDocumentsSelect($event)">
+
+          <div class="upload-preview" *ngIf="selectedDocuments.length">
+            <div *ngFor="let file of selectedDocuments" class="saved-file-item">
+              <span>{{ file.name }}</span>
+            </div>
+          </div>
+
+          <div class="upload-preview" *ngIf="savedDocuments.length">
+            <div *ngFor="let file of savedDocuments" class="saved-file-item">
+              <img *ngIf="file.file_type?.startsWith('image/')" [src]="file.url" class="saved-upload-img">
+
+              <a [href]="file.url" target="_blank">
+                {{ file.original_name || file.file_name }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="upload-section">
+          <label>Scans</label>
+
+          <input type="file" multiple accept="image/*,.pdf" (change)="onScansSelect($event)">
+
+          <div class="upload-preview" *ngIf="selectedScans.length">
+            <div *ngFor="let file of selectedScans" class="saved-file-item">
+              <span>{{ file.name }}</span>
+            </div>
+          </div>
+
+          <div class="upload-preview" *ngIf="savedScans.length">
+            <div *ngFor="let file of savedScans" class="saved-file-item">
+              <img *ngIf="file.file_type?.startsWith('image/')" [src]="file.url" class="saved-upload-img">
+
+              <a [href]="file.url" target="_blank">
+                {{ file.original_name || file.file_name }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="final-note-box">
+          <h4>Before Save</h4>
+
+          <p>
+            Please verify patient details, consent,
+            doctor assessment, medicines and nurse notes
+            before saving.
+          </p>
+        </div>
+
+      </div>
+
+      <div *ngIf="activeStep === 16" id="surgicalBookletSection">
+
+        <h3 class="page-title">Surgical Booklet</h3>
+
+        <div class="surgical-page-card">
+          <h4>{{ activeSurgicalPage || 'Select Surgical Booklet Page' }}</h4>
+
+          <p class="hint-text">
+            {{ activeSurgicalPage }} form will open here.
+          </p>
+
+          <div *ngIf="activeSurgicalPage === 'Pre-Anaesthetic Assessment'">
+            <h3>Pre-Anaesthetic Assessment</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Consent for Anaesthesia'">
+            <h3>Consent for Anaesthesia</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Informed Consent for Surgical Procedures'">
+            <h3>Informed Consent for Surgical Procedures</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Pre-Operative Checklist'">
+            <h3>Pre-Operative Checklist</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Immediate Pre-Op-Re-Evaluation'">
+            <h3>Immediate Pre-Op-Re-Evaluation</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Surgical Safety Checklist'">
+            <h3>Surgical Safety Checklist</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Anaesthesia Record'">
+            <h3>Anaesthesia Record</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Operation Record'">
+            <h3>Operation Record</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Post Operative Orders'">
+            <h3>Post Operative Orders</h3>
+          </div>
+
+          <div *ngIf="activeSurgicalPage === 'Post Operative Monitoring Notes'">
+            <h3>Post Operative Monitoring Notes</h3>
+          </div>
+        </div>
+
+      </div> -->
+    </section>
+
+    <div class="footer-actions">
+
+      <button class="secondary-btn" (click)="prevStep()" [disabled]="activeStep === 1">
+        Back
+      </button>
+
+      <button class="save-btn" type="button" (click)="saveCompleteCaseSheet()" [disabled]="saving">
+        <i class="bx bx-save"></i>
+        {{ saving ? 'Saving...' : 'Save Case Sheet' }}
+      </button>
+
+      <button class="secondary-btn" *ngIf="activeStep < steps.length" (click)="nextStep()">
+        Next
+      </button>
+
+    </div>
+  </ng-container>
+</div>

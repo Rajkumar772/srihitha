@@ -1,0 +1,415 @@
+.nia-page {
+  width: 1085px;
+  margin: 20px auto 130px;
+  background: #fff;
+  padding: 38px 42px 120px;
+  border: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #252525;
+  overflow: visible;
+}
+
+.nia-header {
+  display: flex;
+  align-items: center;
+  justify-content: initial;
+  margin-bottom: 24px;
+  margin-right: 35%;
+}
+
+.nia-header img {
+  width: 390px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.nia-header h2 {
+  color: #078b91;
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.nia-top-line {
+  border: 1px solid #222;
+  height: 52px;
+  display: grid;
+  grid-template-columns: 2fr 1.35fr .65fr .65fr 1.2fr;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.nia-top-line span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.nia-top-line input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  height: 28px;
+}
+
+.nia-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.nia-table td {
+  border: 1px solid #222;
+  padding: 5px 9px;
+  vertical-align: top;
+  box-sizing: border-box;
+      width: 100px;
+}
+
+.nia-table input[type="text"],
+.nia-table input:not([type]) {
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  height: 24px;
+  font-size: 18px;
+  max-width: 100%;
+}
+
+.nia-table label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+.nia-table input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #222;
+  margin: 0 2px 0 0;
+  flex: 0 0 auto;
+}
+
+.nia-section {
+  font-size: 20px;
+  line-height: 1.33;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+.nia-section b {
+  font-weight: 800;
+}
+
+.line-input {
+  width: 420px;
+  border: none !important;
+  border-bottom: 1px solid #222 !important;
+}
+
+.nia-row-hair td {
+  min-height: 160px;
+}
+
+.nia-row-skin td {
+  min-height: 100px;
+}
+
+.nia-row-nervous td {
+  min-height: 180px;
+}
+
+.nia-row-muscle td {
+  min-height: 150px;
+}
+
+.nia-right-entry {
+  width: 240px;
+  vertical-align: top;
+  padding: 0 !important;
+}
+
+.nia-entry-box {
+  height: 100%;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nia-entry-title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-bottom: 1px solid #222;
+  background: #f8f8f8;
+}
+
+.nia-entry-box textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.4;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+@media print {
+  .nia-page {
+    width: 100%;
+    margin: 0;
+    padding: 30px;
+    border: none;
+    page-break-before: always;
+  }
+}
+
+@media (max-width: 1200px) {
+  .nia-page {
+    width: 100%;
+    margin: 16px auto 90px;
+    padding: 22px;
+  }
+
+  .nia-header img {
+    width: 300px;
+  }
+
+  .nia-header h2 {
+    font-size: 24px;
+  }
+
+  .nia-top-line {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+    min-height: 52px;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nia-page {
+    width: 100%;
+    margin: 10px 0 80px;
+    padding: 14px;
+    border-radius: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nia-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .nia-header img {
+    width: 190px;
+    height: auto;
+    max-height: 72px;
+  }
+
+  .nia-header h2 {
+    font-size: 20px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .nia-top-line {
+    grid-template-columns: 1fr;
+    padding: 10px;
+    gap: 8px;
+    font-size: 16px;
+    overflow: visible;
+  }
+
+  .nia-top-line span {
+    font-size: 15px;
+  }
+
+  .nia-top-line input {
+    font-size: 15px;
+    min-width: 0;
+  }
+
+  .nia-table {
+    min-width: 900px;
+  }
+
+  .nia-section,
+  .nia-table,
+  .nia-table input[type="text"],
+  .nia-table input:not([type]),
+  .nia-entry-box textarea {
+    font-size: 15px;
+  }
+
+  .line-input,
+  .long-line-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .nia-page {
+    padding: 10px;
+  }
+
+  .nia-header img {
+    width: 160px;
+  }
+
+  .nia-header h2 {
+    font-size: 18px;
+  }
+}
+
+.nia-entry-cell {
+  padding: 0 !important;
+  vertical-align: top;
+}
+
+.nia-entry-cell textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 95px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  padding: 10px;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.nia-entry-cell {
+  padding: 0 !important;
+  vertical-align: top;
+  width: 260px;
+}
+
+.nia-entry-title {
+  padding: 8px 10px;
+  border-bottom: 1px solid #222;
+  font-size: 16px;
+  font-weight: 700;
+  background: #f8f8f8;
+}
+
+.nia-entry-cell textarea {
+  width: 100%;
+  min-height: 170px;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 10px;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.nia-sign-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px;
+}
+
+.nia-sign-left,
+.nia-sign-right {
+  flex: 1;
+}
+
+.nia-sign-left label,
+.nia-sign-right label {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.nia-sign-left input[type="text"] {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 17px;
+}
+
+.nia-sign-right input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.nia-sign-preview {
+  width: 220px;
+  height: 90px;
+  border: 1px solid #cfcfcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
+}
+
+.nia-sign-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.nia-table input[type="time"]
+ {
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.datd{
+   width: 100px;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.nia-table input[type="time"]::-webkit-calendar-picker-indicator,
+.nia-table input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}

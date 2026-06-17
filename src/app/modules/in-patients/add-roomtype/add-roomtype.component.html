@@ -1,0 +1,519 @@
+<div class="row">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Add Rooms
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <br>
+        <div class="card-body" class="gth">
+            <form [formGroup]="addemployeedetailsform">
+                <div class="row">
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Floor Type<span style="color: red;">*</span></label>
+
+                            <ng-select formControlName="floor_type" (change)="changeType($event, opentimings)"
+                                [ngClass]="{'is-invalid': submitted && f['floor_type'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+
+                                <ng-option *ngFor="let p of roomdropdownreport" [value]="p.new_type">
+                                    {{ p.new_type }}
+                                </ng-option>
+
+                                <ng-option value="ADD">Add New Floor Type</ng-option>
+                            </ng-select>
+
+                            <div *ngIf="submitted && f['floor_type'].errors" class="invalid-feedback">
+                                <div *ngIf="f['floor_type'].errors.required">Floor Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Room Type<span style="color: red;">*</span></label>
+
+                            <ng-select formControlName="name" [ngClass]="{'is-invalid': submitted && f['name'].errors}"
+                                appendTo="body" dropdownPosition="auto">
+
+                                <ng-option [value]="null" disabled>Select Room Type</ng-option>
+
+                                <ng-option *ngFor="let i of casefiledata" [value]="i.roomtype">
+                                    {{ i.roomtype }}
+                                </ng-option>
+
+                            </ng-select>
+                            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['name'].errors.required">Room Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Room Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="rooms" required
+                                placeholder="Enter Rooms" [ngClass]="{'is-invalid': submitted && f['rooms'].errors}">
+                            <div *ngIf="submitted && f['rooms'].errors" class="invalid-feedback">
+                                <div *ngIf="f['rooms'].errors.required">Room Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Bed Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="bed_no" required
+                                placeholder="Enter Rooms" [ngClass]="{'is-invalid': submitted && f['bed_no'].errors}">
+                            <div *ngIf="submitted && f['bed_no'].errors" class="invalid-feedback">
+                                <div *ngIf="f['bed_no'].errors.required">Bed Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Rooms Price<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="rooms_price" required
+                                placeholder="Enter Room Price"
+                                [ngClass]="{'is-invalid': submitted && f['rooms_price'].errors}"
+                                (keypress)="numericOnly($event)">
+                            <div *ngIf="submitted && f['rooms_price'].errors" class="invalid-feedback">
+                                <div *ngIf="f['rooms_price'].errors.required">Room Price is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Room Condition<span style="color: red;">*</span></label>
+                            <ng-select formControlName="room_condition" (change)="roomcondition($event)" appendTo="body"
+                                dropdownpostion="auto"
+                                [ngClass]="{'is-invalid': submitted && f['room_condition'].errors}"
+                                dropdownPosition="auto">
+                                <ng-option value="AC">AC</ng-option>
+                                <ng-option value="NON-AC">NON-AC</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['room_condition'].errors" class="invalid-feedback">
+                                <div *ngIf="f['room_condition'].errors.required">Room Condition is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Description</label>
+                            <input type="text" class="form-control" formControlName="desc"
+                                placeholder="Enter Description">
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+            </form>
+        </div>
+
+        <div class="btn">
+
+            <button type="submit" (click)="submitroomtype()" style="background-color:blue;
+            color: white;
+            width: 98px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;">ADD</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','Room-Type-list')">Excel</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="bed_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Room Type</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.bed_type}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="floor_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Floor Type</th>
+
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.floor_type}}</span>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="room_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Room Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.room_number}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="bed_no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Bed Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.bed_no}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="price">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Price</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.price}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Description</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.description == '' || row.description == null  ">
+                                        - </div>
+                                    <div *ngIf="row.description!=''|| row.description != null  ">
+                                        {{row.description}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="edit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Edit </th>
+                                <td style="background-color: white;" mat-cell *matCellDef="let data" class="centre">
+                                    <i style="cursor: pointer;font-size: 20px;" class="fa fa-pencil"
+                                        (click)="editdata(data,openmodel)" aria-hidden="true"></i>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="delete">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Delete
+                                </th>
+                                <td mat-cell *matCellDef="let data" class="centre">
+                                    <i style="cursor: pointer;font-size: 20px;" class="fa fa-trash bg_clr"
+                                        (click)="delete(data)" aria-hidden="true"></i>
+                                </td>
+                            </ng-container>
+
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="selectone">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'floor_type',value:item.floor_type}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'floor_type'; let int = index">
+                                                {{item.floor_type}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'bed_type',value:item.bed_type}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'bed_type'; let int = index">
+                                                {{item.bed_type}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'room_number',value:item.room_number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'room_number'; let int = index">
+                                                {{item.room_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'bed_no',value:item.bed_no}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'bed_no'; let int = index">
+                                                {{item.bed_no}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'price',value:item.price}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'price'; let int = index">
+                                                {{item.price}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'description',value:item.description}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'description'; let int = index">
+                                                {{item.description}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #openmodel let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Rooms Form</h5>
+            <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="updateform">
+                <div class="row">
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Room Type<span style="color: red;">*</span></label>
+                            <ng-select formControlName="update_roomtype"
+                                [ngClass]="{'is-invalid': submittedd && g['update_roomtype'].errors}">
+                                <ng-option value="" disabled="true">Select Room Type</ng-option>
+                                <ng-option value="{{i.roomtype}}"
+                                    *ngFor="let i of casefiledata">{{i.roomtype}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submittedd && g.update_roomtype.errors" class="invalid-feedback">
+                                <div *ngIf="g.update_roomtype.errors.required">Room Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Floor Type<span style="color: red;">*</span></label>
+                            <ng-select formControlName="update_floor_type"
+                                [ngClass]="{'is-invalid': submitted && f['update_floor_type'].errors}">
+                                <ng-option value="0">Ground Floor</ng-option>
+                                <ng-option value="1">1st Floor</ng-option>
+                                <ng-option value="2">2nd Floor</ng-option>
+                                <ng-option value="3">3rd Floor</ng-option>
+                                <ng-option value="4">4th Floor</ng-option>
+                                <ng-option value="5">5th Floor</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['update_floor_type'].errors" class="invalid-feedback">
+                                <div *ngIf="f['update_floor_type'].errors.required">Floor Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Rooms Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="rooms_update" required
+                                placeholder="Enter Rooms"
+                                [ngClass]="{'is-invalid': submittedd && g['rooms_update'].errors}">
+                            <div *ngIf="submittedd && g.rooms_update.errors" class="invalid-feedback">
+                                <div *ngIf="g.rooms_update.errors.required">Rooms Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Bed Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="beds_update" required
+                                placeholder="Enter Rooms"
+                                [ngClass]="{'is-invalid': submittedd && g['beds_update'].errors}">
+                            <div *ngIf="submittedd && g.beds_update.errors" class="invalid-feedback">
+                                <div *ngIf="g.beds_update.errors.required">Bed Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Rooms Price<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="update_price" required
+                                placeholder="Enter Room Price"
+                                [ngClass]="{'is-invalid': submittedd && g['update_price'].errors}">
+                            <div *ngIf="submittedd && g.update_price.errors" class="invalid-feedback">
+                                <div *ngIf="g.update_price.errors.required">Room Price is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="input-2">Description</label>
+                            <input type="text" class="form-control" formControlName="update_desc"
+                                placeholder="Enter Description">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modalDismiss()">Close</button>
+            <button type="button" (click)=" resetss() " class="btn btn-info waves-effect">Reset</button>
+            <button type="submit" (click)="editaddroomtype()" style="background-color: blue;
+            color: white;
+            width: 80px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;">Update</button>
+        </div>
+    </div>
+</ng-template>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+    <div class="for-spin">
+        <span class="loader"></span>
+        <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+        </p>
+    </div>
+</div>
+
+<!-- //////add floor type code starts -->
+<ng-template #opentimings let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Add New Floor Type</h5>
+        <button type="button" (click)="dis()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addCategory">
+            <div class="row">
+                <div class="col-10">
+                    <label>ADD New Floor Type<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="new_type"
+                        [ngClass]="{'is-invalid': subs && valid['new_type'].errors}" />
+                    <div *ngIf="subs && valid['new_type'].errors" class="invalid-feedback">
+                        <span *ngIf="valid['new_type'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label></label>
+                    <button (click)="submitCategory()" style="background-color: #573474;
+                    color: white;
+                    width: 58px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">ADD</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

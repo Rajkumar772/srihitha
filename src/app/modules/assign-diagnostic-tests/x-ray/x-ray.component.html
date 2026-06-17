@@ -1,0 +1,397 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            X-Ray
+            <span style="float: right;">
+                <a href="javaScript:;"
+                    style="color: black;background-color:white; text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card">
+        <div class="card-body" class="gth"></div>
+        <form [formGroup]="patientDetailsForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label for="input-2">OP Patient ID<span style="color:red;">&nbsp;&nbsp;*</span> </label>
+
+                        <ng-select (change)="onUHIDChange($event)" formControlName="uh_id">
+                            <ng-option value="OP" disabled>Select OP Patient ID</ng-option>
+
+                            <ng-option [value]="a.uh_id"
+                                *ngFor="let a of gotAllpatients; trackBy: trackByUhId">{{a.uh_id}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Sur Name</label>
+                        <input type="text" class="form-control" formControlName="sur_name"
+                            [ngClass]="{'is-invalid': submitted && validGrup['sur_name'].errors}"
+                            placeholder="Type something" />
+                        <div *ngIf="submitted && validGrup['sur_name'].errors" class="invalid-feedback">
+                            <span *ngIf="validGrup['sur_name'].errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Name<span style="color:red;">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="name" oninput="this.value = this.value.toUpperCase()"
+                            [ngClass]="{'is-invalid': submitted && validGrup['name'].errors}"
+                            placeholder="Type something" />
+                        <div *ngIf="submitted && validGrup['name'].errors" class="invalid-feedback">
+                            <span *ngIf="validGrup['name'].errors.required">This value is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Age<span style="color:red;">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <input formControlName="age" type="text" minlength="2" maxlength="2" class="form-control"
+                                [ngClass]="{'is-invalid': submitted && validGrup['age'].errors}"
+                                placeholder="Enter only numbers" (keypress)="numericOnly($event)">
+                            <div *ngIf="submitted && validGrup['age'].errors" class="invalid-feedback">
+                                <span *ngIf="validGrup['age'].errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group p-2">
+                        <label>Gender<span style="color:red;">&nbsp;&nbsp;*</span></label>
+                        <div>
+                            <ng-select id="inputstate" id="default-select" formControlName="gender"
+                                [ngClass]="{'is-invalid': submitted && validGrup['gender'].errors}">
+                                <ng-option disabled selected>Select</ng-option>
+                                <ng-option value="Male">Male</ng-option>
+                                <ng-option value="Female">Female</ng-option>
+                                <ng-option value="Other">Other</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && validGrup['gender'].errors" class="invalid-feedback">
+                                <span *ngIf="validGrup['gender'].errors.required">This value is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label"> Images (upto 4 images)<span style="color:red">*</span></label>
+                    <div class="center">
+                        <input type="file" (change)="onImageChange($event)" formControlName="imageurl">
+
+                    </div>
+                    <div class="mb-3 images" *ngIf="imagesData.length">
+                        <span *ngFor="let item of imagesData; let i = index">
+                            <img src="{{item.reviewimg}}" alt="" style="padding: 3px;" height="150px" width="200px">
+                            <i class="material-icons cust-icon para" (click)="deleteImage(i)">delete</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="text-center">
+            <button style="background-color: blue;
+            color: white;
+            width: 98px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;" (click)="Addxrays()">ADD</button>
+        </div>
+    </div>
+</div>
+
+<div class="card-body p-2">
+
+    <div class="card p-3">
+        <div class="card" class="gth">
+            <form [formGroup]="labAssgnSearch">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group mb-4">
+                            <label>From Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" formControlName="from_date"
+                                [ngClass]="{'is-invalid': submitt && validDate['from_date'].errors }">
+                            <div *ngIf="submitt && validDate['from_date'].errors" class="invalid-feedback">
+                                <div *ngIf="validDate['from_date'].errors['required']">required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group mb-4">
+                            <label>To Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" formControlName="to_date"
+                                [ngClass]="{'is-invalid': submitt && validDate['to_date'].errors }">
+                            <div *ngIf="submitt && validDate['to_date'].errors" class="invalid-feedback">
+                                <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <button type="submit" style="margin-top:17px;background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;" (click)="SearchDATE()">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="mat-elevation-z8" #TABLE style="width:100%">
+    <div class="col-12">
+
+        <div class="row toppad" style="background: white;">
+            <div class="mat-elevation-z8" #TABLE style="width:100%">
+                <!-- serch header start -->
+                <div class="row buttonhide">
+                    <div class="col">
+                        <mat-form-field class="sea">
+                            <mat-label>Search</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" #input>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <div class="col">
+                        <div class="btns">
+                            <button mat-raised-button class="btn btn-secondary m-1"
+                                (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                            <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- serch header end -->
+                <div class="example-container">
+                    <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                        #exporter="matTableExporter" id="ExampleMaterialTable">
+                        <ng-container matColumnDef="i">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                S.No
+                            </th>
+                            <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="uh_id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                OP Patient ID
+                            </th>
+                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                {{row.uh_id}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Full Name</th>
+                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                {{row.name }}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="age">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Age</th>
+                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                {{row.age}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="gender">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Gender</th>
+                            <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                {{row.gender}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="image1">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Image1
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <!-- Show the image if row.images1 exists -->
+                                <img *ngIf="row.images1 != null" [src]="row.images1" alt="Image1"
+                                    class="image-thumbnail" (click)="openModal(row.images1 , quickView)" />
+
+                                <!-- Show a placeholder if row.images1 is null -->
+                                <img *ngIf="row.images1 == null" src="assets/back/noimage.jpg" alt="No image"
+                                    class="image-thumbnail-placeholder" />
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="image2">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Image2</th>
+                            <td mat-cell *matCellDef="let row">
+                                <img *ngIf="row.images2 != null" style="
+                                            border: 2px solid black;
+                                            height:70px;
+                                            width: 70px;
+                                            cursor: pointer;
+                                            rotate: 90deg;margin-left: 19px;
+                                          " src="{{ row.images2 }}" (click)="openModal(row.images2)" />
+
+                                <img style="height:70px;width: 70px;margin-left: 19px;" *ngIf="row.images2==null"
+                                    src="assets/back/noimage.jpg" />
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="image3">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Image3</th>
+                            <td mat-cell *matCellDef="let row">
+                                <img *ngIf="row.images3 != null" style="
+                                            border: 2px solid black;
+                                            height:70px;
+                                            width: 70px;
+                                            cursor: pointer;
+                                            rotate: 90deg;margin-left: 19px;
+                                          " src="{{ row.images3 }}" (click)="openModal(row.images3)" />
+
+                                <img style="height:70px;width: 70px;margin-left: 19px;" *ngIf="row.images3==null"
+                                    src="assets/back/noimage.jpg" />
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <ng-container matColumnDef="image4">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                Image4</th>
+                            <td mat-cell *matCellDef="let row">
+                                <img *ngIf="row.images4 != null" style="
+                                            border: 2px solid black;
+                                            height:70px;
+                                            width: 70px;
+                                            cursor: pointer;
+                                            rotate: 90deg;margin-left: 19px;
+                                          " src="{{ row.images4 }}" (click)="openModal(row.images4)" />
+
+                                <img style="height:70px;width: 70px;margin-left: 19px;" *ngIf="row.images4==null"
+                                    src="assets/back/noimage.jpg" />
+
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
+                        <!-- Select Start -->
+                        <ng-container matColumnDef="select1">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="cell">
+                                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                        (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                                        <ng-option [value]="{key:'i' ,value:item.i}"
+                                            *ngFor="let item of clonedata; let int = index">
+                                            {{item.i}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </th>
+                        </ng-container>
+
+                        <ng-container matColumnDef="select2">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="cell">
+                                    <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                        (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                                        <ng-option [value]="{key:'diagnostic_date' ,value:item.diagnostic_date}"
+                                            *ngFor="let item of clonedata ">
+                                            {{item.diagnostic_date}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </th>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="select3">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="cell">
+                                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                        (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                                        <ng-option [value]="{key:'uh_id' ,value:item.uh_id}"
+                                            *ngFor="let item of clonedata ">
+                                            {{item.uh_id}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </th>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="select4">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="cell">
+                                    <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                        (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                                        <ng-option [value]="{key:'patient_type' ,value:item.patient_type}"
+                                            *ngFor="let item of clonedata">
+                                            {{item.patient_type}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </th>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                        <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                            class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+                        <!-- Footer end -->
+                    </table>
+                </div>
+            </div>
+            <br><br>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<ng-template #quickView let-modal>
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <img [src]="imagesData" alt="Full Screen Image" class="full-screen-image" />
+    </div>
+</ng-template>
+
+
+
+
+<div *ngIf="isVisible" class="modal-overlay">
+    <div>
+        <span class="close" (click)="close()">
+            <i class="fas fa-times"></i>
+        </span>
+        <img [src]="imageUrl" class="modal-image" />
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

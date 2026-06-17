@@ -1,0 +1,117 @@
+<div class="kpis-standalone-wrapper">
+
+    <div class="kpis-section-header">
+        <h2>NABH Quality Indicators Entry Workstation</h2>
+        <p class="subtitle">6th Edition Standardized Clinical KPI Registry</p>
+    </div>
+
+    <div class="kpi-card form-card">
+        <div class="card-title">Add New Indicator Log</div>
+
+        <form (submit)="addEntry($event)">
+            <div class="form-grid single-column">
+                <div class="form-group">
+                    <label for="kpiSelector">Select Target Quality Indicator *</label>
+                    <select id="kpiSelector" (change)="onIndicatorChange($event)" required>
+                        <option value="">-- Choose an Indicator --</option>
+                        <option *ngFor="let kpi of kpiRegistry" [value]="kpi.code">
+                            [{{ kpi.department }}] - {{ kpi.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid baseline-fields" *ngIf="selectedKPI">
+                <div class="form-group">
+                    <label>Date & Time *</label>
+                    <input type="datetime-local" [(ngModel)]="formBuffer.dateTime" name="dateTime" required />
+                </div>
+                <div class="form-group">
+                    <label>Patient Name *</label>
+                    <input type="text" placeholder="e.g., John Doe" [(ngModel)]="formBuffer.patientName"
+                        name="patientName" required />
+                </div>
+                <div class="form-group">
+                    <label>Age / Sex *</label>
+                    <input type="text" placeholder="e.g., 45/M" [(ngModel)]="formBuffer.ageSex" name="ageSex"
+                        required />
+                </div>
+                <div class="form-group">
+                    <label>MR. No *</label>
+                    <input type="text" placeholder="e.g., MRN-100293" [(ngModel)]="formBuffer.mrNo" name="mrNo"
+                        required />
+                </div>
+            </div>
+
+            <div class="form-grid dynamic-fields" *ngIf="selectedKPI">
+                <div class="form-group" *ngFor="let field of selectedKPI.fields"
+                    [ngClass]="{'full-width': field.type === 'textarea'}">
+                    <label>{{ field.label }} *</label>
+
+                    <input *ngIf="field.type === 'text'" type="text" [placeholder]="field.placeholder || ''"
+                        [(ngModel)]="dynamicBuffer[field.key]" [name]="field.key" required />
+
+                    <select *ngIf="field.type === 'select'" [(ngModel)]="dynamicBuffer[field.key]" [name]="field.key"
+                        required>
+                        <option value="">-- Select Option --</option>
+                        <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+                    </select>
+
+                    <textarea *ngIf="field.type === 'textarea'" rows="3" [placeholder]="field.placeholder || ''"
+                        [(ngModel)]="dynamicBuffer[field.key]" [name]="field.key" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions" *ngIf="selectedKPI">
+                <button type="submit" class="btn btn-submit">ADD ENTRY RECORD</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="kpi-card table-card" *ngIf="selectedKPI">
+        <div class="table-card-header">
+            <div class="table-heading">
+                <h3>Captured Logs Grid</h3>
+                <span class="active-indicator-tag">{{ selectedKPI.code }}</span>
+            </div>
+            <div class="table-utilities">
+                <input type="text" placeholder="Search filtered records..." class="search-input"
+                    (input)="filterData($event)" />
+                <button class="btn btn-export-excel" (click)="exportToExcel()">📥 Export to Excel</button>
+            </div>
+        </div>
+
+        <div class="responsive-table-scroll">
+            <table class="kpi-native-table">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Date & Time</th>
+                        <th>Patient Name</th>
+                        <th>Age/Sex</th>
+                        <th>MR. No</th>
+                        <th *ngFor="let field of selectedKPI.fields">{{ field.label }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of filteredEntries; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ row.core.dateTime | date:'medium' }}</td>
+                        <td class="bold-text">{{ row.core.patientName }}</td>
+                        <td>{{ row.core.ageSex }}</td>
+                        <td><span class="mr-pill">{{ row.core.mrNo }}</span></td>
+                        <td *ngFor="let field of selectedKPI.fields">
+                            {{ row.dynamic[field.key] }}
+                        </td>
+                    </tr>
+                    <tr *ngIf="filteredEntries.length === 0">
+                        <td [attr.colspan]="5 + selectedKPI.fields.length" class="empty-state">
+                            No tracking records found matching this indicator schema.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

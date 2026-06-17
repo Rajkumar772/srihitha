@@ -1,0 +1,107 @@
+
+
+
+ <div class="btns no-print mt-3">
+    <button (click)="openPDF()" class="btn btn-primary">Print</button>&nbsp;
+    <button (click)="Back()" class="btn btn-secondary">Back</button>
+  </div>
+
+
+<div id="printArea" class="rx-page" >
+  <header class="rx-header-top">
+    <div class="rx-header-row">
+      <div class="rx-header-left">
+       QTOP GLOBAL TECHNOLOGIES<br />
+       
+      </div>
+      <div class="rx-header-right">
+        <div>D.No: 1st floor, Block-1, 5-233, above Kotak Mahindra Bank BalajiPet road, Venkateswara Nagar</div>
+        <div>Email: info@aimbighealthcare.com</div>
+        <div>Phone +91 9490041001</div>
+        <div>Rajamahendravaram, Andhra Pradesh,522034</div>
+      </div>
+    </div>
+    <div class="rx-header-line"></div>
+  </header>
+
+
+  <div class="rx-card rx-header">
+    <div class="rx-grid">
+      <div class="rx-row"><div class="rx-label">UHID</div><div class="rx-value">: {{singleData.uh_id}}</div></div>
+      <div class="rx-row"><div class="rx-label"> Name</div><div class="rx-value">: {{singleData.name}}</div></div>
+      <div class="rx-row"><div class="rx-label">Admission Date</div><div class="rx-value">: {{singleData.admin_date | date:'dd-MM-yyyy'}}</div></div>
+      <div class="rx-row"><div class="rx-label">Discharge Date</div><div class="rx-value">: {{singleData.discharge_date | date:'dd-MM-yyyy'}}</div></div>
+    </div>
+  </div>
+
+  <!-- <div class="section-title mt-2"><h5><u>Details at the time of Admission</u></h5></div>
+  <div class="rx-gridtext">
+    <div class="rx-row"><div class="rx-label">Reason for Admission</div><div class="rx-value">: {{singleData.reason_for_admission}}</div></div>
+    <div class="rx-row"><div class="rx-label">Significant Findings</div><div class="rx-value">: {{singleData.significant_findings}}</div></div>
+    <div class="rx-row"><div class="rx-label">Diagnosis of the Patient</div><div class="rx-value">: {{singleData.diagnosisofthepatient}}</div></div>
+    <div class="rx-row"><div class="rx-label">Patient Condition at Discharge</div><div class="rx-value">: {{singleData.patientconditionatthetimeofdischarge}}</div></div>
+  </div> -->
+
+  <div class="summary-box">
+  <div class="section-title mt-2">
+    <h5><u>Details at the time of Admission</u></h5>
+  </div>
+  <div class="rx-gridtext">
+ <div class="rx-row"><div class="rx-label">Reason for Admission</div><div class="rx-value">: {{singleData.reason_for_admission}}</div></div>
+    <div class="rx-row"><div class="rx-label">Significant Findings</div><div class="rx-value">: {{singleData.significant_findings}}</div></div>
+    <div class="rx-row"><div class="rx-label">Diagnosis of the Patient</div><div class="rx-value">: {{singleData.diagnosisofthepatient}}</div></div>
+    <div class="rx-row"><div class="rx-label">Patient Condition at Discharge</div><div class="rx-value">: {{singleData.patientconditionatthetimeofdischarge}}</div></div>
+  </div>
+
+</div>
+
+<div class="summary-box">
+  <div class="section-title mt-2"><h5><u>Details Regarding Investigations</u></h5></div>
+  <div class="rx-gridtext">
+    <div class="rx-row"><div class="rx-label">Procedures Performed</div><div class="rx-value">: {{singleData.procedures_done}}</div></div>
+    <div class="rx-row"><div class="rx-label">Other Treatment Details</div><div class="rx-value">: {{singleData.othertreatment_details}}</div></div>
+  
+    <div class="rx-row full-width-row">
+  <div class="rx-label">Medications Given</div>
+  <div class="rx-value">
+    {{ singleData.medications_given }}
+  </div>
+</div>
+  </div></div>
+
+
+  <div class="summary-box">
+  <div class="section-title mt-2"><h5><u>Follow-up Details</u></h5></div>
+  <div class="rx-gridtext">
+    <div class="rx-row"><div class="rx-label">Followup Advice</div><div class="rx-value">: {{singleData.followup_advice}}</div></div>
+    <div class="rx-row"><div class="rx-label">Medications Prescribed</div><div class="rx-value">: {{singleData.medicationsprescribed}}</div></div>
+    <div class="rx-row"><div class="rx-label">Other Instructions</div><div class="rx-value">: {{singleData.otherinstructions}}</div></div>
+  </div></div>
+
+<div class="summary-box">
+  <div class="section-title mt-2"><h5><u>Details in case of Emergency</u></h5></div>
+  <div class="rx-gridtext">
+    <div class="rx-row"><div class="rx-label">How to Seek Medical Help</div><div class="rx-value">: {{singleData.howtoseekmedicalhelp}}</div></div>
+    <div class="rx-row"><div class="rx-label">Contact Numbers</div><div class="rx-value">: {{singleData.contactnumberhospital}}</div></div>
+  </div></div>
+
+
+  <div class="summary-box">
+  <div class="section-title mt-2"><h5><u>Details in case of Death</u></h5></div>
+  <div class="rx-gridtext">
+    <div class="rx-row"><div class="rx-label">Cause of Death</div><div class="rx-value">: {{singleData.causeofdeath}}</div></div>
+  </div></div>
+
+ 
+ 
+
+<div class="signature-row">
+  <img [src]="singleData.doctor_signature"
+       alt="Doctor Signature"
+       class="doctor-sign">
+
+  <div class="signature-text">
+    <u>Doctor Signature</u>
+  </div>
+</div>
+</div>

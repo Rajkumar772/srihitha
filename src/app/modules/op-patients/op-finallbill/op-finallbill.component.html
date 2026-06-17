@@ -1,0 +1,497 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div contenteditable="true" id="editor" class="editor bill-editor">
+  <div class="bill-wrapper">
+
+    <!-- ---------- HEADER ---------- -->
+    <header class="bill-header">
+      <div class="bill-logo">
+        <img src="assets/back/PRINTLOGO.png" alt="Hospital Logo">
+      </div>
+
+      <div class="bill-hospital">
+        <h2 class="bill-hospital-name">PRAGATI IVF,HOSPITAL</h2>
+        <p class="bill-hospital-address">
+          Rajahmundry,<br>
+          Andhra Pradesh 533103, India.
+        </p>
+        <p class="bill-hospital-contact">
+          Phone : 91 7729079781
+        </p>
+        <p class="bill-hospital-gstin">
+          <strong>GSTIN : 7729079781</strong>
+        </p>
+      </div>
+    </header>
+
+    <!-- ---------- TITLE ---------- -->
+    <div class="bill-title-wrap">
+      <h3 class="bill-title">BILLING</h3>
+    </div>
+
+    <!-- ---------- PATIENT / BILL INFO BOX ---------- -->
+<section class="bill-meta">
+  <table class="bill-meta-table">
+    <!-- ROW 1 -->
+    <colgroup>
+      <!-- [Label][ : ][Value] x 3  -->
+      <col style="width:15%">
+      <col style="width:3%">
+      <col style="width:14%">
+
+      <col style="width:15%">
+      <col style="width:3%">
+      <col style="width:14%">
+
+      <col style="width:15%">
+      <col style="width:3%">
+      <col style="width:18%">
+    </colgroup>
+
+  <!-- ROW 1 -->
+  <tr>
+    <td class="bill-meta-label">Patient Name</td>
+    <td class="bill-meta-colon">:</td>
+    <td class="bill-meta-value">{{ bill_data[0].name }}</td>
+
+    <td class="bill-meta-label">Age / Sex</td>
+    <td class="bill-meta-colon">:</td>
+    <td class="bill-meta-value">
+      {{ bill_data[0].age }} / {{ bill_data[0]?.gender[0] }}
+    </td>
+
+    <td class="bill-meta-label">OP Patient ID</td>
+    <td class="bill-meta-colon">:</td>
+    <td class="bill-meta-value">{{ bill_data[0].old_uhid_no }}</td>
+  </tr>
+
+    <!-- ROW 2 -->
+    <tr>
+      <td class="bill-meta-label">Address</td>
+      <td class="bill-meta-colon">:</td>
+      <td class="bill-meta-value">{{ bill_data[0].address }}</td>
+
+      <td class="bill-meta-label">Mobile No</td>
+      <td class="bill-meta-colon">:</td>
+      <td class="bill-meta-value">{{ bill_data[0].phone_number }}</td>
+
+      <td class="bill-meta-label">Date</td>
+      <td class="bill-meta-colon">:</td>
+      <td class="bill-meta-value">
+        {{ bill_data[0].op_date | date: 'dd-MM-yyyy' }}
+      </td>
+    </tr>
+
+    <!-- ROW 3 -->
+    <tr>
+      <td class="bill-meta-label">Name of the Consultant</td>
+      <td class="bill-meta-colon">:</td>
+      <!-- span remaining columns -->
+      <td class="bill-meta-value" colspan="7">{{ bill_data[0].d_name }}</td>
+    </tr>
+  </table>
+</section>
+
+
+
+    <!-- keep your existing “Statement of Bill” table exactly as it is below -->
+
+
+        <!-- <div style="width: 80%;margin-top: 50px;">
+            <table style="border: 1px solid black; border-collapse: collapse;width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black; padding: 5px;text-align: center;font-size: 18px;">Name
+                            of Bill</th>
+                        <th style="border: 1px solid black; padding: 5px;text-align: center;font-size: 18px;">Total
+                            Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'hide-on-print': rent_room === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;"><b>
+                                Stent Remove
+                            </b></td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="rent_room" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': treatment_charges === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Consultant Charges</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="treatment_charges" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': anaesthesia === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>uroflowmetry</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="anaesthesia" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': operation_theatre === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Crystoscopy</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="operation_theatre" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': theatre_assistant === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Guide wire</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="theatre_assistant" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': oxygen_charges === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Anesthesia
+                            </b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="oxygen_charges" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': dressing_charges === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>2D-Echo</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="dressing_charges" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': nursing_charges === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Discharge</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="nursing_charges" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': nebuliser === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Procedure Charge</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="nebuliser" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': legal_charges === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;"><b>
+                                Circumcision</b></td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="legal_charges" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': laboratory === 0}">
+                        <td style="border: 1px solid black; padding: 5px;text-align: left;padding-left: 15px;">
+                            <b>Circumcision Stapler</b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="laboratory" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;text-align: right;font-size: 20px;">
+                            <b>Grand Total : </b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;font-weight: 600;font-size: 20px;"
+                                [value]="grandTotal" class="form-control" readonly />
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <br><br>
+            <div class="row mt-5">
+                <div class="col-8">
+
+                </div>
+                <div class="col-4">
+                    <h5 style="text-align: end;"><b>Authorized Signature</b></h5>
+                </div>
+            </div>
+        </div> -->
+
+        <div style="width: 80%;margin-top: 50px;">
+            <table style="border: 1px solid black; border-collapse: collapse;width: 127%;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black; padding: 5px; text-align: center; font-size: 18px;">
+                            Statement of Bill</th>
+                        <th style="border: 1px solid black; padding: 5px; text-align: center; font-size: 18px;">Qty</th>
+                        <th style="border: 1px solid black; padding: 5px; text-align: center; font-size: 18px;">Rate
+                        </th>
+                        <th style="border: 1px solid black; padding: 5px; text-align: center; font-size: 18px;">Total
+                            Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'hide-on-print': Stent_Remove_qty === 0 && Stent_Remove_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{StentRemove}} </b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Stent_Remove_qty" (ngModelChange)="calculateTotal('Stent_Remove')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Stent_Remove_rate" (ngModelChange)="calculateTotal('Stent_Remove')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Stent_Remove_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Consultant_Charges_qty === 0 && Consultant_Charges_rent === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{ConsultantCharges}}
+                            </b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Consultant_Charges_qty"
+                                (ngModelChange)="calculateTotal('Consultant_Charges')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Consultant_Charges_rent"
+                                (ngModelChange)="calculateTotal('Consultant_Charges')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Consultant_Charges_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Uroflow_metry_qty === 0 && Uroflow_metry_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b> {{Uroflowmetry}}
+                            </b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Uroflow_metry_qty" (ngModelChange)="calculateTotal('Uroflow_metry')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Uroflow_metry_rate" (ngModelChange)="calculateTotal('Uroflow_metry')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Uroflow_metry_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Cystos_copy_qty === 0 && Cystos_copy_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{Cystoscopy}}
+                            </b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Cystos_copy_qty" (ngModelChange)="calculateTotal('Cystos_copy')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Cystos_copy_rate" (ngModelChange)="calculateTotal('Cystos_copy')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Cystos_copy_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Guide_wire_qty === 0 && Guide_wire_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{Guidewire}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Guide_wire_qty" (ngModelChange)="calculateTotal('Guide_wire')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Guide_wire_rate" (ngModelChange)="calculateTotal('Guide_wire')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Guide_wire_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': anaesthesia_qty === 0 && anaesthesia_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{Anaesthesia}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="anaesthesia_qty" (ngModelChange)="calculateTotal('rent_naesthesia')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="anaesthesia_rate" (ngModelChange)="calculateTotal('rent_naesthesia')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="rent_anaesthesia_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': rent_DEcho_qty === 0 && rent_DEcho_rate === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{DEcho}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="rent_DEcho_qty" (ngModelChange)="calculateTotal('rent_DEcho')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="rent_DEcho_rate" (ngModelChange)="calculateTotal('rent_DEcho')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="rent_DEcho_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Discharge_qty === 0 && Discharge_rent === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{Discharge}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Discharge_qty" (ngModelChange)="calculateTotal('Discharge_rtes')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Discharge_rent" (ngModelChange)="calculateTotal('Discharge_rtes')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Discharge_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Procedure_Charge_qty === 0 && Procedure_Charge_rent === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{ProcedureCharge}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Procedure_Charge_qty"
+                                (ngModelChange)="calculateTotal('Procedure_Charge')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Procedure_Charge_rent"
+                                (ngModelChange)="calculateTotal('Procedure_Charge')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Procedure_Charge_total" readonly />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': Circumcision_qty === 0 && Circumcision_rent === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{Circumcision}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Circumcision_qty" (ngModelChange)="calculateTotal('Circumcision_rate')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Circumcision_rent" (ngModelChange)="calculateTotal('Circumcision_rate')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Circumcision_rent_total" readonly />
+                        </td>
+                    </tr>
+                    <tr
+                        [ngClass]="{'hide-on-print': Circumcision_Stapler_rent_qty === 0 && Circumcision_Stapler_rent === 0}">
+                        <td style="border: 1px solid black; padding: 5px; text-align: left; padding-left: 15px;">
+                            <b>{{CircumcisionStapler}}</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Circumcision_Stapler_rent_qty"
+                                (ngModelChange)="calculateTotal('Circumcision_Stapler')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="Circumcision_Stapler_rent"
+                                (ngModelChange)="calculateTotal('Circumcision_Stapler')" />
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="text" style="text-align: center;" class="form-control"
+                                [value]="Circumcision_Stapler_total" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td></td>
+                        <td style="border: 1px solid black; padding: 5px;text-align: right;font-size: 20px;">
+                            <b>Grand Total </b>
+                        </td>
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;font-weight: 600;font-size: 20px;"
+                                [value]="grandTotal" class="form-control" readonly />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h5 style="display: flex; justify-content: flex-start;font-size: 15px;">
+                        <span style="min-width: 150px; text-align: left;">Amount in words :</span>
+                        <span style="text-transform: capitalize;">{{numberInWords}}&nbsp;Rupees Only /-</span>
+                    </h5>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-4">
+                </div>
+                <div class="col-4">
+                </div>
+                <div class="col-4">
+                    <h5 style="text-align: end;font-size: 13px;"><b>(Authorized Signature)</b></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center m-4" id="printPageButton">
+            <button class="btn btn-primary" (click)="submitFinallBill()">Submit</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

@@ -1,0 +1,818 @@
+.anh-med-page {
+  width: 1085px;
+  min-height: 1350px;
+  margin: 25px auto;
+  padding: 24px 28px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.anh-med-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.anh-med-header img {
+  width: 390px;
+  max-height: 95px;
+  object-fit: contain;
+}
+
+.anh-med-header h2 {
+  color: #078c99;
+  font-size: 28px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.anh-med-patient-line {
+  border: 1px solid #222;
+  min-height: 52px;
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: 1.55fr 1.2fr 0.7fr 0.7fr 1.2fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.anh-patient-field {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.anh-patient-field span {
+  font-size: 20px;
+  color: #222;
+  white-space: nowrap;
+}
+
+.anh-patient-field input {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 17px;
+}
+
+.small-field input {
+  max-width: 75px;
+}
+
+.anh-med-note {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.25;
+  margin: 0 0 24px;
+}
+
+.anh-med-table-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.anh-med-table,
+.anh-intake-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.anh-med-table th,
+.anh-med-table td,
+.anh-intake-table th,
+.anh-intake-table td {
+  border: 1px solid #222;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+.anh-med-table th {
+  height: 34px;
+}
+
+.anh-med-table td,
+.anh-intake-table td {
+  height: 54px;
+}
+
+.anh-med-table small {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.anh-med-table input,
+.anh-med-table textarea,
+.anh-intake-table input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.anh-med-table textarea {
+  resize: none;
+  padding: 6px;
+  text-align: left;
+}
+
+.anh-med-table .date-input,
+.anh-med-table .time-input {
+  font-size: 12px;
+  padding: 2px;
+  min-width: 0;
+}
+
+.anh-med-table .date-input::-webkit-calendar-picker-indicator,
+.anh-med-table .time-input::-webkit-calendar-picker-indicator {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  padding: 0;
+}
+
+.anh-intake-table th {
+  height: 86px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.intake-date {
+  margin-top: 8px;
+}
+
+.intake-date input {
+  width: 160px;
+  height: 24px;
+  border: none;
+  border-bottom: 1px solid #222;
+}
+
+.anh-med-actions {
+  margin-top: 14px;
+}
+
+.anh-add-btn {
+  border: 0;
+  border-radius: 10px;
+  background: #078c99;
+  color: #fff;
+  padding: 11px 20px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(7, 140, 153, 0.22);
+}
+
+.anh-add-btn:hover {
+  background: #056f79;
+}
+
+.anh-del-btn {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 10px;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.anh-med-footer {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .anh-med-page {
+    width: 100%;
+    border: none;
+    margin: 0;
+  }
+}
+.col-date {
+    width: 100px;
+  }
+
+.col-time {
+  width: 60px;
+}
+
+.col-drug {
+  width: 270px;
+}
+
+.col-dose {
+  width: 65px;
+}
+
+.col-route {
+  width: 70px;
+}
+
+.col-site {
+  width: 60px;
+}
+
+.col-freq {
+  width: 60px;
+}
+
+.col-sign {
+  width: 60px;
+}
+
+.col-action {
+  width: 65px;
+}
+.anh-med-table {
+  width: 760px;
+  flex-shrink: 0;
+}
+
+.anh-intake-table {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.allergy-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-top: 12px;
+}
+
+.allergy-table th,
+.allergy-table td {
+  border: 1px solid #222;
+  height: 38px;
+  padding: 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.allergy-table input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.nurse-fill-title {
+  margin-top: 14px;
+  border: 1px solid #222;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.time-intake-title {
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.date-grid-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid #222;
+  border-bottom: 0;
+}
+
+.date-grid-row div {
+  height: 34px;
+  border-right: 1px solid #222;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+
+.date-grid-row div:last-child {
+  border-right: 0;
+}
+
+
+.date-grid-row label {
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.date-grid-row input {
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+}
+
+.nurse-intake-grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.nurse-intake-grid td {
+  border: 1px solid #222;
+  height: 50px;
+  padding: 0;
+}
+
+.nurse-intake-grid input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+.medication-notes {
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #222;
+}
+
+.medication-notes p {
+  margin: 3px 0;
+}
+.nia-page {
+  width: 1085px;
+  margin: 20px auto 130px;
+  background: #fff;
+  padding: 38px 42px 120px;
+  border: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #252525;
+  overflow: visible;
+}
+
+.nia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.nia-header img {
+  width: 390px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.nia-header h2 {
+  color: #078b91;
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.nia-top-line {
+  border: 1px solid #222;
+  height: 52px;
+  display: grid;
+  grid-template-columns: 2fr 1.35fr .65fr .65fr 1.2fr;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.nia-top-line span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.nia-top-line input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  height: 28px;
+}
+
+.nia-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.nia-table td {
+  border: 1px solid #222;
+  padding: 5px 9px;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.nia-table input[type="text"],
+.nia-table input:not([type]) {
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  height: 24px;
+  font-size: 18px;
+  max-width: 100%;
+}
+
+.nia-table label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+.nia-table input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #222;
+  margin: 0 2px 0 0;
+  flex: 0 0 auto;
+}
+
+.nia-section {
+  font-size: 20px;
+  line-height: 1.33;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+.nia-section b {
+  font-weight: 800;
+}
+
+.line-input {
+  width: 420px;
+  border: none !important;
+  border-bottom: 1px solid #222 !important;
+}
+
+.nia-row-hair td {
+  min-height: 160px;
+}
+
+.nia-row-skin td {
+  min-height: 100px;
+}
+
+.nia-row-nervous td {
+  min-height: 180px;
+}
+
+.nia-row-muscle td {
+  min-height: 150px;
+}
+
+/* fixed footer overlap fix */
+.form-navigation,
+.bottom-navigation,
+.step-footer,
+.case-footer {
+  z-index: 20;
+}
+
+@media print {
+  .nia-page {
+    width: 100%;
+    margin: 0;
+    padding: 30px;
+    border: none;
+    page-break-before: always;
+  }
+}
+
+.nia-right-entry {
+  width: 240px;
+  vertical-align: top;
+  padding: 0 !important;
+}
+
+.nia-entry-box {
+  height: 100%;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nia-entry-title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-bottom: 1px solid #222;
+  background: #f8f8f8;
+}
+
+.nia-entry-box textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.4;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: transparent;
+}
+/* =========================================================
+   SENIOR RESPONSIVE PATCH - DO NOT REMOVE EXISTING CSS
+   Fixes mobile/tablet overflow without changing desktop PDF look
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.anh-med-page,
+.nia-page {
+  width: min(1085px, 100%);
+  max-width: 1085px;
+}
+
+.anh-med-page img,
+.nia-page img {
+  max-width: 100%;
+      padding-right: 25%;
+}
+
+.anh-med-table-wrap,
+.responsive-table {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1200px) {
+  .anh-med-page,
+  .nia-page {
+    margin: 16px auto 90px;
+    padding: 22px;
+  }
+
+  .anh-med-header img,
+  .nia-header img {
+    width: 300px;
+  }
+
+  .anh-med-header h2,
+  .nia-header h2 {
+    font-size: 24px;
+  }
+
+  .anh-med-patient-line,
+  .nia-top-line {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+    min-height: 52px;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .anh-med-page,
+  .nia-page {
+    width: 100%;
+    margin: 10px 0 80px;
+    padding: 14px;
+    border-radius: 12px;
+    overflow-x: hidden;
+  }
+
+  .anh-med-header,
+  .nia-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .anh-med-header img,
+  .nia-header img {
+    width: 190px;
+    height: auto;
+    max-height: 72px;
+  }
+
+  .anh-med-header h2,
+  .nia-header h2 {
+    font-size: 20px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .anh-med-patient-line,
+  .nia-top-line {
+    grid-template-columns: 1fr;
+    padding: 10px;
+    gap: 8px;
+    font-size: 16px;
+    overflow: visible;
+  }
+
+  .anh-patient-field span,
+  .nia-top-line span {
+    font-size: 15px;
+  }
+
+  .anh-patient-field input,
+  .nia-top-line input {
+    font-size: 15px;
+    min-width: 0;
+  }
+
+  .small-field input {
+    max-width: none;
+  }
+
+  .anh-med-note,
+  .medication-notes {
+    font-size: 13px;
+  }
+
+  .anh-med-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .anh-med-table {
+    width: 760px;
+    min-width: 760px;
+  }
+
+  .anh-intake-table,
+  .date-grid-row,
+  .nurse-intake-grid,
+  .allergy-table {
+    min-width: 620px;
+  }
+
+  .date-grid-row,
+  .nurse-fill-title,
+  .time-intake-title,
+  .nurse-intake-grid,
+  .allergy-table {
+    width: max-content;
+    min-width: 620px;
+  }
+
+  .nia-table {
+    min-width: 900px;
+  }
+
+  .nia-page {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nia-section,
+  .nia-table,
+  .nia-table input[type="text"],
+  .nia-table input:not([type]),
+  .nia-entry-box textarea {
+    font-size: 15px;
+  }
+
+  .line-input,
+  .long-line-input {
+    width: 100%;
+  }
+
+  .anh-add-btn,
+  .add-row-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .anh-med-page,
+  .nia-page {
+    padding: 10px;
+  }
+
+  .anh-med-header img,
+  .nia-header img {
+    width: 160px;
+  }
+
+  .anh-med-header h2,
+  .nia-header h2 {
+    font-size: 18px;
+  }
+}
+
+
+.intake-date {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+  // gap: 6px;
+}
+
+.intake-date input[type="date"] {
+  width: 155px;
+  height: 28px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  text-align: center;
+}
+
+.intake-date input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+.add-row-btn {
+  margin-top: 12px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0f9db0, #087f8c);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(8, 127, 140, 0.25);
+}
+
+.add-row-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(8, 127, 140, 0.35);
+  background: linear-gradient(135deg, #11b4c9, #0991a0);
+}
+
+.add-row-btn:active {
+  transform: scale(0.98);
+}
+
+.add-row-btn::before {
+  content: "+";
+  margin-right: 8px;
+  font-size: 20px;
+  font-weight: 900;
+}

@@ -1,0 +1,483 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+.hthtnh {
+  display: block;
+  padding: 0.20rem 1.0rem;
+  position: relative;
+  font-size: 14px;
+  transition: all 0.4s;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+
+.hthtnher {
+  text-transform: uppercase;
+  display: block;
+  padding: 0.20rem 1.0rem;
+  position: relative;
+  font-size: 13.3px;
+  transition: all 0.4s;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+
+.submit-btn {
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  height: 40px;
+  font-size: 18px;
+  width: 120px;
+}
+
+.gth {
+  // font-family:  "Nunito", sans-serif;
+
+  display: block;
+  padding: 0.20rem 1.0rem;
+  position: relative;
+  font-size: 13.3px;
+  transition: all 0.4s;
+  font-weight: 600;
+  // font-family: "Inter", sans-serif;
+   font-family:'sans-serif';
+   margin-left: 10px;
+}
+
+
+
+.btn-1 {
+  width: 165px;
+  background-color: #1cbb8c;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-family: "Inter";
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+
+
+
+input[type='email'] {
+  text-transform: none;
+}
+
+//////////////////////////// loader 
+
+.loader {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: black black transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent #FF3D00 #FF3D00;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+
+.my-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed !important;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  align-content: space-between;
+  opacity: 0.6;
+}
+
+
+
+//////////////////////////// loader
+
+/* =========================================================
+   PROFESSIONAL UI THEME (Admin + Staff) - Added by ChatGPT
+   - Keeps your existing routing / components unchanged
+   ========================================================= */
+:root {
+  --ab-teal: #00D4C8;
+  --ab-blue: #0707B2;
+  --ab-red: #BC2E32;
+
+  --ui-bg: radial-gradient(1200px 700px at 8% 0%, rgba(0, 212, 200, .12), transparent 55%),
+    radial-gradient(900px 600px at 92% 18%, rgba(7, 7, 178, .10), transparent 58%),
+    linear-gradient(180deg, #f7fbff 0%, #eef5ff 65%, #f7fbff 100%);
+  --ui-card: rgba(255, 255, 255, .92);
+  --ui-border: rgba(15, 23, 42, .10);
+  --ui-shadow: 0 18px 46px rgba(2, 6, 23, .12);
+
+  --side-bg: linear-gradient(180deg, #0b1220 0%, #101b2f 55%, #0b1220 100%);
+  --side-border: rgba(255, 255, 255, .10);
+  --side-pill: rgba(255, 255, 255, .06);
+  --side-pill-hover: rgba(255, 255, 255, .10);
+  --side-active: rgba(0, 212, 200, .16);
+}
+
+body {
+  background: var(--ui-bg);
+}
+
+/* Cards / panels */
+.card,
+.white-box,
+.panel,
+.content-wrapper .card,
+.page-content .card {
+  background: var(--ui-card) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--ui-shadow) !important;
+}
+
+/* Form fields */
+.form-control,
+input.form-control,
+select.form-control,
+textarea.form-control,
+.ng-select .ng-select-container {
+  border-radius: 12px !important;
+  border-color: rgba(15, 23, 42, .12) !important;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, .06);
+}
+
+.form-control:focus,
+.ng-select.ng-select-opened>.ng-select-container {
+  border-color: rgba(0, 212, 200, .55) !important;
+  box-shadow: 0 12px 28px rgba(0, 212, 200, .14) !important;
+}
+
+/* Primary buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--ab-teal), #00a7ff) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 34px rgba(0, 212, 200, .16);
+}
+
+/* Subtle scrollbar */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(2, 6, 23, .18);
+  border-radius: 999px
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(2, 6, 23, .26)
+}
+
+/* =========================================================
+   GLASS + MODULE ACCENT SYSTEM (Admin + Staff) - Added by ChatGPT
+   - Professional: glass sidebar + soft background + colored card accents
+   ========================================================= */
+:root {
+  /* Brand */
+  --ab-teal: #00D4C8;
+  --ab-blue: #0707B2;
+  --ab-red: #BC2E32;
+
+  /* Background */
+  --ui-bg: radial-gradient(1200px 700px at 8% 0%, rgba(0, 212, 200, .16), transparent 55%),
+    radial-gradient(900px 600px at 92% 18%, rgba(7, 7, 178, .12), transparent 58%),
+    radial-gradient(900px 600px at 45% 105%, rgba(188, 46, 50, .08), transparent 60%),
+    linear-gradient(180deg, #f7fbff 0%, #eef5ff 65%, #f7fbff 100%);
+
+  /* Glass surfaces */
+  --glass: rgba(255, 255, 255, .12);
+  --glass-2: rgba(255, 255, 255, .08);
+  --glass-border: rgba(255, 255, 255, .22);
+  --glass-shadow: 0 22px 60px rgba(2, 6, 23, .14);
+  --glass-blur: 14px;
+
+  /* Cards */
+  --card-bg: rgba(255, 255, 255, .92);
+  --card-border: rgba(15, 23, 42, .10);
+  --card-shadow: 0 18px 46px rgba(2, 6, 23, .10);
+
+  /* Module accent (default) */
+  --module-accent: var(--ab-teal);
+  --module-accent-2: #00a7ff;
+}
+
+body {
+  background: var(--ui-bg);
+}
+
+/* -----------------------------------------
+   Sidebar: glass dark
+----------------------------------------- */
+.app-sidebar,
+.sidebar,
+.sidebar-wrapper {
+  background:
+    radial-gradient(900px 520px at 12% 10%, rgba(0, 212, 200, .22), transparent 55%),
+    radial-gradient(800px 520px at 92% 25%, rgba(7, 7, 178, .18), transparent 60%),
+    linear-gradient(180deg, #0b1220 0%, #101b2f 55%, #0b1220 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, .12) !important;
+  box-shadow: 12px 0 30px rgba(2, 6, 23, .18);
+  margin-top: 24px;
+}
+
+/* Sidebar items glass pills */
+.sidebar .nav .nav-item>a,
+.app-sidebar .app-nav-item>.app-nav-link,
+.app-sidebar .app-nav-item>a.app-nav-link {
+  background: rgba(255, 255, 255, .06) !important;
+  border: 1px solid rgba(255, 255, 255, .14) !important;
+  border-radius: 14px !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.sidebar .nav .nav-item>a:hover,
+.app-sidebar .app-nav-item>.app-nav-link:hover,
+.app-sidebar .app-nav-item>a.app-nav-link:hover {
+  background: rgba(255, 255, 255, .10) !important;
+}
+
+/* -----------------------------------------
+   Cards: white with colored accent strip
+----------------------------------------- */
+.card,
+.white-box,
+.panel,
+.content-wrapper .card,
+.page-content .card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--card-shadow) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before,
+.white-box::before,
+.panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 4px;
+  // background: linear-gradient(90deg, var(--module-accent), var(--module-accent-2));
+  opacity: .95;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, .14) !important;
+}
+
+/* KPI / small cards can use .card-accent class */
+.card-accent {
+  background:
+    radial-gradient(900px 520px at 15% 10%, rgba(0, 212, 200, .14), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .90)) !important;
+}
+
+/* -----------------------------------------
+   Forms: clean focus
+----------------------------------------- */
+.form-control,
+input.form-control,
+select.form-control,
+textarea.form-control,
+.ng-select .ng-select-container {
+  border-radius: 12px !important;
+  border-color: rgba(15, 23, 42, .12) !important;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, .06);
+}
+
+.form-control:focus,
+.ng-select.ng-select-opened>.ng-select-container {
+  border-color: color-mix(in srgb, var(--module-accent) 55%, white) !important;
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--module-accent) 18%, transparent) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--module-accent), var(--module-accent-2)) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .10);
+}
+
+/* -----------------------------------------
+   Module palette (apply ONE class on page wrapper)
+   Example: <div class="page-content module-opd"> ... </div>
+----------------------------------------- */
+.module-analytics {
+  --module-accent: #3b82f6;
+  --module-accent-2: #06b6d4;
+}
+
+.module-user-access {
+  --module-accent: #8b5cf6;
+  --module-accent-2: #ec4899;
+}
+
+.module-opd {
+  --module-accent: var(--ab-teal);
+  --module-accent-2: #00a7ff;
+}
+
+.module-ipd {
+  --module-accent: #22c55e;
+  --module-accent-2: #84cc16;
+}
+
+.module-labs {
+  --module-accent: #f59e0b;
+  --module-accent-2: #fb7185;
+}
+
+.module-pharmacy {
+  --module-accent: #14b8a6;
+  --module-accent-2: #22c55e;
+}
+
+.module-doctor {
+  --module-accent: #0ea5e9;
+  --module-accent-2: #6366f1;
+}
+
+.module-accounts {
+  --module-accent: #ef4444;
+  --module-accent-2: #f97316;
+}
+
+.module-settings {
+  --module-accent: #64748b;
+  --module-accent-2: #94a3b8;
+}
+
+/* make link layout flexible */
+.app-subnav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* allow title to take remaining space */
+.app-subnav-label,
+.sub-menu-title {
+  flex: 1;
+  min-width: 0;
+  /* important in flex to allow wrapping */
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;
+  /* break long words if needed */
+  line-height: 1.2;
+}
+
+
+/* ===============================
+   SIDEBAR TEXT – FULL WIDTH FIX
+   =============================== */
+
+/* Sidebar link container */
+.app-sidebar .app-nav-link,
+.sidebar .nav-link,
+.app-subnav-link {
+  display: flex !important;
+  align-items: flex-start !important;
+  /* allow multi-line */
+  gap: 12px;
+}
+
+/* Icon should NOT shrink */
+.app-sidebar .app-nav-icon,
+.sidebar i,
+.app-nav-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* TITLE TEXT – MAIN FIX */
+.app-sidebar .app-nav-label,
+.app-sidebar .app-subnav-label,
+.sidebar .nav-link span,
+.sub-menu-title {
+  flex: 1 1 auto !important;
+  /* allow grow */
+  min-width: 0 !important;
+  /* CRITICAL for wrapping */
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word !important;
+  line-height: 1.25;
+  font-size: 14px;
+}
+
+/* Optional: better spacing for long titles */
+.app-subnav-link {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}

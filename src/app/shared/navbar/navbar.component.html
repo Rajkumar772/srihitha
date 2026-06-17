@@ -1,0 +1,28 @@
+<header class="ph-header">
+  <nav class="ph-navbar">
+
+    <button type="button" class="ph-icon-btn" (click)="toggleSidebar()">
+      <i class="bx bx-menu"></i>
+    </button>
+
+    <div class="ph-logo-wrap">
+      <img src="assets/back/logo2.png" alt="QTOP Global">
+    </div>
+
+    <div class="ph-center">
+      <marquee behavior="" direction=""> WELCOME TO QTOP CARE MATRIX - HIMS
+</marquee>
+    </div>
+
+    <div class="ph-datetime">
+      <div><i class="bx bx-calendar"></i> {{ currentDate | date:'dd MMM yyyy' }}</div>
+      <div><i class="bx bx-time"></i> {{ currentTime }}</div>
+    </div>
+
+    <div class="ph-contact">
+      <span>Contact Us</span>
+      <p><i class="bx bxs-phone"></i> 9912277734</p>
+    </div>
+
+  </nav>
+</header>

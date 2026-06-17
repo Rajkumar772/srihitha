@@ -1,0 +1,214 @@
+// /* red required star */
+// .req {
+//   color: red;
+// }
+
+// /* image size hint */
+// .img-hint {
+//   color: red;
+// }
+
+// /* preview image */
+// .preview-img {
+//   width: 100px;
+//   height: 100px;
+//   object-fit: cover;
+//   margin-top: 8px;
+//   border-radius: 6px;
+//   border: 1px solid rgba(0, 0, 0, 0.1);
+// }
+
+// /* submit button column spacing (replaces margin-top:25px) */
+// .submit-col {
+//   margin-top: 25px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .image-wrapper {
+//   width: 822px;
+//   height: 473px;
+//   border: 2px dashed #ccc;
+//   margin-top: 15px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden;
+// }
+
+// .image-wrapper img {
+//   width: 822px;
+//   height: 473px;
+//   object-fit: cover;
+// }
+
+// .error {
+//   color: red;
+//   margin-top: 10px;
+// }
+
+// button {
+//   margin-top: 15px;
+//   padding: 8px 16px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   .my-overlay {
+//     left: 0 !important;
+//     top: 0 !important;
+//     z-index: 10000 !important;
+//     width: 100% !important;
+//     height: 100% !important;
+//     position: fixed !important;
+//     background-color: rgba(0, 0, 0, 0.9) !important;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: column;
+//     align-content: space-between;
+//     opacity: 0.6;
+//   }
+
+
+
+  /////report css
+  .report-container {
+  padding: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+mat-form-field {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Make table container horizontally scrollable on small screens */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 600px) {
+  table.mat-elevation-z8 {
+    font-size: 12px;
+  }
+
+  th.mat-header-cell, td.mat-cell {
+    padding: 8px 4px;
+    white-space: nowrap;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column;   /* stack search + buttons vertically */
+    align-items: stretch;     /* make buttons full width */
+  }
+
+  .export-buttons button {
+    width: 100%;             /* buttons take full width on mobile */
+  }
+}
+
+
+
+
+
+  .my-overlay {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: space-between;
+    opacity: 0.6;
+  }
+
+
+

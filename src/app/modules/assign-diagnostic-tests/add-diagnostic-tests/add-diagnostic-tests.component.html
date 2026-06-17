@@ -1,0 +1,304 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Add Test Names
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card" style="padding: 1%;">
+
+        <div class="card-body gth">
+            <div class="modal-body">
+                <form [formGroup]="adddiagnTestForm">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="p-2">
+                                <label>Diagnostic Test Date<span style="color: red;">*</span></label>
+                                <input [value]="now" type="date" class="form-control" formControlName="d_test_date"
+                                    [ngClass]="{'is-invalid':submitted && valid['d_test_date'].errors}">
+                                <div *ngIf="submitted && valid['d_test_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['d_test_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="p-2">
+                                <label>Diagnostic Test Name<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="d_test_name"oninput="this.value = this.value.toUpperCase()"
+                                    [ngClass]="{'is-invalid': submitted && valid['d_test_name'].errors }">
+                                <div *ngIf="submitted && valid['d_test_name'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['d_test_name'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="p-2">
+                                <label>Diagnostic Test Amount<span style="color: red;">*</span></label>
+                                <input min="0" type="number" class="form-control" formControlName="d_test_amount"
+                                    [ngClass]="{'is-invalid': submitted && valid['d_test_amount'].errors }">
+                                <div *ngIf="submitted && valid['d_test_amount'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['d_test_amount'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="text-center">
+                    <button style="background-color: blue;
+                    color: white;
+                    width: 98px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;" (click)="AddTest()">ADD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="d_test_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Diagnostic Test Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.d_test_date | date:'dd-MM-YYYY'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="d_test_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Diagnostic Test Name
+                                </th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.d_test_name}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="d_test_amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Diagnostic Test Amount
+                                </th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.d_test_amount}}
+                                </td>
+                            </ng-container>
+
+
+
+
+
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="record(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+
+
+
+                            <!-- Select Start -->
+
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'d_test_date' ,value:item.d_test_date}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.d_test_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'d_test_name' ,value:item.d_test_name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.d_test_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'d_test_amount' ,value:item.d_test_amount}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.d_test_amount}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                            </tr>
+                            <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0">Edit Diagnostic Tests</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" class="gth">
+        <form [formGroup]="editdiagnTestForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="p-2">
+                        <label>Diagnostic Test Date<span style="color: red;">*</span></label>
+                        <input type="date" class="form-control" formControlName="d_test_date"
+                            [ngClass]="{'is-invalid':submitt && validEdit['d_test_date'].errors}">
+                        <div *ngIf="submitt && validEdit['d_test_date'].errors" class="invalid-feedback">
+                            <div *ngIf="validEdit['d_test_date'].errors['required']">required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="p-2">
+                        <label>Diagnostic Test Name<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="d_test_name" oninput="this.value = this.value.toUpperCase()"
+                            [ngClass]="{'is-invalid': submitt && validEdit['d_test_name'].errors }">
+                        <div *ngIf="submitt && validEdit['d_test_name'].errors" class="invalid-feedback">
+                            <div *ngIf="validEdit['d_test_name'].errors['required']">required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="p-2">
+                        <label>Diagnostic Test Amount<span style="color: red;">*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="d_test_amount"
+                            [ngClass]="{'is-invalid': submitt && validEdit['d_test_amount'].errors }">
+                        <div *ngIf="submitt && validEdit['d_test_amount'].errors" class="invalid-feedback">
+                            <div *ngIf="validEdit['d_test_amount'].errors['required']">required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="text-center">
+            <button style="background-color: blue;
+            color: white;
+            width: 75px;
+            height: 38px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;" (click)="editTest()">Update</button>&nbsp;
+            <button class="btn btn-danger m-2" (click)="dltTest()">Delete</button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

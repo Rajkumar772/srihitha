@@ -1,0 +1,252 @@
+.loader {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #0077b6;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border-bottom: 4px solid #0077b6;
+    border-left: 4px solid transparent;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.my-overlay {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: space-between;
+    opacity: 0.6;
+}
+
+
+.bg1 {
+    background-image: url("../../../../assets/back/box.jpg");
+    background-color: #f0f0f0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+}
+
+.bg1:hover {
+    /* Just for styling */
+    cursor: pointer;
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+}
+
+.col-12.col-md-3 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+
+/* Common */
+.stats-card {
+    border-radius: 16px;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-6px);
+}
+
+.stats-card h3 {
+    font-weight: 700;
+}
+
+.title {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.footer {
+    margin-top: 14px;
+    font-size: 14px;
+}
+
+/* 1️⃣ Income – Gradient */
+.style-income {
+    background: linear-gradient(135deg, #4e73df, #1c3faa);
+    color: #fff;
+}
+
+.icon-circle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+/* 2️⃣ Cash – Glassmorphism */
+.style-cash {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.icon-square {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #1cc88a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3️⃣ UPI – Border Accent */
+.style-upi {
+    border-left: 6px solid #36b9cc;
+}
+
+.big-icon {
+    font-size: 40px;
+    color: #36b9cc;
+}
+
+/* 4️⃣ Credit – Dark Neon */
+.style-credit {
+    background: #111;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(231, 74, 59, 0.6);
+}
+
+.icon-neon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #e74a3b;
+    color: #e74a3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Card */
+.best-seller-card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* Header */
+.best-seller-card .card-header {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: #fff;
+    padding: 16px;
+    border-bottom: none;
+}
+
+/* Table */
+.best-seller-table {
+    font-size: 14px;
+}
+
+.best-seller-table thead th {
+    background: #f8f9fc;
+    color: #4e73df;
+    font-weight: 600;
+    border: none;
+    padding: 14px;
+}
+
+.best-seller-table tbody td {
+    padding: 14px;
+    vertical-align: middle;
+    border-top: 1px solid #eef1f6;
+}
+
+/* Hover effect */
+.best-seller-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.best-seller-table tbody tr:hover {
+    background: #f5f8ff;
+}
+
+/* Rank badge */
+.rank-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #4e73df;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bill count highlight */
+.bill-count {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #eaf1ff;
+    color: #4e73df;
+    font-weight: 700;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .best-seller-table thead {
+        display: none;
+    }
+
+    .best-seller-table tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .best-seller-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 14px;
+    }
+
+    .best-seller-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6c757d;
+    }
+}

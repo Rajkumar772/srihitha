@@ -1,0 +1,848 @@
+<section class="pressure-page">
+
+    <div class="pressure-sheet">
+
+        <div class="pressure-header">
+            <img src="assets/back/logo2.png" class="pressure-logo" alt="Hospital Logo">
+
+            <h2>
+                RISK ASSESSMENT FOR PRESSURE ULCER
+            </h2>
+        </div>
+
+        <div class="patient-line">
+            <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+            <span>UMR No</span><input [(ngModel)]="header.umr_no">
+            <span>Sex</span><input [(ngModel)]="header.sex">
+            <span>Age</span><input [(ngModel)]="header.age">
+            <span>IP No</span><input [(ngModel)]="header.ip_no">
+        </div>
+
+        <div class="table-scroll">
+            <table class="pressure-table">
+
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="parameter-head">Parameter</th>
+
+                        <th *ngFor="let d of pressureUlcerRisk.dates; let di = index; trackBy: trackByIndex"
+                            colspan="3">
+                            <input type="date" [(ngModel)]="pressureUlcerRisk.dates[di]">
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <ng-container *ngFor="let d of pressureUlcerRisk.dates; let di = index; trackBy: trackByIndex">
+                            <th *ngFor="let t of [0,1,2]; let ti = index; trackBy: trackByIndex">
+                                <input [ngModel]="pressureUlcerRisk.times[di]?.[ti]"
+                                    (ngModelChange)="updateTime(di, ti, $event)" placeholder="8">
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let row of pressureUlcerRisk.rows; trackBy: trackByRowLabel">
+
+                        <!-- GROUP HEADER -->
+                        <ng-container *ngIf="row.isHeader && row.label !== 'TOTAL SCORE'; else dataRow">
+                            <td class="label-cell group-title"
+                                [attr.colspan]="1 + (pressureUlcerRisk.dates.length * 3)">
+                                {{ row.label }}
+                            </td>
+                        </ng-container>
+
+                        <!-- DATA ROW -->
+                        <ng-template #dataRow>
+                            <td class="label-cell" [class.group-title]="row.isHeader">
+                                {{ row.label }}
+                            </td>
+
+                            <ng-container *ngIf="isSingleCellRow(row); else normalCells">
+                                <td *ngFor="let d of pressureUlcerRisk.dates; let di = index; trackBy: trackByIndex"
+                                    colspan="3">
+                                    <input [(ngModel)]="row.values[di]">
+                                </td>
+                            </ng-container>
+
+                            <ng-template #normalCells>
+                                <td *ngFor="let cell of getNormalCells(); let ci = index; trackBy: trackByIndex">
+                                    <button type="button" class="tick-box" [class.active]="row.values[ci] === '✓'"
+                                        (click)="selectPressureTick(row, ci)">
+                                        {{ row.values[ci] === '✓' ? '✓' : '' }}
+                                    </button>
+                                </td>
+                            </ng-template>
+                        </ng-template>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <table class="grading-table">
+            <tr>
+                <td>Grading</td>
+                <td>None<br>above 18</td>
+                <td>Low Risk<br>15 - 18</td>
+                <td>Moderate Risk<br>13 - 14</td>
+                <td>Severe Risk<br>06 - 09</td>
+                <td>High Risk<br>10 - 12</td>
+            </tr>
+
+            <tr>
+                <td>Plane of<br>Care</td>
+                <td>No<br>Intervention<br>Required</td>
+                <td colspan="2" class="care-text">
+                    • Special Mattress - Alpha bed<br>
+                    • Reposition once in 2hrs<br>
+                    • Back care<br>
+                    • Skin Inspection<br>
+                    • Promote Activity<br>
+                    • Educate Patient & Family<br>
+                    • Evaluate on change of condition
+                </td>
+                <td colspan="2" class="care-text">
+                    • All Plus (B+C)<br>
+                    • Special Mattress<br>
+                    • Reposition once in 2hrs<br>
+                    • Manage Individual Risk Factors
+                </td>
+            </tr>
+        </table>
+
+        <div class="pressure-actions no-print">
+            <button type="button" (click)="addDateColumn()">+ Add Date</button>
+            <button type="button" (click)="removeDateColumn()">- Remove Date</button>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="bundle-page">
+
+    <div class="bundle-sheet">
+
+        <!-- LOGO -->
+        <div class="bundle-logo-row">
+            <img src="assets/back/logo2.png" class="bundle-logo" alt="Hospital Logo">
+        </div>
+
+        <!-- PATIENT DETAILS -->
+        <div class="bundle-patient-line">
+            <span>Patient Name</span>
+            <input [(ngModel)]="header.patient_name">
+
+            <span>UMR No</span>
+            <input [(ngModel)]="header.umr_no">
+
+            <span>Sex</span>
+            <input [(ngModel)]="header.sex">
+
+            <span>Age</span>
+            <input [(ngModel)]="header.age">
+
+            <span>IP No</span>
+            <input [(ngModel)]="header.ip_no">
+        </div>
+
+        <!-- BUNDLE BLOCKS -->
+        <div class="bundle-block" *ngFor="let page of pressureBundlePages; let pi = index">
+
+            <div class="bundle-title-row">
+                <h3>Pressure Ulcer Bundles Bundles</h3>
+
+                <label>
+                    Date:
+                    <input type="date" [(ngModel)]="page.date">
+                </label>
+            </div>
+
+            <div class="bundle-table-scroll">
+                <table class="bundle-table">
+                    <colgroup>
+                        <col class="serial-col-width">
+                        <col class="bundle-text-col-width">
+                        <col *ngFor="let time of bundleTimes" class="time-col-width">
+                    </colgroup>
+
+                    <thead>
+                        <tr>
+                            <th class="bundle-head" colspan="2">Bundles</th>
+
+                            <th *ngFor="let time of bundleTimes">
+                                {{ time.hour }} <br>
+                                {{ time.period }}
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of bundleItems; let bi = index">
+                            <td class="serial-col">{{ bi + 1 }}.</td>
+                            <td class="bundle-text">{{ item }}</td>
+
+                            <td *ngFor="let time of bundleTimes; let ti = index">
+                                <button type="button" class="bundle-check" [class.active]="page.values[bi][ti] === '✓'"
+                                    (click)="toggleBundleCheck(pi, bi, ti)">
+                                    {{ page.values[bi][ti] === '✓' ? '✓' : '' }}
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="bundle-actions no-print">
+            <button type="button" (click)="addBundlePage()">+ Add Bundle Page</button>
+            <button type="button" (click)="removeBundlePage()">- Remove Bundle Page</button>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="activity-page">
+
+    <div class="activity-sheet" *ngFor="let page of activityPages; let pageIndex = index">
+
+        <div class="pressure-header">
+            <img src="assets/back/logo2.png" class="pressure-logo" alt="Hospital Logo">
+            <h2>ACTIVITY CARD DOCTOR VISITS</h2>
+        </div>
+
+        <div class="activity-patient-box">
+            <div>
+                <span>Name of the patient :</span>
+                <input [(ngModel)]="header.patient_name">
+
+                <span>I.P.No :</span>
+                <input [(ngModel)]="header.ip_no">
+            </div>
+
+            <div>
+                <span>WARD :</span>
+                <input [(ngModel)]="page.ward">
+
+                <span>Consultant Name Dr.</span>
+                <input [(ngModel)]="page.consultant_name">
+            </div>
+
+            <div>
+                <span>Date of Admission :</span>
+                <input type="date" [(ngModel)]="page.admission_date">
+
+                <span>Discharge :</span>
+                <input type="date" [(ngModel)]="page.discharge_date">
+            </div>
+        </div>
+
+        <!-- DOCTOR VISITS -->
+        <table class="doctor-table">
+            <thead>
+                <tr>
+                    <th>Doctor's Name</th>
+
+                    <th *ngFor="let d of page.doctorHeaderDates; let i = index">
+                        <input type="date" class="doctor-date-picker" [(ngModel)]="page.doctorHeaderDates[i]">
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of page.doctorRows">
+                    <td class="doctor-name-cell">
+                        <input type="text" [(ngModel)]="r.doctor_name" placeholder="Dr. Name">
+
+                        <label class="sign-upload-btn no-print">
+                            Sign
+                            <input type="file" accept="image/*" (change)="onDoctorSignatureUpload($event, r)">
+                        </label>
+
+                        <img *ngIf="r.signature" [src]="r.signature" class="doctor-sign-preview">
+                    </td>
+
+                    <td *ngFor="let d of page.doctorHeaderDates; let i = index">
+                        <button type="button" class="visit-mark" (click)="toggleDoctorVisit(r, i)">
+                            {{ r.visits[i] }}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MEDICAL EQUIPMENT -->
+        <h3>MEDICAL EQUIPMENT</h3>
+
+        <table class="equipment-table">
+            <thead>
+                <tr>
+                    <th>Started Date</th>
+                    <th>Time of<br>Start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+
+                    <th>Started<br>Date</th>
+                    <th>Time of<br>start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of page.equipmentRows">
+                    <td><input type="date" [(ngModel)]="r[0]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[1]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="date" [(ngModel)]="r[2]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[3]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input [(ngModel)]="r[4]" readonly></td>
+
+                    <td><input type="date" [(ngModel)]="r[5]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[6]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="date" [(ngModel)]="r[7]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[8]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input [(ngModel)]="r[9]" readonly></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="dual-title">
+            <h3>SYRINGE PUMP</h3>
+            <h3>INFUSION PUMP</h3>
+        </div>
+
+        <table class="equipment-table">
+            <thead>
+                <tr>
+                    <th>Started Date</th>
+                    <th>Time of<br>Start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+
+                    <th>Started<br>Date</th>
+                    <th>Time of<br>start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of page.pumpRows">
+                    <td><input type="date" [(ngModel)]="r[0]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[1]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="date" [(ngModel)]="r[2]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[3]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input [(ngModel)]="r[4]" readonly></td>
+
+                    <td><input type="date" [(ngModel)]="r[5]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[6]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="date" [(ngModel)]="r[7]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[8]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input [(ngModel)]="r[9]" readonly></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="dual-title">
+            <h3>OXYGEN</h3>
+            <h3>CPAP / BPAP</h3>
+        </div>
+
+        <table class="equipment-table">
+            <thead>
+                <tr>
+                    <th>Started Date</th>
+                    <th>Time of<br>Start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+
+                    <th>Started<br>Date</th>
+                    <th>Time of<br>start</th>
+                    <th>Stopped<br>Date</th>
+                    <th>Time of<br>Stop</th>
+                    <th>Total /<br>Hrs. Day</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of page.oxygenRows">
+                    <td><input type="date" [(ngModel)]="r[0]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[1]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="date" [(ngModel)]="r[2]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input type="time" [(ngModel)]="r[3]" (change)="calculateEquipmentHours(r, 1)"></td>
+                    <td><input [(ngModel)]="r[4]" readonly></td>
+
+                    <td><input type="date" [(ngModel)]="r[5]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[6]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="date" [(ngModel)]="r[7]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input type="time" [(ngModel)]="r[8]" (change)="calculateEquipmentHours(r, 2)"></td>
+                    <td><input [(ngModel)]="r[9]" readonly></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="activity-actions no-print">
+        <button type="button" (click)="addActivityPage()">
+            + Add Page
+        </button>
+
+        <button type="button" (click)="removeActivityPage()" [disabled]="activityPages.length === 1">
+            - Remove Page
+        </button>
+    </div>
+
+</section>
+
+
+
+<section class="nabh-page">
+
+        <div class="pressure-header">
+            <img src="assets/back/logo2.png" class="pressure-logo" alt="Hospital Logo">
+
+            <h2>
+               RISK ASSESSMENT OF PRESSURE ULCER
+            </h2>
+        </div>
+    <!-- PATIENT INFO -->
+    <div class="nabh-patient-card">
+        <span><b>Patient Name :</b> {{ header.patient_name }}</span>
+        <span><b>UMR No :</b> {{ header.umr_no }}</span>
+        <span><b>Sex :</b> {{ header.sex }}</span>
+        <span><b>Age :</b> {{ header.age }}</span>
+        <span><b>IP No :</b> {{ header.ip_no }}</span>
+    </div>
+
+    <!-- PHYSIOTHERAPY -->
+    <div class="nabh-section">
+        <h2>Physiotherapy</h2>
+        <button type="button" (click)="openEntryModal('physiotherapy')">+ Add</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Treatment</th>
+                    <th>No Of Times</th>
+                    <th>Done By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of physiotherapyList; let i = index">
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.treatment }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.doneBy }}</td>
+                    <td>
+                        <button type="button" (click)="editEntry('physiotherapy', i)">✏️</button>
+                        <button type="button" (click)="deleteEntry('physiotherapy', i)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DRESSING -->
+    <div class="nabh-section">
+        <h2>Dressing: Minor ( ) Medium ( ) Major ( )</h2>
+        <button type="button" (click)="openEntryModal('dressing')">+ Add</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>No. of Times</th>
+                    <th>Type</th>
+                    <th>Done By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of dressingList; let i = index">
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.doneBy }}</td>
+                    <td>
+                        <button type="button" (click)="editEntry('dressing', i)">✏️</button>
+                        <button type="button" (click)="deleteEntry('dressing', i)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- NEBULISATION -->
+    <div class="nabh-section">
+        <h2>Nebulisation</h2>
+        <button type="button" (click)="openEntryModal('nebulisation')">+ Add</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Medicine</th>
+                    <th>No Of Times</th>
+                    <th>Done By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of nebulisationList; let i = index">
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.medicine }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.doneBy }}</td>
+                    <td>
+                        <button type="button" (click)="editEntry('nebulisation', i)">✏️</button>
+                        <button type="button" (click)="deleteEntry('nebulisation', i)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PHOTOTHERAPY SINGLE SURFACE -->
+    <div class="nabh-section">
+        <div class="section-header">
+            <h2>Phototherapy Single Surface</h2>
+
+         <button
+  type="button"
+  class="nabh-add-btn"
+  (click)="openEntryModal('photoSingle')">
+  + Add
+</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Started Date</th>
+                    <th>Time of Start</th>
+                    <th>Stopped Date</th>
+                    <th>Time of Stop</th>
+                    <th>Total / Hrs.Day</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of photoSingleList; let i=index">
+                    <td>{{item.date}}</td>
+                    <td>{{item.fromTime}}</td>
+                    <td>{{item.stopDate}}</td>
+                    <td>{{item.toTime}}</td>
+                    <td>{{item.totalHours}}</td>
+
+                    <td>
+                        <button (click)="editEntry('photoSingle',i)">✏️</button>
+                        <button (click)="deleteEntry('photoSingle',i)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- PHOTOTHERAPY DOUBLE SURFACE -->
+    <div class="nabh-section">
+        <div class="section-header">
+            <h2>Phototherapy Double Surface</h2>
+
+      <button
+  type="button"
+  class="nabh-add-btn"
+  (click)="openEntryModal('photoDouble')">
+  + Add
+</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Started Date</th>
+                    <th>Time of Start</th>
+                    <th>Stopped Date</th>
+                    <th>Time of Stop</th>
+                    <th>Total / Hrs.Day</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of photoDoubleList; let i=index">
+                    <td>{{item.date}}</td>
+                    <td>{{item.fromTime}}</td>
+                    <td>{{item.stopDate}}</td>
+                    <td>{{item.toTime}}</td>
+                    <td>{{item.totalHours}}</td>
+
+                    <td>
+                        <button (click)="editEntry('photoDouble',i)">✏️</button>
+                        <button (click)="deleteEntry('photoDouble',i)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PROCEDURE -->
+    <div class="nabh-section">
+        <h2>Procedure</h2>
+        <button type="button" (click)="openEntryModal('procedure')">+ Add</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor’s Name</th>
+                    <th *ngFor="let d of procedureDates">Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let p of procedures; let pi = index">
+                    <td>{{ p }}</td>
+
+                    <td *ngFor="let d of procedureDates; let di = index">
+                        {{ getProcedureDate(p, di) }}
+                    </td>
+
+                    <td>
+                        <button type="button" (click)="openEntryModal('procedure')">+ Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+       <div class="staff-sign-row">
+  <div class="staff-sign-box">
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="staffNurseName" placeholder="Staff Nurse Name">
+  </div>
+
+  <div class="staff-sign-box">
+    <label>Signature of Staff Nurse:</label>
+
+    <label class="upload-sign-btn no-print">
+      Upload Signature
+      <input type="file" accept="image/*" (change)="onStaffSignatureUpload($event)">
+    </label>
+
+    <img
+      *ngIf="staffNurseSignature"
+      [src]="staffNurseSignature"
+      class="staff-sign-preview">
+  </div>
+</div>
+    </div>
+<!-- ENTRY MODAL -->
+<div class="modal-backdrop" *ngIf="showEntryModal">
+
+  <div class="entry-modal">
+
+    <h2>{{ modalTitle }}</h2>
+
+    <div class="modal-grid">
+
+      <!-- COMMON DATE -->
+      <label>
+        Date
+        <input type="date" [(ngModel)]="entryForm.date">
+      </label>
+
+      <!-- PHYSIOTHERAPY -->
+      <ng-container *ngIf="activeType === 'physiotherapy'">
+
+        <label>
+          Time
+          <input type="time" [(ngModel)]="entryForm.time">
+        </label>
+
+        <label>
+          Treatment
+          <input type="text"
+                 [(ngModel)]="entryForm.treatment"
+                 placeholder="Treatment">
+        </label>
+
+        <label>
+          No Of Times
+          <input type="number"
+                 min="1"
+                 [(ngModel)]="entryForm.count">
+        </label>
+
+        <label>
+          Done By
+          <input type="text"
+                 [(ngModel)]="entryForm.doneBy">
+        </label>
+
+      </ng-container>
+
+      <!-- DRESSING -->
+      <ng-container *ngIf="activeType === 'dressing'">
+
+        <label>
+          No Of Times
+          <input type="number"
+                 min="1"
+                 [(ngModel)]="entryForm.count">
+        </label>
+
+        <label>
+          Type
+          <select [(ngModel)]="entryForm.type">
+            <option value="">Select</option>
+            <option value="Minor">Minor</option>
+            <option value="Medium">Medium</option>
+            <option value="Major">Major</option>
+          </select>
+        </label>
+
+        <label>
+          Done By
+          <input type="text"
+                 [(ngModel)]="entryForm.doneBy">
+        </label>
+
+      </ng-container>
+
+      <!-- NEBULISATION -->
+      <ng-container *ngIf="activeType === 'nebulisation'">
+
+        <label>
+          Time
+          <input type="time" [(ngModel)]="entryForm.time">
+        </label>
+
+        <label>
+          Medicine
+          <input type="text"
+                 [(ngModel)]="entryForm.medicine">
+        </label>
+
+        <label>
+          No Of Times
+          <input type="number"
+                 min="1"
+                 [(ngModel)]="entryForm.count">
+        </label>
+
+        <label>
+          Done By
+          <input type="text"
+                 [(ngModel)]="entryForm.doneBy">
+        </label>
+
+      </ng-container>
+
+      <!-- PHOTOTHERAPY SINGLE + DOUBLE -->
+      <ng-container *ngIf="activeType === 'photoSingle' || activeType === 'photoDouble'">
+
+        <label>
+          Started Date
+          <input type="date"
+                 [(ngModel)]="entryForm.date">
+        </label>
+
+        <label>
+          Time of Start
+          <input type="time"
+                 [(ngModel)]="entryForm.fromTime"
+                 (change)="calculateTotalHours()">
+        </label>
+
+        <label>
+          Stopped Date
+          <input type="date"
+                 [(ngModel)]="entryForm.stopDate">
+        </label>
+
+        <label>
+          Time of Stop
+          <input type="time"
+                 [(ngModel)]="entryForm.toTime"
+                 (change)="calculateTotalHours()">
+        </label>
+
+        <label>
+          Total / Hrs.Day
+          <input type="text"
+                 [(ngModel)]="entryForm.totalHours"
+                 readonly>
+        </label>
+
+      </ng-container>
+
+      <!-- PROCEDURE -->
+      <ng-container *ngIf="activeType === 'procedure'">
+
+        <label>
+          Date
+          <input type="date"
+                 [(ngModel)]="entryForm.date">
+        </label>
+
+        <label>
+          Procedure
+          <select [(ngModel)]="entryForm.procedure">
+
+            <option value="">Select Procedure</option>
+
+            <option *ngFor="let p of procedures"
+                    [value]="p">
+              {{ p }}
+            </option>
+
+          </select>
+        </label>
+
+      </ng-container>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button type="button"
+              class="cancel-btn"
+              (click)="closeEntryModal()">
+        Cancel
+      </button>
+
+      <button type="button"
+              class="save-btn"
+              (click)="saveEntry()">
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+    <div class="nabh-save-row no-print">
+  <button type="button" class="nabh-final-save-btn" (click)="saveRiskAssessmentData()">
+    Save All Data
+  </button>
+</div>
+</section>

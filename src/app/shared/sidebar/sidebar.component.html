@@ -1,0 +1,129 @@
+<!-- Sidebar Content starts -->
+
+<div class="sidebar sidebar-wrapper app-sidebar">
+
+    <!-- Sidebar Header Ends -->
+    <br>
+    <div class="sidebar-content app-sidebar-body">
+
+        <div class="sidebar-filter">
+            <div class="search-box">
+                <i class="fa fa-search search-icon"></i>
+
+                <input type="text" [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Search menu..." />
+            </div>
+            <select [(ngModel)]="sortOrder" (change)="applyFilters()">
+                <option value="default">Sort by</option>
+                <option value="az">A to Z</option>
+                <option value="za">Z to A</option>
+            </select>
+
+
+        </div>
+        <ul class="navigation app-nav">
+            <!-- First level menu -->
+            <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]" [class.open]="openedMenu === menuItem"
+                class="app-nav-item">
+                <a class="app-nav-link" href="javascript:void(0)"
+                    (click)="menuItem.submenu.length > 0 ? toggleMenu(menuItem, $event) : null"
+                    [routerLink]="menuItem.submenu.length === 0 ? [menuItem.path] : null"
+                    *ngIf="!menuItem.isExternalLink; else externalLinkBlock">
+
+                    <!-- <span class="app-nav-icon-wrap" [ngClass]="menuItem.iconStatusClass">
+            <i [ngClass]="menuItem.icon" class="app-nav-icon"></i>
+          </span> -->
+                    <span class="app-nav-icon-wrap" [class.icon-pending]="menuItem.iconStatusClass === 'icon-pending'"
+                        [class.icon-completed]="menuItem.iconStatusClass === 'icon-completed'"
+                        [class.icon-ongoing]="menuItem.iconStatusClass === 'icon-ongoing'">
+
+                        <i [ngClass]="menuItem.icon" class="app-nav-icon"></i>
+
+                    </span>
+                    <span class="menu-title hthtnh app-nav-label">{{menuItem.title}}</span>
+                    <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]" class="app-nav-badge">
+                        {{menuItem.badge}}
+                    </span>
+                </a>
+                <ng-template #externalLinkBlock>
+                    <a class="app-nav-link" [href]="[menuItem.path]" target="_blank">
+                        <i [ngClass]="[menuItem.icon]" class="app-nav-icon"></i>
+                        <span class="menu-title app-nav-label">{{menuItem.title}}</span>
+                        <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]" class="app-nav-badge">
+                            {{menuItem.badge}}
+                        </span>
+                    </a>
+                </ng-template>
+
+                <!-- Second level menu -->
+                <!-- Second level menu -->
+                <div class="menu-content app-subnav" *ngIf="menuItem.submenu.length > 0">
+                    <div class="app-subnav-inner">
+                        <ul class="app-subnav-list">
+                            <li *ngFor="let menuSubItem of menuItem.submenu"
+                                [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'"
+                                [ngClass]="[menuSubItem.class]" class="app-subnav-item">
+
+                                <a class="app-subnav-link"
+                                    [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]"
+                                    *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock">
+                                    <i [ngClass]="[menuSubItem.icon]" class="app-subnav-icon"></i>
+                                    <span class="sub-menu-title hthtnh app-subnav-label">{{menuSubItem.title}}</span>
+                                </a>
+
+                                <ng-template #externalSubLinkBlock>
+                                    <a class="app-subnav-link" [href]="[menuSubItem.path]" target="_blank">
+                                        <i [ngClass]="[menuSubItem.icon]" class="app-subnav-icon"></i>
+                                        <span class="sub-menu-title app-subnav-label">{{menuSubItem.title}}</span>
+                                    </a>
+                                </ng-template>
+
+                                <!-- Third level menu -->
+                                <div class="menu-content app-subnav app-subnav--nested"
+                                    *ngIf="menuSubItem.submenu.length > 0">
+                                    <div class="app-subnav-inner">
+                                        <ul class="app-subnav-list">
+                                            <li *ngFor="let menuSubsubItem of menuSubItem.submenu"
+                                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                                                [ngClass]="[menuSubsubItem.class]" class="app-subnav-item">
+
+                                                <a class="app-subnav-link" [routerLink]="[menuSubsubItem.path]"
+                                                    *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock">
+                                                    <i [ngClass]="[menuSubsubItem.icon]" class="app-subnav-icon"></i>
+                                                    <span
+                                                        class="sub-menu-title app-subnav-label">{{menuSubsubItem.title}}</span>
+                                                </a>
+
+                                                <ng-template #externalSubSubLinkBlock>
+                                                    <a class="app-subnav-link" [href]="[menuSubsubItem.path]"
+                                                        target="_blank">
+                                                        <i [ngClass]="[menuSubsubItem.icon]"
+                                                            class="app-subnav-icon"></i>
+                                                        <span
+                                                            class="sub-menu-title app-subnav-label">{{menuSubsubItem.title}}</span>
+                                                    </a>
+                                                </ng-template>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <li class="logout-item" (click)="logoutAlert()">
+                <a href="javascript:void(0)" class="logout-btn">
+                    <span class="material-icons logout-icon">logout</span>
+                    <span class="logout-text">Logout</span>
+                </a>
+
+                <div class="logout-user">
+                    <span class="logout-user-name">{{ name }}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

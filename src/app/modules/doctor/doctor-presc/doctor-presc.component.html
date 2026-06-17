@@ -1,0 +1,544 @@
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="card" style="padding: 1%;">
+
+            <div class="col-lg-12"
+                style="background-color:  blue;color: white;padding: 3px;text-align: center;margin: 10px;">
+                <h5>Enter Prescription Details</h5>
+            </div>
+            <div class="card-body" class="gth">
+                <form [formGroup]="doctor_frm">
+                    <div class="row">
+
+                     <div class="col-lg-4 mt-3">
+    <div class="form-group">
+        <label>
+            OP Patient ID
+            <span style="color:red">&nbsp;&nbsp;*</span>
+        </label>
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                class="form-control"
+                formControlName="uh_id"
+                placeholder="Enter OP Patient ID / Mobile Number"
+                [ngClass]="{'is-invalid': typesubmit && type['uh_id'].errors}" />
+
+            <button
+                type="button"
+                class="btn btn-primary search-btn"
+                (click)="searchPatientByUhidOrMobile('uh_id')">
+
+                <i class="fa fa-search"></i>
+                Search
+
+            </button>
+
+        </div>
+
+        <div *ngIf="typesubmit && type['uh_id'].errors" class="invalid-feedback">
+            <span *ngIf="type['uh_id'].errors.required">
+                This value is required.
+            </span>
+        </div>
+    </div>
+</div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Patient Type<span style="color:red">&nbsp;&nbsp; * </span></label>
+
+                                <ng-select formControlName="patient_type" placeholder="Select Patient Type"
+                                    [ngClass]="{'is-invalid': typesubmit && type['patient_type'].errors}">
+                                    <ng-option [value]="''" [disabled]="true">Select Patient Type</ng-option>
+                                    <ng-option value="NEW">New</ng-option>
+                                    <ng-option value="OLD">Old</ng-option>
+                                </ng-select>
+
+                                <div *ngIf="typesubmit && type['patient_type'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['patient_type'].errors?.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>OP Date <span style="color: red;"> * </span></label>
+                                <input type="date" class="form-control" formControlName="date"
+                                    [ngClass]="{'is-invalid': typesubmit && type['date'].errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && type['date'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['date'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Sur Name</label>
+                                <input type="text" class="form-control" formControlName="name"
+                                    oninput="this.value = this.value.toUpperCase()" placeholder="Enter Sur Name" />
+                                <div *ngIf="typesubmit && type['name'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['name'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Full Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <input type="text" class="form-control" formControlName="full_name"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    [ngClass]="{'is-invalid': typesubmit && type['full_name'].errors}"
+                                    placeholder="Enter Full Name" />
+                                <div *ngIf="typesubmit && type['full_name'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['full_name'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Age<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <input type="text" class="form-control" formControlName="age"
+                                    [ngClass]="{'is-invalid': typesubmit && type['age'].errors}"
+                                    placeholder="Enter Age" />
+                                <div *ngIf="typesubmit && type['age'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['age'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Gender<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <div>
+                                    <ng-select id="inputstate" id="default-select" formControlName="gender"
+                                        appendTo="body" dropdownpostion="auto"
+                                        [ngClass]="{'is-invalid': typesubmit && type['gender'].errors}">
+                                        <ng-option value="" disabled Selected>Select</ng-option>
+                                        <ng-option value="Male">Male</ng-option>
+                                        <ng-option value="Female">Female</ng-option>
+                                        <ng-option value="Other">Other</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="typesubmit && type['gender'].errors" class="invalid-feedback">
+                                        <span *ngIf="type['gender'].errors.required">This value is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Phone Number<span style="color:red">&nbsp;&nbsp; * </span></label>
+                                <input type="text" class="form-control" formControlName="phone_number"
+                                    placeholder="Enter Mobile Number"
+                                    (keyup.enter)="searchPatientByUhidOrMobile('phone_number')"
+                                    (blur)="searchPatientByUhidOrMobile('phone_number')"
+                                    [ngClass]="{'is-invalid': typesubmit && type['phone_number'].errors}" />
+                                <div *ngIf="typesubmit && type['phone_number'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['phone_number'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Next Visit</label>
+                                <input type="date" class="form-control" formControlName="op_date"
+                                    [ngClass]="{'is-invalid': typesubmit && type['op_date'].errors}"
+                                    placeholder="Type something" />
+                                <div *ngIf="typesubmit && type['op_date'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['op_date'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-lg-12 mt-4"
+                            style="background-color: blue;padding: 3px;text-align: center;margin: 10px;">
+                            <h5 style="font-weight: 600;font-family: monospace;color: white;">Details</h5>
+                        </div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Chief Complaint<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <textarea formControlName="complaint" class="form-control" placeholder="e.g. Fever, cough, body pains
+" [ngClass]="{'is-invalid': typesubmit && type['complaint'].errors}"
+                                    oninput="this.value = this.value.toUpperCase()"></textarea>
+                                <div *ngIf="typesubmit && type['complaint'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['complaint'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Examination Finding<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <textarea formControlName="examination" oninput="this.value = this.value.toUpperCase()"
+                                    class="form-control" placeholder="e.g. BP, Temperature, Sugar, Pulse, SpO₂
+" [ngClass]="{'is-invalid': typesubmit && type['complaint'].errors}"></textarea>
+                                <div *ngIf="typesubmit && type['complaint'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['complaint'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3 ">
+                            <div class="form-group">
+                                <label>Advice <span style="color:red"> *</span></label>
+                                <textarea formControlName="advice" class="form-control" placeholder="Enter Advice"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    [ngClass]="{'is-invalid': typesubmit && type['advice'].errors}"></textarea>
+                                <div *ngIf="typesubmit && type['advice'].errors" class="invalid-feedback">
+                                    <span *ngIf="type['advice'].errors.required">This value is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+                <br><br>
+
+
+                <div class="m-2">
+                    <table *ngIf="xraydata.length">
+                        <thead style="background-color:  blue;">
+                            <tr>
+                                <th style="color: white;text-align: center;">S.No</th>
+                                <th style="color: white;text-align: center;">Test Name</th>
+                                <th style="color: white;text-align: center;">Report</th>
+                                <th style="color: white;text-align: center;">Brief</th>
+                                <th style="color: white;text-align: center;">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of xraydata;let i =index;">
+                                <td style="text-align: center;">{{i+1}}</td>
+                                <td style="text-align: center;">{{a.d_test_name}}</td>
+                                <th style="text-align: center;">
+                                    <span *ngIf="a.d_test_report;else noImage">
+                                        <img [src]="a.d_test_report" style="width: 50%;height: 50%;">
+                                    </span>
+                                    <ng-template #noImage>
+                                        <img src="assets/back/non_image.jpg" style="width: 50%;height: 50%;" />
+                                    </ng-template>
+                                </th>
+                                <th style="text-align: center;">{{a.d_test_brief}}</th>
+                                <td style="text-align: center;"><i (click)="delete(i,a.d_test_amount)"
+                                        class="fa-solid fa-trash"></i>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <br><br>
+
+
+
+                <div class="col-lg-12"
+                    style="background-color:  blue;color: white;padding: 3px;text-align: center;margin: 10px;">
+                    <h5>Medicine Details</h5>
+                </div>
+
+                <form [formGroup]="addMedicineForm">
+                    <div class="voice-box">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="startMedicineVoice()"
+                            [disabled]="isListening">
+                            🎤 {{ isListening ? 'Listening...' : 'Voice Medicine' }}
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-sm" (click)="stopMedicineVoice()"
+                            *ngIf="isListening">
+                            Stop
+                        </button>
+
+                        <div class="voice-text" *ngIf="voiceText">
+                            <b>Voice:</b> {{ voiceText }}
+                        </div>
+
+                        <div class="voice-warning">
+                            Voice fills only. Doctor must verify and click ADD.
+                        </div>
+                        <div class="quick-prescription-box">
+
+                            <div class="quick-row">
+                                <b>Instruction:</b>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('instruction','ONCE DAILY')">
+                                    Once Daily
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('instruction','TWICE DAILY')">
+                                    Twice Daily
+                                </button>
+
+                                <button type="button" class="quick-btn"
+                                    (click)="quickSet('instruction','THRICE DAILY')">
+                                    Thrice Daily
+                                </button>
+                            </div>
+
+                            <div class="quick-row">
+                                <b>Days:</b>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('days','3')">
+                                    3 Days
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('days','5')">
+                                    5 Days
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('days','7')">
+                                    7 Days
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('days','10')">
+                                    10 Days
+                                </button>
+                            </div>
+
+                            <div class="quick-row">
+                                <b>Timing:</b>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('time_options','MORNING')">
+                                    Morning
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('time_options','AFTERNOON')">
+                                    Afternoon
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('time_options','NIGHT')">
+                                    Night
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('time_options','MOR-NT')">
+                                    MOR-NT
+                                </button>
+
+                                <button type="button" class="quick-btn" (click)="quickSet('time_options','MOR-AFT-NT')">
+                                    MOR-AFT-NT
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="voice-suggestions" *ngIf="voiceMedicineSuggestions.length">
+
+                            <b>Did you mean?</b>
+
+                            <button type="button" class="suggestion-btn" *ngFor="let med of voiceMedicineSuggestions"
+                                (click)="selectVoiceSuggestion(med)">
+
+                                {{ med.medicine_name }}
+
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group p-3">
+                                <label>Select Medicine: <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select class="custom-ng-select" formControlName="medicine_name"
+                                    (change)="selectedtabletwithcomposi($event)"
+                                    [ngClass]="{'is-invalid': submitt && valid['medicine_name'].errors }">
+                                    <ng-option *ngFor="let a of medicine_data" [value]="a.medicine_name">
+                                        {{ a.medicine_name }}
+                                        <div class="col-lg-6">
+                                        </div>
+
+                                    </ng-option>
+                                </ng-select>
+                                <div *ngIf="submitt&& valid['medicine_name'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['medicine_name'].errors['required']">Medicine Name is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group p-3">
+                                <label>Choose Composition Name<span style="color:red"> *</span></label>
+                                <ng-select id="inputstate" id="default-select" formControlName="composition_name">
+                                    <ng-option disabled>Select Composition Name </ng-option>
+                                    <ng-option *ngFor="let p of getcomposition"
+                                        value="{{p.composition_name}}">{{p.composition_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <div class="form-group p-3">
+                                <label>Instructions<span style="color: red;">*</span></label>
+                                <ng-select id="inputstate" id="default-select" formControlName="instruction"
+                                    (change)="autoFillRemarks()"
+                                    [ngClass]="{'is-invalid': submitt && valid['instruction'].errors }">
+                                    <ng-option value="ONCE DAILY">ONCE DAILY</ng-option>
+                                    <ng-option value="TWICE DAILY">TWICE DAILY</ng-option>
+                                    <ng-option value="THRICE DAILY">THRICE DAILY</ng-option>
+                                    <ng-option value="FOURTH HOURLY">FOURTH HOURLY</ng-option>
+                                    <ng-option value="SIXTH HOURLY"> SIXTH HOURLY</ng-option>
+                                    <ng-option value="EIGHTH HOURLY">EIGHTH HOURLY</ng-option>
+                                    <ng-option value="TWELVTH HOURLY">TWELVTH HOURLY</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitt && valid['instruction'].errors" class="invalid-feedback">
+                                    <span *ngIf="valid['instruction'].errors.required">Instructions is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="form-group p-3">
+                                <label>Days<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" formControlName="days"
+                                    (keypress)="numericOnly($event)"
+                                    [ngClass]="{'is-invalid': submitt && valid['days'].errors}"
+                                    placeholder="Type something" (change)="autoFillRemarks()" />
+                                <div *ngIf="submitt && valid['days'].errors" class="invalid-feedback">
+                                    <span *ngIf="valid['days'].errors.required">Days is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group p-3">
+                                <label>Timings<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select id="inputstate" id="default-select" formControlName="time_options"
+                                    (change)="autoFillRemarks()"
+                                    [ngClass]="{'is-invalid': submitt && valid['time_options'].errors }">
+                                    <ng-option value="BEFORE BREAKFAST">BEFORE BREAKFAST</ng-option>
+                                    <ng-option value="MORNING">MORNING</ng-option>
+                                    <ng-option value="BEFORE LUNCH">BEFORE LUNCH</ng-option>
+                                    <ng-option value="AFTERNOON">AFTERNOON</ng-option>
+                                    <ng-option value="BEFORE DINNER">BEFORE DINNER</ng-option>
+                                    <ng-option value="NIGHT">NIGHT</ng-option>
+                                    <ng-option value="MOR-NT"> MOR-NT</ng-option>
+                                    <ng-option value="MOR-AFT"> MOR-AFT</ng-option>
+                                    <ng-option value="MOR-AFT-NT">MOR-AFT-NT</ng-option>
+                                    <ng-option value="1D-EMPTY STOMACH">1D-EMPTY STOMACH</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitt && valid['time_options'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['time_options'].errors['required']">Timings is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-4 col-md-3">
+                            <div class="form-group p-3">
+                                <label>Timings <span class="req">*</span></label>
+                                <ng-select id="default-select" formControlName="time_options"
+                                    [ngClass]="{'is-invalid': submitt && valid['time_options'].errors }"
+                                    (change)="autoFillRemarks()">
+
+                                    <ng-option [value]="'BEFORE BREAKFAST'">BEFORE BREAKFAST</ng-option>
+                                    <ng-option [value]="'MORNING'">MORNING</ng-option>
+                                    <ng-option [value]="'BEFORE LUNCH'">BEFORE LUNCH</ng-option>
+                                    <ng-option [value]="'AFTERNOON'">AFTERNOON</ng-option>
+                                    <ng-option [value]="'BEFORE DINNER'">BEFORE DINNER</ng-option>
+                                    <ng-option [value]="'NIGHT'">NIGHT</ng-option>
+
+                                    <ng-option [value]="'MOR-NT'">MOR-NT</ng-option>
+                                    <ng-option [value]="'MOR-AFT'">MOR-AFT</ng-option>
+                                    <ng-option [value]="'MOR-AFT-NT'">MOR-AFT-NT</ng-option>
+
+                                    <ng-option [value]="'1D-EMPTY STOMACH'">1D-EMPTY STOMACH</ng-option>
+                                </ng-select>
+
+                                <div *ngIf="submitt && valid['time_options'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['time_options'].errors['required']">Timings is required</div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- ROW 3 (full width) -->
+                        <div class="col-6">
+                            <div class="form-group p-3">
+                                <label>Remarks <span class="req">*</span></label>
+                                <textarea rows="2" class="form-control" formControlName="remarks"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    placeholder="Remarks will auto-generate..."
+                                    (input)="markRemarksManual()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1">
+                            <button class="btn btn-secondary btn-sm"
+                                style="margin-top: 35px;margin-bottom: 3px;margin-left: 15px; width: 83px;height: 37px; font-size: 15px;"
+                                (click)="addMedicineFields()">ADD</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="m-2">
+                    <table class="w-100" *ngIf="medicinedata.length" style="width: 135%;">
+                        <thead style="background-color:  blue; width: 150%">
+                            <tr>
+                                <th style="color: white;text-align: center;">S.No</th>
+                                <th style="color: white;text-align: center;">Medicine Name</th>
+                                <th style="color: white;text-align: center;"> composition Name</th>
+                                <th style="color: white;text-align: center;">Instruction</th>
+                                <th style="color: white;text-align: center;">Days</th>
+                                <th style="color: white;text-align: center;">Timings</th>
+                                <th style="color: white;text-align: center;">Remarks</th>
+                                <th style="color: white;text-align: center;">Remove</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let a of medicinedata; let i = index;">
+                                <td style="text-align: center;">{{i + 1}}</td>
+
+                                <td style="text-align: center;">{{ a.medicine_name }}</td>
+                                <td style="text-align: center;">{{ a.composition_name }}</td>
+                                <td style="text-align: center;">{{ a.instruction }}</td>
+                                <td style="text-align: center;">{{ a.days }}</td>
+                                <td style="text-align: center;">{{ a.time_options }}</td>
+                                <td style="text-align: center;">{{ a.remarks }}</td>
+                                <td style="text-align: center;">
+                                    <i (click)="remove(i)" class="fa-solid fa-trash"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br><br>
+                <div>
+                    <div style="text-align: center;">
+                        <div class="form-group">
+                            <br>
+                            <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;" (click)="typeSubmit()"> Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

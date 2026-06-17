@@ -1,0 +1,262 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div id="printPageButton" class="text-center">
+    <h3>Print Count : <b style="color: green;">{{dynamicPrintCount}}</b></h3>
+</div>
+
+
+<div contenteditable="true" id="editor" class="editor" style="page-break-before: auto; page-break-after: auto;">
+
+    <div style="display: flex; flex-direction: column; align-items: center; margin-left: 20px;background-color: white;">
+
+        <img src="assets/back/header.png" class="headerimg">
+
+        <div
+            style="border: 1px solid #184c01;width: 101%;border-radius: 10px;margin-right: 20px;margin-bottom: 10px;margin-top: 15px;font-weight: bolder;">
+            <div style="width: 100%; padding: 10px;font-size: 22px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 3px 3px;font-weight: bolder"><b>Patient Name</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder">: {{TakingObject.patient_name}}</td>
+                        <td style="padding: 3px 3px;font-weight: bolder"><b>Age/Sex</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder">: {{TakingObject.patient_age}} /
+                            {{TakingObject?.patient_gender}}
+                        </td>
+                        <td style="padding: 3px 3px;font-weight: bolder"><b>Tax Invoice No</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder">: {{TakingObject.sale_bill_no}}</td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 3px 3px; font-weight: bolder"><b>Consultant</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder ">: {{TakingObject.d_name}}</td>
+                        <td style="padding: 3px 3px;font-weight: bolder"><b>Bill Type</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder">: {{TakingObject.payment_mode}}</td>
+                        <td style="padding: 3px 3px;font-weight: bolder "><b>Invoice Date</b></td>
+                        <td style="padding: 3px 3px;font-weight: bolder ">: {{TakingObject.sale_date |
+                            date:'dd-MM-YYYY'}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div><br>
+
+        <div
+            style="border: 1px solid #184c01;width: 101%;border-radius: 10px;margin-right: 20px;margin-bottom: 10px;padding: 10px;margin-top:5px">
+            <div style="width: 100%;font-size: 13px;">
+                <table id="table" class="table table-bordered">
+                    <thead>
+                        <tr style="font-size: 17px;">
+                            <th style="color: black;padding: 1px;">S.No</th>
+                            <th style="color: black;">Mfg.</th>
+                            <th style="color: black;">Medicine Name</th>
+                            <th style="color: black;">HSN Code</th>
+                            <th style="color: black;">Batch No</th>
+                            <th style="color: black;">Expiry Date</th>
+                            <th style="color: black;">Sch</th>
+                            <th style="color: black;">Quantity</th>
+                            <th style="color: black;">Rate</th>
+                            <th style="color: black;">GST % </th>
+                            <th style="color: black;">Gross (Rs) </th>
+                            <th style="color: black;">CGST</th>
+                            <th style="color: black;">SGST </th>
+                            <th style="color: black;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of salesPatientData;let y = index">
+                            <td style="color: black;font-weight: bolder">{{y+1}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.company_name}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.medicine_name}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.hsncode}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.batch_no}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.expirydate}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.schedule_drugs}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.total_tabs}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.eachcost | number:'1.2-2'}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.gst_per}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.sale_without_mrp_total | number:'1.2-2'}}
+                            </td>
+                            <td style="color: black;font-weight: bolder">{{i.sale_cgst_amount | number:'1.2-2'}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.sale_sgst_amount | number:'1.2-2'}}</td>
+                            <td style="color: black;font-weight: bolder">{{i.sale_with_mrp_total | number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">
+                                Total
+                                Amount</td>
+                            <td style="color: black;font-weight: bolder">
+                                {{TakingObject.sale_without_discount_total | number:'1.2-2'}}</td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">
+                                Total CGST
+                            </td>
+                            <td style="color: black;font-weight: bolder">{{TakingObject.sale_gst_amount / 2}}</td>
+
+                        </tr>
+
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">
+                                Total SGST
+                            </td>
+                            <td style="color: black;font-weight: bolder">{{TakingObject.sale_gst_amount / 2}}</td>
+
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">
+                                Discount (%)
+                            </td>
+                            <td style="color: black;font-weight: bolder">{{TakingObject.sale_disc_percnt + " " + "%"}}
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">
+                                Net Amount
+                            </td>
+                            <td style="font-size: 20px;color: black;font-weight: 6bolder00;">
+                                {{TakingObject.sale_grandtotal + " " +
+                                "/-"}}</td>
+
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">Pay Mode :</td>
+                            <td style="color: black;font-weight: bolder"><b>{{TakingObject.payment_mode}}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: black;font-weight: bolder">Paid Amount(In Words)</td>
+                            <td style="text-transform: uppercase;width: 30%;font-weight: bolder;color: black;">
+                                {{INwords + " " + 'Rupees Only /-'}}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div style="text-align: start;padding: 5px;margin-top: 10px;margin-bottom: -60px;">
+                    <h6 style="font-weight: bolder;color: black">No of Items :<b> {{ salesPatientData?.length}}</b></h6>
+                </div>
+                <div style="text-align: center; padding: 5px; margin-top: 10px; margin-bottom: -60px;">
+                    <h6 style="font-weight: bolder;color: black"><b>SCAN & Pay With any UPI App</b></h6>
+                    <img src="assets/back/qrcode.png" class="qrcode">
+                </div>
+
+                <div style="text-align: end;padding: 5px;margin-top: 50px;">
+                    <h6 style="font-weight: bolder;color: black">Authorized Signature</h6>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

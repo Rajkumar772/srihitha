@@ -1,0 +1,169 @@
+<div>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+        License Tracking
+        <span style="float: right;">
+            <a href="javaScript:;" style="color: white;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+            </a> &nbsp;&nbsp;
+        </span>
+    </h3>
+</div>
+
+<div class="card" style="padding:10px">
+    <form (ngSubmit)="trackingsub()" [formGroup]="Registerform">
+        <div class="row">
+
+            <div class="col-lg-3 p-2">
+                <div class="form-group">
+                    <label>Type of License <span style="color: red;"> * </span></label>
+                    <input type="text" class="form-control" formControlName="license"
+                        [ngClass]="{'is-invalid': typesubmit && type['license'].errors}"
+                        placeholder="Enter Name of the License" />
+                    <div *ngIf="typesubmit && type['license'].errors" class="invalid-feedback">
+                        <span *ngIf="type['license'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 p-2">
+                <div class="form-group">
+                    <label>From Date <span style="color: red;"> * </span></label>
+                    <input type="date" class="form-control" formControlName="fromdate"
+                        [ngClass]="{'is-invalid': typesubmit && type['fromdate'].errors}"
+                        placeholder="Type something" />
+                    <div *ngIf="typesubmit && type['fromdate'].errors" class="invalid-feedback">
+                        <span *ngIf="type['fromdate'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 p-2">
+                <div class="form-group">
+                    <label>To Date(Expiry) <span style="color: red;"> * </span></label>
+                    <input type="date" class="form-control" formControlName="todate"
+                        [ngClass]="{'is-invalid': typesubmit && type['todate'].errors}" placeholder="Type something" />
+                    <div *ngIf="typesubmit && type['todate'].errors" class="invalid-feedback">
+                        <span *ngIf="type['todate'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 col-lg-3">
+                <label>Document Upload<br>
+                    <!-- <span style="color: red">*Image size 2853 x 1275 pixels!</span> -->
+                </label>
+                <div>
+                    <input type="file" accept="image/*" (change)="onImageChange($event)"
+                        formControlName="category_image" class="form-control mt-1" place="Enter Image" [ngClass]="{
+                                  'is-invalid':
+                                    submitted && valid['category_image'].errors
+                                }" />
+                    <img *ngIf="review" [src]="reviewimg" alt="Preview" style="width:100px;height:100px" />
+
+                </div>
+            </div>
+            <div class="mb-3 col-lg-3" style="margin-top: 25px;">
+                <button type="submit" class="btn btn-primary">ADD</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>
+<div class="card">
+    <div class="report-container">
+        <!-- <h2>License Tracking Report</h2> -->
+        <div class="controls">
+            <mat-form-field appearance="fill" style="flex: 1;">
+                <mat-label>Search</mat-label>
+                <input matInput [(ngModel)]="searchKey" (keyup)="applyFilter()">
+                <button mat-button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="clearFilter()">
+                    ✕
+                </button>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="exportExcel()">Export Excel</button>
+            <button mat-raised-button color="accent" (click)="exportPDF()">Export PDF</button>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef style="
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+"> ID </th>
+                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fromdate">
+                <th mat-header-cell *matHeaderCellDef style="
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+"> From Date </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.fromdate}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="todate">
+                <th mat-header-cell *matHeaderCellDef style="
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+"> To Date </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.todate}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="license">
+                <th mat-header-cell *matHeaderCellDef style="
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+">License </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.license}}
+                </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef>Image</th>
+            <td mat-cell *matCellDef="let element">
+                <img [src]="element.image" alt="Banner Image" width="120px" height="120px">
+            </td>
+        </ng-container> -->
+            <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef style="
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+">File</th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- Show image if not pdf -->
+                    <ng-container *ngIf="element.filetype !== 'pdf'; else pdfTemplate">
+                        <img [src]="element.image" alt="File Image" width="120" height="120"
+                            style="object-fit: contain;" />
+                    </ng-container>
+
+                    <!-- Show PDF icon and link if pdf -->
+                    <ng-template #pdfTemplate>
+                        <a [href]="element.image" target="_blank" rel="noopener noreferrer"
+                            style="display: flex; align-items: center; gap: 8px;">
+                            <!-- <img src="assets/pdf-icon.png" alt="PDF File" width="40" height="40" /> -->
+                            <i class="fa-solid fa-file-pdf" style="font-size:40px"></i>
+                            <!-- <span>{{ element.filetype.toUpperCase() }}</span> -->
+                        </a>
+                    </ng-template>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

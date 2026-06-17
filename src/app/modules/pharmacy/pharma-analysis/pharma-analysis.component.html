@@ -1,0 +1,179 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+            Pharmacy Analysis
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 col-xl-3">
+        <div class="card stats-card style-income">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="title">Today Income</h6>
+                        <h3>
+                            {{ main_data?.grand_total | currency:'INR':'symbol':'1.0-0' }}
+                        </h3>
+                    </div>
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                </div>
+                <div class="footer">
+                    <b>{{ main_data?.total_sales_bill_count }}</b> Total Bills
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-xl-3">
+        <div class="card stats-card style-cash">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="title">Today Cash</h6>
+                        <h3>
+                            {{ main_data?.total_cash_sales | currency:'INR':'symbol':'1.0-0' }}
+                        </h3>
+                    </div>
+                    <div class="icon-square">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                </div>
+                <div class="footer">
+                    <b>{{ main_data?.total_cash_bill_count }}</b> Cash Bills
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-xl-3">
+        <div class="card stats-card style-upi">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="title">UPI / E-Card</h6>
+                        <h3>
+                            {{ main_data?.total_upi_sales | currency:'INR':'symbol':'1.0-0' }}
+                        </h3>
+                    </div>
+                    <i class="fa-brands fa-google-pay big-icon"></i>
+                </div>
+                <div class="footer">
+                    <b>{{ main_data?.total_upi_bill_count }}</b> UPI Bills
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-3">
+        <div class="card stats-card style-credit">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="title">Today Credits</h6>
+                        <h3>
+                            {{ main_data?.total_credit_sales | currency:'INR':'symbol':'1.0-0' }}
+                        </h3>
+                    </div>
+                    <div class="icon-neon">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                </div>
+                <div class="footer">
+                    <b>{{ main_data?.total_credit_bill_count }}</b> Credit Bills
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-12 col-md-">
+
+        <div class="card radius-10 shadow-sm">
+            <div class="card-body" style="height: 430px;">
+                <h6 class="mb-3 fw-semibold text-primary">
+                    Total Income (Month Wise)
+                </h6>
+
+                <div id="recruitment-cost"></div>
+            </div>
+        </div>
+
+        <div class="card best-seller-card">
+            <div class="card-header text-center">
+                <h5 class="mb-0 fw-bold">
+                    🏆 Top 3 Best Sellers
+                </h5>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table best-seller-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Supplier Name</th>
+                            <th>Mobile Number</th>
+                            <th>GST Number</th>
+                            <th class="text-center">NO of Bills</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let a of ThreeSupplData; let i = index">
+                            <td>
+                                <span class="rank-badge">{{ i + 1 }}</span>
+                            </td>
+                            <td class="fw-semibold">{{ a.supplier_name }}</td>
+                            <td>{{ a.supplier_number }}</td>
+                            <td>{{ a.supplier_gst }}</td>
+                            <td class="text-center">
+                                <span class="bill-count">{{ a.bill_count }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card p-4 shadow-sm rounded-4">
+            <apx-chart #chart3 [series]="ThirdOptions.series" [chart]="ThirdOptions.chart" [xaxis]="ThirdOptions.xaxis"
+                [stroke]="ThirdOptions.stroke" [fill]="ThirdOptions.fill" [grid]="ThirdOptions.grid"
+                [dataLabels]="ThirdOptions.dataLabels" [title]="ThirdOptions.title" [yaxis]="ThirdOptions.yaxis"
+                [tooltip]="ThirdOptions.tooltip" [markers]="ThirdOptions.markers">
+            </apx-chart>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader">
+    </div>
+</div>

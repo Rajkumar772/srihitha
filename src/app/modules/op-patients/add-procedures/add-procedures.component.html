@@ -1,0 +1,858 @@
+<div class="card">
+    <div>
+        <h3
+            style="font-family: 'Times New Roman', Times, serif; text-align: center; background: blue; color: white; position: relative;">
+            Add-Procedures
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" style="padding:1%">
+
+            <mat-tab-group>
+
+                <!--FIRST FORM  -->
+                <mat-tab label="Add Procedure Types">
+                    <div class="card-body" class="gth">
+                        <form [formGroup]="addproceduretypesForm" (ngSubmit)="submitproceduretype()">
+                            <div class="row" style="padding: 3px;text-align: left;margin: 10px;">
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label for="input-2">Procedure Types<span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="input-2"
+                                            formControlName="procedure_type"
+                                            [ngClass]="{'is-invalid': submitted && f['procedure_type'].errors }">
+                                        <div *ngIf="submitted && f['procedure_type'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['procedure_type'].errors.required">This value is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <label for="input-2"></label>
+                                    <br>
+                                    <button type="submit" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;">Submit</button>
+                                </div>
+                            </div>
+                            <br><br>
+
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row toppad" style="background: white;">
+                                    <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                        <!-- serch header start -->
+                                        <div class="row buttonhide">
+                                            <div class="col-3">
+                                                <mat-form-field class="sea">
+                                                    <mat-label>Search</mat-label>
+                                                    <input matInput (keyup)="applyFilter($event)"  
+                                                        #input>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-2 search">
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle(1)">find_in_page</i>
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle(0)">refresh</i>
+                                            </div>
+                                            <div class="col-2 cent_btn">
+                                                <div class="colorbtns color_custm">
+                                                    <button class="colorbtns colo" (click)="changecolor('blue')">
+                                                    </button>
+                                                    <button class="colorbtns colo1"
+                                                        (click)="changecolor('rgb(0, 255, 242)')"></button>
+                                                    <button class="colorbtns colo2"
+                                                        (click)="changecolor('rgb(255, 174, 0)')"></button>
+                                                    <button class="colorbtns colo3"
+                                                        (click)="changecolor('rgb(255, 0, 170)')"></button>
+                                                    <input type="color" id="color1" name="favcolor" value="blue"
+                                                        (change)="this.changeCustomColor($event)"
+                                                        (keyup)="this.changeCustomColor($event)">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <mat-paginator [pageSizeOptions]="[25,50,100,200]" showFirstLastButton>
+                                                </mat-paginator>
+                                            </div>
+                                            <div class="col-1">
+                                                <div class="btns">
+                                                    <button mat-raised-button class="btn btn-secondary m-1"
+                                                        (click)="exporter.exportTable('xlsx', {fileName:'insurance report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- serch header end -->
+                                        <div class="example-container">
+                                            <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource"
+                                                matSort #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                                                <ng-container matColumnDef="i">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass" style="width:20px"> S.No
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.i}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">
+                                                        Procedure Types</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.procedure_type}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="edit">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Edit </th>
+                                                    <td style="background-color: white;" mat-cell *matCellDef="let data"
+                                                        class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;"
+                                                            class="fa fa-pencil" (click)="editdata(data,openmodel)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No Edit Option"
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="delete">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Delete
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let data" class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;" class="fa fa-trash"
+                                                            aria-hidden="true" (click)="delete(data)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No delete Option"
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- Select Start -->
+                                                <ng-container matColumnDef="selectSlno" sticky:true>
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset" class="selectid"
+                                                                appendTo="body" (change)="columnfilterdata($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option [value]="{key:'i' ,value:item.i}"
+                                                                    *ngFor="let item of clonedata; let int = index">
+                                                                    {{item.i}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+                                                <ng-container matColumnDef="select1">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset" class="select"
+                                                                appendTo="body" (change)="columnfilterdata($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'procedure_type',value:item.procedure_type}"
+                                                                    *ngFor="let item of clonedata | removeDuplicateJsonObject : 'procedure_type'; let int = index">
+                                                                    {{item.procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true">
+                                                </tr>
+                                                <tr mat-row
+                                                    *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                                                </tr>
+                                                <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                                    class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                                    <!-- Footer end -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-tab>
+
+                <!-- SECOND FORM -->
+
+                <mat-tab label="Add Procedure Category Type">
+                    <div class="card-body" class="gth">
+                        <form [formGroup]="DerndAesproceduretypeForm" (ngSubmit)="submitDerndAesproceduretype()">
+                            <div class="row" style="padding: 3px;text-align: left;margin: 10px;">
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label>Procedure Types<span style="color: red;"> * </span></label>
+                                        <ng-select formControlName="procedure_type"
+                                            (change)="changeproceduretype($event)"
+                                            [ngClass]="{'is-invalid': submitted2 && h['procedure_type'].errors}">
+                                            <ng-option *ngFor="let a of proceduredata" [value]="{
+                                                    procedure_type:a.procedure_type,
+                                                    procedure_type_id:a.id
+                                                }">{{a.procedure_type}}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="submitted2 && h['procedure_type'].errors" class="invalid-feedback">
+                                            <span *ngIf="h['procedure_type'].errors.required">This value is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label>Procedure Category Type<span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="input-2"
+                                            formControlName="der_aes_procedure_type"
+                                            [ngClass]="{'is-invalid': submitted2 && h['der_aes_procedure_type'].errors }">
+                                        <div *ngIf="submitted2 && h['der_aes_procedure_type'].errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="h['der_aes_procedure_type'].errors.required">This value is
+                                                required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <label for="input-2"></label>
+                                    <br>
+                                    <button type="submit" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;">Submit</button>
+                                </div>
+                            </div>
+                            <br><br>
+
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row toppad" style="background: white;">
+                                    <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                        <!-- serch header start -->
+                                        <div class="row buttonhide">
+                                            <div class="col-3">
+                                                <mat-form-field class="sea">
+                                                    <mat-label>Search</mat-label>
+                                                    <input matInput (keyup)="applyFilter2($event)"  
+                                                        #input>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-2 search">
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle2(1)">find_in_page</i>
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle2(0)">refresh</i>
+                                            </div>
+                                            <div class="col-2 cent_btn">
+                                                <div class="colorbtns color_custm">
+                                                    <button class="colorbtns colo" (click)="changecolor2('blue')">
+                                                    </button>
+                                                    <button class="colorbtns colo1"
+                                                        (click)="changecolor2('rgb(0, 255, 242)')"></button>
+                                                    <button class="colorbtns colo2"
+                                                        (click)="changecolor2('rgb(255, 174, 0)')"></button>
+                                                    <button class="colorbtns colo3"
+                                                        (click)="changecolor2('rgb(255, 0, 170)')"></button>
+                                                    <input type="color" id="color1" name="favcolor" value="blue"
+                                                        (change)="this.changeCustomColor2($event)"
+                                                        (keyup)="this.changeCustomColor2($event)">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <mat-paginator #categoryPaginator [pageSizeOptions]="[25,50,100,200]" showFirstLastButton>
+                                                </mat-paginator>
+                                            </div>
+                                            <div class="col-1">
+                                                <div class="btns">
+                                                    <button mat-raised-button class="btn btn-secondary m-1"
+                                                        (click)="exporter.exportTable('xlsx', {fileName:'insurance report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- serch header end -->
+                                        <div class="example-container">
+                                            <table mat-table matTableExporter #tab mat-table
+                                                [dataSource]="dataSourceTwo" matSort #exporter="matTableExporter"
+                                                id="ExampleMaterialTable">
+
+                                                <ng-container matColumnDef="i">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass2" style="width:20px"> S.No
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.i}}</td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass2">
+                                                        Procedure Types</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.procedure_type}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="der_aes_procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass2">
+                                                        Procedure Category Types</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.der_aes_procedure_type}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="edit">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Edit </th>
+                                                    <td style="background-color: white;" mat-cell *matCellDef="let data"
+                                                        class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;"
+                                                            class="fa fa-pencil"
+                                                            (click)="editdatasecond(data,openmodelsecond)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No Edit Option"
+                                                        </span>
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="delete">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Delete
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let data" class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;" class="fa fa-trash"
+                                                            aria-hidden="true" (click)="deletesecond(data)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No delete Option"
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- Select Start -->
+                                                <ng-container matColumnDef="select1" sticky:true>
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset2" class="selectid"
+                                                                appendTo="body" (change)="columnfilterdata2($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option [value]="{key:'i' ,value:item.i}"
+                                                                    *ngFor="let item of clonedata2; let int = index">
+                                                                    {{item.i}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+                                                <ng-container matColumnDef="select2">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset2" class="select"
+                                                                appendTo="body" (change)="columnfilterdata2($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'procedure_type',value:item.procedure_type}"
+                                                                    *ngFor="let item of clonedata2 | removeDuplicateJsonObject : 'procedure_type'; let int = index">
+                                                                    {{item.procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="select3">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset2" class="select"
+                                                                appendTo="body" (change)="columnfilterdata2($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'der_aes_procedure_type',value:item.der_aes_procedure_type}"
+                                                                    *ngFor="let item of clonedata2 | removeDuplicateJsonObject : 'der_aes_procedure_type'; let int = index">
+                                                                    {{item.der_aes_procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="nextdisplayedColumnsTwo;sticky: true">
+                                                </tr>
+                                                <tr mat-row
+                                                    *matRowDef="let row; columns: nextdisplayedColumnsTwo;sticky: true">
+                                                </tr>
+                                                <tr mat-header-row *matHeaderRowDef="selectColumnsTwo;sticky: true"
+                                                    class="example-second-header-row"
+                                                    [ngClass]="{'hide': !hideselect2}">
+                                                    <!-- Footer end -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+                <!-- THIRD FORM -->
+
+                <mat-tab label="Add Procedure Sub Category Type">
+                    <div class="card-body" class="gth">
+                        <form [formGroup]="subDerndAesproceduretypeForm" (ngSubmit)="submitSubDerndAesproceduretype()">
+                            <div class="row" style="padding: 3px;text-align: left;margin: 10px;">
+
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label>Procedure Types<span style="color: red;"> * </span></label>
+                                        <ng-select formControlName="procedure_type"
+                                            (change)="changesubproceduretype($event)"
+                                            [ngClass]="{'is-invalid': submitted3 && m['procedure_type'].errors}">
+                                            <ng-option [value]="item" *ngFor="let item of proceduredata">
+                                                {{item.procedure_type}}
+                                            </ng-option>
+                                        </ng-select>
+                                        <div *ngIf="submitted3 && m['procedure_type'].errors" class="invalid-feedback">
+                                            <span *ngIf="m['procedure_type'].errors.required">This value is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label>Procedure Category Type<span style="color: red;"> *
+                                            </span></label>
+                                        <ng-select formControlName="der_aes_procedure_type"
+                                            (change)="changesubcatproceduretype($event)"
+                                            [ngClass]="{'is-invalid': submitted3 && m['der_aes_procedure_type'].errors}">
+                                            <ng-option *ngFor="let item of subproceduredata" [value]="item">
+                                                {{item.der_aes_procedure_type}}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="submitted3 && m['der_aes_procedure_type'].errors"
+                                            class="invalid-feedback">
+                                            <span *ngIf="m['der_aes_procedure_type'].errors.required">This value is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label>Procedure Sub Category Type<span style="color: red;"> *
+                                            </span></label>
+                                        <input type="text" class="form-control" id="input-2"
+                                            formControlName="sub_der_aes_procedure_type"
+                                            [ngClass]="{'is-invalid': submitted3 && m['sub_der_aes_procedure_type'].errors}">
+                                        <div *ngIf="submitted3 && m['sub_der_aes_procedure_type'].errors"
+                                            class="invalid-feedback">
+                                            <span *ngIf="m['sub_der_aes_procedure_type'].errors.required">This value is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4 col-xl-4">
+                                    <label for="input-2"></label>
+                                    <br>
+                                    <button type="submit" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 700px;">Submit</button>
+                                </div>
+                            </div>
+                            <br><br>
+
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row toppad" style="background: white;">
+                                    <div class="mat-elevation-z8" #TABLE style="width:100%">
+                                        <!-- serch header start -->
+                                        <div class="row buttonhide">
+                                            <div class="col-3">
+                                                <mat-form-field class="sea">
+                                                    <mat-label>Search</mat-label>
+                                                    <input matInput (keyup)="applyFilter3($event)"  
+                                                        #input>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-2 search">
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle3(1)">find_in_page</i>
+                                                <i class="material-icons cust-icon para" style="color: #86868c;"
+                                                    (click)="originalandtoggle3(0)">refresh</i>
+                                            </div>
+                                            <div class="col-2 cent_btn">
+                                                <div class="colorbtns color_custm">
+                                                    <button class="colorbtns colo" (click)="changecolor3('blue')">
+                                                    </button>
+                                                    <button class="colorbtns colo1"
+                                                        (click)="changecolor3('rgb(0, 255, 242)')"></button>
+                                                    <button class="colorbtns colo2"
+                                                        (click)="changecolor3('rgb(255, 174, 0)')"></button>
+                                                    <button class="colorbtns colo3"
+                                                        (click)="changecolor3('rgb(255, 0, 170)')"></button>
+                                                    <input type="color" id="color1" name="favcolor" value="blue"
+                                                        (change)="this.changeCustomColor3($event)"
+                                                        (keyup)="this.changeCustomColor3($event)">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <mat-paginator #subcategoryPaginator [pageSizeOptions]="[25,50,100,200]" showFirstLastButton>
+                                                </mat-paginator>
+                                            </div>
+                                            <div class="col-1">
+                                                <div class="btns">
+                                                    <button mat-raised-button class="btn btn-secondary m-1"
+                                                        (click)="exporter.exportTable('xlsx', {fileName:'insurance report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- serch header end -->
+                                        <div class="example-container">
+                                            <table mat-table matTableExporter #tab mat-table
+                                                [dataSource]="dataSourceThree" matSort #exporter="matTableExporter"
+                                                id="ExampleMaterialTable">
+
+                                                <ng-container matColumnDef="i">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass3" style="width:20px"> S.No
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                                        {{row.i}}</td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass3">
+                                                        Procedure Types</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.procedure_type}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="der_aes_procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass3">
+                                                        Procedure Category Type</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <span class="para">{{row.der_aes_procedure_type}}</span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="sub_der_aes_procedure_type">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass3">
+                                                        Procedure Sub Category Type</th>
+                                                    <td mat-cell *matCellDef="let row" class="centre">
+                                                        <div
+                                                            *ngIf="row.sub_der_aes_procedure_type == '' || row.sub_der_aes_procedure_type == null  ">
+                                                            - </div>
+                                                        <div
+                                                            *ngIf="row.sub_der_aes_procedure_type!=''|| row.sub_der_aes_procedure_type != null  ">
+                                                            {{row.sub_der_aes_procedure_type}}
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="edit">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Edit </th>
+                                                    <td style="background-color: white;" mat-cell *matCellDef="let data"
+                                                        class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;"
+                                                            class="fa fa-pencil"
+                                                            (click)="editdatathird(data,openmodelthird)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No Edit Option"
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="delete">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                        [ngStyle]="headerclass">Delete
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let data" class="centre">
+                                                        <i *ngIf="user_id == '26'"
+                                                            style="cursor: pointer;font-size: 20px;" class="fa fa-trash"
+                                                            aria-hidden="true" (click)="deletethird(data)">
+                                                        </i>
+                                                        <span *ngIf="user_id != '26'" class="text-info">
+                                                            "No delete Option"
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- Select Start -->
+                                                <ng-container matColumnDef="select1" sticky:true>
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset3" class="selectid"
+                                                                appendTo="body" (change)="columnfilterdata3($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option [value]="{key:'i' ,value:item.i}"
+                                                                    *ngFor="let item of clonedata3; let int = index">
+                                                                    {{item.i}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+                                                <ng-container matColumnDef="select2">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset3" class="select"
+                                                                appendTo="body" (change)="columnfilterdata3($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'procedure_type',value:item.procedure_type}"
+                                                                    *ngFor="let item of clonedata3 | removeDuplicateJsonObject : 'procedure_type'; let int = index">
+                                                                    {{item.procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="select3">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset3" class="select"
+                                                                appendTo="body" (change)="columnfilterdata3($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'der_aes_procedure_type',value:item.der_aes_procedure_type}"
+                                                                    *ngFor="let item of clonedata3 | removeDuplicateJsonObject : 'der_aes_procedure_type'; let int = index">
+                                                                    {{item.der_aes_procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="select4">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <div class="cell">
+                                                            <ng-select [(ngModel)]="reset3" class="select"
+                                                                appendTo="body" (change)="columnfilterdata3($event, 0)"
+                                                                [searchable]="true" [clearable]="true">
+                                                                <ng-option
+                                                                    [value]="{key:'sub_der_aes_procedure_type',value:item.sub_der_aes_procedure_type}"
+                                                                    *ngFor="let item of clonedata3 | removeDuplicateJsonObject : 'sub_der_aes_procedure_type'; let int = index">
+                                                                    {{item.sub_der_aes_procedure_type}}
+                                                                </ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </th>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="nextdisplayedColumnsThree;sticky: true">
+                                                </tr>
+                                                <tr mat-row
+                                                    *matRowDef="let row; columns: nextdisplayedColumnsThree;sticky: true">
+                                                </tr>
+                                                <tr mat-header-row *matHeaderRowDef="selectColumnsThree;sticky: true"
+                                                    class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                                    <!-- Footer end -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+            </mat-tab-group>
+
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #openmodel let-modal>
+    <div class="gth">
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Procedure Type</h5>
+            <button style="background-color: transparent;border: 0px;" type="button"
+                (click)="modal.dismiss('Cross click')">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editproceduretypesForm" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Procedure Type <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="procedure_type" required
+                                placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submittedd && g.procedure_type.errors }">
+                            <div *ngIf="submittedd && g.procedure_type.errors" class="invalid-feedback">
+                                <div *ngIf="g.procedure_type.errors.required">This value is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <label for="input-2"></label>
+                        <br>
+                        <button (click)="editproceduretype()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #openmodelsecond let-modal>
+    <div class="gth">
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Procedure Category Type</h5>
+            <button style="background-color: transparent;border: 0px;" type="button"
+                (click)="modal.dismiss('Cross click')">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editDerndAesproceduretypeForm" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Procedure Category Type <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="der_aes_procedure_type" required
+                                placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submittedd2 && l.der_aes_procedure_type.errors }">
+                            <div *ngIf="submittedd2 && l.der_aes_procedure_type.errors" class="invalid-feedback">
+                                <div *ngIf="l.der_aes_procedure_type.errors.required">This value is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <label for="input-2"></label>
+                        <br>
+                        <button (click)="editprocedurecategorytype()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #openmodelthird let-modal>
+    <div class="gth">
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Procedure Sub Category Type</h5>
+            <button style="background-color: transparent;border: 0px;" type="button"
+                (click)="modal.dismiss('Cross click')">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editsubDerndAesproceduretypeForm" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Procedure Sub Category Type <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="sub_der_aes_procedure_type"
+                                required placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submittedd3 && n.sub_der_aes_procedure_type.errors }">
+                            <div *ngIf="submittedd3 && n.sub_der_aes_procedure_type.errors" class="invalid-feedback">
+                                <div *ngIf="n.sub_der_aes_procedure_type.errors.required">This value is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <label for="input-2"></label>
+                        <br>
+                        <button (click)="editproceduresubcategorytype()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+    <div class="for-spin">
+        <span class="loader"></span>
+        <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+        </p>
+    </div>
+</div>

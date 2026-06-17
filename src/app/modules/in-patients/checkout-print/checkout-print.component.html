@@ -1,0 +1,130 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of proforma1; let i = index;">
+        <mat-card class="card  " *ngIf="proforma1.length">
+
+            <div class="row" style="display: flex; align-items: center;">
+                <div class="col-6">
+                    
+                    <img src="assets/back/PRINTLOGO.png"
+                        style="width: 250px;height: 90px;margin-top: -10px;margin-bottom: 10px;">
+                </div>
+                <div class="col-6">
+                    <h4 style="font-size: 18px; font-weight: bold; text-align: center;">Hospital Managemet
+                    </h4>
+                    <h5 style="font-size: 13px; font-weight: 500; text-align: center;line-height: 18px;">7729079781 <br>
+                        <strong>GSTIN : 7729079781</strong>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row" style="height: 100%;">
+                <div class="col-6 border boto">
+                    <!-- <h5 class="pincity para"> <span> Details:-</span> </h5> -->
+                    <!-- <div>
+                        <h6 class="pincity para"> <span>UH ID: </span> <span> {{item.uh_id}} </span> </h6>
+                        <h6 class="pincity para"> <span>Name: </span> <span>{{item.name}} </span> </h6>
+                        <h6 class="pincity para"> <span>Mobile NO: </span> <span> {{item.phone_number}} </span> </h6>
+                        <h6 class="pincity para"> <span>Admitted Date : </span> <span> {{item.admin_date}} </span> </h6>
+                    </div> -->
+                    <div class="row" style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                        <div class="col-6" style="font-size: 15px; text-align: justify;">
+                            OP Patient ID <br>Patient Name <br> Mobile <br>Admitted Date
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> : <br> :
+                        </div>
+                        <div class="col-5" style="font-size: 15px; text-align: justify;">
+                            {{ item.uh_id}} <br>
+                            {{item.name}} <br>
+                            {{ item.phone_number }}<br>
+                            {{item.admin_date | date:'dd-MM-YYYY'}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6 borders center boto">
+                    <!-- <div>
+                        <h6 class="pincity para"> <span>Room Price:</span> <span> {{item.price}} </span> </h6>
+                        <h6 class="pincity para"> <span>Advance Paid:</span> <span> {{item.amount}} </span> </h6>
+                        <h6 class="pincity para"> <span>DisCharge Date:</span> <span> {{item.discharge_date}} </span> </h6>
+                        <h6 class="pincity para"> <span>Pending Amount:</span> <span> {{item.lessadvance}} </span></h6>
+                        <h6 class="pincity para"> <span>Days:</span> <span> {{item.t_days}} </span>
+                        </h6>
+                    </div> -->
+                    <div class="row" style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                        <div class="col-6" style="font-size: 15px; text-align: justify;">
+                            Room Price <br> Advance Paid <br>DisCharge Date
+                            <!--  <br> Pending Amount -->
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> : 
+                            <!-- <br> : -->
+                        </div>
+                        <div class="col-5" style="font-size: 15px; text-align: justify;">
+                            {{item.price}}<br>
+                            {{item.amount}} <br>
+                            {{item.discharge_date | date:'dd-MM-YYYY'}} 
+                            <!-- <br> {{item.lessadvance}} -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 border-down center botos">
+                    <h4 style="text-align:center"><u>Check-out Receipt</u></h4>
+                </div> -->
+                <div class="col-12 border-down center botos" style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                    <p class="from-to para"> <span> Check In :: {{ item.admin_date | date : 'dd-MM-YYYY'}}</span>
+                        <span>Check out :: {{item.discharge_date | date : 'dd-MM-YYYY'}} </span> </p>
+                    <p class="from-to para"> </p>
+                    <!-- <p class="from-to para">  <span></span> <span> Check Out::  {{ item.depart_date | date : 'd-MM-YYY'}} {{ item.depart_time | date : 'H:mm:ss'}} </span></p> -->
+                    <p class="bill para"> <span>Advance Received on: {{ item.admin_date | date : 'dd-MM-YYYY'}} </span>
+                        <span> {{item.amount | number : '1.2-2'}} </span>
+                    </p>
+                </div>
+
+
+                <!-- <div class="col-6 border-add botos ">
+                </div>
+                <div class="col-3 border-total center codcent">
+                    <h5 class="para">Total</h5>
+                </div>
+                <div class="col-3 border-down center codcent">
+                    <h5 class="para">{{ (item.lessadvance ) | number : '1.2-2'}}</h5>
+                </div> -->
+
+                <div class="col-12">
+                    <h4 style="text-align:center;margin-top: 2px;margin-bottom: 2px;"><span>Payment Details</span></h4>
+                </div>
+                <div class="col-12 border boto" style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                    <div>
+                        <h6>Payment Mode &nbsp; : <span>{{item.payment_types}}</span></h6>
+                        <h6>Transaction ID : <span>{{item.transaction_id || '-'}}</span></h6>
+                        <h6><span>Total Room Price (Rs) :</span> <span>{{ (item.price ) | number : '1.2-2'}}</span></h6>
+                        <h6>Advance Paid (Rs) : <span>{{item.amount}}</span></h6>
+                        <h6><span>
+                                <hr style="border: solid 1px black;">Amount Paid:
+                            </span> <span>{{item.lessadvance}}</span></h6>
+                        <h6 style="text-transform: uppercase;">Amount in words : <span> {{numberInWords + " " + 'Rupees
+                                Only /-' }}</span></h6>
+                    </div>
+                </div>
+
+
+                <div class="col-6">
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3 mt-4" style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;font-weight: bold;">
+                    <p>(Authorized Signature)</p>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

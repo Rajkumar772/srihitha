@@ -1,0 +1,819 @@
+
+<div class="row">
+        <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color:white;">
+Audit Report
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+
+</div>
+<br>
+
+
+
+<mat-tab-group>
+    <mat-tab label="By Payments">
+        <div class="row">
+            <div class="col-xl-12 mx-auto">
+
+                <div class="card border-top border-0 border-4" style="padding: 1%;">
+
+                    <div class="card-body p-5" class="gth">
+                        <form [formGroup]="dateSearchForAudit">
+                            <div class="row">
+                                <h4 style="font-weight: 600;">Current Month Wise / Search By Date Wise :</h4>
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>From Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="from_date"
+                                            [ngClass]="{'is-invalid': submitt && validDate['from_date'].errors }">
+                                        <div *ngIf="submitt && validDate['from_date'].errors" class="invalid-feedback">
+                                            <div *ngIf="validDate['from_date'].errors['required']">required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>To Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="to_date"
+                                            [ngClass]="{'is-invalid': submitt && validDate['to_date'].errors }">
+                                        <div *ngIf="submitt && validDate['to_date'].errors" class="invalid-feedback">
+                                            <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3">
+                                    <i style="font-size: 30px;margin-top: 35px;cursor: pointer;" class="fa fa-search"
+                                        aria-hidden="true" (click)="gotSaleAuditReport()"></i>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                            <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                                            <div class="col-2">
+                                             <div class="btns">
+                                        <button mat-raised-button class="btn btn-secondary m-1"
+                                            (click)="exportTable('ExampleMaterialTable','stock-tracking')">Excel</button>
+                                        <button mat-raised-button style="background-color: blue;
+                                        color: white;
+                                        width: 75px;
+                                        height: 38px;
+                                        font-size: 16px;
+                                        border: none;
+                                        border-radius: 5px;" (click)="EveryMonthAuditReport()">Print</button>
+                                    </div>
+                                            </div>
+                                        </div>
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable">
+
+
+                                    <ng-container matColumnDef="i">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            S.No
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="each_day">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Date</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para"><b>{{row.each_day | date: 'dd/MM/yyyy' }}</b></span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_bills_generated">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            No of Bills</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span style="font-size: 20px;"><b>{{row.total_bills_generated}}</b></span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="cash_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            CASH Payments</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="text-success"
+                                                style="font-size: 16px;font-weight: 600">{{row.cash_amount |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="upi_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            UPI / NET BANKING Payments</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="text-info"
+                                                style="font-size: 16px;font-weight: 600">{{row.upi_amount |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+
+
+
+                                    <ng-container matColumnDef="both_cash_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Both CASH Payments</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span style="font-size: 16px;font-weight: 600">{{row.both_cash_amount |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="both_upi_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Both UPI Payments</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span style="font-size: 16px;font-weight: 600">{{row.both_upi_amount |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef class="text-center">
+
+
+                                        </td>
+
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="credit_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Credit Amount(-)</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span
+                                                style="font-size: 16px;font-weight: 600;color: red;">{{row.credit_amount
+                                                |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="font-weight: 800;font-size: 18px;">
+                                            SalesTotal</td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="without_reduction">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Without OT Amount</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span style="font-size: 16px;font-weight: 600">{{row.without_reduction |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 19px;">{{getSalesTotl() |
+                                                currency:'INR':'symbol':'1.0-0'}} </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ot_returns">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            OT Amount(-)</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span style="font-size: 16px;font-weight: 600">{{row.ot_returns |
+                                                number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef>
+                                            <span style="font-weight: 800;font-size: 18px;"> GrandTotal</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="day_grandtotal">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Day End Total</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span
+                                                style="color: green;font-size: 17px;font-weight: 600">{{row.day_grandtotal
+                                                |
+                                                number:'1.2-2' }}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 19px;">{{getTotalCost() |
+                                                currency:'INR':'symbol':'1.0-0'}} </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="select1">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell">
+                                                <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                    (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                    [clearable]="true">
+                                                    <ng-option [value]="{key:'i' ,value:item.i}"
+                                                        *ngFor="let item of clonedata; let int = index">
+                                                        {{item.i}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+                                    <ng-container matColumnDef="select2">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell">
+                                                <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                                    (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                    [clearable]="true">
+                                                    <ng-option [value]="{key:'each_day' ,value:item.each_day}"
+                                                        *ngFor="let item of clonedata ">
+                                                        {{item.each_day}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+                                    <ng-container matColumnDef="select3">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell">
+                                                <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                                    (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                                    [clearable]="true">
+                                                    <ng-option
+                                                        [value]="{key:'total_bills_generated' ,value:item.total_bills_generated}"
+                                                        *ngFor="let item of clonedata ">
+                                                        {{item.total_bills_generated}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+                                    <ng-container matColumnDef="select4">
+                                        <th mat-header-cell *matHeaderCellDef>
+                                            <div class="cell" *ngIf="gettingUserId=='26'">
+                                                <ng-select style="width: 100px;" (change)="discountEdit($event)">
+                                                    <ng-option value="0">0%</ng-option>
+                                                    <ng-option value="5">5%</ng-option>
+                                                    <ng-option value="10">10%</ng-option>
+                                                    <ng-option value="15">15%</ng-option>
+                                                    <ng-option value="20">20%</ng-option>
+                                                    <ng-option value="25">25%</ng-option>
+                                                    <ng-option value="30">30%</ng-option>
+                                                    <ng-option value="35">35%</ng-option>
+                                                    <ng-option value="40">40%</ng-option>
+                                                    <ng-option value="45">45%</ng-option>
+                                                    <ng-option value="50">50%</ng-option>
+                                                    <ng-option value="55">55%</ng-option>
+                                                    <ng-option value="60">60%</ng-option>
+                                                    <ng-option value="65">65%</ng-option>
+                                                    <ng-option value="70">70%</ng-option>
+                                                    <ng-option value="75">75%</ng-option>
+                                                    <ng-option value="80">80%</ng-option>
+                                                </ng-select>
+
+                                            </div>
+                                        </th>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns; sticky: true"></tr>
+
+                                    <tr mat-header-row *matHeaderRowDef="selectColumns; sticky: true"
+                                        class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                    <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="GST Reports">
+        <div class="row">
+            <div class="col-xl-12 mx-auto">
+
+                <div class="card border-top border-0 border-4">
+
+                    <div class="card-body p-5">
+                        <form [formGroup]="dateSearchForAuditTwo">
+                            <div class="row">
+                                <h4 style="font-weight: 600;">Current Month Wise / Search By Date Wise :</h4>
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>From Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="from_date"
+                                            [ngClass]="{'is-invalid': submitted && validDateTwo['from_date'].errors }">
+                                        <div *ngIf="submitted && validDateTwo['from_date'].errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="validDateTwo['from_date'].errors['required']">From Date required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3 col-xl-3">
+                                    <div class="p-3">
+                                        <label>To Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" formControlName="to_date"
+                                            [ngClass]="{'is-invalid': submitted && validDateTwo['to_date'].errors }">
+                                        <div *ngIf="submitted && validDateTwo['to_date'].errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="validDateTwo['to_date'].errors['required']">To Date required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-3">
+                                    <i style="font-size: 30px;margin-top: 35px;cursor: pointer;" class="fa fa-search"
+                                        aria-hidden="true" (click)="gotSaleAuditReportTwo()"></i>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                            <!-- serch header start -->
+
+                             <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                                            <div class="col-2">
+                                             <div class="btns">
+                                        <button mat-raised-button class="btn btn-secondary m-1"
+                                            (click)="exportTable('ExampleMaterialTable','stock-tracking')">Excel</button>
+                                    
+                                    </div>
+                                            </div>
+                                        </div>
+                            <!-- serch header end -->
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSourceTwo" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                                    <ng-container matColumnDef="i">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">S.NO
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_and_purchase_date">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Sale Date</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_and_purchase_date | date :
+                                                'dd-MM-YYYY'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_bills_generated">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">Bills Generated
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_bills_generated | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            5 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_5_percent | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_8_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">12 %
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_12_percent | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_18_percent |
+                                            number:'1.2-2' }}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_28_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">5 %
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_8_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            12 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_18_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_28_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">Grand Total</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="net_total">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Total</th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.net_total |
+                                            number:'1.2-2'}}</td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">{{grandTotalTwo |
+                                                number:'1.2-2'
+                                                }}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- /////////////////////// -->
+
+                                    <ng-container matColumnDef="header-row-second-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> GROSS(Rs) </th>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="header-row-third-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> TAX(Rs) </th>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="['i', 'sale_and_purchase_date' ,  'total_bills_generated' ,
+                                         'header-row-second-group' , 'header-row-third-group' , 'net_total' ]">
+                                    </tr>
+
+                                    <tr mat-header-row *matHeaderRowDef="restOfColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumnsTwo;sticky: true">
+                                    </tr>
+
+                                    <tr mat-footer-row *matFooterRowDef="nextdisplayedColumnsTwo"></tr>
+                                    <!-- Footer end -->
+
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row toppad" style="background: white;">
+                        <div class="mat-elevation-z8" #TABLE style="width:100%">
+                            <!-- serch header start -->
+
+                            <div class="row p-2">
+                                <div class="col-6">
+                                    <div *ngIf="MonthlyDataTotal && MonthlyDataTotal.length > 0">
+                                        <h4 style="font-weight: 600;">Total Month Wise :
+                                            {{MonthlyDataTotal[0].sale_and_purchase_month}} -
+                                            {{MonthlyDataTotal[0].sale_and_purchase_year}}</h4>
+                                    </div>
+                                    <div *ngIf="!MonthlyDataTotal || MonthlyDataTotal.length === 0">
+                                        Loading...
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="btns">
+                                        <button mat-raised-button class="btn btn-secondary m-1"
+                                            (click)="exportTable('ExampleMaterialTable2','Audit Sale Total Month Wise')">Excel</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- serch header end -->
+                            <div class="example-container">
+                                <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource2" matSort
+                                    #exporter="matTableExporter" id="ExampleMaterialTable2">
+
+                                    <ng-container matColumnDef="i">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            S.NO
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sale_and_purchase_month">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Sales</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.sale_and_purchase_month }} -
+                                                {{row.sale_and_purchase_year
+                                                }}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_bills_generated">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            Bills
+                                            Generated
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_bills_generated | number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="total_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            5 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_8_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">12
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.total_18_percent |
+                                            number:'1.2-2' }}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="total_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+                                        <td mat-cell *matCellDef="let row" class="centre">
+                                            <span class="para">{{row.total_28_percent | number:'1.2-2'}}</span>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_5_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">5
+                                            %
+                                        </th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_5_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_8_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            8 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_8_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_12_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            12 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_12_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef> </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_18_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            18 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_18_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tax_28_percent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                            28 %</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                            {{row.tax_28_percent |
+                                            number:'1.2-2'}}
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                            <span style="font-weight: 800;font-size: 18px;">Grand Total</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="net_total">
+                                        <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                            [ngStyle]="headerclass">
+                                            Total</th>
+
+                                        <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.net_total |
+                                            number:'1.2-2'}}</td>
+
+                                        <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+
+                                            <span style="font-weight: 800;font-size: 18px;">{{grandTotalTwo |
+                                                number:'1.2-2'
+                                                }}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                    <!-- /////////////////////// -->
+
+                                    <ng-container matColumnDef="header-row-first-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3" [ngStyle]="headerclass"
+                                            style="text-align: center;">
+                                            <div
+                                                style="display: flex;width:100%;justify-content: space-between;align-items: center;">
+                                                <p>From : {{ dateSearchForAuditTwo.get('from_date').value }}</p>
+                                                <p>To : {{ dateSearchForAuditTwo.get('to_date').value }}</p>
+                                                <p>Type : Month</p>
+                                            </div>
+                                        </th>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="header-row-second-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> GROSS(Rs) </th>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="header-row-third-group">
+                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" [ngStyle]="headerclass"
+                                            style="text-align: center;"> TAX(Rs) </th>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="[ 
+                                    'header-row-first-group'
+                                       ,  'header-row-second-group' , 'header-row-third-group' , 'net_total' ]">
+                                    </tr>
+
+                                    <tr mat-header-row *matHeaderRowDef="restOfColumnsMonth"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: nextdisplayedColumnsMonth;sticky: true">
+                                    </tr>
+                                    <tr mat-footer-row *matFooterRowDef="nextdisplayedColumnsMonth"></tr>
+                                    <!-- Footer end -->
+
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </mat-tab>
+
+    <mat-tab label="By Margin">
+
+    </mat-tab>
+</mat-tab-group>
+
+
+
+
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

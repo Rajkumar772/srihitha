@@ -1,0 +1,850 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Add Asset
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+
+        <div class="card-body" class="gth">
+            <form [formGroup]="addemployeedetailsform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Choose Type of Product<span style="color: red;">*</span></label>
+                            <ng-select formControlName="typeofproduct"
+                                [ngClass]="{'is-invalid': submitted && f['typeofproduct'].errors}" appendTo="body"
+                                dropdownPosition="auto" (change)="producttype($event, productname)">
+                                <ng-option value="" disabled Selected>Select Type of Product</ng-option>
+                                <ng-option *ngFor="let p of getproduct" [value]="p.nameofproduct">
+                                    {{ p.nameofproduct }}
+                                </ng-option>
+                                <ng-option value="ADDPRODUCT">Add New Product</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['typeofproduct'].errors" class="invalid-feedback">
+                                <div *ngIf="f['typeofproduct'].errors.required">Choose Type of Product is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label class="form-label">Name of the Equipment <span style="color:red">*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="nameofequipment"
+                            [ngClass]="{'is-invalid': submitted && f['nameofequipment'].errors}" appendTo="body"
+                            dropdownPosition="auto" (change)="changeType($event, opentimings)">
+                            <ng-option value="" disabled Selected>Select Name of the Equipment</ng-option>
+                            <ng-option *ngFor="let p of departmentdropdown" [value]="p.nameofequipment">
+                                {{ p.nameofequipment }}
+                            </ng-option>
+                            <ng-option value="ADD">Add New Equipment</ng-option>
+                        </ng-select>
+                        <div class="invalid-feedback" *ngIf="submitted && f['nameofequipment'].errors?.['required']">
+                            Name of the Equipment is required
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Company Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="companyname"
+                                placeholder="Company Name"
+                                [ngClass]="{'is-invalid': submitted && f['companyname'].errors }">
+                            <div *ngIf="submitted && f['companyname'].errors" class="invalid-feedback">
+                                <div *ngIf="f['companyname'].errors.required">Company Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Model Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="model"
+                                placeholder="Model Name" [ngClass]="{'is-invalid': submitted && f['model'].errors }">
+                            <div *ngIf="submitted && f['model'].errors" class="invalid-feedback">
+                                <div *ngIf="f['model'].errors.required">Model Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Purchase Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="purchase_date"
+                                placeholder="Purchase Date"
+                                [ngClass]="{'is-invalid': submitted && f['purchase_date'].errors }">
+                            <div *ngIf="submitted && f['purchase_date'].errors" class="invalid-feedback">
+                                <div *ngIf="f['purchase_date'].errors.required">Purchase Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Purchase Rate<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" id="input-2" formControlName="purchase_rate"
+                                placeholder="Purchase Rate"
+                                [ngClass]="{'is-invalid': submitted && f['purchase_rate'].errors }">
+                            <div *ngIf="submitted && f['purchase_rate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['purchase_rate'].errors.required">Purchase Rate is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Quantity<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" id="input-2" formControlName="quantity"
+                                placeholder="Enter Quantity"
+                                [ngClass]="{'is-invalid': submitted && f['quantity'].errors }">
+                            <div *ngIf="submitted && f['quantity'].errors" class="invalid-feedback">
+                                <div *ngIf="f['quantity'].errors.required">Quantity is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Choose Type of Equipment<span style="color: red;">*</span></label>
+                            <ng-select formControlName="positiontype"
+                                [ngClass]="{'is-invalid': submitted && f['positiontype'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Select Type of Product</ng-option>
+                                <ng-option value="Movable">Movable</ng-option>
+                                <ng-option value="Im-Movable">Im-Movable</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['positiontype'].errors" class="invalid-feedback">
+                                <div *ngIf="f['positiontype'].errors.required">Choose Type of Equipment is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Supplier/Vendor Name<span style="color: red;">*</span></label>
+                            <!-- <input type="text" class="form-control" id="input-2" formControlName="suppliervendorname"
+                                placeholder="Enter Supplier/Vendor Name"
+                                [ngClass]="{'is-invalid': submitted && f['suppliervendorname'].errors }"> -->
+                                 <ng-select id="inputstate" id="default-select" formControlName="suppliervendorname"
+                                [ngClass]="{'is-invalid': submitted && f['suppliervendorname'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Select Supplier/Vendor Name</ng-option>
+                                <ng-option *ngFor="let p of supplierlist" [value]="p">
+                                    {{ p.name }} {{ p.number }}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <div *ngIf="submitted && f['suppliervendorname'].errors" class="invalid-feedback">
+                                <div *ngIf="f['suppliervendorname'].errors.required">Supplier/Vendor Name is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Asset Code<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="assetcode"
+                                placeholder="Enter Asset Code"
+                                [ngClass]="{'is-invalid': submitted && f['assetcode'].errors }">
+                            <div *ngIf="submitted && f['assetcode'].errors" class="invalid-feedback">
+                                <div *ngIf="f['assetcode'].errors.required">Asset Code is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Warranty Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="warrantydate"
+                                placeholder="Enter Asset Code"
+                                [ngClass]="{'is-invalid': submitted && f['warrantydate'].errors }">
+                            <div *ngIf="submitted && f['warrantydate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['warrantydate'].errors.required">Warranty Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label> Invoice Upload
+                            </label>
+                            <div>
+                                <input type="file" accept="image/*,.pdf,application/pdf"
+                                    (change)="onImageChange($event)" formControlName="category_image"
+                                    class="form-control mt-1" place="Enter Image" />
+                                <img *ngIf="review" [src]="reviewimg" alt="Preview" style="width:100px;height:100px" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">ADD</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+
+                                <!-- ✅ HIDDEN TABLE ONLY FOR EXCEL EXPORT (NO EDIT/DELETE) -->
+                                <!-- <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Type of Product</th>
+                                            <th>Name of the Equipment</th>
+                                            <th>Company Name</th>
+                                            <th>Model</th>
+                                          
+                                            <th>Purchase Date</th>
+                                            <th>Purchase Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.typeofproduct }}</td>
+                                            <td>{{ row.nameofequipment }}</td>
+                                            <td>{{ row.companyname }}</td>
+                                            <td>{{ row.model }}</td>
+                                            <td>{{ row.purchase_date }}</td>
+                                            <td>{{ row.purchase_rate }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table> -->
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Type of Product</th>
+                                            <th>Name of the Equipment</th>
+                                            <th>Company Name</th>
+                                            <th>Model</th>
+                                            <th>Purchase Date</th>
+                                            <th>Purchase Rate</th>
+                                            <th>Quantity</th>
+                                            <th>Asset Code</th>
+                                            <th>Supplier/Vendor Name</th>
+                                            <th>Warranty Date</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.typeofproduct || '__' }}</td>
+                                            <td>{{ row.nameofequipment || '__' }}</td>
+                                            <td>{{ row.companyname || '__' }}</td>
+                                            <td>{{ row.model || '__' }}</td>
+                                            <td>{{ row.purchase_date || '__' }}</td>
+                                            <td>{{ row.purchase_rate || '__' }}</td>
+                                            <td>{{ row.quantity || '__' }}</td>
+                                            <td>{{ row.assetcode || '__' }}</td>
+                                            <td>{{ row.suppliervendorname || '__' }}</td>
+
+                                            <!-- Warranty Status in Excel -->
+                                            <td>
+                                                {{
+                                                row.warrantydate ? row.warrantydate : '__'
+                                                }}
+                                                {{
+                                                row.isExpired ? ' (EXPIRED)' :
+                                                row.isExpiring ? ' (RENEWAL)' : ''
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="typeofproduct">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Type of Product</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.typeofproduct || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="nameofequipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name of the Equipment</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.nameofequipment || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="companyname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Company Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.companyname || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="model">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Model</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.model || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="purchase_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Purchase Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.purchase_date || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="purchase_rate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Purchase Rate</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.purchase_rate || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="quantity">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                   Quantity</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.quantity || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="assetcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Asset Code</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.assetcode || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="suppliervendorname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier/Vendor Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.suppliervendorname || '__'}}</span>
+                                </td>
+                            </ng-container>
+                              <ng-container matColumnDef="suppliernumber">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.suppliernumber || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="warrantydate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Warranty Date
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="date-text">
+                                        {{ row.warrantydate || '__' }}
+                                    </span>
+                                    <!-- EXPIRED sticker -->
+                                    <span *ngIf="row.isExpired" class="badge expired-badge">
+                                        EXPIRED
+                                    </span>
+                                    <i *ngIf="row.isExpired" style="cursor: pointer;font-size: 20px;"
+                                        class="fa fa-pencil" (click)="editdate(row,openmodel)" aria-hidden="true"></i>
+                                    <!-- RENEWAL sticker -->
+                                    <span *ngIf="!row.isExpired && row.isExpiring" class="badge renewal-badge">
+                                        RENEWAL
+                                    </span>
+                                    <i *ngIf="!row.isExpired && row.isExpiring" style="cursor: pointer;font-size: 20px;"
+                                        class="fa fa-pencil" (click)="editdate(row,openmodel)" aria-hidden="true"></i>
+
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="record123(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+                            <ng-container matColumnDef="image">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Invoice
+                                </th>
+                                <td mat-cell *matCellDef="let element" (click)="imagepopup(element.image)"
+                                    style="cursor:pointer;">
+                                    <ng-container *ngIf="isPdf(element.image); else showImg">
+                                        <div class="pdf-thumb">
+                                            <i class="bx bxs-file-pdf"></i>
+                                            <span>PDF</span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #showImg>
+                                        <img [src]="element.image" alt="Document" width="120" height="120"
+                                            style="object-fit:cover;border-radius:8px;">
+                                    </ng-template>
+                                </td>
+                            </ng-container>
+
+
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'typeofproduct',value:item.typeofproduct}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'typeofproduct'; let int = index">
+                                                {{item.typeofproduct}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'nameofequipment',value:item.nameofequipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'nameofequipment'; let int = index">
+                                                {{item.nameofequipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'companyname',value:item.companyname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'companyname'; let int = index">
+                                                {{item.companyname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'model',value:item.model}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'model'; let int = index">
+                                                {{item.model}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'purchase_date',value:item.purchase_date}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_date'; let int = index">
+                                                {{item.purchase_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'purchase_rate',value:item.purchase_rate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'purchase_rate'; let int = index">
+                                                {{item.purchase_rate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'quantity',value:item.quantity}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'quantity'; let int = index">
+                                                {{item.quantity}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'assetcode',value:item.assetcode}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'assetcode'; let int = index">
+                                                {{item.assetcode}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'suppliervendorname',value:item.suppliervendorname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'suppliervendorname'; let int = index">
+                                                {{item.suppliervendorname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                                <ng-container matColumnDef="select12">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option
+                                                [value]="{key:'suppliervendorname',value:item.suppliervendorname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'suppliervendorname'; let int = index">
+                                                {{item.suppliervendorname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select13">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'suppliernumber',value:item.suppliernumber}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'suppliernumber'; let int = index">
+                                                {{item.suppliernumber}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- //////new code starts for addequipment dropdown -->
+<ng-template #opentimings let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Add New Equipment </h5>
+        <button type="button" (click)="dis()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="adddepartment">
+            <div class="row">
+                <div class="col-10">
+                    <label>ADD New Equipment<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="new_type"
+                        [ngClass]="{'is-invalid': subs && valid['new_type'].errors}" />
+                    <div *ngIf="subs && valid['new_type'].errors" class="invalid-feedback">
+                        <span *ngIf="valid['new_type'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label></label>
+                    <button (click)="submitCategory()" style="background-color: #573474;
+                    color: white;
+                    width: 58px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">ADD</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>
+<div class="img-modal" *ngIf="isImgPopupOpen" (click)="closeImgPopup()">
+    <div class="img-modal-card" (click)="$event.stopPropagation()">
+
+        <div class="img-modal-head">
+            <div class="img-modal-title">Preview</div>
+
+            <div class="img-modal-actions">
+                <a class="btn-open" [href]="popupImgUrl" target="_blank" rel="noopener">Open</a>
+                <button type="button" class="btn-close" (click)="closeImgPopup()">✕</button>
+            </div>
+        </div>
+        <div class="img-modal-body">
+            <img [src]="popupImgUrl" alt="Preview Image">
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ////code starts for edit quantity -->
+<!-- Popup Template -->
+<ng-template #quantityPopup>
+    <h2 mat-dialog-title>Edit Quantity</h2>
+    <mat-dialog-content>
+        <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" [(ngModel)]="selectedQuantity" />
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="dialog.closeAll()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="saveQuantity()" [disabled]="isSaving">
+            Save
+        </button>
+    </mat-dialog-actions>
+</ng-template>
+
+
+
+<ng-template #openmodelquantity let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Quantity</h5>
+            <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismissquantity()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="updateformquantity" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Update Quantity<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="update_quantity" required
+                                placeholder="Enter Quantity"
+                                [ngClass]="{'is-invalid': submitted && f.update_quantity.errors }">
+                            <div *ngIf="submitted && f.update_quantity.errors" class="invalid-feedback">
+                                <div *ngIf="f.update_quantity.errors.required">Update Quantity is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <br>
+                        <button (click)="saveQuantity()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+
+
+<!-- ///////NEW CODE TARTS FOR NEW Product -->
+<ng-template #productname let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Add New Product </h5>
+        <button type="button" (click)="dismissproduct()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addproductform">
+            <div class="row">
+                <div class="col-10">
+                    <label>Add New Product<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="new_product"
+                        [ngClass]="{'is-invalid': subs && valid['new_product'].errors}" />
+                    <div *ngIf="subs && valid['new_product'].errors" class="invalid-feedback">
+                        <span *ngIf="valid['new_product'].errors.required">This value is required.</span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label></label>
+                    <button (click)="submitProduct()" style="background-color: #573474;
+                    color: white;
+                    width: 58px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">ADD</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #openmodel let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Date</h5>
+            <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="updateformrenewal" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" formControlName="update_date" required
+                                placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submitted && f.update_date.errors }">
+                            <div *ngIf="submitted && f.update_date.errors" class="invalid-feedback">
+                                <div *ngIf="f.update_date.errors.required">Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <br>
+                        <button (click)="editdatesubmit()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View Renewal History</h5>
+        <!-- <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button> -->
+        <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+            <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: #0d6efd;">
+                <tr>
+                    <th style="color:white; text-align:center;">S.No</th>
+                    <th style="color:white; text-align:center;">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let a of equipmentData; let i = index" [ngClass]="{
+        'available-row': a.ind == 0,
+        'not-available-row': a.ind == 1
+      }">
+                    <td style="text-align:center;">{{ i + 1 }}</td>
+                    <td style="text-align:center;">{{ a.renewaldate || '__'}}</td>
+
+                </tr>
+                <tr *ngIf="!equipmentData || equipmentData.length === 0">
+                    <td colspan="5" class="text-center text-muted fw-bold">
+                        No data available
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

@@ -1,0 +1,711 @@
+<!-- NURSES INITIAL ASSESSMENT -->
+<div class="nia-page">
+
+  <div class="nia-header">
+    <img src="assets/back/logo2.png" alt="ANH Logo">
+    <h2>NURSES INITIAL ASSESSMENT</h2>
+  </div>
+
+  <!-- <div class="nia-top-line">
+    <span>Patient Name <input [(ngModel)]="header.patient_name"></span>
+    <span>UMR No <input [(ngModel)]="header.umr_no"></span>
+    <span>Sex <input [(ngModel)]="header.sex"></span>
+    <span>Age <input [(ngModel)]="header.age"></span>
+    <span>IP No <input [(ngModel)]="header.ip_no"></span>
+  </div> -->
+
+  <table class="nia-table">
+    <tr>
+      <td colspan="3">Pt. Reported to ward: <input [(ngModel)]="consultant.nurseAssessment.reported_ward"></td>
+      <td colspan="3">Assessment start time:
+  <input type="time" [(ngModel)]="consultant.nurseAssessment.assessment_start_time">
+</td>
+
+<td colspan="2">Ending time:
+  <input type="time" [(ngModel)]="consultant.nurseAssessment.ending_time">
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="4">Patient name: <input [(ngModel)]="consultant.nurseAssessment.patient_name"></td>
+      <td colspan="3">IP. No: <input [(ngModel)]="consultant.nurseAssessment.ip_no"></td>
+<td class="datd">DOA:<input type="date" [(ngModel)]="consultant.nurseAssessment.doa"></td>    </tr>
+
+    <tr>
+      <td colspan="2">Age: <input [(ngModel)]="consultant.nurseAssessment.age"></td>
+      <td colspan="2">Gender: <input [(ngModel)]="consultant.nurseAssessment.gender"></td>
+      <td colspan="2">Ward No: <input [(ngModel)]="consultant.nurseAssessment.ward_no"></td>
+      <td colspan="2">Language: <input [(ngModel)]="consultant.nurseAssessment.language"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">Weight: <input [(ngModel)]="consultant.nurseAssessment.weight"></td>
+      <td colspan="2">Height: <input [(ngModel)]="consultant.nurseAssessment.height"></td>
+      <td colspan="4">Known Drug Allergies: <input [(ngModel)]="consultant.nurseAssessment.drug_allergies"></td>
+    </tr>
+
+    <tr><td colspan="8">Presenting complaint: <input [(ngModel)]="consultant.nurseAssessment.presenting_complaint"></td></tr>
+    <tr><td colspan="8">Past History/Comorbid conditions: <input [(ngModel)]="consultant.nurseAssessment.past_history"></td></tr>
+
+    <tr>
+      <td colspan="8">
+        Risk Factors:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.smoking"> Smoking</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.alcohol"> Alcohol Dependency</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.obesity"> Obesity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.drug_abuse"> Drug Abuse</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.none"> None</label>
+      </td>
+    </tr>
+
+    <tr><td colspan="8">Surgery/Procedure planned: <input [(ngModel)]="consultant.nurseAssessment.surgery_planned"></td></tr>
+    <tr><td colspan="8">General appearance <input [(ngModel)]="consultant.nurseAssessment.general_appearance"></td></tr>
+    <tr><td colspan="8">Nutrition: <input [(ngModel)]="consultant.nurseAssessment.nutrition"></td></tr>
+
+<tr class="nia-row-hair">
+  <td colspan="6" class="nia-section">
+
+    <b>Hair:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hair_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hair_unusual"
+      [ngModelOptions]="{standalone:true}">
+      Unusual hair Distribution
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hair_loss"
+      [ngModelOptions]="{standalone:true}">
+      Hair Loss
+    </label>
+
+    <br>
+
+    <b>Eyes:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.eyes_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.eyes_painful"
+      [ngModelOptions]="{standalone:true}">
+      Painfull
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.eyes_redness"
+      [ngModelOptions]="{standalone:true}">
+      Redness
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.eyes_edema"
+      [ngModelOptions]="{standalone:true}">
+      Edema
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.eyes_discharge"
+      [ngModelOptions]="{standalone:true}">
+      Discharge
+    </label>
+
+    <br>
+
+    <b>Vision:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.vision_no_loss"
+      [ngModelOptions]="{standalone:true}">
+      No reported visual loss
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.vision_blind"
+      [ngModelOptions]="{standalone:true}">
+      Blind
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.vision_cataract"
+      [ngModelOptions]="{standalone:true}">
+      Cataract
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.vision_partially_impaired"
+      [ngModelOptions]="{standalone:true}">
+      Partially impaired
+    </label>
+
+    <br>
+
+    <b>Nose:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.nose_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.nose_bleeding"
+      [ngModelOptions]="{standalone:true}">
+      Bleeding
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.nose_discharge"
+      [ngModelOptions]="{standalone:true}">
+      Discharge
+    </label>
+
+    <br>
+
+    <b>Ear:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.ear_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No Significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.ear_painful"
+      [ngModelOptions]="{standalone:true}">
+      Painfull
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.ear_infection"
+      [ngModelOptions]="{standalone:true}">
+      Infection
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.ear_discharge"
+      [ngModelOptions]="{standalone:true}">
+      Discharge
+    </label>
+
+    <br>
+
+    <b>Hearing:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hearing_no_loss"
+      [ngModelOptions]="{standalone:true}">
+      No hearing loss
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hearing_deaf"
+      [ngModelOptions]="{standalone:true}">
+      Deaf
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hearing_partially_impaired"
+      [ngModelOptions]="{standalone:true}">
+      Partially impaired
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.hearing_device"
+      [ngModelOptions]="{standalone:true}">
+      Hearing Device
+    </label>
+
+    <br>
+
+    <b>Oral Cavity:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.oral_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.oral_difficult_chewing"
+      [ngModelOptions]="{standalone:true}">
+      Difficult chewing
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.oral_difficult_swallowing"
+      [ngModelOptions]="{standalone:true}">
+      Difficult swallowing
+    </label>
+
+    <br>
+
+    <b>Dentures:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.dentures_upper"
+      [ngModelOptions]="{standalone:true}">
+      Upper
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.dentures_lower"
+      [ngModelOptions]="{standalone:true}">
+      Lower
+    </label>
+
+    <br>
+
+    <b>Neck:</b>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.neck_no_finding"
+      [ngModelOptions]="{standalone:true}">
+      No significant findings
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.neck_stiffness"
+      [ngModelOptions]="{standalone:true}">
+      Stiffness
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.neck_lymph_node"
+      [ngModelOptions]="{standalone:true}">
+      Lymph node enlargement
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.neck_thyroid"
+      [ngModelOptions]="{standalone:true}">
+      Thyroid enlargement
+    </label>
+
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="consultant.nurseAssessment.neck_tracheal"
+      [ngModelOptions]="{standalone:true}">
+      Tracheal Displacement
+    </label>
+
+  </td>
+
+<td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Hair / Eyes / ENT Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.ent_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter hair, eyes, vision, nose, ear notes">
+  </textarea>
+</td>
+</tr>
+
+<tr class="nia-row-skin">      <td colspan="6" class="nia-section">
+        <b>Skin:</b><br>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_no_problem" [ngModelOptions]="{standalone:true}">No skin problem</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_lesion" [ngModelOptions]="{standalone:true}">Lesion</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_rash" [ngModelOptions]="{standalone:true}">Rash</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_callous" [ngModelOptions]="{standalone:true}">Callous</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_bruise" [ngModelOptions]="{standalone:true}">Bruise</label><br>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_ulcer_color" [ngModelOptions]="{standalone:true}">Ulcer Color</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_discharge" [ngModelOptions]="{standalone:true}">Discharge</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_varicosity" [ngModelOptions]="{standalone:true}">Varicosity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.skin_breakdown" [ngModelOptions]="{standalone:true}">Skin Breakdown</label>
+      </td>
+<td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Skin Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.skin_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter skin notes">
+  </textarea>
+</td>    </tr>
+
+<tr class="nia-row-nervous">
+        <td colspan="6" class="nia-section">
+        <b>Nervous system</b><br>
+        <b>Orientated:</b>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_disoriented" [ngModelOptions]="{standalone:true}">Disoriented</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_comatose" [ngModelOptions]="{standalone:true}">Comatose</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_forgetful" [ngModelOptions]="{standalone:true}">Forgetful</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_agitated" [ngModelOptions]="{standalone:true}">Agitated</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_anxious" [ngModelOptions]="{standalone:true}">Anxious</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oriented_depressed" [ngModelOptions]="{standalone:true}">Depressed</label><br>
+
+        <b>LOC:</b>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_alert" [ngModelOptions]="{standalone:true}">Alert</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_voice" [ngModelOptions]="{standalone:true}">Responds to Voice</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_touch" [ngModelOptions]="{standalone:true}">Responds to Touch</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_pain" [ngModelOptions]="{standalone:true}">Responds to Pain</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_no_response" [ngModelOptions]="{standalone:true}">No response</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.loc_fluctuates" [ngModelOptions]="{standalone:true}">Fluctuates</label><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_paralysis" [ngModelOptions]="{standalone:true}">Paralysis</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_spasticity" [ngModelOptions]="{standalone:true}">Spasticity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_rigidity" [ngModelOptions]="{standalone:true}">Rigidity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_hypertonicity" [ngModelOptions]="{standalone:true}">Hypertonicity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_slurred" [ngModelOptions]="{standalone:true}">Slurred speech/language</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_difficulty" [ngModelOptions]="{standalone:true}">Difficulty</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_seizures" [ngModelOptions]="{standalone:true}">Seizures</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.neuro_tremors" [ngModelOptions]="{standalone:true}">Tremors</label>
+      </td>
+<td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Nervous System Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.nervous_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter nervous system notes">
+  </textarea>
+</td>    </tr>
+
+<tr class="nia-row-muscle">      <td colspan="6" class="nia-section">
+        <b>Musculoskeletal :</b><br>
+        Coordination and balance or gait <input class="line-input" [(ngModel)]="consultant.nurseAssessment.muscle_gait" [ngModelOptions]="{standalone:true}"><br>
+        Amputation:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.amputation_no" [ngModelOptions]="{standalone:true}">No</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.amputation_yes" [ngModelOptions]="{standalone:true}">Yes</label>
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.amputation_details" [ngModelOptions]="{standalone:true}"><br>
+
+        Prosthesis:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.prosthesis_no" [ngModelOptions]="{standalone:true}">No</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.prosthesis_yes" [ngModelOptions]="{standalone:true}">Yes</label>
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.prosthesis_details" [ngModelOptions]="{standalone:true}"><br>
+
+        Joints:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.joints_swollen" [ngModelOptions]="{standalone:true}">Swollen</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.joints_redness" [ngModelOptions]="{standalone:true}">Redness</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.joints_pain" [ngModelOptions]="{standalone:true}">Pain</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.joints_tenderness" [ngModelOptions]="{standalone:true}">Tenderness</label>
+      </td>
+<td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Musculoskeletal Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.musculoskeletal_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter musculoskeletal notes">
+  </textarea>
+</td>    </tr>
+
+  </table>
+
+</div>
+
+
+<!-- NURSES INITIAL ASSESSMENT PAGE 2 -->
+<div class="nia-page">
+
+  <div class="nia-header">
+    <img src="assets/back/logo2.png" alt="ANH Logo">
+    <h2>NURSES INITIAL ASSESSMENT</h2>
+  </div>
+
+  <div class="nia-top-line">
+    <span>Patient Name <input [(ngModel)]="header.patient_name"></span>
+    <span>UMR No <input [(ngModel)]="header.umr_no"></span>
+    <span>Sex <input [(ngModel)]="header.sex"></span>
+    <span>Age <input [(ngModel)]="header.age"></span>
+    <span>IP No <input [(ngModel)]="header.ip_no"></span>
+  </div>
+
+  <table class="nia-table">
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Extremities :</b> Clubbing
+        <input [(ngModel)]="consultant.nurseAssessment.extremities_clubbing"
+               [ngModelOptions]="{standalone:true}">
+      </td>
+<td colspan="2" class="nia-right-entry">
+
+  <div class="nia-entry-box">
+
+    <div class="nia-entry-title">
+      Nurse Notes / Entry
+    </div>
+
+    <textarea
+  [(ngModel)]="consultant.nurseAssessment.extremities_notes"
+  [ngModelOptions]="{standalone:true}">
+</textarea>
+
+  </div>
+
+</td>    </tr>
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Respiratory System:</b><br>
+
+        <label>
+          <input type="checkbox" [(ngModel)]="consultant.nurseAssessment.resp_no_finding" [ngModelOptions]="{standalone:true}">
+          No significant findings
+        </label><br>
+
+        <b>SON:</b>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.son_rest" [ngModelOptions]="{standalone:true}">Rest</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.son_activity" [ngModelOptions]="{standalone:true}">Activity</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.son_orthopnea" [ngModelOptions]="{standalone:true}">Orthopnea</label>
+
+        <b>Cough:</b>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.cough_productive" [ngModelOptions]="{standalone:true}">Productive</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.cough_non_productive" [ngModelOptions]="{standalone:true}">Non-Productive</label><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.cyanosis" [ngModelOptions]="{standalone:true}">Cyanosis</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.wheezes" [ngModelOptions]="{standalone:true}">Wheezes</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.crackles" [ngModelOptions]="{standalone:true}">Crackles</label><br>
+
+        Oxygen Use:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oxygen_continuous" [ngModelOptions]="{standalone:true}">Continuous</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.oxygen_intermittent" [ngModelOptions]="{standalone:true}">Intermittent</label>
+        Rate:
+        <input class="small-line-input" [(ngModel)]="consultant.nurseAssessment.oxygen_rate" [ngModelOptions]="{standalone:true}"><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.nebulization" [ngModelOptions]="{standalone:true}">Nebulization</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.ventilator" [ngModelOptions]="{standalone:true}">Ventilator</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.tracheostomy" [ngModelOptions]="{standalone:true}">Tracheostomy</label>
+      </td>
+   <td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Respiratory Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.respiratory_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter respiratory notes">
+  </textarea>
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Cardiovascular:</b><br>
+
+        Chest pain:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.chest_pain" [ngModelOptions]="{standalone:true}"><br>
+
+        History of:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.hypertension" [ngModelOptions]="{standalone:true}">Hypertension</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.hypotension" [ngModelOptions]="{standalone:true}">Hypotension</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.dizziness" [ngModelOptions]="{standalone:true}">Dizziness</label><br>
+
+        History of CVD:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.history_cvd" [ngModelOptions]="{standalone:true}"><br>
+
+        History of congenital heart disease:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.congenital_heart_disease" [ngModelOptions]="{standalone:true}"><br>
+
+        Edema:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.edema_pitting" [ngModelOptions]="{standalone:true}">Pitting</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.edema_dependent" [ngModelOptions]="{standalone:true}">Dependent</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.edema_left" [ngModelOptions]="{standalone:true}">Left</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.edema_right" [ngModelOptions]="{standalone:true}">Right</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.edema_bilateral" [ngModelOptions]="{standalone:true}">Bilateral</label><br>
+
+        Pulse:
+        <input class="long-line-input" [(ngModel)]="consultant.nurseAssessment.pulse" [ngModelOptions]="{standalone:true}"><br>
+
+        Rhythm:
+        <input class="long-line-input" [(ngModel)]="consultant.nurseAssessment.rhythm" [ngModelOptions]="{standalone:true}">
+      </td>
+    <td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Cardiovascular Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.cardiovascular_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter cardiovascular notes">
+  </textarea>
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Castro intestinal system</b><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_no_finding" [ngModelOptions]="{standalone:true}">No significant findings</label><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_bleeding" [ngModelOptions]="{standalone:true}">Bleeding</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_constipation" [ngModelOptions]="{standalone:true}">Constipation</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_diarrhea" [ngModelOptions]="{standalone:true}">Diarrhea</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_nausea" [ngModelOptions]="{standalone:true}">Nausea/Vomiting</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_pain" [ngModelOptions]="{standalone:true}">Pain</label><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_abdominal_distension" [ngModelOptions]="{standalone:true}">Abdominal distension</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_bowel_sounds" [ngModelOptions]="{standalone:true}">Bowel sounds</label><br>
+
+        Palpable masses:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.palpable_masses" [ngModelOptions]="{standalone:true}"><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.gi_tenderness" [ngModelOptions]="{standalone:true}">Tenderness</label><br>
+
+        Ryles Tube or Peg Tube:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.ryles_tube" [ngModelOptions]="{standalone:true}"><br>
+
+        Appetite:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.appetite_good" [ngModelOptions]="{standalone:true}">Good</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.appetite_poor" [ngModelOptions]="{standalone:true}">Poor</label>
+      </td>
+     <td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">CI System Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.gi_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter gastro intestinal notes">
+  </textarea>
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Urinary</b><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_full_control" [ngModelOptions]="{standalone:true}">Full control</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_incontinence" [ngModelOptions]="{standalone:true}">Incontinence</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_difficult" [ngModelOptions]="{standalone:true}">Difficult urination</label><br>
+
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_polyuria" [ngModelOptions]="{standalone:true}">Polyuria</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_nocturia" [ngModelOptions]="{standalone:true}">Nocturia</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_anuria" [ngModelOptions]="{standalone:true}">Anuria</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.urinary_hematuria" [ngModelOptions]="{standalone:true}">Hematuria</label>
+
+        Others:
+        <input class="small-line-input" [(ngModel)]="consultant.nurseAssessment.urinary_others" [ngModelOptions]="{standalone:true}"><br>
+
+        Indwelling catheter:
+        <input class="line-input" [(ngModel)]="consultant.nurseAssessment.indwelling_catheter" [ngModelOptions]="{standalone:true}">
+      </td>
+     <td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Urinary Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.urinary_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter urinary notes">
+  </textarea>
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="6" class="nia-section">
+        <b>Genital</b><br>
+
+        Female: (Menstrual History LM)
+        <input class="long-line-input" [(ngModel)]="consultant.nurseAssessment.female_menstrual_history" [ngModelOptions]="{standalone:true}"><br>
+
+        Breast:
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.breast_tenderness" [ngModelOptions]="{standalone:true}">Tenderness</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.breast_masses" [ngModelOptions]="{standalone:true}">Masses</label>
+        <label><input type="checkbox" [(ngModel)]="consultant.nurseAssessment.breast_skin_changes" [ngModelOptions]="{standalone:true}">Skin Changes</label><br>
+
+        Male:
+        <input class="long-line-input" [(ngModel)]="consultant.nurseAssessment.male_details" [ngModelOptions]="{standalone:true}">
+      </td>
+  <td colspan="2" class="nia-entry-cell">
+  <div class="nia-entry-title">Genital Notes</div>
+
+  <textarea
+    [(ngModel)]="consultant.nurseAssessment.genital_notes"
+    [ngModelOptions]="{standalone:true}"
+    placeholder="Enter genital notes">
+  </textarea>
+</td>
+    </tr>
+
+    <tr>
+      <td colspan="8" class="nia-info-box">
+        <b>Additional information if any</b>
+        <textarea [(ngModel)]="consultant.nurseAssessment.additional_information"
+                  [ngModelOptions]="{standalone:true}"></textarea>
+      </td>
+    </tr>
+
+<tr>
+  <td colspan="8" class="nia-sign-box">
+
+    <div class="nia-sign-wrapper">
+
+      <div class="nia-sign-left">
+        <label>Name of Nursing Staff</label>
+
+        <input
+          type="text"
+          [(ngModel)]="consultant.nurseAssessment.nursing_staff_name"
+          [ngModelOptions]="{standalone:true}"
+          placeholder="Enter Nurse Name">
+      </div>
+
+      <div class="nia-sign-right">
+
+        <label>Upload Signature</label>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onNurseSignatureUpload($event)">
+
+        <div
+          class="nia-sign-preview"
+          *ngIf="consultant.nurseAssessment.nursing_staff_signature">
+
+          <img
+            [src]="consultant.nurseAssessment.nursing_staff_signature"
+            alt="Signature">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </td>
+</tr>
+
+  </table>
+
+</div>

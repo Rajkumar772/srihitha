@@ -1,0 +1,167 @@
+  .lab-form-wrapper {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 18px;
+    margin: 20px 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .lab-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #00706b;
+    margin-bottom: 18px;
+  }
+
+  .lab-title h3 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: 3px;
+    font-weight: 600;
+  }
+
+  .lab-title span {
+    color: #111;
+    font-weight: 700;
+  }
+
+  .lab-search {
+    margin-bottom: 15px;
+    height: 44px;
+  }
+
+  .lab-form-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d5e0ec;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .lab-form-table thead {
+    background: #eef4fb;
+  }
+
+  .lab-form-table th,
+  .lab-form-table td {
+    padding: 12px;
+    border-bottom: 1px solid #d5e0ec;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  .lab-form-table th:nth-child(2),
+  .lab-form-table td:nth-child(2) {
+    text-align: left;
+    color: #003f88;
+    font-weight: 600;
+  }
+
+  .lab-form-table input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+  }
+
+  .selected-box {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 14px;
+  }
+
+  .selected-title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .selected-title button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+  }
+
+  .selected-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .selected-table td {
+    padding: 9px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .selected-table i {
+    color: red;
+    cursor: pointer;
+  }
+
+  .patient-search-box {
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.patient-search-box input {
+  height: 46px;
+  border-radius: 12px;
+}
+
+.patient-search-box button {
+  height: 46px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.patient-details-form {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 35px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.patient-details-form .form-group {
+  margin-bottom: 0;
+}
+
+.patient-details-form label {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.patient-details-form label span {
+  color: red;
+}
+
+.patient-details-form input,
+.patient-details-form textarea {
+  height: 44px;
+  border-radius: 10px;
+  background: #f3f6f9;
+}
+
+.patient-details-form textarea {
+  height: 70px;
+}
+
+@media (max-width: 768px) {
+  .patient-search-box {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-details-form {
+    grid-template-columns: 1fr;
+  }
+}

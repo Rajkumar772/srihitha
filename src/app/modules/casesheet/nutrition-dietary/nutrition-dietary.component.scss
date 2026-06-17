@@ -1,0 +1,819 @@
+.nutrition-page {
+  width: 1085px;
+  min-height: 1350px;
+  margin: 20px auto;
+  padding: 26px 32px 42px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.nutrition-header {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.nutrition-logo {
+  width: 200px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.nutrition-header h2 {
+  margin: 0;
+  color: #008996;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.nutrition-patient-line {
+  border: 1px solid #222;
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 130px 1.7fr 80px 1fr 50px .7fr 50px .7fr 60px 1fr;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.nutrition-patient-line span {
+  white-space: nowrap;
+}
+
+.nutrition-patient-line input {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+}
+
+.nutrition-box {
+  border: 1px solid #222;
+  padding: 26px;
+}
+
+.screening-title-row {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  align-items: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.screening-title-row input {
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  width: 120px;
+}
+
+.initial-table,
+.final-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-bottom: 36px;
+}
+
+.initial-table th,
+.initial-table td,
+.final-table th,
+.final-table td {
+  border: 1px solid #222;
+  padding: 6px 8px;
+  vertical-align: top;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.table-title {
+  text-align: left;
+  font-size: 20px !important;
+  font-weight: 800;
+}
+
+.yes-no-col {
+  width: 105px;
+  text-align: center;
+  font-size: 20px !important;
+}
+
+.sno {
+  width: 52px;
+  text-align: center;
+}
+
+.initial-table input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  display: block;
+  margin: auto;
+}
+
+.screening-note {
+  font-size: 17px !important;
+  line-height: 1.18 !important;
+}
+
+.final-table th {
+  text-align: center;
+  font-weight: 800;
+}
+
+.final-table td:nth-child(1),
+.final-table td:nth-child(3) {
+  width: 135px;
+}
+
+.score-line {
+  text-align: center;
+  font-size: 18px !important;
+}
+
+.score-line input,
+.center-line input {
+  width: 170px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+}
+
+.center-line {
+  text-align: center;
+  font-size: 18px !important;
+}
+
+.nutrition-bottom {
+  padding: 0 10px;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.nutrition-bottom p {
+  margin: 16px 0;
+}
+
+.line-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.line-input-row input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  height: 30px;
+  font-size: 18px;
+}
+
+.risk-choice {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-top: 14px;
+}
+
+.risk-choice label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.risk-choice input {
+  width: 18px;
+  height: 18px;
+}
+
+.signature-line {
+  margin-top: 20px;
+}
+
+/* ================= ALL DEVICE MEDIA QUERY ================= */
+
+@media (max-width: 1200px) {
+  .nutrition-page {
+    width: 100%;
+    max-width: 1085px;
+    overflow-x: auto;
+  }
+
+  .nutrition-header {
+    grid-template-columns: 340px 1fr;
+  }
+
+  .nutrition-logo {
+    width: 320px;
+  }
+
+  .nutrition-patient-line,
+  .nutrition-box {
+    min-width: 1020px;
+  }
+}
+
+@media (max-width: 992px) {
+  .nutrition-page {
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  .nutrition-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .nutrition-logo {
+    margin: auto;
+    width: 260px;
+    height: auto;
+  }
+
+  .nutrition-header h2 {
+    font-size: 24px;
+  }
+
+  .nutrition-patient-line,
+  .nutrition-box {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nutrition-page {
+    padding: 12px;
+  }
+
+  .nutrition-logo {
+    width: 220px;
+  }
+
+  .nutrition-header h2 {
+    font-size: 21px;
+  }
+
+  .nutrition-patient-line,
+  .nutrition-box {
+    min-width: 980px;
+  }
+
+  .nutrition-patient-line {
+    font-size: 18px;
+  }
+
+  .initial-table th,
+  .initial-table td,
+  .final-table th,
+  .final-table td,
+  .nutrition-bottom {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .nutrition-page {
+    padding: 8px;
+  }
+
+  .nutrition-logo {
+    width: 180px;
+  }
+
+  .nutrition-header h2 {
+    font-size: 18px;
+  }
+
+  .nutrition-patient-line,
+  .nutrition-box {
+    min-width: 940px;
+  }
+}
+
+@media print {
+  .nutrition-page {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    page-break-after: always;
+    overflow: visible;
+  }
+
+  .nutrition-patient-line,
+  .nutrition-box {
+    min-width: 100%;
+  }
+}
+
+
+.nutrition-assessment-page{
+  width:1085px;
+  min-height:1350px;
+  margin:20px auto;
+  padding:26px 32px 42px;
+  background:#fff;
+  border:1px solid #cfcfcf;
+  font-family:Arial, Helvetica, sans-serif;
+  color:#111827;
+  box-sizing:border-box;
+}
+
+.na-header{
+  display:grid;
+  grid-template-columns:420px 1fr;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.na-logo{
+  width:390px;
+  height:100px;
+  object-fit:contain;
+}
+
+.na-header h2{
+  margin:0;
+  color:#008996;
+  font-size:28px;
+  font-weight:900;
+  line-height:1.45;
+  text-align:center;
+  letter-spacing:1px;
+}
+
+.na-patient-line{
+  border:1px solid #222;
+  min-height:62px;
+  display:grid;
+  grid-template-columns:130px 1.7fr 80px 1fr 50px .7fr 50px .7fr 60px 1fr;
+  align-items:center;
+  gap:4px;
+  padding:8px 16px;
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+.na-patient-line span{
+  white-space:nowrap;
+}
+
+.na-patient-line input{
+  width:100%;
+  min-width:0;
+  height:30px;
+  border:none;
+  border-bottom:1px solid #222;
+  outline:none;
+  background:transparent;
+  font-size:18px;
+}
+
+.na-box{
+  border:1px solid #222;
+  padding:22px;
+  font-size:22px;
+  line-height:1.55;
+}
+
+.na-box h3{
+  font-size:22px;
+  margin:0 0 12px;
+  font-weight:800;
+}
+
+.na-box h4{
+  margin:0 0 28px;
+  font-size:20px;
+}
+
+.na-row{
+  display:grid;
+  grid-template-columns:180px 1fr 1fr 1fr;
+  gap:22px;
+  margin:24px 0;
+  align-items:center;
+}
+
+.na-row label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.na-row input[type="radio"]{
+  width:18px;
+  height:18px;
+}
+
+.mt-large{
+  margin-top:76px !important;
+}
+
+.na-line{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:24px 0;
+}
+
+.na-line input{
+  flex:1;
+  height:30px;
+  border:none;
+  border-bottom:1px solid #222;
+  outline:none;
+  background:transparent;
+  font-size:18px;
+}
+
+.na-line.short input{
+  max-width:260px;
+}
+
+.na-tables{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:120px;
+  margin:44px 10px;
+}
+
+.na-tables table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+.na-tables th,
+.na-tables td{
+  border:1px solid #222;
+  padding:14px 10px;
+  font-size:21px;
+  vertical-align:middle;
+}
+
+.na-tables th{
+  text-align:left;
+  font-size:22px;
+  height:58px;
+}
+
+.na-tables td:last-child{
+  width:130px;
+  text-align:center;
+}
+
+.na-bottom-sign{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:120px;
+  margin-top:84px;
+  font-size:21px;
+}
+
+.na-bottom-sign input{
+  width:100%;
+  height:32px;
+  border:none;
+  border-bottom:1px solid #222;
+  outline:none;
+  background:transparent;
+}
+
+/* ALL DEVICES */
+@media(max-width:1200px){
+  .nutrition-assessment-page{
+    width:100%;
+    max-width:1085px;
+    overflow-x:auto;
+  }
+
+  .na-patient-line,
+  .na-box{
+    min-width:1020px;
+  }
+}
+
+@media(max-width:992px){
+  .nutrition-assessment-page{
+    padding:18px;
+    overflow-x:auto;
+  }
+
+  .na-header{
+    grid-template-columns:1fr;
+    text-align:center;
+    gap:10px;
+  }
+
+  .na-logo{
+    width:260px;
+    height:auto;
+    margin:auto;
+  }
+
+  .na-header h2{
+    font-size:24px;
+  }
+
+  .na-patient-line,
+  .na-box{
+    min-width:1000px;
+  }
+}
+
+@media(max-width:768px){
+  .nutrition-assessment-page{
+    padding:12px;
+  }
+
+  .na-logo{
+    width:220px;
+  }
+
+  .na-header h2{
+    font-size:21px;
+  }
+
+  .na-patient-line,
+  .na-box{
+    min-width:980px;
+  }
+}
+
+@media(max-width:576px){
+  .nutrition-assessment-page{
+    padding:8px;
+  }
+
+  .na-logo{
+    width:180px;
+  }
+
+  .na-header h2{
+    font-size:18px;
+  }
+
+  .na-patient-line,
+  .na-box{
+    min-width:940px;
+  }
+}
+
+@media print{
+  .nutrition-assessment-page{
+    width:100%;
+    margin:0;
+    padding:20px;
+    border:none;
+    page-break-after:always;
+    overflow:visible;
+  }
+
+  .na-patient-line,
+  .na-box{
+    min-width:100%;
+  }
+}
+.dietary-notes-page {
+  width: 1085px;
+  min-height: 760px;
+  margin: 20px auto;
+  padding: 26px 32px 42px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.dietary-header {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dietary-logo {
+  width: 390px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.dietary-header h2 {
+  margin: 0;
+  color: #008996;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.dietary-patient-line {
+  border: 1px solid #222;
+  min-height: 62px;
+  display: grid;
+  grid-template-columns:
+    165px 1.5fr
+    110px 1fr
+    65px .6fr
+    70px .5fr
+    85px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  font-size: 22px;
+  margin-bottom: 0;
+}
+
+.dietary-patient-line span {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.dietary-patient-line input {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  padding-left: 6px;
+}
+.dietary-allergy-line {
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
+  border-bottom: 1px solid #222;
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: 240px 90px 90px 250px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-size: 26px;
+}
+
+.dietary-allergy-line label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dietary-allergy-line input[type="radio"] {
+  width: 22px;
+  height: 22px;
+}
+
+.dietary-allergy-line > input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #222;
+  outline: none;
+  font-size: 24px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+}
+
+.dietary-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.dietary-table th,
+.dietary-table td {
+  border: 1px solid #222;
+  vertical-align: top;
+}
+
+.dietary-table th {
+  height: 78px;
+  font-size: 27px;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.dietary-table .dt-date {
+  width: 170px;
+}
+
+.dietary-table .dt-sign {
+  width: 242px;
+}
+
+.dietary-table td {
+  height: 520px;
+  padding: 0;
+}
+
+.dietary-date-cell {
+  padding: 14px 10px !important;
+}
+
+.dietary-date-input {
+  width: 100%;
+  height: 38px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+}
+
+.dietary-notes-textarea,
+.dietary-sign-textarea {
+  width: 100%;
+  height: 520px;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 16px 14px;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.dietary-add-btn,
+.dietary-delete-btn {
+  margin-top: 14px;
+  padding: 9px 18px;
+  border: none;
+  background: #008996;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dietary-delete-btn {
+  margin: 8px;
+  background: #dc2626;
+}
+
+@media (max-width: 1200px) {
+  .dietary-notes-page {
+    width: 100%;
+    max-width: 1085px;
+    overflow-x: auto;
+  }
+
+  .dietary-header,
+  .dietary-patient-line,
+  .dietary-allergy-line,
+  .dietary-table {
+    min-width: 1010px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dietary-notes-page {
+    padding: 12px;
+  }
+
+  .dietary-logo {
+    width: 150px;
+    margin-left: 80px;
+  }
+
+  .dietary-header h2 {
+    font-size: 24px;
+  }
+}
+
+@media print {
+  .dietary-notes-page {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    overflow: visible;
+    page-break-after: always;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

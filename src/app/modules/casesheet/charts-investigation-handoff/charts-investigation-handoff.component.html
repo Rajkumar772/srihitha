@@ -1,0 +1,677 @@
+<section class="pfe-page">
+
+  <div class="pfe-header">
+    <img src="assets/back/logo2.png" class="pfe-logo">
+    <h2>PATIENT & FAMILY EDUCATION</h2>
+  </div>
+
+  <div class="pfe-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <ng-container *ngFor="let block of consultant.patientFamilyEducation; let i = index; trackBy: trackByIndex">
+
+    <div class="pfe-top-row">
+      <div>Date <input type="date" [(ngModel)]="block.date"></div>
+
+      <div>
+        Teaching provided to:
+        <input [(ngModel)]="block.teaching_provided_to">
+      </div>
+
+      <label><input type="checkbox" [(ngModel)]="block.patient"> Patient</label>
+      <label><input type="checkbox" [(ngModel)]="block.attendant"> Attendant</label>
+    </div>
+
+    <table class="pfe-table">
+      <thead>
+        <tr>
+          <th class="training-col">Training<br>provided by</th>
+          <th class="topics-col"></th>
+          <th class="method-col">Teaching<br>Method</th>
+          <th class="response-col">Teaching<br>Method</th>
+          <th class="sign-col">Sign</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <label><input type="checkbox" [(ngModel)]="block.training_by.doctor"> Doctor</label>
+            <label><input type="checkbox" [(ngModel)]="block.training_by.nurse"> Nurse</label>
+            <label><input type="checkbox" [(ngModel)]="block.training_by.dietician"> Dietician</label>
+            <label><input type="checkbox" [(ngModel)]="block.training_by.medical_social_worker"> Medical
+              Social<br>Worker</label>
+            <label><input type="checkbox" [(ngModel)]="block.training_by.physiotherapist"> Physiotherapist</label>
+          </td>
+
+          <td>
+            <div class="topics-grid">
+              <div>
+                <label><input type="checkbox" [(ngModel)]="block.topics.medication"> Safe use of medication<br>& their
+                  side effects</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.disease_specific"> Disease Specific</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.emergency_care"> Emergency Care</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.pain_management"> Pain Management</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.insulin_management"> Insulin, Management</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.hand_hygiene"> Hand Hygiene</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.nsi_prevention"> Prevention of NSI</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.infection_control"> Infection Control</label>
+                <div class="other-line">Other specify: <input [(ngModel)]="block.other_specify"></div>
+              </div>
+
+              <div>
+                <label><input type="checkbox" [(ngModel)]="block.topics.fall_prevention"> Fall Prevention</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.dietary_intervention"> Dietary
+                  intervention</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.food_drug_interaction"> Food & Drug
+                  Interaction</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.equipment_use"> Safe use of equipment</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.psychological_support"> Psychological
+                  Support</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.smoking_cessation"> Smoking cessation</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.lifestyle"> Life style</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.rehabilitation"> Rehabilitation
+                  techniques</label>
+                <label><input type="checkbox" [(ngModel)]="block.topics.physiotherapy"> Physiotherapy exercises</label>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <label><input type="checkbox" [(ngModel)]="block.teaching_method.demonstration"> Demonstration</label>
+            <label><input type="checkbox" [(ngModel)]="block.teaching_method.discussion"> Discussion</label>
+            <label><input type="checkbox" [(ngModel)]="block.teaching_method.handouts"> Handouts</label>
+          </td>
+
+          <td>
+            <label><input type="checkbox" [(ngModel)]="block.response.acceptable"> Demonstrates<br>acceptable
+              level<br>of knowledge</label>
+            <label><input type="checkbox" [(ngModel)]="block.response.additional_instruction">
+              Requires<br>additional<br>instructions</label>
+          </td>
+
+          <td>
+            <textarea [(ngModel)]="block.sign"></textarea>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="5" class="remarks-cell">
+            Remarks
+            <textarea [(ngModel)]="block.remarks"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="delete-pfe-btn no-print" *ngIf="consultant.patientFamilyEducation.length > 1"
+      (click)="removeEducationBlock(i)">
+      Delete This Block
+    </button>
+
+  </ng-container>
+
+  <button type="button" class="add-pfe-btn no-print" (click)="addEducationBlock()">
+    + Add Education Block
+  </button>
+
+</section>
+
+
+
+<section class="tpr-page">
+
+  <div class="tpr-header">
+    <img src="assets/back/logo2.png" class="tpr-logo">
+    <h2>T P R CHART</h2>
+  </div>
+
+  <div class="tpr-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <button type="button" class="add-tpr-btn no-print" (click)="openTprEntryForm()">
+    + Add TPR Entry
+  </button>
+
+  <div class="tpr-entry-card no-print" *ngIf="showTprEntryForm">
+
+    <h3>{{ editingTprIndex !== null ? 'Edit TPR Entry' : 'Add TPR Entry' }}</h3>
+
+    <div class="tpr-entry-grid">
+
+      <label>
+        Date
+        <input type="date" [(ngModel)]="tprEntry.date" placeholder="Select Date">
+      </label>
+
+      <label>
+        Time Slot
+        <select [(ngModel)]="tprEntry.time_slot">
+          <option value="">Select Time Slot</option>
+          <option *ngFor="let slot of timeSlots" [value]="slot">
+            {{ slot }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        No. of days in Hospital
+        <input [(ngModel)]="tprEntry.hospital_day" placeholder="Example: Day 3">
+      </label>
+
+      <label>
+        Post OP Day
+        <input [(ngModel)]="tprEntry.post_op_day" placeholder="Example: POD 2">
+      </label>
+
+      <label>
+        Temperature °F
+        <input [(ngModel)]="tprEntry.temperature_f" placeholder="Example: 98.4">
+      </label>
+
+      <label>
+        Pulse Rate
+        <input [(ngModel)]="tprEntry.pulse_rate" placeholder="Example: 72 bpm">
+      </label>
+
+      <label>
+        Respiration
+        <input [(ngModel)]="tprEntry.respiration" placeholder="Example: 18/min">
+      </label>
+
+      <label>
+        Blood Pressure
+        <input [(ngModel)]="tprEntry.blood_pressure" placeholder="Example: 120/80">
+      </label>
+
+      <label>
+        Urine
+        <input [(ngModel)]="tprEntry.urine" placeholder="Example: 500 ml">
+      </label>
+
+      <label>
+        Bowels
+        <input [(ngModel)]="tprEntry.bowels" placeholder="Example: Passed Stool">
+      </label>
+
+      <label>
+        Weight
+        <input [(ngModel)]="tprEntry.weight" placeholder="Example: 68 kg">
+      </label>
+
+      <label>
+        Diet
+        <input [(ngModel)]="tprEntry.diet" placeholder="Example: Soft Diet">
+      </label>
+
+      <label>
+        Antibiotics Days
+        <input [(ngModel)]="tprEntry.antibiotics_days" placeholder="Example: Day 5">
+      </label>
+
+      <label>
+        Bath
+        <input [(ngModel)]="tprEntry.bath" placeholder="Example: Given">
+      </label>
+
+      <label>
+        Allergy
+        <input [(ngModel)]="tprEntry.allergy" placeholder="Example: Penicillin">
+      </label>
+
+      <label>
+        Others
+        <input [(ngModel)]="tprEntry.others" placeholder="Additional Notes">
+      </label>
+
+      <label>
+        Nurse Name
+        <input [(ngModel)]="tprEntry.nurse_name" placeholder="Enter Nurse Name">
+      </label>
+    </div>
+
+    <div class="tpr-form-actions">
+      <button type="button" (click)="saveTprEntry()">Save Entry</button>
+      <button type="button" class="cancel-btn" (click)="closeTprEntryForm()">Cancel</button>
+    </div>
+
+  </div>
+
+  <div class="tpr-saved-list no-print" *ngIf="consultant.tprChart.entries.length">
+    <h3>Saved TPR Entries</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Temp</th>
+          <th>Pulse</th>
+          <th>Resp</th>
+          <th>BP</th>
+          <th>Nurse</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of consultant.tprChart.entries; let i = index">
+          <td>{{ item.date }}</td>
+          <td>{{ item.time_slot }}</td>
+          <td>{{ item.temperature_f }}</td>
+          <td>{{ item.pulse_rate }}</td>
+          <td>{{ item.respiration }}</td>
+          <td>{{ item.blood_pressure }}</td>
+          <td>{{ item.nurse_name }}</td>
+          <td>
+            <button type="button" (click)="editTprEntry(i)">Edit</button>
+            <button type="button" class="delete-btn" (click)="deleteTprEntry(i)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tpr-scroll">
+
+    <table class="tpr-table">
+
+      <tbody>
+
+        <tr>
+          <td class="label-cell">Date:</td>
+          <td colspan="6" *ngFor="let d of dayIndexes">{{ getTprDates()[d] || '' }}</td>
+        </tr>
+
+        <tr>
+          <td class="label-cell">No.of days in Hospital</td>
+          <td colspan="6" *ngFor="let d of dayIndexes">{{ getHospitalDay(d) }}</td>
+        </tr>
+
+        <tr>
+          <td class="label-cell">Post OP Day</td>
+          <td colspan="6" *ngFor="let d of dayIndexes">{{ getPostOpDay(d) }}</td>
+        </tr>
+
+        <tr>
+          <td class="label-cell">TEMPERATURE</td>
+          <ng-container *ngFor="let d of dayIndexes">
+            <td colspan="3">A.M</td>
+            <td colspan="3">P.M</td>
+          </ng-container>
+        </tr>
+
+        <tr>
+          <td class="temp-title">
+            <span>C</span>
+            <span>F</span>
+          </td>
+
+          <ng-container *ngFor="let d of dayIndexes">
+            <td>2</td>
+            <td>6</td>
+            <td>10</td>
+            <td>2</td>
+            <td>6</td>
+            <td>10</td>
+          </ng-container>
+        </tr>
+
+        <tr *ngFor="let temp of temperatureRows">
+          <td class="temp-title">
+            <span>{{ temp.c }}</span>
+            <span>{{ temp.f }}</span>
+          </td>
+
+          <ng-container *ngFor="let d of dayIndexes">
+            <td class="dot-cell">{{ getTempMark(d, '2 AM', temp.f) }}</td>
+            <td class="dot-cell">{{ getTempMark(d, '6 AM', temp.f) }}</td>
+            <td class="dot-cell">{{ getTempMark(d, '10 AM', temp.f) }}</td>
+            <td class="dot-cell">{{ getTempMark(d, '2 PM', temp.f) }}</td>
+            <td class="dot-cell">{{ getTempMark(d, '6 PM', temp.f) }}</td>
+            <td class="dot-cell">{{ getTempMark(d, '10 PM', temp.f) }}</td>
+          </ng-container>
+        </tr>
+
+        <tr>
+          <td class="label-cell">PULSE RATE</td>
+          <ng-container *ngFor="let d of dayIndexes">
+            <td class="value-cell">{{ getTprValue(d, '2 AM', 'pulse_rate') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '6 AM', 'pulse_rate') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '10 AM', 'pulse_rate') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '2 PM', 'pulse_rate') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '6 PM', 'pulse_rate') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '10 PM', 'pulse_rate') }}</td>
+          </ng-container>
+        </tr>
+
+        <tr>
+          <td class="label-cell">RESPIRATION</td>
+          <ng-container *ngFor="let d of dayIndexes">
+            <td class="value-cell">{{ getTprValue(d, '2 AM', 'respiration') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '6 AM', 'respiration') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '10 AM', 'respiration') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '2 PM', 'respiration') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '6 PM', 'respiration') }}</td>
+            <td class="value-cell">{{ getTprValue(d, '10 PM', 'respiration') }}</td>
+          </ng-container>
+        </tr>
+
+        <tr *ngFor="let row of [
+          { key: 'blood_pressure', label: 'BLOOD PRESSURE' },
+          { key: 'urine', label: 'URINE' },
+          { key: 'bowels', label: 'BOWELS' },
+          { key: 'weight', label: 'WEIGHT' },
+          { key: 'diet', label: 'DIET' },
+          { key: 'antibiotics_days', label: 'ANTIBIOTICS DAYS' },
+          { key: 'bath', label: 'BATH' },
+          { key: 'allergy', label: 'ALLERGY' },
+          { key: 'others', label: 'OTHERS' }
+        ]">
+          <td class="label-cell">{{ row.label }}</td>
+          <td colspan="6" class="daily-cell" *ngFor="let d of dayIndexes">
+            {{ getDailyValue(d, row.key) }}
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+<div class="tpr-page-actions no-print">
+  <button type="button" (click)="previousTprPage()" [disabled]="tprCurrentPage === 0">
+    Previous
+  </button>
+
+  <span>Page {{ tprCurrentPage + 1 }} / {{ getTotalTprPages() }}</span>
+
+  <button type="button" (click)="nextTprPage()" [disabled]="tprCurrentPage >= getTotalTprPages() - 1">
+    Next
+  </button>
+
+  <button type="button" class="create-page-btn" (click)="createNewTprPage()">
+    + Create New TPR Page
+  </button>
+</div>
+
+
+
+<section class="io-page" *ngFor="let page of consultant.intakeOutputPages; let pageIndex = index">
+  <div class="io-header">
+    <img src="assets/back/logo2.png" class="io-logo">
+    <h2>INTAKE AND OUTPUT CHART</h2>
+  </div>
+
+<div class="io-patient-line">
+  <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+  <span>UMR No</span><input [(ngModel)]="header.umr_no">
+  <span>Sex</span><input [(ngModel)]="header.sex">
+  <span>Age</span><input [(ngModel)]="header.age">
+  <span>IP No</span><input [(ngModel)]="header.ip_no">
+</div>
+
+<div class="io-info-box">
+  <div><span>Name</span><input [(ngModel)]="page.name"></div>
+  <div><span>Age</span><input [(ngModel)]="page.age"></div>
+  <div><span>Sex</span><input [(ngModel)]="page.sex"></div>
+  <div><span>Hosp. No.</span><input [(ngModel)]="page.hosp_no"></div>
+
+  <div><span>Unit</span><input [(ngModel)]="page.unit"></div>
+  <div><span>Ward</span><input [(ngModel)]="page.ward"></div>
+  <div><span>Date</span><input type="date" [(ngModel)]="page.date"></div>
+</div>
+
+  <div class="io-summary">
+    <div>
+      <p>Past 24 Hrs. Intake</p>
+<label>ORAL <input [(ngModel)]="page.past_oral"></label>    
+<label>IV <input [(ngModel)]="page.past_iv"></label>
+  
+<label>Other <input [(ngModel)]="page.past_intake_other"></label>
+
+<label>Total <input [(ngModel)]="page.past_intake_total"></label>
+    </div>
+
+    <div>
+      <p>Past 24 Hrs. Output</p>
+<label>Urine <input [(ngModel)]="page.past_urine"></label>
+
+<label>NASOGASTRIC ASPIRATION <input [(ngModel)]="page.past_ng_asp"></label>
+
+<label>Drainage <input [(ngModel)]="page.past_drainage"></label>
+
+<label>Other <input [(ngModel)]="page.past_output_other"></label>
+
+<label>Total <input [(ngModel)]="page.past_output_total"></label>
+    </div>
+  </div>
+
+  <div class="io-scroll">
+    <table class="io-table">
+      <thead>
+        <tr>
+          <th rowspan="3">Hours</th>
+          <th colspan="5">INTAKE</th>
+          <th colspan="5">OUTPUT</th>
+        </tr>
+        <tr>
+          <th colspan="3">(Medication, Nutrition,<br>Fluids, Blood)</th>
+          <th colspan="2">Oral<br>(Medication Food)</th>
+          <th rowspan="2">Urine</th>
+          <th rowspan="2">N.G Asp</th>
+          <th rowspan="2">Drainage</th>
+          <th rowspan="2">Other</th>
+          <th rowspan="2">Signature</th>
+        </tr>
+        <tr>
+          <th>Fluids</th>
+          <th>Hrly</th>
+          <th>Total</th>
+          <th>Fluids</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let row of page.rows; let i = index">
+          <td class="hour-cell">{{ row.hour }}</td>
+          <td><input [(ngModel)]="row.med_fluids"></td>
+          <td><input [(ngModel)]="row.hrly"></td>
+          <td><input [(ngModel)]="row.intake_total"></td>
+          <td><input [(ngModel)]="row.oral_fluids"></td>
+          <td><input [(ngModel)]="row.oral_amount"></td>
+          <td><input [(ngModel)]="row.urine"></td>
+          <td><input [(ngModel)]="row.ng_asp"></td>
+          <td><input [(ngModel)]="row.drainage"></td>
+          <td><input [(ngModel)]="row.output_other"></td>
+          <td><input [(ngModel)]="row.signature"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="io-page-actions no-print" *ngIf="pageIndex === consultant.intakeOutputPages.length - 1">
+
+  <button type="button" class="create-io-page-btn" (click)="addIntakeOutputPage()">
+    + Create New Intake Output Page
+  </button>
+
+  <button
+    type="button"
+    class="delete-io-page-btn"
+    *ngIf="consultant.intakeOutputPages.length > 1"
+    (click)="deleteIntakeOutputPage(pageIndex)">
+    Delete This Page
+  </button>
+
+</div>
+</section>
+
+
+<section class="invest-page">
+
+  <div class="invest-header">
+    <img src="assets/back/logo2.png" class="invest-logo">
+    <h2>INVESTIGATION CHART</h2>
+  </div>
+
+  <div class="invest-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="invest-scroll">
+    <table class="invest-table">
+      <thead>
+        <tr>
+          <th class="invest-name-col">INVESTIGATION</th>
+          <th *ngFor="let d of investigationChart.dates">
+            <input type="date" [(ngModel)]="d.date">
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of investigationChart.rows">
+          <td class="invest-name-col">
+            <input [(ngModel)]="row.name" placeholder="Investigation">
+          </td>
+
+          <td *ngFor="let val of row.values; let i = index">
+            <input [(ngModel)]="row.values[i]">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="invest-actions no-print">
+  <button type="button" (click)="addInvestigationRow()">
+    + Add Row
+  </button>
+
+  <button type="button" (click)="removeInvestigationRow()">
+    - Remove Row
+  </button>
+
+  <button type="button" (click)="addInvestigationDate()">
+    + Add Date
+  </button>
+
+  <button type="button" (click)="removeInvestigationDate()">
+    - Remove Date
+  </button>
+</div>
+
+</section>
+
+<section class="invest-page invest-page-2">
+
+  <div class="invest-header">
+    <img src="assets/back/logo2.png" class="invest-logo">
+    <h2>INVESTIGATION RESULTS CHART</h2>
+  </div>
+
+  <div class="invest-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="invest-scroll">
+    <table class="invest-table">
+      <thead>
+        <tr>
+          <th class="invest-name-col">INVESTIGATION</th>
+          <th *ngFor="let d of investigationChartSecond.dates">
+            <input type="date" [(ngModel)]="d.date">
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of investigationChartSecond.rows">
+          <td class="invest-name-col">
+            <input [(ngModel)]="row.name">
+          </td>
+
+          <td *ngFor="let val of row.values; let i = index">
+            <input [(ngModel)]="row.values[i]">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="invest-actions no-print">
+
+  <button type="button" (click)="addInvestigationSecondRow()">
+    + Add Row
+  </button>
+
+  <button type="button" (click)="removeInvestigationSecondRow()">
+    - Remove Row
+  </button>
+
+  <button type="button" (click)="addInvestigationSecondDate()">
+    + Add Date
+  </button>
+
+  <button type="button" (click)="removeInvestigationSecondDate()">
+    - Remove Date
+  </button>
+
+</div>
+
+</section>
+
+
+<section class="critical-page">
+
+  <div class="critical-header">
+    <img src="assets/back/logo2.png" class="critical-logo">
+    <h2>CRITICAL RESULT REPORTING</h2>
+  </div>
+
+  <div class="critical-patient-line">
+    <span>Patient Name</span><input [(ngModel)]="header.patient_name">
+    <span>UMR No</span><input [(ngModel)]="header.umr_no">
+    <span>Sex</span><input [(ngModel)]="header.sex">
+    <span>Age</span><input [(ngModel)]="header.age">
+    <span>IP No</span><input [(ngModel)]="header.ip_no">
+  </div>
+
+  <div class="critical-grid">
+    <div class="critical-box" *ngFor="let item of consultant.criticalResults; let i = index">
+      <label>Critical Result : <input [(ngModel)]="item.critical_result"></label>
+      <label>Received by : <input [(ngModel)]="item.received_by"></label>
+      <label>Date and Time : <input type="datetime-local" [(ngModel)]="item.date_time"></label>
+      <label>Received From : <input [(ngModel)]="item.received_from"></label>
+      <label>Informed To: <input [(ngModel)]="item.informed_to"></label>
+    </div>
+  </div>
+
+  <div class="critical-actions no-print">
+    <button type="button" (click)="addCriticalResult()">+ Add Box</button>
+    <button type="button" (click)="removeCriticalResult()">- Remove Box</button>
+  </div>
+
+</section>

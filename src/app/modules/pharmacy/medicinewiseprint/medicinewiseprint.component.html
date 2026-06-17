@@ -1,0 +1,83 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+<div class="p-2">
+    <table>
+        <thead>
+
+            <tr>
+                <th colspan="2" style="font-size: 16px;">
+                    <!-- Date : <b>{{currntDate |/ date: 'dd/MM/yyyy' }}</b> -->
+                </th>
+                <th colspan="9" style="font-size: 16px;">
+                    <b>SCHEDULE DRUGS REPORT</b>
+                </th>
+            </tr>
+
+            <tr>
+                <th>S.No</th>
+                <th>Date</th>
+                <th>Bill No</th>
+                <th>OP Patient ID</th>
+                <th>Patient Name</th>
+                <th>Patient Number</th>
+                <th>Payment Mode</th>
+                <th>Medicine Name</th>
+                <th>Schedule Drugs</th>
+                <th>Expiry Date</th>
+                <th>Each Cost</th>
+                <th>Total Tabs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of medicinewisedata;let i=index;">
+                <td>{{i+1}}</td>
+                <td><b>{{a.sale_date | date: 'dd/MM/yyyy' }}</b></td>
+                <td>{{a.sale_bill_no}}</td>
+                <td><b>{{a.uh_id || '-'}}</b></td>
+                <td>{{a.patient_name}}</td>
+                <td>{{a.patient_number}}</td>
+                <td>
+                    <span *ngIf="a.payment_mode == 'CASH'">
+                        <h6 style="font-weight: 600;" class="text-success">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'UPI'">
+                        <h6 style="font-weight: 600;" class="text-info">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'E - CARD'">
+                        <h6 style="font-weight: 700;color: #8a0bf2;">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'BOTH'">
+                        <h6 style="font-weight: 600;" class="text-dark">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'CREDIT'">
+                        <h6 style="font-weight: 600;" class="text-danger">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                </td>
+                <td>{{a.medicine_name || '-'}}</td>
+
+                <td>{{a. schedule_drugs || '-'}}</td>
+                <td>{{a. expirydate}}</td>
+                <td>{{a. eachcost || '-'}}</td>
+                <td>{{a. total_tabs || '-'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

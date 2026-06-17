@@ -1,0 +1,325 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            NABH QI
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: blue;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" style="padding: 1%;">
+            <div class="card-body" class="gth">
+                <form [formGroup]="addnabhForm">
+                    <div class="row">
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Department <span style="color:red">&nbsp;&nbsp; * </span></label>
+                                <div>
+                                    <ng-select (change)="changeType($event,openPopforNew)" id="inputstate"
+                                        appendTo="body" dropdownpostion="auto" id="default-select"
+                                        formControlName="department"
+                                        [ngClass]="{'is-invalid': submitte && valid['department'].errors }">
+                                        <ng-option *ngFor="let p of department" value="{{p.name}}">{{p.name}}
+                                        </ng-option>
+                                        <ng-option value="ADD">Add New Department</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="submitte && valid['department'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['department'].errors['required']">Department is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Standard <span style="color:red">&nbsp;&nbsp; * </span></label>
+                                <textarea class="form-control" formControlName="standard" placeholder="Enter Standard"
+                                    rows="1"
+                                    [ngClass]="{'is-invalid': submitte && valid['standard'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['standard'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['standard'].errors['required']">Standard is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Indicator <span style="color:red">&nbsp;&nbsp; *</span></label>
+                                <textarea class="form-control" formControlName="indicator" rows="1"
+                                    [ngClass]="{'is-invalid': submitte && valid['indicator'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['indicator'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['indicator'].errors['required']">Indicator is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Definition<span style="color:red">&nbsp;&nbsp; * </span></label>
+                                <textarea class="form-control" formControlName="definition"
+                                    placeholder="Enter Definition" rows="1"
+                                    [ngClass]="{'is-invalid': submitte && valid['definition'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['definition'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['definition'].errors['required']">Definition required</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Formula<span style="color:red">&nbsp;&nbsp; * </span></label>
+                                <textarea class="form-control" formControlName="formula" placeholder="Type Formula"
+                                    rows="1"
+                                    [ngClass]="{'is-invalid': submitte && valid['formula'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['formula'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['formula'].errors['required']">Formula required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>Unit <span style="color:red">&nbsp;&nbsp;* </span></label>
+                                <textarea class="form-control" formControlName="unit" placeholder="Type something"
+                                    (keypress)="numericOnly($event)" rows="1"
+                                    [ngClass]="{'is-invalid': submitte && valid['unit'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['unit'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['unit'].errors['required']">Unit is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <label>HIS EMR System Guide</label>
+                                <textarea type="text" class="form-control" formControlName="guide"
+                                    placeholder="Type something"
+                                    [ngClass]="{'is-invalid': submitte && valid['guide'].errors }"></textarea>
+                                <div *ngIf="submitte && valid['guide'].errors" class="invalid-feedback">
+                                    <div *ngIf="valid['guide'].errors['required']"> Guide</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mt-3">
+                            <div class="form-group">
+                                <br><button type="button" style="background-color: blue;
+                                color: white;width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;"
+                                    (click)="addnabh()">
+                                    ADD </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #openPopforNew let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Add New Department</h5>
+        <button type="button" (click)="dis()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addNew">
+            <div class="row">
+
+                <div class="col-10">
+                    <label>ADD Department Name</label>
+                    <input type="text" class="form-control" formControlName="new_type" />
+
+                </div>
+                <div class="col-2">
+                    <label></label>
+                    <br>&nbsp;
+                    <button style="margin-top: -28px;" (click)="submitNew()" class="btn btn-primary btn-sm">ADD</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','NABH QI')">Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.department }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="standard">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Standard</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.standard }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="indicator">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Indicator
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.indicator}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="definition">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Definition</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.definition}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="formula">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Formula</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.formula}}</td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="unit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Unit</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.unit}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="guide">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Guide</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.guide}}</td>
+                            </ng-container>
+
+
+
+
+                            <ng-container matColumnDef="usr_nm">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Entry Name</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.usr_nm}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <i (click)="viewDetails(row,viewTemplate)" style="color: black;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewTemplate let modal;>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">View Details</h5>
+        <button type="button" class="btn-close" (click)="dismiss(viewTemplate)" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <table>
+            <thead style="background-color: blue;padding: 5px;color: white;font-size: 15px;">
+                <tr>
+                    <th>S.No</th>
+                    <th>Department</th>
+                    <th>Standard</th>
+                    <th>Indicator</th>
+                    <th>Formula</th>
+                    <th>Unit</th>
+                    <th>Definition</th>
+                    <th>Guide</th>
+                </tr>
+            </thead>
+            <tbody style="padding: 5px;">
+                <tr *ngFor="let i of rowData; let a =index;">
+                    <td>{{a+1}}</td>
+                    <td>{{i.department}}</td>
+                    <td>{{i.standard}}</td>
+                    <td>{{i.indicator}}</td>
+                    <td>{{i.formula}}</td>
+                    <td>{{i.unit}}</td>
+                    <td>{{i.definition}}</td>
+                    <td>{{i.guide}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Please Wait</h5>
+</div>

@@ -1,0 +1,2359 @@
+.case-sheet-page {
+    background: #f4f7fb;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* HEADER */
+
+.patient-header {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.patient-left h2 {
+    margin: 0;
+    color: #0f4c81;
+    font-weight: 700;
+}
+
+.patient-meta {
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.patient-meta span {
+    font-size: 14px;
+    color: #666;
+}
+
+.patient-right {
+    display: flex;
+    gap: 10px;
+}
+
+.alert {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.allergy {
+    background: #ffe5e5;
+    color: #d63031;
+}
+
+.diagnosis {
+    background: #e5f4ff;
+    color: #0984e3;
+}
+
+/* BODY */
+
+.case-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #0f4c81;
+}
+
+/* TIMELINE */
+
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+
+    width: 10px;
+    height: 10px;
+
+    background: #0f4c81;
+    border-radius: 50%;
+}
+
+.timeline-time {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 4px;
+}
+
+.timeline-content {
+    font-size: 14px;
+    color: #333;
+}
+
+/* ORDER */
+
+.order-box {
+    border-left: 4px solid #0f4c81;
+    padding: 12px;
+    margin-bottom: 14px;
+    background: #f8fbff;
+    border-radius: 8px;
+}
+
+.order-text {
+    font-weight: 600;
+    color: #222;
+}
+
+.order-footer {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #777;
+}
+
+/* MOBILE */
+
+@media (max-width: 992px) {
+
+  .pdf-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .pdf-title {
+    font-size: 24px;
+  }
+
+  .pdf-field textarea {
+    min-height: 130px;
+  }
+}
+
+/* ✅ Reduce PDF hospital header size for live entry */
+.case-pdf-page {
+  background: #fff;
+  border-radius: 28px;
+  padding: 30px 36px;
+  margin: 20px 0;
+  border: 1px solid #dbe7f5;
+}
+
+
+.pdf-logo-header,
+.cannula-top {
+  min-height: 110px !important;
+  height: auto !important;
+  padding: 14px 20px !important;
+  margin-bottom: 12px !important;
+  align-items: center !important;
+}
+
+.pdf-logo-header img,
+.cannula-top img {
+  width: 160px !important;
+  max-height: 95px !important;
+  object-fit: contain !important;
+}
+
+.pdf-logo-header h2 {
+  font-size: 26px !important;
+}
+
+.cannula-top h3 {
+  font-size: 26px !important;
+  line-height: 1.25 !important;
+}
+
+.pdf-patient-line {
+  padding: 10px 14px !important;
+  margin-bottom: 12px !important;
+  font-size: 16px !important;
+  gap: 18px !important;
+}
+
+.pdf-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
+  margin: 55px 0 45px;
+  color: #000;
+  letter-spacing: 0.5px;
+}
+
+/* EACH SECTION */
+
+.pdf-field {
+  border-bottom: 1px solid #222;
+  margin-bottom: 0;
+}
+
+/* LABEL */
+
+.pdf-field label {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #082f5a;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+/* TEXTAREA */
+
+.pdf-field textarea {
+  width: 100%;
+  min-height: 170px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+
+  font-size: 17px;
+  line-height: 1.7;
+  color: #222;
+
+  padding: 0;
+}
+/* SIGNATURE SECTION */
+
+.pdf-bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+
+  margin-top: 70px;
+  padding-top: 20px;
+}
+
+/* LABELS */
+
+.pdf-bottom-row label {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #082f5a;
+  margin-bottom: 14px;
+}
+
+/* INPUTS */
+/* FILE INPUT */
+
+.pdf-bottom-row input[type="file"] {
+  border: none;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pdf-table th,
+.pdf-table td {
+  border: 1px solid #111;
+  padding: 8px;
+  vertical-align: top;
+}
+
+.pdf-table th {
+  text-align: center;
+  font-weight: 700;
+}
+
+.pdf-table input,
+.pdf-table textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: vertical;
+  min-height: 55px;
+}
+
+@media print {
+  .case-pdf-page {
+    page-break-after: always;
+    border: none;
+    margin: 0;
+  }
+}
+
+
+
+.cannula-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.cannula-top img {
+  width: 410px;
+}
+
+.cannula-top h3 {
+  color: #008c95;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cannula-box {
+  display: grid;
+  grid-template-columns: 3fr 1.1fr;
+  border: 1px solid #222;
+  min-height: 470px;
+}
+
+.cannula-left {
+  padding: 10px;
+  border-right: 1px solid #222;
+  font-size: 21px;
+}
+
+.cannula-right {
+  min-height: 100%;
+}
+
+.line-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.line-row input {
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  flex: 1;
+  font-size: 18px;
+}
+
+.check-line {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.check-line input,
+.cannula-check input,
+.removal-box input {
+  width: 34px;
+  height: 26px;
+  border: 1px solid #222;
+  vertical-align: middle;
+}
+
+.cannula-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 15px;
+}
+
+.cannula-note {
+  border: 1px solid #222;
+  border-top: none;
+  padding: 8px;
+  font-size: 21px;
+}
+
+.cannula-table-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
+}
+
+.cannula-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cannula-table th,
+.cannula-table td {
+  border: 1px solid #222;
+  padding: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.cannula-table td:first-child,
+.cannula-table th:first-child {
+  text-align: left;
+}
+
+.cannula-table tbody tr:nth-child(3) td,
+.cannula-table tbody tr:nth-child(4) td {
+  height: 90px;
+}
+
+.phlebitis-score {
+  border-left: 1px solid #222;
+  padding: 12px 18px;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.cannula-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #222;
+}
+
+.removal-box,
+.remarks-box {
+  padding: 10px;
+  min-height: 270px;
+  font-size: 20px;
+}
+
+.removal-box {
+  border-right: 1px solid #222;
+}
+
+.removal-box label {
+  display: flex;
+  justify-content: space-between;
+  max-width: 520px;
+  margin-bottom: 4px;
+}
+
+.remarks-box textarea {
+  width: 100%;
+  height: 170px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 18px;
+}
+
+.remarks-box p {
+  margin-top: 35px;
+}
+/* SIGNATURE IMAGE */
+
+.sign-preview {
+  display: block;
+  width: 180px;
+  height: 70px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+
+
+/* NAME FIELD */
+
+.signature-name-field {
+  margin-top: 18px;
+}
+
+
+.action-cell {
+  text-align: center;
+  vertical-align: middle !important;
+  width: 70px;
+}
+
+/* BUTTON */
+
+.clear-sign-btn {
+  margin-top: 8px;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.row-delete-btn {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 18px;
+  background: #fee2e2;
+  color: #dc2626;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.add-row-btn {
+  margin-top: 12px;
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 22px;
+  font-weight: 900;
+  background: #e0f2fe;
+  color: #075985;
+  cursor: pointer;
+}
+
+.cannula-table input,
+.cannula-table textarea {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  min-height: 42px;
+  font-size: 15px;
+}
+
+.cannula-table textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.cannula-table th input {
+  min-height: 30px;
+  text-align: center;
+}
+.removal-date-input{
+  width: 100%;
+  min-width: 260px;
+  height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #cfd8e3;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 16px;
+  color: #1e293b;
+  box-sizing: border-box;
+  appearance: auto;
+}
+
+.removal-date-input::-webkit-calendar-picker-indicator{
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
+.removal-check-list{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.removal-check-list {
+  width: 100%;
+  display: block;
+}
+
+.removal-check-list label {
+  display: grid;
+  grid-template-columns: 1fr 42px;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  line-height: 1.3;
+  margin: 3px 0;
+}
+
+.removal-check-list label input[type="checkbox"] {
+  grid-column: 2;
+  width: 26px;
+  height: 26px;
+  justify-self: end;
+}
+
+.removal-check-list label span {
+  grid-column: 1;
+}
+.removal-check-list input[type="checkbox"]{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.field-group{
+  margin-bottom: 20px;
+}
+
+.removal-box{
+  padding: 20px;
+}
+
+.remarks-box{
+  padding: 20px;
+}
+
+.med-pdf-page {
+  background: #fff;
+  border: 1px solid #111;
+  padding: 18px;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  color: #111;
+  overflow-x: auto;
+}
+
+.med-patient-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.med-patient-line input {
+  width: 120px;
+  border: none;
+  border-bottom: 1px solid #111;
+  outline: none;
+  font-size: 14px;
+}
+
+.med-pdf-page h3 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+.med-table {
+  width: 100%;
+  min-width: 1150px;
+  border-collapse: collapse;
+}
+
+.med-table th,
+.med-table td {
+  border: 1px solid #111;
+  padding: 6px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.med-table th {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.med-table input,
+.med-table textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.med-table textarea {
+  min-height: 45px;
+  resize: vertical;
+}
+
+.med-add-btn {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: #075985;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.med-delete-btn {
+  border: 0;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 7px 10px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .med-pdf-page {
+    page-break-after: always;
+    border: none;
+    margin: 0;
+  }
+}
+
+.vo-page {
+  width: 1085px;
+  margin: 20px auto;
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.vo-logo img {
+  width: 0px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.vo-patient-line {
+  border: 1px solid #222;
+  padding: 10px 18px;
+  font-size: 19px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vo-patient-line input {
+  width: 120px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  font-size: 18px;
+}
+
+.vo-allergy-box {
+  border: 1px solid #222;
+  min-height: 132px;
+  margin-bottom: 0;
+}
+
+.vo-allergy-row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.6fr 0.6fr 2.3fr;
+  align-items: center;
+  padding: 5px;
+  font-size: 18px;
+}
+
+.vo-allergy-box textarea {
+  width: 100%;
+  height: 70px;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.vo-sign-text {
+  padding: 5px;
+  font-size: 17px;
+}
+
+.vo-weight-table,
+.vo-med-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vo-weight-table td,
+.vo-med-table th,
+.vo-med-table td {
+  border: 1px solid #222;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.vo-weight-table td {
+  height: 55px;
+  font-size: 18px;
+      width: 25px;
+}
+
+.daily-weight {
+  width: 88px;
+  font-size: 20px !important;
+}
+
+.vo-title {
+  text-align: center;
+  color: #078c99;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 18px 0;
+}
+
+.vo-med-table th {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 5px;
+}
+
+.vo-med-table td {
+  height: 46px;
+}
+
+.vo-med-table input,
+.vo-med-table textarea,
+.vo-weight-table input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  text-align: center;
+}
+
+.vo-med-table textarea {
+  resize: none;
+  padding: 5px;
+  text-align: left;
+}
+
+.vo-add-btn {
+  margin-top: 12px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #078c99;
+  color: #fff;
+  font-weight: 700;
+}
+
+.vo-delete-btn {
+  border: 0;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 900;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .vo-page {
+    width: 100%;
+    margin: 0;
+    border: none;
+    page-break-after: always;
+  }
+}
+
+.sos-model-page {
+  width: 1085px;
+  margin: 20px auto;
+  padding: 38px 24px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.sos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.sos-header img {
+  width: 100px;
+  height: auto;
+}
+
+.sos-header h3 {
+  text-align: center;
+  color: #078c99;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.sos-patient-line {
+  border: 1px solid #222;
+  padding: 10px 18px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sos-patient-line input {
+  width: 125px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  font-size: 18px;
+}
+
+.sos-model-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sos-model-table th,
+.sos-model-table td {
+  border: 1px solid #222;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sos-model-table th {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 7px;
+}
+
+.sos-model-table td {
+  height: 150px;
+}
+
+.sos-model-table input,
+.sos-model-table textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  text-align: center;
+}
+
+.sos-model-table textarea {
+  resize: none;
+  padding: 6px;
+  text-align: left;
+}
+
+.sos-add-btn {
+  margin-top: 12px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #078c99;
+  color: #fff;
+  font-weight: 700;
+}
+
+.sos-delete-btn {
+  border: 0;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 900;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+
+/**/
+.change-plan-page {
+  width: 100%;
+  max-width: 1180px;
+  margin: 20px auto;
+  padding: 45px 30px 110px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  font-family: Arial, sans-serif;
+  color: #222;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.change-patient-line {
+  border: 1px solid #222;
+  height: 78px;
+  padding:15px 20px;
+  margin-bottom: 25px;
+  // display: grid;
+  // grid-template-columns: 1.2fr 1.3fr 0.9fr 0.8fr 1.2fr;
+  align-items: center;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.change-patient-line input {
+  width: 130px;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  font-size: 20px;
+  background: transparent;
+}
+
+.change-plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.change-plan-table th,
+.change-plan-table td {
+  border: 1px solid #222;
+  text-align: center;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.change-plan-table th {
+  height: 85px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.15;
+  padding: 10px;
+}
+
+.change-plan-table td {
+  height: 170px;
+  padding: 0;
+}
+
+.change-plan-table th:nth-child(1),
+.change-plan-table td:nth-child(1) {
+  width: 14%;
+}
+
+.change-plan-table th:nth-child(2),
+.change-plan-table td:nth-child(2) {
+  width: 29%;
+}
+
+.change-plan-table th:nth-child(3),
+.change-plan-table td:nth-child(3) {
+  width: 29%;
+}
+
+.change-plan-table th:nth-child(4),
+.change-plan-table td:nth-child(4) {
+  width: 22%;
+}
+.change-plan-table input[type="datetime-local"] {
+  width: 100%;
+  min-width: 140px;
+  font-size: 14px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.change-plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+
+  margin-bottom: 25px;
+}
+.change-plan-header h2 {
+  flex: 1;
+
+  margin: 0;
+
+  text-align: center;
+
+  color: #078c99;
+
+  font-size: 34px;
+  font-weight: 900;
+
+  line-height: 1.15;
+
+  letter-spacing: 0.5px;
+}
+.change-plan-table th:nth-child(5),
+.change-plan-table td:nth-child(5) {
+  width: 7%;
+}
+
+.change-plan-table input,
+.change-plan-table textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 16px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.row-delete-btn {
+  // margin-top: 120px;
+  border: 0;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 900;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.add-row-btn {
+  margin-top: 18px;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 10px;
+  background: #078c99;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+.signature-td {
+  padding: 10px !important;
+  vertical-align: top;
+}
+
+.signature-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+}
+
+.signature-upload {
+  width: 100%;
+  font-size: 12px;
+}
+
+.table-sign-preview {
+  width: 140px;
+  height: 60px;
+  object-fit: contain;
+  border-bottom: 1px solid #ccc;
+}
+
+.signature-name-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #222 !important;
+  outline: none;
+  text-align: center;
+  font-size: 15px;
+  padding: 6px;
+  background: transparent;
+}
+
+/* ================================
+   PDF BOTTOM SIGNATURE SECTION
+================================ */
+
+.pdf-bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+
+  margin-top: 55px;
+  padding-top: 20px;
+}
+
+/* ALL LABELS */
+
+.pdf-bottom-row label {
+  display: block;
+
+  margin-bottom: 14px;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  color: #082f5a;
+
+  letter-spacing: 0.3px;
+}
+
+/* FILE INPUT */
+
+.pdf-bottom-row input[type="file"] {
+  width: 100%;
+  max-width: 320px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #cfd8e3;
+  border-radius: 12px;
+
+  background: #f8fbff;
+
+  font-size: 14px;
+  color: #334155;
+
+  cursor: pointer;
+
+  margin-bottom: 16px;
+}
+
+/* SIGNATURE IMAGE */
+
+.sign-preview {
+  display: block;
+
+  width: 220px;
+  height: 90px;
+
+  object-fit: contain;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+
+  background: #fff;
+
+  padding: 8px;
+
+  margin-bottom: 14px;
+}
+
+/* CLEAR BUTTON */
+
+.clear-sign-btn {
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  margin-bottom: 20px;
+}
+
+.clear-sign-btn:hover {
+  background: #fecaca;
+}
+
+/* NAME FIELD */
+
+.signature-name-field {
+  margin-top: 12px;
+}
+
+/* TEXT INPUTS */
+
+.pdf-bottom-row input[type="text"],
+.pdf-bottom-row input[type="date"],
+.pdf-bottom-row input[type="time"],
+.signature-name-field input {
+
+  width: 100%;
+  max-width: 320px;
+
+  height: 50px;
+
+  padding: 0 14px;
+
+  border: 1px solid #cfd8e3;
+  border-radius: 12px;
+
+  background: #fff;
+
+  outline: none;
+
+  font-size: 16px;
+  color: #1e293b;
+
+  transition: 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+/* INPUT FOCUS */
+
+.pdf-bottom-row input:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15,118,110,0.08);
+}
+
+/* DATE & TIME COLUMN */
+
+.pdf-bottom-row > div:nth-child(2),
+.pdf-bottom-row > div:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* MOBILE */
+
+@media (max-width: 992px) {
+
+  .pdf-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .pdf-bottom-row input[type="file"],
+  .pdf-bottom-row input[type="text"],
+  .pdf-bottom-row input[type="date"],
+  .pdf-bottom-row input[type="time"],
+  .signature-name-field input {
+
+    max-width: 100%;
+  }
+
+  .sign-preview {
+    width: 180px;
+    height: 70px;
+  }
+}
+
+/* CHANGE PLAN SIGNATURE CELLS */
+
+.signature-td {
+  padding: 14px 16px !important;
+  vertical-align: top !important;
+  overflow: hidden;
+}
+
+.signature-box {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* upload input clean size */
+.signature-upload {
+  width: 100%;
+  max-width: 210px;
+
+  padding: 8px;
+
+  border: 1px solid #cfd8e3;
+  border-radius: 10px;
+
+  background: #f8fbff;
+
+  font-size: 12px;
+  color: #334155;
+
+  cursor: pointer;
+}
+
+/* uploaded signature preview */
+.table-sign-preview {
+  width: 150px;
+  height: 55px;
+
+  object-fit: contain;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+
+  background: #fff;
+  padding: 6px;
+}
+
+/* name input */
+.signature-name-input {
+  width: 100%;
+  max-width: 210px;
+
+  height: 38px;
+
+  border: none !important;
+  border-bottom: 1px solid #222 !important;
+
+  outline: none;
+  background: transparent;
+
+  text-align: center;
+
+  font-size: 14px;
+  color: #111;
+}
+
+/* prevent file text overflow */
+.signature-upload::-webkit-file-upload-button {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #078c99;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.progress-notes-page {
+  width: 1085px;
+  margin: 20px auto;
+  padding: 35px 24px 110px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.progress-notes-header {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.progress-notes-header img {
+  width: 100px;
+  height: auto;
+}
+
+.progress-notes-header h2 {
+  margin: 0;
+  text-align: justify;
+  color: #078c99;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+// .progress-patient-line {
+//   border: 1px solid #222;
+
+//   padding: 12px 20px;
+
+//   margin-bottom: 26px;
+
+//   display: grid;
+
+//   grid-template-columns:
+//     1.5fr
+//     1.5fr
+//     0.9fr
+//     0.8fr
+//     1.4fr;
+
+//   align-items: center;
+
+//   gap: 22px;
+
+//   box-sizing: border-box;
+
+//   font-size: 22px;
+// }
+
+// .progress-patient-line > div {
+//   display: flex;
+//   align-items: center;
+//   gap: 6px;
+// }
+
+// .progress-patient-line input {
+//   width: 100%;
+
+//   border: none;
+//   border-bottom: 1px solid #222;
+
+//   outline: none;
+
+//   background: transparent;
+
+//   font-size: 18px;
+
+//   padding-bottom: 4px;
+// }
+
+.progress-patient-line {
+  border: 1px solid #222;
+  padding: 18px 24px;
+  margin-bottom: 32px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-sizing: border-box;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.progress-patient-line input {
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid #222;
+  outline: none;
+  background: transparent;
+  font-size: 22px;
+  padding: 0 6px 4px;
+}
+
+/* Patient Name */
+.progress-patient-line input:nth-of-type(1) {
+  width: 150px;
+}
+
+/* UMR No */
+.progress-patient-line input:nth-of-type(2) {
+  width: 160px;
+}
+
+/* Sex */
+.progress-patient-line input:nth-of-type(3) {
+  width: 110px;
+}
+
+/* Age */
+.progress-patient-line input:nth-of-type(4) {
+  width: 90px;
+}
+
+/* IP No */
+.progress-patient-line input:nth-of-type(5) {
+  width: 150px;
+}
+.progress-notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.progress-notes-table td {
+  border: 1px solid #222;
+  vertical-align: top;
+  height: 48px;
+  padding: 0;
+}
+
+.progress-date-cell {
+  width: 100px;
+  text-align: center;
+}
+
+.progress-date-cell input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  padding: 8px;
+}
+
+.progress-notes-table textarea {
+  width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+}
+
+.action-cell {
+  width: 70px;
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+/* CANNULA HEADER FIX */
+/* CANNULA HEADER FIX */
+
+.cannula-top {
+  display: grid !important;
+  grid-template-columns: 260px 1fr 260px;
+  align-items: center !important;
+
+  min-height: 130px !important;
+  padding: 20px 35px !important;
+  margin-bottom: 28px !important;
+}
+
+.cannula-top img {
+  width: 130px !important;
+  max-height: 100px !important;
+  object-fit: contain !important;
+  justify-self: start;
+}
+
+.cannula-top h3 {
+  grid-column: 2 / 4;
+
+  margin: 0;
+
+  text-align: justify;
+
+  color: #078c99;
+  font-size: 27px !important;
+  font-weight: 900;
+  line-height: 1.2 !important;
+  letter-spacing: 1px;
+}
+
+/* =====================================================
+   FINAL ALL DEVICE RESPONSIVE PATCH
+   Add this at END of component CSS only
+   ===================================================== */
+
+:host,
+.case-sheet-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* common page safety */
+.case-pdf-page,
+.change-plan-page,
+.progress-notes-page,
+.cannula-page,
+.sos-model-page,
+.vo-page,
+.med-pdf-page {
+  width: 100% !important;
+  max-width: 1180px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* tables should scroll, not break layout */
+.change-plan-table,
+.progress-notes-table,
+.cannula-table,
+.sos-model-table,
+.vo-med-table,
+.vo-weight-table,
+.med-table {
+  border-collapse: collapse;
+}
+
+/* large laptop */
+@media (max-width: 1200px) {
+  .change-plan-page,
+  .progress-notes-page,
+  .sos-model-page,
+  .vo-page {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .cannula-left,
+  .removal-box {
+    border-right: 0 !important;
+    border-bottom: 1px solid #222;
+  }
+}
+
+/* tablet */
+@media (max-width: 992px) {
+  .case-sheet-page {
+    padding: 12px;
+  }
+
+  .patient-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .patient-meta,
+  .patient-right {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .case-pdf-page,
+  .change-plan-page,
+  .progress-notes-page,
+  .cannula-page,
+  .sos-model-page,
+  .vo-page,
+  .med-pdf-page {
+    padding: 16px !important;
+    margin: 14px 0 !important;
+    border-radius: 14px;
+  }
+
+  .change-plan-header,
+  .progress-notes-header,
+  .cannula-top,
+  .sos-header {
+    display: flex !important;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 10px !important;
+  }
+
+  .change-plan-header h2,
+  .progress-notes-header h2,
+  .cannula-top h3,
+  .sos-header h3,
+  .vo-title,
+  .pdf-title {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+  }
+
+  .change-logo img,
+  .progress-notes-header img,
+  .cannula-top img,
+  .sos-header img,
+  .vo-logo img {
+    width: 130px !important;
+    max-height: 90px !important;
+    object-fit: contain;
+  }
+
+  .change-patient-line,
+  .progress-patient-line,
+  .sos-patient-line,
+  .vo-patient-line,
+  .med-patient-line,
+  .pdf-patient-line {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    height: auto !important;
+    gap: 10px !important;
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+
+  .change-patient-line input,
+  .progress-patient-line input,
+  .sos-patient-line input,
+  .vo-patient-line input,
+  .med-patient-line input {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 15px !important;
+  }
+
+  .pdf-bottom-row {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+
+  .change-plan-table,
+  .progress-notes-table,
+  .cannula-table,
+  .sos-model-table,
+  .vo-med-table,
+  .vo-weight-table,
+  .med-table {
+    min-width: 850px;
+  }
+}
+
+/* mobile */
+@media (max-width: 576px) {
+  .case-sheet-page {
+    padding: 8px;
+  }
+
+  .case-pdf-page,
+  .change-plan-page,
+  .progress-notes-page,
+  .cannula-page,
+  .sos-model-page,
+  .vo-page,
+  .med-pdf-page {
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    border-radius: 10px;
+  }
+
+  .change-plan-header h2,
+  .progress-notes-header h2,
+  .cannula-top h3,
+  .sos-header h3,
+  .vo-title,
+  .pdf-title {
+    font-size: 19px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .change-logo img,
+  .progress-notes-header img,
+  .cannula-top img,
+  .sos-header img,
+  .vo-logo img {
+    width: 105px !important;
+  }
+
+  .change-patient-line,
+  .progress-patient-line,
+  .sos-patient-line,
+  .vo-patient-line,
+  .med-patient-line,
+  .pdf-patient-line {
+    grid-template-columns: 1fr !important;
+    font-size: 15px !important;
+  }
+
+  .line-row,
+  .check-line,
+  .cannula-check {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .line-row input,
+  .removal-date-input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .cannula-left,
+  .cannula-note,
+  .removal-box,
+  .remarks-box,
+  .phlebitis-score {
+    font-size: 15px !important;
+  }
+
+  .change-plan-table,
+  .progress-notes-table,
+  .cannula-table,
+  .sos-model-table,
+  .vo-med-table,
+  .vo-weight-table,
+  .med-table {
+    min-width: 780px;
+  }
+
+  .add-row-btn,
+  .sos-add-btn,
+  .vo-add-btn,
+  .med-add-btn {
+    width: 100%;
+  }
+}
+
+/* exact small phones: Moto G4 / 360px */
+@media (max-width: 380px) {
+  .case-sheet-page {
+    padding: 6px;
+  }
+
+  .case-pdf-page,
+  .change-plan-page,
+  .progress-notes-page,
+  .cannula-page,
+  .sos-model-page,
+  .vo-page,
+  .med-pdf-page {
+    padding: 8px !important;
+  }
+
+  .change-plan-header h2,
+  .progress-notes-header h2,
+  .cannula-top h3,
+  .sos-header h3 {
+    font-size: 17px !important;
+  }
+
+  .change-logo img,
+  .progress-notes-header img,
+  .cannula-top img,
+  .sos-header img {
+    width: 90px !important;
+  }
+
+  .change-plan-table,
+  .progress-notes-table,
+  .cannula-table,
+  .sos-model-table,
+  .vo-med-table,
+  .vo-weight-table,
+  .med-table {
+    min-width: 720px;
+  }
+}
+
+/* print keep PDF clean */
+@media print {
+  :host,
+  .case-sheet-page {
+    overflow: visible !important;
+  }
+
+  .case-pdf-page,
+  .change-plan-page,
+  .progress-notes-page,
+  .cannula-page,
+  .sos-model-page,
+  .vo-page,
+  .med-pdf-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    page-break-after: always;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+.sign-preview,
+.table-sign-preview {
+  width: 140px;
+  height: 100px;
+  object-fit: contain;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 6px;
+  background: #fff;
+  display: block;
+  margin-top: 12px;
+}
+
+/* ===== CANNULA PDF EXACT DESIGN FIX ===== */
+
+.cannula-page {
+  width: 1120px !important;
+  min-width: 1120px !important;
+  max-width: 1120px !important;
+  margin: 20px auto !important;
+  padding: 0 !important;
+  background: #fff;
+  border: 1px solid #111;
+  border-radius: 0 !important;
+  font-family: Arial, sans-serif;
+  color: #111;
+  overflow: visible !important;
+}
+
+.cannula-note {
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+  padding: 8px 10px;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.cannula-table-area {
+  display: grid !important;
+  grid-template-columns: 560px 560px !important;
+  width: 1120px !important;
+}
+
+.cannula-table {
+  width: 560px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+.cannula-table th,
+.cannula-table td {
+  border: 1px solid #111;
+  padding: 5px 6px;
+  font-size: 17px;
+  line-height: 1.25;
+  text-align: center;
+  vertical-align: top;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+.cannula-table th:first-child,
+.cannula-table td:first-child {
+  width: 175px !important;
+  min-width: 175px !important;
+  text-align: left;
+}
+
+.cannula-table textarea,
+.cannula-table input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  resize: none;
+}
+
+.phlebitis-score {
+  border-left: 1px solid #111;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.cannula-footer {
+  display: grid !important;
+  grid-template-columns: 560px 560px !important;
+  width: 1120px !important;
+  border-top: 1px solid #111;
+}
+
+.removal-box,
+.remarks-box {
+  min-height: 260px;
+  padding: 14px 18px;
+  font-size: 18px;
+}
+
+.removal-box {
+  border-right: 1px solid #111;
+}
+
+.case-pdf-page {
+  overflow-x: auto !important;
+}
+
+/* IMPORTANT: don't collapse PDF on devices */
+@media (max-width: 1200px),
+       (max-width: 992px),
+       (max-width: 576px),
+       (max-width: 380px) {
+  .cannula-page {
+    width: 1120px !important;
+    min-width: 1120px !important;
+    max-width: 1120px !important;
+  }
+
+  .cannula-table-area {
+    grid-template-columns: 560px 560px !important;
+  }
+
+  .cannula-footer {
+    grid-template-columns: 560px 560px !important;
+  }
+}
+/* ===== CANNULA PATIENT LINE LIKE PDF ===== */
+
+.cannula-patient-line {
+  width: 100%;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  margin-bottom: 24px;
+
+  display: grid;
+  grid-template-columns: auto 1.4fr auto 1fr auto 0.7fr auto 0.7fr auto 1fr;
+  align-items: end;
+  column-gap: 0;
+
+  font-size: 20px;
+  color: #111;
+  box-sizing: border-box;
+}
+
+.cannula-patient-line label {
+  font-size: 20px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.cannula-patient-line input {
+  border: 0;
+  border-bottom: 1px solid #111;
+  outline: 0;
+  height: 30px;
+  font-size: 18px;
+  padding: 0 6px;
+  background: transparent;
+  min-width: 90px;
+}
+
+/* keep PDF width, mobile scroll */
+.cannula-page {
+  width: 1120px !important;
+  min-width: 1120px !important;
+  max-width: 1120px !important;
+}
+
+.case-pdf-page {
+  overflow-x: auto !important;
+}
+
+.signature-section {
+  min-height: 230px !important;
+  overflow: visible !important;
+  padding-bottom: 30px !important;
+}
+
+.sign-preview {
+  display: block !important;
+  width: 130px !important;
+  height: 95px !important;
+  object-fit: contain !important;
+  border: 1px dashed #b8cbe0 !important;
+  border-radius: 10px !important;
+  margin-top: 12px !important;
+  background: #fff !important;
+  padding: 6px !important;
+}
+
+.table-sign-preview {
+  width: 90px;
+  height: 38px;
+  object-fit: contain;
+  display: block;
+  margin: 4px auto;
+  border-bottom: 1px solid #111;
+}
+
+.signature-upload {
+  width: 115px;
+  font-size: 11px;
+}
+
+
+.primary-consultant-sheet {
+  width: 1085px;
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #111;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #111;
+}
+
+.primary-header {
+  height: 125px;
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
+}
+
+.primary-header img {
+  width: 360px;
+  max-height: 105px;
+  object-fit: contain;
+}
+
+.primary-patient-box {
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+  height: 62px;
+  padding: 13px 16px;
+  font-size: 23px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.primary-patient-box input {
+  border: 0;
+  border-bottom: 1px solid #111;
+  outline: 0;
+  background: transparent;
+  font-size: 20px;
+  padding: 0 6px;
+}
+
+.primary-patient-box input:nth-of-type(1) { width: 210px; }
+.primary-patient-box input:nth-of-type(2) { width: 150px; }
+.primary-patient-box input:nth-of-type(3) { width: 90px; }
+.primary-patient-box input:nth-of-type(4) { width: 90px; }
+.primary-patient-box input:nth-of-type(5) { width: 135px; }
+
+.primary-title {
+  height: 60px;
+  border-bottom: 1px solid #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #078c99;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.primary-box {
+  border-bottom: 1px solid #111;
+  padding: 18px 20px;
+}
+
+.primary-box label {
+  display: block;
+  font-size: 23px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.primary-box textarea {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.primary-box.big textarea {
+  min-height: 240px;
+}
+
+.primary-box.medium textarea {
+  min-height: 150px;
+}
+
+.primary-footer {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 35px;
+  padding: 22px 20px 35px;
+}
+
+.primary-footer label {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.primary-footer input[type="text"],
+.primary-footer input[type="date"],
+.primary-footer input[type="time"],
+.primary-footer input:not([type]) {
+  width: 100%;
+  height: 42px;
+  border: 0;
+  border-bottom: 1px solid #111;
+  outline: 0;
+  background: transparent;
+  font-size: 18px;
+}
+
+@media print {
+  .primary-consultant-sheet {
+    width: 100%;
+    margin: 0;
+    page-break-after: always;
+  }
+}
+
+/* SOS signature image display fix */
+.sos-model-table td {
+  height: 150px !important;
+  vertical-align: top !important;
+  padding: 8px !important;
+  overflow: visible !important;
+}
+
+.sos-model-table td:nth-child(5),
+.sos-model-table td:nth-child(7),
+.sos-model-table td:nth-child(8) {
+  min-width: 180px !important;
+}
+
+.sos-model-table td:nth-child(5) input[type="file"],
+.sos-model-table td:nth-child(7) input[type="file"],
+.sos-model-table td:nth-child(8) input[type="file"] {
+  width: 130px !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto 8px auto !important;
+}
+
+.sos-model-table .table-sign-preview {
+  width: 110px !important;
+  height: 45px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 6px auto !important;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 4px;
+  background: #fff;
+}
+
+.sos-model-table td:nth-child(5) input[type="text"],
+.sos-model-table td:nth-child(7) input[type="text"],
+.sos-model-table td:nth-child(8) input[type="text"] {
+  height: 34px !important;
+  display: block !important;
+  margin-top: 6px !important;
+}
+
+.sos-model-table {
+  table-layout: fixed;
+}
+
+.sos-model-table td {
+  height: 135px !important;
+  padding: 8px !important;
+  vertical-align: middle !important;
+}
+
+.sos-sign-cell {
+  text-align: center;
+}
+
+.sos-upload-btn {
+display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 92px;
+    height: 34px;
+    /* background: #078c99; */
+    color: #fff;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 6px;
+    padding-left: 28px;
+}
+
+.sos-upload-btn input {
+  display: none !important;
+}
+
+.sos-sign-preview {
+  width: 95px;
+  height: 38px;
+  margin: 4px auto;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sos-sign-preview img {
+  max-width: 88px;
+  max-height: 32px;
+  object-fit: contain;
+}
+
+.sos-sign-cell input[type="text"] {
+  height: 28px !important;
+  width: 100% !important;
+  font-size: 13px !important;
+}

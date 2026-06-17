@@ -1,0 +1,112 @@
+<div class="patient-search-box">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Enter UHID / OP Number"
+    [(ngModel)]="uhid"
+    (keyup.enter)="searchPatient()">
+
+  <button class="btn btn-primary" type="button" (click)="searchPatient()">
+    Search
+  </button>
+</div>
+
+<div class="patient-details-form" *ngIf="patient">
+
+  <div class="form-group">
+    <label>Patient Type <span>*</span></label>
+    <input class="form-control" value="OP" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>OP Patient ID <span>*</span></label>
+    <input class="form-control" [value]="patient.uh_id" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Name <span>*</span></label>
+    <input class="form-control" [value]="patient.name" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Age <span>*</span></label>
+    <input class="form-control" [value]="patient.age" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Gender <span>*</span></label>
+    <input class="form-control" [value]="patient.gender" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Address <span>*</span></label>
+    <textarea class="form-control" readonly>{{ patient.address }}</textarea>
+  </div>
+
+</div>
+
+<div class="lab-form-wrapper">
+
+  <div class="lab-title">
+    <h3>ASSIGN RADIOLOGY TESTS</h3>
+    <span>Total: ₹{{ totalAmount }}</span>
+  </div>
+
+  <input
+    type="text"
+    class="form-control lab-search"
+    placeholder="Search X-Ray / Scan..."
+    [(ngModel)]="searchText">
+
+  <table class="lab-form-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Test Name</th>
+        <th>Amount</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let test of filteredTests; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ test.d_test_name }}</td>
+        <td>₹{{ test.d_test_amount || 0 }}</td>
+        <td>
+          <input
+            type="checkbox"
+            [checked]="isSelected(test)"
+            (change)="toggleTest(test, $event)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="selected-box" *ngIf="selectedTests.length">
+
+    <div class="selected-title">
+      Selected Radiology Tests
+      <button type="button" (click)="clearAll()">Clear All</button>
+    </div>
+
+    <table class="selected-table">
+      <tr *ngFor="let t of selectedTests; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ t.d_test_name }}</td>
+        <td>₹{{ t.d_test_amount }}</td>
+        <td>
+          <i class="fa-solid fa-trash" (click)="removeTest(i)"></i>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+
+<div class="text-center mt-4">
+  <button class="btn btn-success" type="button" (click)="submitLabOrders()">
+    Submit Radiology Orders
+  </button>
+</div>

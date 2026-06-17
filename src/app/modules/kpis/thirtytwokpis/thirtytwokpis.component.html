@@ -1,0 +1,99 @@
+<section class="nabh-page">
+
+  <div class="nabh-header">
+    <div>
+      <h2>NABH 32 Quality Indicators / KPIs</h2>
+      <p>Add, view and export indicator-wise KPI data</p>
+    </div>
+
+    <button class="export-btn" type="button" (click)="exportExcel()" [disabled]="!selectedIndicatorId">
+      Export Excel
+    </button>
+  </div>
+
+  <div class="nabh-card">
+    <label class="form-label">Select Indicator</label>
+
+    <select class="form-control" [(ngModel)]="selectedIndicatorId" (change)="onIndicatorChange()">
+      <option value="">Select NABH Indicator</option>
+      <option *ngFor="let item of indicators" [value]="item.id">
+        {{ item.indicator_no }}. {{ item.title }}
+      </option>
+    </select>
+  </div>
+
+  <div class="nabh-card" *ngIf="selectedIndicator">
+
+    <div class="indicator-title">
+      <h3>{{ selectedIndicator.indicator_no }}. {{ selectedIndicator.title }}</h3>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group" *ngFor="let field of selectedIndicator.fields">
+        <label>{{ field.label }}</label>
+
+        <input *ngIf="field.type !== 'textarea' && field.type !== 'select'" class="form-control" [type]="field.type"
+          [(ngModel)]="formData[field.key]" [placeholder]="field.label" />
+
+        <textarea *ngIf="field.type === 'textarea'" class="form-control textarea" [(ngModel)]="formData[field.key]"
+          [placeholder]="field.label">
+        </textarea>
+
+        <select *ngIf="field.type === 'select'" class="form-control" [(ngModel)]="formData[field.key]">
+          <option value="">Select</option>
+          <option *ngFor="let opt of field.options" [value]="opt">
+            {{ opt }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="save-btn" type="button" (click)="saveEntry()">
+        Save Entry
+      </button>
+
+      <button class="clear-btn" type="button" (click)="clearForm()">
+        Clear
+      </button>
+    </div>
+
+  </div>
+
+  <div class="nabh-card" *ngIf="entries.length">
+
+    <div class="table-header">
+      <h3>Saved Entries</h3>
+    </div>
+
+    <div class="table-responsive">
+      <table class="nabh-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th *ngFor="let field of selectedIndicator?.fields">
+              {{ field.label }}
+            </th>
+            <th>Created Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let row of entries; let i = index">
+            <td data-label="S.No">{{ i + 1 }}</td>
+
+            <td *ngFor="let field of selectedIndicator?.fields" [attr.data-label]="field.label">
+              {{ row.data?.[field.key] || '-' }}
+            </td>
+
+            <td data-label="Created Date">
+              {{ row.created_at | date:'dd-MM-yyyy hh:mm a' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</section>

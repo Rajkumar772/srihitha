@@ -1,0 +1,648 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Maintenance
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <div class="card-body" class="gth">
+            <form [formGroup]="addemployeedetailsform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Choose Type of Product<span style="color: red;">*</span></label>
+                            <ng-select formControlName="typeofproduct"
+                                [ngClass]="{'is-invalid': submitted && f['typeofproduct'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Select Type of Product</ng-option>
+                                <!-- <ng-option value="BIO-Medical">BIO-Medical</ng-option>
+                                <ng-option value="Utility">Utility</ng-option>
+                                <ng-option value="Non-Utility">Non-Utility</ng-option> -->
+                                <ng-option *ngFor="let p of getproduct" [value]="p.nameofproduct">
+                                    {{ p.nameofproduct }}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['typeofproduct'].errors" class="invalid-feedback">
+                                <div *ngIf="f['typeofproduct'].errors.required">Choose Type of Product is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label class="form-label">Name of the Equipment <span style="color:red">*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="nameofequipment"
+                            (change)="selectequipment($event)"
+                            [ngClass]="{'is-invalid': submitted && f['nameofequipment'].errors}" appendTo="body"
+                            dropdownPosition="auto">
+                            <ng-option value="" disabled Selected>Select Name of the Equipment</ng-option>
+                            <ng-option *ngFor="let p of departmentdropdown" [value]="p.nameofequipment">
+                                {{ p.nameofequipment }}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['nameofequipment'].errors" class="invalid-feedback">
+                            <div *ngIf="f['nameofequipment'].errors.required">Name of the Equipment is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Company Name<span style="color: red;">*</span></label>
+                            <ng-select id="inputstate" id="default-select" formControlName="companyname"
+                                (change)="selectcompanynamewisemodel($event)"
+                                [ngClass]="{'is-invalid': submitted && f['companyname'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Select Company Name</ng-option>
+                                <ng-option *ngFor="let p of getequipmentwisecompany" [value]="p.companyname">
+                                    {{ p.companyname }}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['companyname'].errors" class="invalid-feedback">
+                                <div *ngIf="f['companyname'].errors.required">Company Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Model Name<span style="color: red;">*</span></label>
+                            <ng-select id="inputstate" id="default-select" formControlName="model"
+                                [ngClass]="{'is-invalid': submitted && f['model'].errors}" appendTo="body"
+                                (change)="selectmodelname($event)" dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Select Company Name</ng-option>
+                                <!-- <ng-option *ngFor="let p of getcompanywisemodel" [value]="p.model">
+                                    {{ p.model }} - {{ p.assetcode }} - {{ p.companyname }}
+                                </ng-option> -->
+                                <ng-option *ngFor="let p of getcompanywisemodel" [value]="p">
+                                    {{ p.model }} - {{ p.assetcode }} - {{ p.companyname }}
+                                </ng-option>
+
+                            </ng-select>
+                            <div *ngIf="submitted && f['model'].errors" class="invalid-feedback">
+                                <div *ngIf="f['model'].errors.required">Model Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2"> Location<span style="color: red;">*</span></label>
+                            <ng-select formControlName="location"
+                                [ngClass]="{'is-invalid': submitted && f['location'].errors}" appendTo="body"
+                                placeholder="Enter Location" dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Choose Location</ng-option>
+                                <!-- <ng-option value="Ground Floor">Ground Floor</ng-option>
+                                <ng-option value="1st Floor">1st Floor</ng-option>
+                                <ng-option value="2nd Floor">2nd Floor</ng-option>
+                                <ng-option value="3rd Floor">3rd Floor</ng-option>
+                                <ng-option value="4th Floor">4th Floor</ng-option>
+                                <ng-option value="5th Floor">5th Floor</ng-option> -->
+                                <ng-option *ngFor="let p of locationdata" [value]="p.new_type">
+                                    {{ p.new_type }}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                                <div *ngIf="f['location'].errors.required">Location is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2"> Department<span style="color: red;">*</span></label>
+                            <ng-select formControlName="department"
+                                [ngClass]="{'is-invalid': submitted && f['department'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Choose Department</ng-option>
+                                <!-- <ng-option value="IT">IT Department</ng-option>
+                                <ng-option value="Electrical">Electrical</ng-option>
+                                <ng-option value="Sales">Sales</ng-option> -->
+                                <ng-option *ngFor="let p of departmentdropdownasset" [value]="p.new_type">
+                                    {{ p.new_type }}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+                                <div *ngIf="f['department'].errors.required">Department Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Asset Code<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="assetcode" readonly
+                                placeholder="Enter Asset Code"
+                                [ngClass]="{'is-invalid': submitted && f['assetcode'].errors }">
+                            <div *ngIf="submitted && f['assetcode'].errors" class="invalid-feedback">
+                                <div *ngIf="f['assetcode'].errors.required">Asset Code is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2"> Choose Maintenance Type<span style="color: red;">*</span></label>
+                            <ng-select formControlName="maintenance"
+                                [ngClass]="{'is-invalid': submitted && f['maintenance'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Choose Maintenance Type</ng-option>
+                                <!-- <ng-option value="Preventive">Preventive</ng-option> -->
+                                <ng-option value="Repair">Repair</ng-option>
+                                <ng-option value="Breakdown">Breakdown</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['maintenance'].errors" class="invalid-feedback">
+                                <div *ngIf="f['maintenance'].errors.required">Choose Maintenance Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2"> Choose Priority Type<span style="color: red;">*</span></label>
+                            <ng-select formControlName="priority"
+                                [ngClass]="{'is-invalid': submitted && f['priority'].errors}" appendTo="body"
+                                dropdownPosition="auto">
+                                <ng-option value="" disabled Selected>Choose Priority</ng-option>
+                                <ng-option value="Low">Low</ng-option>
+                                <ng-option value="Medium">Medium</ng-option>
+                                <ng-option value="High">High</ng-option>
+                                <ng-option value="Critical">Critical</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['priority'].errors" class="invalid-feedback">
+                                <div *ngIf="f['priority'].errors.required">Choose Priority Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Work Completed Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="workcompleteddate"
+                                placeholder="Enter Asset Code"
+                                [ngClass]="{'is-invalid': submitted && f['workcompleteddate'].errors }">
+                            <div *ngIf="submitted && f['workcompleteddate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['workcompleteddate'].errors.required">Work Completed Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Available Quantity<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="available_qty"
+                                placeholder="Available Quantity" readonly
+                                [ngClass]="{'is-invalid': submitted && f['available_qty'].errors }">
+                            <div *ngIf="submitted && f['available_qty'].errors" class="invalid-feedback">
+                                <div *ngIf="f['available_qty'].errors.required">Available Quantity is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Quantity<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="quantity"
+                                placeholder="Enter Quantity"
+                                [ngClass]="{'is-invalid': submitted && f['quantity'].errors }">
+                            <div *ngIf="submitted && f['quantity'].errors" class="invalid-feedback">
+                                <div *ngIf="f['quantity'].errors.required">Asset Code is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Purchase Rate<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="purchase_rate"
+                                placeholder="Enter Purchase Rate"
+                                [ngClass]="{'is-invalid': submitted && f['purchase_rate'].errors }">
+                            <div *ngIf="submitted && f['purchase_rate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['purchase_rate'].errors.required">Asset Code is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Supplier/Vendor Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="suppliervendorname"
+                                placeholder="Enter Supplier/Vendor Name" readonly
+                                [ngClass]="{'is-invalid': submitted && f['suppliervendorname'].errors }">
+                            <div *ngIf="submitted && f['suppliervendorname'].errors" class="invalid-feedback">
+                                <div *ngIf="f['suppliervendorname'].errors.required">Supplier/Vendor Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                    <!-- <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Choose Type of Equipment<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="positiontype"
+                                placeholder="Available Quantity" readonly
+                                [ngClass]="{'is-invalid': submitted && f['positiontype'].errors }">
+                            <div *ngIf="submitted && f['positiontype'].errors" class="invalid-feedback">
+                                <div *ngIf="f['positiontype'].errors.required">Choose Type of Equipment is required
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">ADD</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+
+                                <!-- ✅ HIDDEN TABLE ONLY FOR EXCEL EXPORT (NO EDIT/DELETE) -->
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Status</th>
+                                            <th>Type of Product</th>
+                                            <th>Name of the Equipment</th>
+                                            <th>Company Name</th>
+                                            <th>Model</th>
+                                            <th>Location</th>
+                                            <th>Department</th>
+                                            <th>Asset Code</th>
+                                            <th>Maintenance Type</th>
+                                            <th>Priority</th>
+                                            <th>Work Completion Date</th>
+                                            <th>Purchase Date</th>
+                                            <th>Purchase Rate</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+
+                                            <!-- Status Text Instead of Number -->
+                                            <td>
+                                                {{
+                                                row.status == 0 ? 'In-Progress' :
+                                                row.status == 1 ? 'Completed' :
+                                                row.status == 2 ? 'Cancelled' : '__'
+                                                }}
+                                            </td>
+
+                                            <td>{{ row.typeofproduct || '__' }}</td>
+                                            <td>{{ row.nameofequipment || '__' }}</td>
+                                            <td>{{ row.companyname || '__' }}</td>
+                                            <td>{{ row.model || '__' }}</td>
+                                            <td>{{ row.location || '__' }}</td>
+                                            <td>{{ row.department || '__' }}</td>
+                                            <td>{{ row.assetcode || '__' }}</td>
+                                            <td>{{ row.maintenance || '__' }}</td>
+                                            <td>{{ row.priority || '__' }}</td>
+                                            <td>{{ row.workcompleteddate || '__' }}</td>
+                                            <td>{{ row.purchase_date || '__' }}</td>
+                                            <td>{{ row.purchase_rate || '__' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+
+
+
+
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Status
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <select [(ngModel)]="row.status" (change)="updateStatus(row)"
+                                        class="status-dropdown" [ngClass]="{
+                                         'inprogress': row.status === 0,
+                                         'completed': row.status === 1,
+                                         'cancelled': row.status === 2 }">
+                                        <option [ngValue]="0">In-Progress</option>
+                                        <option [ngValue]="1">Completed</option>
+                                        <option [ngValue]="2">Cancelled</option>
+                                    </select>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="typeofproduct">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Type of Product</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.typeofproduct || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="nameofequipment">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name of the Equipment</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.nameofequipment || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="companyname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Company Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.companyname || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="model">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Model</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.model || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Location</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.location || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.department || '__'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="assetcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Asset Code</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.assetcode || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="maintenance">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Maintenance Type</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.maintenance || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="priority">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Priority</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.priority || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="workcompleteddate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Work Completion Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.workcompleteddate || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'status',value:item.roomtype}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'status'; let int = index">
+                                                {{item.status}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'typeofproduct',value:item.typeofproduct}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'typeofproduct'; let int = index">
+                                                {{item.typeofproduct}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'nameofequipment',value:item.nameofequipment}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'nameofequipment'; let int = index">
+                                                {{item.nameofequipment}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'companyname',value:item.companyname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'companyname'; let int = index">
+                                                {{item.companyname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'model',value:item.model}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'model'; let int = index">
+                                                {{item.model}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'location',value:item.location}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'location'; let int = index">
+                                                {{item.location}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'department',value:item.department}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'department'; let int = index">
+                                                {{item.department}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'assetcode',value:item.assetcode}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'assetcode'; let int = index">
+                                                {{item.assetcode}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'maintenance',value:item.maintenance}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'maintenance'; let int = index">
+                                                {{item.maintenance}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'priority',value:item.priority}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'priority'; let int = index">
+                                                {{item.priority}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'workcompleteddate',value:item.workcompleteddate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'workcompleteddate'; let int = index">
+                                                {{item.workcompleteddate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

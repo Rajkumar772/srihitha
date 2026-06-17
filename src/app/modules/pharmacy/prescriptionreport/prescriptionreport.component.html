@@ -1,0 +1,590 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Doctors List
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+
+            <div class="card-body" class="gth">
+                <form [formGroup]="doctor_search" (ngSubmit)="SearchDATE()">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="from_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['from_date'].errors }">
+                                <div *ngIf="submitt && validDate['from_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['from_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['to_date'].errors }">
+                                <div *ngIf="submitt && validDate['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <button type="submit" style="margin-top:17px;background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-12 mt-4" style="background-color: azure;padding: 3px;text-align: center;margin: 10px;">
+                <h5 style="font-weight: 600;font-family: monospace;">Search by ID number</h5>
+            </div>
+
+            <div class="row" style="padding: 1%;">
+                <div class="col-lg-4 mt-1">
+                    <div class="form-group">
+                        <label>OP Patient ID/ Patient name<span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <ng-select id="inputstate" class="op-patient-select" appendTo="body"
+                            (change)="changepn($event)">
+
+                            <ng-option *ngFor="let p of patients_data" value="{{p.uh_id}}">
+                                {{ p.uh_id }} - {{ p.name }} {{ p.full_name }}
+                            </ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Name" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Prescription Report', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="uh_id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    OP Patient ID</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.uh_id}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="i_ts">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width: 12%">
+                                    Visited Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.i_ts | date: 'dd/MM/yyyy, hh:mm a'}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Full Name</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.name + " " +
+                                    row.full_name}}</td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Age</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.age}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Gender</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.gender}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="phone_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.phone_number}}</span>
+                                </td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Pharmacy View</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="Pharma(viewModal,row)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa-solid fa-eye"></i></td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'uh_id' ,value:item.uh_id}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.uh_id}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'date' ,value:item.date}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name' ,value:item.name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header pharmacy-modal-header">
+        <h5 class="modal-title m-0">View Pharmacy</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body pharmacy-modal-body">
+
+        <div class="doctor-prescription-section">
+            <h5 class="section-title">Doctor Prescription</h5>
+
+            <div class="doctor-prescription-card" *ngFor="let a of medicalData; let i = index">
+
+                <div class="prescription-top">
+                    <span class="prescription-no">#{{ i + 1 }}</span>
+
+                    <div class="prescription-med" *ngIf="!a.is_pharmacy_added">
+                        <ng-container *ngIf="a.isParsed; else normalMed">
+                            {{ getFormattedBrands(a.brands) }}
+                        </ng-container>
+
+                        <ng-template #normalMed>
+                            {{ a.medicine_name || '-' }}
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="add-medicine-form" *ngIf="a.is_pharmacy_added">
+
+                    <div class="form-row">
+                        <div class="form-field medicine-field">
+                            <label>Select Medicine <span>*</span></label>
+                         <ng-select
+    placeholder="Select Medicine"
+    appendTo="body"
+    bindLabel="medicine_name"
+    [(ngModel)]="a.selected_medicine"
+    (change)="selectedPharmacyMedicine($event, a)">
+
+    <ng-option *ngFor="let m of medicine_data" [value]="m">
+        {{ m.medicine_name || m.med_name || m.item_name || m.name }}
+    </ng-option>
+
+</ng-select>
+                        </div>
+
+                        <!-- <div class="form-field">
+                            <label>Instructions <span>*</span></label>
+                            <ng-select appendTo="body" [(ngModel)]="a.instruction">
+                                <ng-option *ngFor="let ins of instructionOptions" [value]="ins">
+                                    {{ ins }}
+                                </ng-option>
+                            </ng-select>
+                        </div> -->
+
+                        <!-- <div class="form-field days-field">
+                            <label>Days <span>*</span></label>
+                            <input type="number" min="1" placeholder="Type something" [(ngModel)]="a.days">
+                        </div> -->
+<!-- 
+                        <div class="form-field">
+                            <label>Timings <span>*</span></label>
+                            <ng-select appendTo="body" [(ngModel)]="a.time_options">
+                                <ng-option *ngFor="let t of timingOptions" [value]="t">
+                                    {{ t }}
+                                </ng-option>
+                            </ng-select>
+                        </div> -->
+                    </div>
+
+                    <div class="form-row second-row">
+                        <div class="form-field medicine-field">
+                            <label>Choose Composition Name <span>*</span></label>
+                         <ng-select
+    placeholder="Select Composition Name"
+    appendTo="body"
+    [(ngModel)]="a.composition_name">
+
+    <ng-option *ngFor="let c of a.compositionList || []" [value]="c">
+        {{ c }}
+    </ng-option>
+
+</ng-select>
+                        </div>
+
+                        <!-- <div class="form-field remarks-big">
+                            <label>Remarks</label>
+                            <textarea
+                                rows="2"
+                                [(ngModel)]="a.remarks"
+                                placeholder="Remarks will auto-generate..."></textarea>
+                        </div> -->
+                    </div>
+
+                </div>
+
+<div class="prescription-grid pharmacy-stock-grid">
+<div>
+  <label>Stock Available</label>
+  <p>{{ a.stock_qty || '-' }}</p>
+
+  <small *ngIf="a.stock_status === 'INSUFFICIENT'" style="color:red;font-weight:600;">
+    Shortage: {{ a.shortage_qty }}
+  </small>
+</div>
+
+  <div>
+    <label>Rack / Bin</label>
+    <p>{{ a.bin_location || '-' }}</p>
+  </div>
+
+  <div>
+    <label>Batch No</label>
+    <p>{{ a.batch_no || '-' }}</p>
+  </div>
+
+  <div>
+    <label>Expiry Date</label>
+    <p>{{ a.expirydate || '-' }}</p>
+  </div>
+
+  <div>
+    <label>Sale Price</label>
+    <p>₹ {{ a.eachcost || 0 }}</p>
+  </div>
+
+  <div>
+    <label>Amount</label>
+    <p>₹ {{ getMedicineAmount(a) | number:'1.2-2' }}</p>
+  </div>
+
+  <div class="alternative-box">
+    <label>Alternative Medicine</label>
+    <ng-select
+      placeholder="Select Alternative"
+      appendTo="body"
+      bindLabel="medicine_name"
+      [(ngModel)]="a.alternative_medicine"
+      (change)="selectedAlternativeMedicine($event, a)">
+      <ng-option *ngFor="let m of medicine_data" [value]="m">
+        {{ m.medicine_name || m.med_name || m.item_name || m.name }}
+      </ng-option>
+    </ng-select>
+  </div>
+
+</div>
+
+                <div class="pharmacy-action-box">
+                    <div class="qty-area">
+                        <small *ngIf="a.prescribed_qty" style="color:#0d47a1;font-weight:600;">
+  Doctor Qty: {{ a.prescribed_qty }}
+</small>
+                        <label>Sale Qty</label>
+                        <div class="qty-box">
+                            <button type="button" class="qty-btn" (click)="decreaseQty(a)">-</button>
+<input type="number" min="1" [(ngModel)]="a.sale_qty" (ngModelChange)="validateSaleQty(a)" class="qty-input">                            <button type="button" class="qty-btn" (click)="increaseQty(a)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="remarks-area">
+                        <label>Pharmacy Remarks</label>
+                        <input
+                            type="text"
+                            [(ngModel)]="a.pharmacy_remarks"
+                            placeholder="Out of stock / changed qty / alternative"
+                            class="remarks-input">
+                    </div> -->
+
+                    <button type="button" class="delete-med-btn" (click)="removeMedicine(i)">
+                        <i class="fa fa-trash"></i> Remove
+                    </button>
+                </div>
+
+            </div>
+
+            <div *ngIf="!medicalData?.length" class="no-data-box">
+                No data available
+            </div>
+        </div>
+
+        <div class="popup-footer-actions">
+            <button class="add-med-btn" type="button" (click)="addMedicineRow()">
+                + Add Medicine
+            </button>
+
+            <!-- <button class="print-med-btn" type="button" (click)="printPrescription()">
+                Print
+            </button> -->
+
+            <button class="print-med-btn" type="button" (click)="submitPrescriptionSale()">
+  Submit & Print
+</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #view let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View Lab Tests </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <thead style="background-color: blue;">
+                <tr>
+                    <th style="color: white;text-align: center;">S.No</th>
+                    <th style="color: white;text-align: center;">Medical Test</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="Labdata.length > 0; else noData">
+                    <tr class="tr" *ngFor="let a of Labdata; let i=index;">
+                        <td style="text-align: center;">{{ i + 1 }}</td>
+                        <td style="text-align: center;">{{ a.labtest || '-' }}</td>
+                    </tr>
+
+                </ng-container>
+                <ng-template #noData>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">No data available</td>
+                    </tr>
+                </ng-template>
+
+            </tbody>
+        </table>
+        <div class="text-end">
+            <button [disabled]="showButton" (click)="getLabRprtsViaDctr(showResults)" style="background-color: blue;
+                color: white;
+                width: 155px;
+                height: 38px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;">{{content}}</button>
+        </div>
+
+
+    </div>
+</ng-template>
+
+<ng-template #Modal let-modal>
+    <div class="modal-header" style="text-align: center;">
+        <h5 style="text-align: center;" class="modal-title mt-0" style="font-weight: bold">View Diagnostic Tests </h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <thead style="background-color: blue;">
+                <tr>
+                    <th style="color: white;text-align: center;">S.No</th>
+                    <th style="color: white;text-align: center;">Test Name</th>
+                    <th style="color: white;text-align: center;">Report</th>
+                    <th style="color: white;text-align: center;">Brief</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="Diagnostic_data.length > 0; else noData">
+                    <tr class="tr" *ngFor="let a of Diagnostic_data; let i=index;">
+                        <td style="text-align: center;">{{ i + 1 }}</td>
+                        <td style="text-align: center;">{{ a.d_test_name || '-' }}</td>
+                        <td style="text-align: center;">
+                            <img class="hover-image" src="assets/back/non_image.jpg" style="height: 50%;width: 50%;"
+                                alt="Image" />
+                        </td>
+                        <td style="text-align: center;">
+                            {{a.d_test_brief}}
+                        </td>
+
+                    </tr>
+
+                </ng-container>
+                <ng-template #noData>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">No data available</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>
+
+
+
+
+
+
+
+<ng-template #showResults let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" style="font-weight: bold">Lab Test Results</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="p-2 m-1">
+        <h5 style="background-color: yellow;padding: 6px;color: red;">Test Assign Date : {{test_assign_date}}</h5>
+        <h5 style="background-color: yellow;padding: 6px;color: red;font-weight:600;">Test Completed Date :
+            {{completed_date}}</h5>
+    </div>
+    <div class="modal-body">
+        <div>
+            <table class="w-100">
+                <thead style="background-color: black;">
+                    <tr>
+                        <th style="color: white;text-align: center;">S.NO</th>
+                        <th style="color: white;text-align: center;">Lab Test Name</th>
+                        <th style="color: white;text-align: center;">Result Value</th>
+                        <th style="color: white;text-align: center;">Field Name</th>
+                        <th style="color: white;text-align: center;">Field Range</th>
+                        <th style="color: white;text-align: center;">Field Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let a of resultsLab; let i = index;">
+                        <td style="text-align: center;">{{i+1}}</td>
+                        <td style="text-align: center;">{{a.labtest_name}}</td>
+                        <td
+                            style="background-color: aliceblue;color: black;text-align:center;font-weight: 600;font-size: 16px;">
+                            {{a.value}}</td>
+                        <td style="text-align: center;">{{a.field}}</td>
+                        <td style="text-align: center;">{{a.ranges}}</td>
+                        <td style="text-align: center;text-transform: none;">{{a.units}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</ng-template>

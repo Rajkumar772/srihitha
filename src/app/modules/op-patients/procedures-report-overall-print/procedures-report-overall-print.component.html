@@ -1,0 +1,80 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+<div class="p-2">
+    <table>
+        <thead>
+
+            <tr>
+                <th colspan="3" style="font-size: 16px;">
+                    <!-- Date : <b>{{currntDate |/ date: 'dd/MM/yyyy' }}</b> -->
+                </th>
+                <th colspan="9" style="font-size: 16px;">
+                    <b>Procedure REPORT</b>
+                </th>
+            </tr>
+
+            <tr>
+                <th>S.No</th>
+                <th>Billing Date</th>
+                <th>Invoice No</th>
+                <th>OP Patient ID</th>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Doctor Name</th>
+                <th>Total Amount</th>
+                <th>Payment Mode</th>
+                <th>GST (%)</th>
+                <th>GST Tax Amount</th>
+                <th>Total Grand Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of proceduredata;let i=index;">
+                <td>{{i+1}}</td>
+                <td><b>{{a.date | date: 'dd/MM/yyyy' }}</b></td>
+                <td>{{a.procedure_bill_no}}</td>
+                <td><b>{{a.old_uhid_no || '-'}}</b></td>
+                <td>{{a.name || '-'}}</td>
+                <td>{{a.age || '-'}}</td>
+                <td>{{a.phone_number || '-'}}</td>
+                <td>{{a.gender || '-'}}</td>
+                <td>{{a.address || '-'}}</td>
+                <td>{{a.d_name || '-'}}</td>
+                <td>{{a.grandtotal | number:'1.2-2' || '-'}}</td>
+                <td>
+                    <span *ngIf="a.payment_mode == 'CASH'">
+                        <h6 style="font-weight: 600;" class="text-success">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'UPI'">
+                        <h6 style="font-weight: 600;" class="text-info">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'BOTH'">
+                        <h6 style="font-weight: 600;color: rgb(236, 106, 0);">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                </td>
+                <td>{{a.gst_amount + " " + "%" || '-'}}</td>
+                <td>{{a.gst_percentage | number:'1.2-2' || '-'}}</td>
+                <td>{{a.totalAmountAftrgst | number:'1.2-2' || '-'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

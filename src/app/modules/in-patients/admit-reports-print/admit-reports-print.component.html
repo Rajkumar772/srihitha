@@ -1,0 +1,87 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+<div class="p-2">
+    <table>
+        <thead>
+
+            <tr>
+                <th colspan="5" style="font-size: 16px;">
+                    <!-- Date : <b>{{currntDate |/ date: 'dd/MM/yyyy' }}</b> -->
+                </th>
+                <th colspan="7" style="font-size: 16px;">
+                    <b>DATE OF ADMIT REPORT</b>
+                </th>
+
+            </tr>
+
+            <tr>
+                <th>S.No</th>
+                <th>OP Patient ID</th>
+                <th>IP Patient ID</th>
+                <th>Date Of Admit</th>
+                <th>Date Of Discharge</th>
+                <th>Patient Name</th>
+                <th>Final Bill No</th>
+                <th>Total Amount </th>
+                <th>Payment Mode</th>
+                <th>Payment Mode (BOTH) <br> CASH Amount</th>
+                <th>Payment Mode (BOTH) <br> UPI Amount</th>
+                <th>Transaction ID</th>
+                <th>Discount(%)</th>
+                <th>Discount Amount</th>
+                <th>Total Amount After Discount</th>
+                <th>GST (%)</th>
+                <th>GST Tax Amount</th>
+                <th>Total Grand Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of dateOfAdmitdata;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{a.uh_id}}</td>
+                <td>{{a.ip_number}}</td>
+                <td><b>{{a.date_of_admit | date: 'dd/MM/yyyy' || '-'}}</b></td>
+                <td><b>{{a.date_of_discharge | date: 'dd/MM/yyyy' || '-'}}</b></td>
+                <td><b>{{a.name || '-'}}</b></td>
+                <td>{{a.final_bill_no || '-'}}</td>
+                <td>{{a.grandTotal | number:'1.2-2' || '-'}}</td>
+                <td>
+                    <span *ngIf="a.paymentMode == 'CASH'">
+                        <h6 style="font-weight: 600;" class="text-success">
+                            {{a.paymentMode}}</h6>
+                    </span>
+                    <span *ngIf="a.paymentMode == 'UPI'">
+                        <h6 style="font-weight: 600;" class="text-info">
+                            {{a.paymentMode}}</h6>
+                    </span>
+                    <span *ngIf="a.paymentMode == 'BOTH'">
+                        <h6 style="font-weight: 600;color: rgb(236, 106, 0);">
+                            {{a.paymentMode}}</h6>
+                    </span>
+                </td>
+                <td>{{a.cash || '-'}}</td>
+                <td>{{a.upi || '-'}}</td>
+                <td>{{a.transactionId || '-'}}</td>
+                <td>{{a.initialDiscount + " " + "%" || '-'}}</td>
+                <td>{{a.discountAmount | number:'1.2-2' || '-'}}</td>
+                <td>{{a.totalAmountAftrDscnt | number:'1.2-2' || '-'}}</td>
+                <td>{{a.gstRate + " " + "%" || '-'}}</td>
+                <td>{{a.gstAmount | number:'1.2-2' || '-'}}</td>
+                <td>{{a.totalamount | number:'1.2-2' || '-'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

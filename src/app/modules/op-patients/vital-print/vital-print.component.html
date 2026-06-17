@@ -1,0 +1,114 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+<br>
+<div class="center card_cent" style="width: 100%;" *ngFor="let item of vitaldata; let i = index;">
+    <br>
+    <mat-card class="card" *ngIf="vitaldata.length" style="margin-top: -50px;">
+
+        <div class="row" style="display: flex; align-items: center;">
+            <div class="col-5">
+                <img src="assets/back/PRINTLOGO.png"
+                    style="height: 100px;margin-top: -10px;margin-bottom: 10px;width: 250px;">
+                <strong style="margin-left: 20px;">GSTIN : 7729079781</strong>
+            </div>
+            <div class="col-5" style="margin-left: 70px;width: 324px;margin-right: -100px;margin-top: 20px;">
+                <h4 style="font-size: 18px; font-weight: bold; text-align: center;">Hospial Managemet
+                </h4>
+                <h5 style="font-size: 13px;font-weight: 500;text-align: center;line-height: 18px;">
+                    Kovvur <br> [Phone : 7729079781]
+                </h5>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <div style="border: 1px solid black;width: 100%;border-radius: 10px;margin-bottom: 10px;">
+            <div style="width: 100%; padding: 10px;font-size: 15px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 3px 3px;"><b>OP Patient ID</b></td>
+                        <td style="padding: 3px 3px;">: {{item.uh_id}}</td>
+                        <td style="padding: 3px 3px;"><b>Age/Sex</b></td>
+                        <td style="padding: 3px 3px;">: {{item.age}} / {{item?.gender[0]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 3px 3px; "><b>Patient Name</b></td>
+                        <td style="padding: 3px 3px; ">:{{item.name}}</td>
+                        <td style="padding: 3px 3px;"><b>OP Bill Date</b></td>
+                        <td style="padding: 3px 3px;">: {{ item.date | date : 'dd-MM-YYYY'}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 3px 3px; "><b>Mobile No</b></td>
+                        <td style="padding: 3px 3px; ">: {{item.phone_number}} </td>
+                        <td style="padding: 3px 3px; "><b>Marital Status</b></td>
+                        <td style="padding: 3px 3px; ">: {{item.marital_status}} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col-12">
+
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <table class="applicant-info" style="margin-left: 10px;">
+                <tr>
+                    <td>
+                        <table class="info-table">
+                            <h4 style="font-size: 20px; text-align: center;">VITALS</h4>
+                            <tr>
+                                <td class="label" style="padding-top: 15px;"><b>Weight</b></td>
+                                <td class="colon" style="padding-top: 15px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                            </tr>
+                            <tr>
+                                <td class="label" style="padding-top: 15px;"><b>Height</b></td>
+                                <td class="colon" style="padding-top: 15px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                            </tr>
+                            <tr class="mt-1">
+                                <td class="label" style="padding-top: 10px;"><b>PR</b></td>
+                                <td class="colon" style="padding-top: 10px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                <td class="value">{{a.phone}}</td>
+                            </tr>
+                            <tr class="mt-1">
+                                <td class="label" style="padding-top: 10px;"><b>BP</b></td>
+                                <td class="colon" style="padding-top: 10px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                <td class="value">{{a.address}}</td>
+                            </tr>
+                            <tr class="mt-1">
+                                <!-- <td class="label" style="padding-top: 10px;"><b>SP<sup>O</sup>2 </b></td>
+                                <td class="colon" style="padding-top: 10px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                <td class="value">{{a.date| date :'dd-MM-YYY'}}</td> -->
+                            </tr>
+                            <tr class="mt-1">
+                                <td class="label" style="padding-top: 10px;"><b>Temp </b></td>
+                                <td class="colon" style="padding-top: 10px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                <td class="value">{{a.date| date : 'dd-MM-YYY'}}</td>
+                            </tr>
+                            <tr class="mt-1">
+                                <td class="label" style="padding-top: 10px;text-decoration: underline;"><b>Patient
+                                        Status(Complaints)</b></td>
+                                <td class="colon" style="padding-top: 10px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                <td class="value">{{a.date| date : 'dd-MM-YYY'}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </mat-card>
+</div>
+
+<style>
+    .label {
+        margin-right: 5px;
+    }
+</style>

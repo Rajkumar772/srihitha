@@ -1,0 +1,840 @@
+<div class="card">
+    <div>
+        <h3
+            style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue ; color: white;">
+            Lab Purchase Kits
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<div class="card" style="padding:1%">
+    <div class="card-body" class="gth">
+        <div style="text-align: end;">
+            <h6><b>Last Bill No :</b><b style="font-size: 30px;color: green;">
+                    {{currentNumber}}
+                </b></h6>
+        </div>
+        <form [formGroup]="labtestsupplierdtsForm">
+            <div class="row">
+                <div style="padding: 3px;text-align: left;margin: 10px;">
+                    <h5 style="font-weight: 600;"> Enter Supplier Details :</h5>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Supplier Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="supplier_name"
+                            (change)="changepns($event)"
+                            [ngClass]="{'is-invalid': submitted && valid['supplier_name'].errors }">
+                            <ng-option *ngFor="let p of suppyrdata"
+                                [value]="{name:p.supplier_name ,id:p.id}">{{p.supplier_name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && valid['supplier_name'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supplier_name'].errors['required']">Name is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Phone Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="supplier_number" maxlength="10"
+                            minlength="10" pattern="^[0-9]*$" (keypress)="numericOnly($event)"
+                            placeholder="Type something" readonly
+                            [ngClass]="{'is-invalid': submitted && valid['supplier_number'].errors }" />
+                        <div *ngIf="submitted && valid['supplier_number'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supplier_number'].errors['required']">Number is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Landline No<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="supplier_number"
+                            (keypress)="numericOnly($event)" placeholder="Type something" readonly
+                            [ngClass]="{'is-invalid': submitted && valid['supplier_number'].errors }" />
+                        <div *ngIf="submitted && valid['supplier_number'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supplier_number'].errors['required']">Number is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label> Supplier GST Number <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="supplier_gst" minlength="15"
+                            maxlength="15" placeholder="Type something" readonly
+                            [ngClass]="{'is-invalid': submitted && valid['supplier_gst'].errors }" />
+                        <div *ngIf="submitted && valid['supplier_gst'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supplier_gst'].errors['required']">Gst No is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label> DL No 1 <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="supp_dl_no1"
+                            placeholder="Type something" readonly
+                            [ngClass]="{'is-invalid': submitted && valid['supp_dl_no1'].errors }" />
+                        <div *ngIf="submitted && valid['supp_dl_no1'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supp_dl_no1'].errors['required']">Gst No is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label> DL No 2 <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="supp_dl_no2"
+                            placeholder="Type something" readonly
+                            [ngClass]="{'is-invalid': submitted && valid['supp_dl_no2'].errors }" />
+                        <div *ngIf="submitted && valid['supp_dl_no2'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['supp_dl_no2'].errors['required']">Gst No is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label> Invoice Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <div style="display: flex;">
+                            <input style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;" type="text"
+                                class="form-control" placeholder="INVOICE NUMBER" formControlName="invoice_number"
+                                [ngClass]="{'is-invalid': submitted && valid['invoice_number'].errors }">
+                            <div *ngIf="submitted && valid['invoice_number'].errors" class="invalid-feedback">
+                                <div *ngIf="valid['invoice_number'].errors['required']">Invoice No is required</div>
+                            </div>
+                            <div>
+                                <button (click)="checkLabpurchaseInvoiceNumber()" style="border-radius: 0%;
+                                    outline: none;
+                                    background-color: blue;
+                                    color: white;
+                                    height: 38px;
+                                    font-size: 16px;width: 46px;">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label> Invoice Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="date" class="form-control" formControlName="invoice_date"
+                            placeholder="Type something" [max]="currentDate" [min]="currentDate"
+                            [ngClass]="{'is-invalid': submitted && valid['invoice_date'].errors }" />
+                        <div *ngIf="submitted && valid['invoice_date'].errors" class="invalid-feedback">
+                            <div *ngIf="valid['invoice_date'].errors['required']">Invoice Date is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div style="background-color: blue;color: white;padding: 3px;text-align: center;margin: 10px;">
+            <h5> Enter Lab Equipment Details</h5>
+        </div>
+
+        <form [formGroup]="addlabkitForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group p-3">
+                        <label>Kit Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="kit_name"
+                            (change)="changeProductName($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['kit_name'].errors }">
+                            <ng-option *ngFor="let p of labitemsdata" [value]="{
+                            'kit_name':p.kit_name,
+                            'kit_id':p.kit_id,
+                            'hsncode':p.hsn_code,
+                            'pack' : p.pack ,
+                            'mrp_rate' : p.mrp_rate  ,
+                            'eachcost' : p.eachcost}">{{p.kit_name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="submittTwo && validTwo['kit_name'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['kit_name'].errors['required']">Kit Name is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-lg-4">
+                    <div class="form-group p-3">
+                        <label>Kit Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select id="inputstate" id="default-select" formControlName="kit_name"
+                            (change)="changeProductName($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['kit_name'].errors }">
+                            <ng-option *ngFor="let p of labitemsdata" [value]="{
+                            'kit_name':p.kit_name,
+                            'kit_id':p.id,
+                            'lab_product_name': p.lab_product_name , 
+                            'lab_product_id':p.lab_product_id,
+                            'hsncode':p.hsn_code,
+                            'category_id':p.category_id ,
+                            'category_name':p.category_name,
+                            'pack' : p.pack ,
+                            'mrp_rate' : p.mrp_rate  ,
+                            'eachcost' : p.eachcost}">{{p.kit_name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="submittTwo && validTwo['kit_name'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['kit_name'].errors['required']">Kit Name is required</div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <!-- <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Category Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="category_name"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['category_name'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['category_name'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['category_name'].errors['required']">Category is required</div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Lab Test Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="lab_product_name"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['lab_product_name'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['lab_product_name'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['lab_product_name'].errors['required']">Lab Test Name is required</div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>HSN Code<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="hsncode"
+                            placeholder="Type (ex:10b6h68)" (keypress)="numericAndApha($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['hsncode'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['hsncode'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['hsncode'].errors['required']">HSN is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Batch Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="batch_no"
+                            placeholder="Add Batch number (ex:01)" (keypress)="numericAndApha($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['batch_no'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['batch_no'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['batch_no'].errors['required']">Batch no is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>No of Kits (PACK)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="pack"
+                            placeholder="Type units(ex:10)" (input)="packChange($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['pack'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['pack'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['pack'].errors['required']">Strips Unit is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Each Kit MRP Rate<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="mrp_rate"
+                            placeholder="Type rate (ex:10)" (input)="eachquantity($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['mrp_rate'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['mrp_rate'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['mrp_rate'].errors['required']">MRP is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Each Kit cost<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="number" class="form-control" formControlName="eachcost"
+                            placeholder="Type rate (ex:10)" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Purchasing Rate Per Kit<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="value"
+                            placeholder="Type rate (ex:10)" (input)="changeIfRate($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['value'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['value'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['value'].errors['required']">Purchasing Rate is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Total Quantity of Kits<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="quantity"
+                            (keypress)="numericOnly($event)" placeholder="Type quantity" (keyup)="totalmedicine($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['quantity'].errors }" />
+                        <div *ngIf="submittTwo && validTwo['quantity'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['quantity'].errors['required']">Quantity is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Without GST Price</label>
+                        <input readonly type="number" class="form-control" formControlName="without_gst_medicine_price"
+                            placeholder="Type something">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>GST Percentage <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select type="text" formControlName="gst_per" placeholder="Type something"
+                            (change)="gstCalculation($event)"
+                            [ngClass]="{'is-invalid': submittTwo && validTwo['gst_per'].errors }">
+                            <ng-option aria-selected="true" value="0"> Select The Option</ng-option>
+                            <ng-option value="0"> 0 %</ng-option>
+                            <ng-option value="5"> 5 %</ng-option>
+                            <ng-option value="8"> 8 %</ng-option>
+                            <ng-option value="12">12 %</ng-option>
+                            <ng-option value="18">18 %</ng-option>
+                            <ng-option value="28">28 %</ng-option>
+                        </ng-select>
+                        <div *ngIf="submittTwo && validTwo['gst_per'].errors" class="invalid-feedback">
+                            <div *ngIf="validTwo['gst_per'].errors['required']">Gstper is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>With GST Price</label>
+                        <input readonly type="number" class="form-control" formControlName="with_gst_price"
+                            placeholder="Type something">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Free Kits</label>
+                        <input (keypress)="numericOnly($event)" type="text" class="form-control" maxlength="4"
+                            formControlName="free_tabs" placeholder="Type something" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Expiry Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input [min]="nowCurrentDate" type="month" class="form-control" formControlName="expirydate"
+                            placeholder="" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2 mt-2">
+                    <button style="background-color: blue;color: white;" class="btn mt-4"
+                        (click)="addlabdetails()">ADD</button>
+                </div>
+
+                <div class="col-lg-12">
+                    <br>
+                    <div class="table-responsive" *ngIf="productarr.length">
+                        <table class="table table-bordered mb-0 w-100">
+                            <thead>
+                                <tr style="background-color:blue;font-size: 17px;color: white;">
+                                    <th style="color: white;">S.No</th>
+                                    <th style="color: white;">Kit Name</th>
+                                    <!-- <th style="color: white;">Category Name</th>
+                                    <th style="color: white;">Lab Test Name</th> -->
+                                    <th style="color: white;">HSN Code</th>
+                                    <th style="color: white;">Batch No</th>
+                                    <th style="color: white;">No of Kits</th>
+                                    <th style="color: white;">Each Kit MRP Rate</th>
+                                    <th style="color: white;">Each Kit Cost</th>
+                                    <th style="color: white;">Purchasing Rate/Kit</th>
+                                    <th style="color: white;">Total Qnty of Kits</th>
+                                    <th style="color: white;">GST %</th>
+                                    <th style="color: white;">Without GST Price</th>
+                                    <th style="color: white;">Free Kits</th>
+                                    <th style="color: white;">Total Kits</th>
+                                    <th style="color: white;">Expiry Date</th>
+                                    <th style="color: white;">Update</th>
+                                    <th style="color: white;">Action</th>
+                                </tr>
+                                <tr *ngFor="let i of productarr;let y = index">
+                                    <td>{{y+1}}</td>
+                                    <td>{{i.kit_name}}</td>
+                                    <!-- <td>{{i.category_name}}</td>
+                                    <td>{{i.lab_product_name}}</td> -->
+                                    <td>{{i.hsncode}}</td>
+                                    <td>{{i.batch_no}}</td>
+                                    <td>{{i.pack}}</td>
+                                    <td>{{i.mrp_rate}}</td>
+                                    <td>{{i.eachcost}}</td>
+                                    <td>{{i.value}}</td>
+                                    <td>{{i.quantity}}</td>
+                                    <td>{{i.gst_per + "%"}}</td>
+                                    <td>{{i.without_gst_medicine_price}}</td>
+                                    <td>{{i.free_tabs}}</td>
+                                    <td>{{i.total_tabs}}</td>
+                                    <td>{{i.expirydate | date:'MM/YYYY'}}</td>
+                                    <td>
+                                        <i style="font-size: 20px;cursor: pointer;" class="fa-solid fa-pencil"
+                                            (click)="updateArow(i,y,editFormTempo)"></i>
+                                    </td>
+                                    <td>
+                                        <i class="fa-solid fa-trash" (click)="delete(y)"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Gross Amount</td>
+                                    <td>{{grandtotal}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div *ngIf="productarr.length" style="width: 200px;">
+                                            <label>Select Discount %</label>
+                                            <ng-select type="text" placeholder="Type something"
+                                                [formControl]="ngSelectControl"
+                                                (change)="addDiscountToeveryProducT($event,0)">
+                                                <ng-option aria-selected="true" value="0"> Select The Option</ng-option>
+                                                <ng-option value="0"> 0 %</ng-option>
+                                                <ng-option value="1"> 1 %</ng-option>
+                                                <ng-option value="1.5"> 1.5 %</ng-option>
+                                                <ng-option value="1.75"> 1.75 %</ng-option>
+                                                <ng-option value="2"> 2 %</ng-option>
+                                                <ng-option value="2.5"> 2.5 %</ng-option>
+                                                <ng-option value="2.75"> 2.75 %</ng-option>
+                                                <ng-option value="3"> 3 %</ng-option>
+                                                <ng-option value="3.5"> 3.5 %</ng-option>
+                                                <ng-option value="3.75"> 3.75 %</ng-option>
+                                                <ng-option value="4"> 4 %</ng-option>
+                                                <ng-option value="4.5"> 4.5 %</ng-option>
+                                                <ng-option value="4.75"> 4.75 %</ng-option>
+                                                <ng-option value="5"> 5 %</ng-option>
+                                                <ng-option value="5.5"> 5.5 %</ng-option>
+                                                <ng-option value="5.75"> 5.75 %</ng-option>
+                                                <ng-option value="6"> 6 %</ng-option>
+                                                <ng-option value="6.5"> 6.5 %</ng-option>
+                                                <ng-option value="6.75"> 6.75 %</ng-option>
+                                                <ng-option value="7"> 7 %</ng-option>
+                                                <ng-option value="7.5"> 7.5 %</ng-option>
+                                                <ng-option value="7.75"> 7.75 %</ng-option>
+                                                <ng-option value="8"> 8 %</ng-option>
+                                                <ng-option value="8.5"> 8.5 %</ng-option>
+                                                <ng-option value="8.75"> 8.75 %</ng-option>
+                                                <ng-option value="9"> 9 %</ng-option>
+                                                <ng-option value="9.5"> 9.5 %</ng-option>
+                                                <ng-option value="9.75"> 9.75 %</ng-option>
+                                                <ng-option value="10"> 10 %</ng-option>
+                                                <ng-option value="10.5"> 10.5 %</ng-option>
+                                                <ng-option value="10.75"> 10.75 %</ng-option>
+                                                <ng-option value="11"> 11 %</ng-option>
+                                                <ng-option value="12"> 12 %</ng-option>
+                                                <ng-option value="13"> 13 %</ng-option>
+                                                <ng-option value="14"> 14 %</ng-option>
+                                                <ng-option value="15"> 15 %</ng-option>
+                                                <ng-option value="16"> 16 %</ng-option>
+                                                <ng-option value="17"> 17 %</ng-option>
+                                                <ng-option value="18"> 18 %</ng-option>
+                                                <ng-option value="19"> 19 %</ng-option>
+                                                <ng-option value="20"> 20 %</ng-option>
+                                                <ng-option value="21"> 21 %</ng-option>
+                                                <ng-option value="22"> 22 %</ng-option>
+                                                <ng-option value="23"> 23 %</ng-option>
+                                                <ng-option value="24">24 %</ng-option>
+                                                <ng-option value="25">25 %</ng-option>
+                                                <ng-option value="30">30 %</ng-option>
+                                                <ng-option value="50">50 %</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </td>
+                                    <td>{{initialDiscount + " " + "%"}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total Discount</td>
+                                    <td>{{discountAmount}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total Taxable Amount</td>
+                                    <td>{{totalAmountAftrDscnt}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: blue;color: white;">S.No</td>
+                                    <td style="background-color: blue;color: white;">Tax Rate %</td>
+                                    <td style="background-color: blue;color: white;">Tax Amount</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let a of groupedItemsWithTax;let i =index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{a.gst_per + " " + "%"}}</td>
+                                    <td>{{a.tax_amount}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="background-color: blue;color: white;width: 100px;">Total Tax Amount
+                                    </td>
+                                    <td style="background-color: blue;color: white;">{{totalTaxAmount}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total CGST</td>
+                                    <td>{{TotalCGST}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total SGST</td>
+                                    <td>{{TotalSGST}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NET AMOUNT</td>
+                                    <td style="font-size: 20px;font-weight: 600;">{{MegaGrandTotal + " " + "/-"}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group mb-0" style="text-align: center;">
+                    <br><br>
+                    <button type="submit" *ngIf="productarr.length" style="background-color: blue;
+                    color: white;
+                    width: 98px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;" (click)="typeSubmitPurchase()"> Submit
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #editFormTempo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Update Quantity</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="labkitEditForm">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Kit Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" formControlName="kit_name" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <!-- <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Category Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="category_name" />
+                    </div>
+                </div> -->
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>HSN Code<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="hsncode" readonly
+                            placeholder="Type (ex:10b6h68)" />
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Batch Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="batch_no"
+                            placeholder="Add Batch number (ex:01)" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>No of Kits (PACK)<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="pack"
+                            placeholder="Type units(ex:10)" (input)="packChangetWO($event)"
+                            [ngClass]="{'is-invalid': submittThree && validThree['pack'].errors }" />
+                        <div *ngIf="submittThree && validThree['pack'].errors" class="invalid-feedback">
+                            <div *ngIf="validThree['pack'].errors['required']">Strips Unit is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Each Kit MRP Rate<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="mrp_rate"
+                            placeholder="Type rate (ex:10)" (input)="eachquantitTwo($event)"
+                            [ngClass]="{'is-invalid': submittThree && validThree['mrp_rate'].errors }" />
+                        <div *ngIf="submittThree && validThree['mrp_rate'].errors" class="invalid-feedback">
+                            <div *ngIf="validThree['mrp_rate'].errors['required']">MRP is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Each Kit cost<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input readonly type="number" class="form-control" formControlName="eachcost"
+                            placeholder="Type rate (ex:10)" />
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Purchasing Rate Per Kit<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input min="0" type="number" class="form-control" formControlName="value"
+                            placeholder="Type rate (ex:10)" (input)="changeIfRateTwo($event)"
+                            [ngClass]="{'is-invalid': submittThree && validThree['value'].errors }" />
+                        <div *ngIf="submittThree && validThree['value'].errors" class="invalid-feedback">
+                            <div *ngIf="validThree['value'].errors['required']">Purchasing Rate is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Total Quantity of Kits<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input type="text" class="form-control" formControlName="quantity"
+                            (keypress)="numericOnly($event)" placeholder="Type quantity"
+                            (keyup)="totalmedicinetWO($event)"
+                            [ngClass]="{'is-invalid': submittThree && validThree['quantity'].errors }" />
+                        <div *ngIf="submittThree && validThree['quantity'].errors" class="invalid-feedback">
+                            <div *ngIf="validThree['quantity'].errors['required']">Quantity is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Without GST Price</label>
+                        <input readonly type="number" class="form-control" formControlName="without_gst_medicine_price"
+                            placeholder="Type something">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>GST Percentage <span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <ng-select type="text" formControlName="gst_per" placeholder="Type something"
+                            (change)="gstCalculationtWO($event)"
+                            [ngClass]="{'is-invalid': submittThree && validThree['gst_per'].errors }">
+                            <ng-option aria-selected="true" value="0"> Select The Option</ng-option>
+                            <ng-option value="0"> 0 %</ng-option>
+                            <ng-option value="5"> 5 %</ng-option>
+                            <ng-option value="8"> 8 %</ng-option>
+                            <ng-option value="12">12 %</ng-option>
+                            <ng-option value="18">18 %</ng-option>
+                            <ng-option value="28">28 %</ng-option>
+                        </ng-select>
+                        <div *ngIf="submittThree && validThree['gst_per'].errors" class="invalid-feedback">
+                            <div *ngIf="validThree['gst_per'].errors['required']">Gstper is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>With GST Price</label>
+                        <input readonly type="number" class="form-control" formControlName="with_gst_price"
+                            placeholder="Type something">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group p-3">
+                        <label>Free Kits</label>
+                        <input (keypress)="numericOnly($event)" type="text" class="form-control" maxlength="4"
+                            formControlName="free_tabs" placeholder="Type something" />
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group p-3">
+                        <label>Expiry Date<span style="color:red">&nbsp;&nbsp;*</span></label>
+                        <input [min]="nowCurrentDate" type="month" class="form-control" formControlName="expirydate"
+                            placeholder="" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center m-3">
+                <button style="background-color: blue;
+                color: white;
+                width: 98px;
+                height: 38px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;" (click)="updatetherowandinsert()">Update</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

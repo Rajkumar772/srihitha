@@ -1,0 +1,617 @@
+<br>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Staff List</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);" style="color:black">Staff List</a></li>
+                    <li class="breadcrumb-item active">Add Staff</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+            <div class="btn-1" (click)="gotostaff()"><i class="fa-solid fa-bars"></i>
+                &nbsp; &nbsp;Staff
+            </div><br>
+            <div class="card-body" class="gth">
+                <form [formGroup]="staff_search" (ngSubmit)="SearchDATE()">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="from_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['from_date'].errors }">
+                                <div *ngIf="submitt && validDate['from_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['from_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" formControlName="to_date"
+                                    [ngClass]="{'is-invalid': submitt && validDate['to_date'].errors }">
+                                <div *ngIf="submitt && validDate['to_date'].errors" class="invalid-feedback">
+                                    <div *ngIf="validDate['to_date'].errors['required']">required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <button type="submit" class="submit-btn" style="margin-top:17px">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+
+                    <div class="row buttonhide">
+                        <div class="col-3">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2 search">
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(1)">find_in_page</i>
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(0)">refresh</i>
+                        </div>
+
+                        <div class="col-2 cent_btn mt-2">
+                            <div class="colorbtns color_custm">
+                                <button class="colorbtns colo" (click)="changecolor('blue')"> </button>
+                                <button class="colorbtns colo1" (click)="changecolor('rgb(0, 255, 242)')"></button>
+                                <button class="colorbtns colo2" (click)="changecolor('rgb(255, 174, 0)')"></button>
+                                <button class="colorbtns colo3" (click)="changecolor('rgb(255, 0, 170)')"></button>
+                                <input type="color" id="color1" name="favcolor" value="blue"
+                                    (change)="this.changeCustomColor($event)" (keyup)="this.changeCustomColor($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <mat-paginator [pageSizeOptions]="[25,50,100,500]" showFirstLastButton>
+                            </mat-paginator>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','staff-list')">Excel</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.NO
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Age
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.age}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Gender</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.gender}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Number</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.number}}</td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="address">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Adress</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.address}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="timings">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Available Timings</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.timings}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="deprtmnt">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.deprtmnt}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="experience">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Experience</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.experience}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="joining_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Joining Date</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.joining_date}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="proof">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Proof</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.proof}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="work_exp">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Previous Work Experience</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.work_exp}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Description</th>
+
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    {{row.description}}
+                                </td>
+                            </ng-container>
+
+
+
+
+                            <!-- Select Start -->
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name' ,value:item.name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'age' ,value:item.age}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.age}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'gender' ,value:item.gender}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.gender}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'number' ,value:item.number}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'address' ,value:item.address}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.address }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'timings' ,value:item.timings}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.timings}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'deprtmnt' ,value:item.deprtmnt}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.deprtmnt}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'experience' ,value:item.experience}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.experience}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select10">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'joining_date' ,value:item.joining_date}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.joining_date}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select11">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'proof' ,value:item.proof}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.proof}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select12">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'work_exp' ,value:item.work_exp}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.work_exp}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select13">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'description' ,value:item.description}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.description}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #editFormTempo let modal;>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Edit Staff </h5>
+        <button type="button" class="btn-close" (click)="dismiss(editFormTempo)" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body" class="gth">
+        <form [formGroup]="editForm">
+            <div class="row">
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Name <span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <input type="text" class="form-control" formControlName="name"
+                            oninput="this.value = this.value.toUpperCase()" placeholder="Type something"
+                            [ngClass]="{'is-invalid': submitted && validate['name'].errors }" />
+                        <div *ngIf="submitted && validate['name'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['name'].errors['required']">Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Age <span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <input type="text" class="form-control" formControlName="age" placeholder="Type something"
+                            minlength="2" maxlength="2" (keypress)="numericOnly($event)"
+                            [ngClass]="{'is-invalid': submitted && validate['age'].errors }" />
+                        <div *ngIf="submitted && validate['age'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['age'].errors['required']">Age is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Gender <span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <ng-select formControlName="gender"
+                            [ngClass]="{'is-invalid': submitted && validate['gender'].errors }">
+                            <ng-option value="MALE">MALE</ng-option>
+                            <ng-option value="FEMALE">FEMALE</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && validate['gender'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['gender'].errors['required']">Gender is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Mobile No <span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <input type="text" class="form-control" formControlName="number" placeholder="Type something"
+                            minlength="10" maxlength="10" (keypress)="numericOnly($event)"
+                            [ngClass]="{'is-invalid': submitted && validate['number'].errors }" />
+                        <div *ngIf="submitted && validate['number'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['number'].errors['required']">Number is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Address <span style="color:red">&nbsp;&nbsp; *</span></label>
+                        <textarea class="form-control" formControlName="address"
+                            oninput="this.value = this.value.toUpperCase()" rows="1"
+                            [ngClass]="{'is-invalid': submitted && validate['address'].errors }"></textarea>
+                        <div *ngIf="submitted && validate['address'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['address'].errors['required']">Address is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Timings <span style="color:red">&nbsp;&nbsp;</span></label>
+                        <ng-select formControlName="timings" (change)="changeType($event,opentimings)">
+                            <ng-option *ngFor="let p of timings" value="{{p.timings}}">{{p.timings}}
+                            </ng-option>
+                            <ng-option value="ADD">Add New Timings</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Department <span style="color:red">&nbsp;&nbsp; * </span></label>
+                        <div>
+                            <ng-select (change)="changeType($event,openPopforNew)" id="inputstate" id="default-select"
+                                formControlName="deprtmnt"
+                                [ngClass]="{'is-invalid': submitted && validate['deprtmnt'].errors }">
+                                <ng-option *ngFor="let p of department" value="{{p.name}}">{{p.name}}
+                                </ng-option>
+                                <ng-option value="ADD">Add New Department</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && validate['deprtmnt'].errors" class="invalid-feedback">
+                                <div *ngIf="validate['deprtmnt'].errors['required']">Department is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Experience <span style="color:red">&nbsp;&nbsp;* </span></label>
+                        <input type="number" class="form-control" formControlName="experience"
+                            placeholder="Type something" (keypress)="numericOnly($event)"
+                            [ngClass]="{'is-invalid': submitted && validate['experience'].errors }" />
+                        <div *ngIf="submitted && validate['experience'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['experience'].errors['required']">Experience is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Joining Date <span style="color:red">&nbsp;&nbsp;* </span></label>
+                        <input type="date" class="form-control" formControlName="joining_date"
+                            placeholder="Type something"
+                            [ngClass]="{'is-invalid': submitted && validate['joining_date'].errors }" />
+                        <div *ngIf="submitted && validate['joining_date'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['joining_date'].errors['required']">Joining Date is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Identity Proof<span style="color:red">&nbsp;&nbsp;* </span></label>
+                        <input type="text" class="form-control" formControlName="proof" placeholder="Type something"
+                            maxlength="12" minlength="12"
+                            [ngClass]="{'is-invalid': submitted && validate['proof'].errors }" />
+                        <div *ngIf="submitted && validate['proof'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['proof'].errors['required']">Joining Date is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Previous Work Experience<span style="color:red">&nbsp;&nbsp;* </span></label>
+                        <input type="text" class="form-control" formControlName="work_exp" placeholder="Type something"
+                            [ngClass]="{'is-invalid': submitted && validate['work_exp'].errors }" />
+                        <div *ngIf="submitted && validate['work_exp'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['work_exp'].errors['required']">Previous Work Experience is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea type="text" class="form-control" formControlName="description"
+                            oninput="this.value = this.value.toUpperCase()" rows="1" placeholder="Type something"
+                            [ngClass]="{'is-invalid': submitted && validate['description'].errors }"></textarea>
+                        <div *ngIf="submitted && validate['description'].errors" class="invalid-feedback">
+                            <div *ngIf="validate['description'].errors['required']"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-3">
+
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <div class="form-group">
+                        <br><button type="button" class="btn btn-primary me-1" (click)="editData()">
+                            Edit</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+</ng-template>

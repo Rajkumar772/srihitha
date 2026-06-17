@@ -1,0 +1,178 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill" style="border: 1px solid black;">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of lab_data; let i = index;">
+        <mat-card class="card" *ngIf="lab_data.length" style="margin-bottom: 0px;">
+            <div class="row">
+                <div class="col-6">
+
+                    <div>
+                        <!-- <img src="assets/back/PRINTLOGO.png"
+                            style="width: 55%;margin-top: -10px;margin-bottom: 10px;margin-left: -30px;"> -->
+                    </div>
+                    <div style="font-size: 11px;font-weight: 500;">
+                        <strong>GSTIN : 7729079781</strong>
+                    </div>
+                </div>
+                <div class="col-6" style="text-align: right;">
+                    <!-- <img src="assets/back/Goutham.svg" style="width: 75%;"> -->
+                    <!-- <h5 style="font-size: 20px;">{{item.d_name}}</h5> -->
+                </div>
+            </div>
+            <div
+                style="border-top: 1px solid black;border-bottom: 1px solid black;display: flex;justify-content: space-between;">
+                <div></div>
+                <div>
+                    <h4 style="font-size: 20px; text-align: center;" class="mt-2"><b>LAB TEST RECEIPT</b></h4>
+                </div>
+                <div>
+                    <h4 style="font-size: 20px; text-align: center;" class="mt-2"><b>{{typeOfMode}}</b></h4>
+                </div>
+
+            </div>
+            <div class="row" style="height: 100%;">
+                <div class="col-6"
+                    style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                    <div class="row">
+                        <div class="col-4" style="font-size: 15px; text-align: justify;">
+                            Patient Name <br>Age/Sex <br>UHID
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br>: <br> :
+                        </div>
+                        <div class="col-7" style="font-size: 15px; text-align: justify;">
+                            <!-- <span *ngIf="item.uh_id !== 'null' && item.uh_id !== ''
+                                     && item.uh_id !== null ; else noTransactionId">
+                                {{item.uh_id}}
+                            </span>
+                            <span #noTransactionId>_</span>
+                            <br> -->
+                            {{item.name}} <br>
+                            {{item.age }}/{{item.gender }}<br>
+                            {{item.uh_id }}/<br>{{item.main_uh_id}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6"
+                    style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                    <div class="row">
+                        <div class="col-4" style="font-size: 15px; text-align: justify;">
+                            Date <br> Phone.No <br> Mode
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> : <br>
+                        </div>
+                        <div class="col-7" style="font-size: 15px; text-align: justify;">
+                            {{item.date | date : 'd-MM-YYY'}}<br>
+                            {{item.number}} <br>
+                            <span *ngIf="item.payment_mode === 'BOTH'; else normalMode">
+                                BOTH (cash & UPI)
+                            </span>
+                            <ng-template #normalMode>
+                                {{ item.payment_mode || '-' }}
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12" style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                    <h4 style="font-size: 20px; text-align: center; " class="mt-2"><b>TESTS NAME</b></h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="centered-table p-1">
+                    <table>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>LAB TEST</th>
+                            <th>TEST AMOUNT</th>
+                        </tr>
+
+                        <tr *ngFor="let a of groupMbrsData, let i=index;" style="font-size: 15px;">
+                            <td style="padding: 3px">{{i+1}}</td>
+                            <td style="padding: 3px">{{a.labtest_name}}</td>
+                            <td style="padding: 3px">{{a.amount}}</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="border-top: 1px solid black;">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr *ngIf="item.discount_per > 0">
+                            <td></td>
+                            <td style="text-align: right;"><strong>Discount :</strong></td>
+                            <td><b style="font-size: 20px;">{{item.discount_per + " %"}}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right;"><strong>Grand Total :</strong></td>
+                            <!-- <td><b style="font-size: 20px;">{{item.after_discount_total | number:'1.2-2'}}</b></td> -->
+                            <td><b style="font-size: 20px;">{{item.grandtotal | number:'1.2-2'}}</b></td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row mt-1">
+                <h6 style="text-align: start;margin-top: -10px;">In Words :<strong style="text-transform: uppercase;">
+                        {{totalWords}}
+                        Rupees Only</strong></h6>
+            </div>
+
+            <div class="row mt-3">
+                <h5 style="text-align: end;margin-top: -16px;margin-bottom: 0px;">(Authorized Signature)</h5>
+            </div>
+
+        </mat-card>
+    </div>
+
+</div>
+
+<!-- <div class="row">
+    <p style="text-align: center;font-size: 15px;margin-top: 15px;font-weight: 600;">Kovvur</p>
+</div> -->
+<style>
+    .centered-table {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .centered-table table {
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    .centered-table th,
+    .centered-table td {
+        /* border: 1px solid black; */
+        text-align: center;
+        /* padding: 9px; */
+    }
+</style>

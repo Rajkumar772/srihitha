@@ -1,0 +1,74 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize"> Back</button>
+</div>
+<br>
+
+
+<!-- <div class="all-bill">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of opdata; let i = index;">
+        <mat-card class="card" *ngIf="opdata.length" style="border: 1px solid black;">
+            <div class="row" >
+            </div>
+            <div class="row" style="height: 100%; display: flex;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4" >
+                            Name <br> Age/Sex <br>Phone.No
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> :
+                        </div>
+                        <div class="col-7" >
+                            {{item.sur_name}}&nbsp;{{item.name}} <br>
+                            {{ item.age }}/{{ item.gender }}<br>
+                            {{item.phone_number}}
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-6" >
+                    <div class="row">
+                    <ngx-barcode [bc-value]="'GH-' + item.uh_id" [bc-display-value]="true"></ngx-barcode>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div> -->
+
+
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of opdata; let i = index;">
+        <mat-card class="card" *ngIf="opdata.length" style="border: 1px solid black;">
+            <div class="row" style="height: 100%; display: flex; align-items: center;">
+                <div class="col-6">
+                    <div style="display: flex;">
+                        <div style="width: 35%; font-weight: bold;">
+                            <b>UHId</b><br><b>Name</b> <br> <b>Age/Sex</b> <br><b>Phone.No</b> <br><b>Address</b>
+                        </div>
+                        <div style="width: 5%; text-align: right;">
+                            : <br> : <br> :<br>:<br>:
+                        </div>
+                        <div style="width: 60%;">
+                            {{item.uh_id}}<br>
+                            {{item.name}} <br>
+                            {{item.age}}/{{item.gender}} <br>
+                            {{item.phone_number}}<br>
+                            {{item.address}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="text-align: right;">
+                    <ngx-barcode [bc-value]="'GH-' + item.uh_id" [bc-display-value]="true" [bc-width]="2"
+                        [bc-height]="50">
+                    </ngx-barcode>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

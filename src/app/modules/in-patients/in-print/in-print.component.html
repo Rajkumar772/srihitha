@@ -1,0 +1,67 @@
+<p>in-print works!</p>
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of opdata; let i = index;">
+        <mat-card class="card" *ngIf="opdata.length">
+            <div class="row">
+                <div class="col-4">
+                    <img style="width:280px" src="assets/back/print.png">
+                </div>
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <h6 class="pincity"> <span><b>Cell:</b>9618999618</span> </h6>
+                    <h6 class="pincity"> <span>Address:</span></h6>
+                    <h6 class="pincity"> <span>Kovvur</span></h6>
+                </div>
+            </div>
+            <h4 style="text-align:center"><span><u>OP Reciept</u></span> </h4>
+            <div class="row" style="height: 100%;">
+                <div class="col-6 border boto">
+                    <div>
+                        <h6 class="pincity"> <span>OP Number:</span><span>{{item.uh_id}} </span> </h6>
+                        <h6 class="pincity"> <span>Patient
+                                Name:</span><span>{{item.salutation}}&nbsp;&nbsp;{{item.name}}</span>
+                        </h6>
+                        <h6 class="pincity"> <span>Gender: </span> <span> {{item.gender}} </span> </h6>
+                        <h6 class="pincity"> <span>Age:</span> <span> {{item.age}} </span> </h6>
+                    </div>
+                </div>
+                <div class="col-6 borders center boto">
+                    <div>
+                        <h6 class="pincity"> <span>Doctor Name: </span> <span> {{item.doctor_name}} </span> </h6>
+                        <h6 class="pincity"> <span>Relation: </span> <span> {{item.guardian}} </span> </h6>
+                        <h6 class="pincity"> <span>Phone Number:</span> <span> {{item.phone_number}} </span> </h6>
+                        <h6 class="pincity"> <span>Address: </span> <span> {{item.address}} </span> </h6>
+                    </div>
+                </div>
+                <div class="col-12 border-down center botos">
+                    <h5 class="centre"> Reciept</h5>
+                </div>
+                <div class="col-12 border-down center botos">
+                    <p class="bill para"> <span> Appointment On: {{ item.date | date : 'd-MM-YYY'}}</span>
+
+                    </p>
+                </div>
+                <div class="col-6 border-add botos">
+                </div>
+
+                <div class="col-3 border-total center codcent">
+                    <h5>Total</h5>
+                </div>
+
+                <div class="col-3 border-down center codcent">
+                    <h5>{{item.consultant_fee | number : '1.2-2'}}</h5>
+                </div>
+
+            </div>
+        </mat-card>
+    </div>
+</div>

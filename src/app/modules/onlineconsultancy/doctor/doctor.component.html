@@ -1,0 +1,12 @@
+<h2>Doctor Consultation Panel</h2>
+
+<form [formGroup]="doctorForm">
+  <input placeholder="Doctor Name" formControlName="doctorName">
+  <input placeholder="Department" formControlName="department">
+  <input type="date" formControlName="appointmentDate">
+  <input type="time" formControlName="appointmentTime">
+
+  <button type="button" (click)="startConsultation()">
+    Start Consultation
+  </button>
+</form>

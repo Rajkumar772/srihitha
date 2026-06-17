@@ -1,0 +1,218 @@
+.border1 {
+    // border: 2px solid black !important;
+    text-align: center;
+    // padding: 10px;
+    // -webkit-box-shadow: none;
+    // -moz-box-shadow: none;
+    // box-shadow: none;
+  }
+  
+  .borders {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .border-down {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .border-total {
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .border-add {
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: start;
+  }
+  
+  .product {
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: start;
+  }
+  
+  .prices {
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: center;
+  }
+  
+  .center {
+    display: block;
+    // margin-right: auto;
+    // margin-right: auto;
+    // padding: 10px;
+  }
+  
+  .total {
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: center;
+  }
+  
+  .card {
+    width: 100%;
+  }
+  
+  .data {
+  
+    padding: 20px;
+  }
+  
+  .rest {
+    margin: 40px 0;
+  }
+  
+  .pincity {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .my-overlay1 i.fa.fa-spinner1.fa-spin1,
+  .spinner-big {
+    font-size: 100px !important;
+  }
+  
+  .my-overlay {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    cursor: pointer !important;
+    visibility: visible !important;
+    transition: visibility 0s, opacity 0.4s linear !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: space-between;
+    cursor: wait !important;
+    opacity: 0.6;
+  }
+  
+  .codcent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  @media print {
+    #printPageButton {
+      display: none;
+    }
+  }
+  
+  .button-customize {
+    text-align: center;
+    margin: 20px;
+    height: 2.5rem;
+    width: 9rem;
+    text-align: center;
+    font-family: Gilroy !important;
+    font-size: 1rem !important;
+  }
+  
+  .btn {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btns {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .boto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .botos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+  .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
+  
+  .card {
+    // margin-bottom: 1.5rem;
+    box-shadow: none;
+    // height: 400px;
+  }
+  
+  .centre {
+    text-align: center;
+  }
+  
+  .bill {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+//   .all-bill {
+//     margin-top:2%;
+//   }
+  
+  .from-to {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .para {
+    font-weight: bold;
+  }
+  
+  .aded {
+    font-size: 10px;
+  }
+
+  h6 {
+    font-size: 17px;
+  }
+  
+  h5 {
+    font-size: 17px;
+  }
+  
+  h4 {
+    font-size: 15px;
+  }
+
+
+  th{
+    font-size: 18px;
+  }
+
+
+
+
+  strong{
+    font-size: 16px;
+    padding: 10px;
+    text-transform: uppercase;
+  }
+
+  b{
+    font-size: 18px;
+  }
+

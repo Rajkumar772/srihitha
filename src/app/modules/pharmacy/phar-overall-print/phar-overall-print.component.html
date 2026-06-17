@@ -1,0 +1,36 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;">
+        <mat-card class="card">
+
+            <div class="table-responsive p-2" style="margin-top: -20px;">
+                <table class="table">
+                    <tbody>
+                        <tr style="text-align: center;">
+                            <th colspan="18"><strong>Total Stock Up to Today</strong></th>
+                        </tr>
+                        <tr>
+                            <th><strong>S.NO</strong></th>
+                            <th><strong>Medicine Name</strong></th>
+                            <th><strong>Stock Left</strong></th>
+                        </tr>
+                        <tr *ngFor="let a of overAllData; let i = index;">
+                            <td>{{a.i}}</td>
+                            <td>{{a.medicine_name }}</td>
+                            <td>{{a.available_quantity }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </mat-card>
+    </div>
+</div>

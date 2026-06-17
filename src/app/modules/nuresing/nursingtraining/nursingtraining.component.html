@@ -1,0 +1,460 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Training
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+        <div class="card-body" class="gth">
+            <form [formGroup]="trainingform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Training ID<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="trainingid"
+                                placeholder="Enter Training ID"
+                                [ngClass]="{'is-invalid': submitted && f['trainingid'].errors }">
+                            <div *ngIf="submitted && f['trainingid'].errors" class="invalid-feedback">
+                                <div *ngIf="f['trainingid'].errors.required">Training ID is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="name"
+                                placeholder="Enter Name" [ngClass]="{'is-invalid': submitted && f['name'].errors }">
+                            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['name'].errors.required">Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 p-2">
+                        <div class="form-group">
+                            <label> Department <span style="color: red;"> * </span></label>
+                            <div>
+                                <ng-select id="inputstate" id="default-select" formControlName="department"
+                                    appendTo="body" dropdownpostion="auto"
+                                    [ngClass]="{'is-invalid': submitted && f['department'].errors }">
+                                    <ng-option value="" disabled Selected>Select</ng-option>
+                                    <ng-option value="ICU">ICU</ng-option>
+                                    <ng-option value="General Ward">General Ward</ng-option>
+                                    <ng-option value="Pediatrics">Pediatrics</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['department'].errors.required">Department is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Training Program Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="trainingprogramname"
+                                placeholder="Enter Training Program Name"
+                                [ngClass]="{'is-invalid': submitted && f['trainingprogramname'].errors }">
+                            <div *ngIf="submitted && f['trainingprogramname'].errors" class="invalid-feedback">
+                                <div *ngIf="f['trainingprogramname'].errors.required">Training Program Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 p-2">
+                        <div class="form-group">
+                            <label> Training Type <span style="color: red;"> * </span></label>
+                            <div>
+                                <ng-select id="inputstate" id="default-select" formControlName="trainingtype"
+                                    appendTo="body" dropdownpostion="auto"
+                                    [ngClass]="{'is-invalid': submitted && f['trainingtype'].errors }">
+                                    <ng-option value="" disabled Selected>Select Training Type</ng-option>
+                                    <ng-option value="Online">Online</ng-option>
+                                    <ng-option value="General Ward">Workshop</ng-option>
+                                    <ng-option value="Certification">Certification</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitted && f['trainingtype'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['trainingtype'].errors.required">Training Type is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Training Start Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="startdate"
+                                placeholder="Enter Training Start Date"
+                                [ngClass]="{'is-invalid': submitted && f['startdate'].errors }">
+                            <div *ngIf="submitted && f['startdate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['startdate'].errors.required">Training Start Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Training End Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="input-2" formControlName="enddate"
+                                placeholder="Enter Training End Date"
+                                [ngClass]="{'is-invalid': submitted && f['enddate'].errors }">
+                            <div *ngIf="submitted && f['enddate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['enddate'].errors.required">Training End Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Duration<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="duration"
+                                placeholder="Enter Duration"
+                                [ngClass]="{'is-invalid': submitted && f['duration'].errors }">
+                            <div *ngIf="submitted && f['duration'].errors" class="invalid-feedback">
+                                <div *ngIf="f['duration'].errors.required">Duration is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Training Location<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="traininglocation"
+                                placeholder="Enter Training Location"
+                                [ngClass]="{'is-invalid': submitted && f['traininglocation'].errors }">
+                            <div *ngIf="submitted && f['traininglocation'].errors" class="invalid-feedback">
+                                <div *ngIf="f['traininglocation'].errors.required">Training Location is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Submit</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th> Drill Date</th>
+                                            <th>Drill Time</th>
+                                            <th>Location</th>
+                                            <th>Conducted By</th>
+                                            <th>Total Participants</th>
+                                            <th>Fire Officer Name</th>
+                                            <th> Type of Drill</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.drill_date }}</td>
+                                            <td>{{ row.startTime }}</td>
+                                            <td>{{ row.location }}</td>
+                                            <td>{{ row.conductedby }}</td>
+                                            <td>{{ row.totalparticipants }}</td>
+                                            <td>{{ row.fireofficername }}</td>
+                                            <td>{{ row.typeofdrill }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="trainingid">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Training ID
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.trainingid }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.name }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.department }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="trainingprogramname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Training Program
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.trainingprogramname }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="trainingtype">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Training Type
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.trainingtype }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="startdate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Start Date
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.startdate }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="enddate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    End Date
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.enddate }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Duration">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Duration
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.Duration }}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="traininglocation">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Location
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{ row.traininglocation }}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'trainingid',value:item.trainingid}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'trainingid'; let int = index">
+                                                {{item.trainingid}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name',value:item.name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'name'; let int = index">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'department',value:item.department}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'department'; let int = index">
+                                                {{item.department}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'trainingprogramname',value:item.trainingprogramname}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'trainingprogramname'; let int = index">
+                                                {{item.trainingprogramname}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'trainingtype',value:item.trainingtype}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'trainingtype'; let int = index">
+                                                {{item.trainingtype}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select6">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'startdate',value:item.startdate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'startdate'; let int = index">
+                                                {{item.startdate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select7">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'enddate',value:item.enddate}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'enddate'; let int = index">
+                                                {{item.enddate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                             <ng-container matColumnDef="select8">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                                            <ng-option [value]="{key:'Duration',value:item.Duration}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'Duration'; let int = index">
+                                                {{item.Duration}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                             <ng-container matColumnDef="select9">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'traininglocation',value:item.traininglocation}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'traininglocation'; let int = index">
+                                                {{item.traininglocation}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

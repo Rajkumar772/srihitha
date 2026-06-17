@@ -1,0 +1,152 @@
+.doctor-lab-page {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.page-title {
+  background: linear-gradient(135deg, #001dff, #1f00ff);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.refresh-btn {
+  border: none;
+  background: #1296ff;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.refresh-btn:hover {
+  background: #0a7de0;
+  transform: translateY(-2px);
+}
+
+/* SEARCH */
+.search-box {
+  height: 54px;
+  border-radius: 14px;
+  border: 1px solid #d9dfe8;
+  font-size: 20px;
+  margin-bottom: 18px;
+  padding-left: 18px;
+}
+
+/* TABLE */
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.patients-table thead {
+  background: linear-gradient(135deg, #001dff, #1f00ff);
+}
+
+.patients-table th {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 16px;
+  text-align: center;
+}
+
+.patients-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 18px;
+  color: #555;
+}
+
+.patients-table tbody tr {
+  transition: 0.3s;
+}
+
+.patients-table tbody tr:hover {
+  background: #f7fbff;
+}
+
+/* PRINT BUTTON */
+.print-icon-btn {
+  width: 52px;
+  height: 48px;
+  border: none;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #111;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.print-icon-btn:hover {
+  background: #0d6efd;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* LOADING */
+.loading,
+.empty {
+  text-align: center;
+  padding: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .doctor-lab-page {
+    padding: 15px;
+  }
+
+  .page-title {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .page-title h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .patients-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .patients-table th,
+  .patients-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .print-icon-btn {
+    width: 42px;
+    height: 40px;
+    font-size: 18px;
+  }
+}

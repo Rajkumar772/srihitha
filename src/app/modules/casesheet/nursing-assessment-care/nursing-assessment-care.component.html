@@ -1,0 +1,326 @@
+<section class="ncp-page">
+
+  <div class="ncp-header">
+    <img src="assets/back/logo2.png" class="ncp-logo" alt="Hospital Logo">
+    <h2>NURSING CARE PLAN</h2>
+  </div>
+
+  <div class="ncp-patient-line">
+    <span>Patient Name</span>
+    <input [(ngModel)]="header.patient_name">
+
+    <span>UMR No</span>
+    <input [(ngModel)]="header.umr_no">
+
+    <span>Sex</span>
+    <input [(ngModel)]="header.sex">
+
+    <span>Age</span>
+    <input [(ngModel)]="header.age">
+
+    <span>IP No</span>
+    <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <ng-container *ngFor="let page of carePlanPages; let pageIndex = index; trackBy: trackByIndex">
+
+    <div class="ncp-paper-page">
+<div class="ncp-page-actions no-print">
+  <button
+    type="button"
+    class="ncp-delete-page-btn"
+    *ngIf="carePlanPages.length > 1"
+    (click)="removeNursingCarePlanPage(pageIndex)">
+    Delete This Page
+  </button>
+</div>
+      <div
+        class="ncp-block"
+        *ngFor="let plan of page; let blockIndex = index; trackBy: trackByIndex">
+
+        <div class="ncp-top-line">
+          <div>
+            Date :
+            <input type="date" [(ngModel)]="plan.date">
+          </div>
+
+          <div>
+            Time :
+            <input type="time" [(ngModel)]="plan.time">
+          </div>
+
+          <div>
+            Shift :
+            <input [(ngModel)]="plan.shift">
+          </div>
+        </div>
+
+        <table class="ncp-goals-table">
+          <tr>
+            <td rowspan="3" class="goal-label">Goals</td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.airway">
+                Maintain Airway patency and oxygenation
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.fluid_balance">
+                Maintain fluid Balance
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.pain">
+                Relieve pain & discomfort
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.nutrition">
+                Maintain Good nutritional status
+              </label>
+            </td>
+
+            <td rowspan="3" class="family-education">
+              Patient Family Education
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.infection">
+                Prevent infection
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.elimination">
+                Meet Elimination Needs
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.fall">
+                Patient on risk of fall, please mention intervention
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.activity">
+                Improve Activity tolerance
+              </label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.hygiene">
+                Maintain Personal Hygiene
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.anxiety">
+                Reduce Anxiety
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.ambulation">
+                Early Ambulation
+              </label>
+            </td>
+
+            <td>
+              <label>
+                <input type="checkbox" [(ngModel)]="plan.goals.skin">
+                Skin Integrity
+              </label>
+            </td>
+          </tr>
+        </table>
+
+        <table class="ncp-main-table">
+          <thead>
+            <tr>
+              <th>CARE PLAN</th>
+              <th>CARE GIVEN</th>
+              <th>OUTCOME</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let row of plan.rows; let i = index; trackBy: trackByIndex">
+              <td>
+                <textarea [(ngModel)]="row.care_plan"></textarea>
+              </td>
+
+              <td>
+                <textarea [(ngModel)]="row.care_given"></textarea>
+              </td>
+
+              <td>
+                <textarea [(ngModel)]="row.outcome"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="ncp-footer">
+          <div class="special-notes">
+            <label>Special Notes:</label>
+            <textarea [(ngModel)]="plan.special_notes"></textarea>
+          </div>
+
+          <div class="handover-grid">
+            <div>
+              Name of Nurse Handing over
+              <input [(ngModel)]="plan.handing_nurse_name">
+            </div>
+
+            <div>
+              Emp.No:
+              <input [(ngModel)]="plan.handing_emp_no">
+            </div>
+
+            <div>
+              Signature:
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onSignatureUpload($event, plan, 'handing_signature')">
+
+              <img
+                *ngIf="plan.handing_signature_preview"
+                [src]="plan.handing_signature_preview"
+                class="sign-preview">
+            </div>
+          </div>
+
+          <div class="handover-grid">
+            <div>
+              Name of Nurse Taken over:
+              <input [(ngModel)]="plan.taken_nurse_name">
+            </div>
+
+            <div>
+              Emp.No:
+              <input [(ngModel)]="plan.taken_emp_no">
+            </div>
+
+            <div>
+              Signature:
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onSignatureUpload($event, plan, 'taken_signature')">
+
+              <img
+                *ngIf="plan.taken_signature_preview"
+                [src]="plan.taken_signature_preview"
+                class="sign-preview">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <button
+    type="button"
+    class="add-plan-btn no-print"
+    (click)="addNursingCarePlanPage()">
+
+    + Add Nursing Care Plan Page
+
+  </button>
+
+</section>
+
+
+<section class="nurse-notes-page" *ngFor="let row of nurseNotesRows; let i = index">
+
+  <div class="nn-header">
+    <img src="assets/back/logo2.png">
+    <div>
+      <h2>NURSE NOTES</h2>
+      <p>(TO BE FILLED BY NURSE)</p>
+    </div>
+  </div>
+
+  <div class="nn-patient-line">
+    Patient Name <input [(ngModel)]="header.patient_name">
+    UMR No <input [(ngModel)]="header.umr_no">
+    Sex <input [(ngModel)]="header.sex">
+    Age <input [(ngModel)]="header.age">
+    IP No <input [(ngModel)]="header.ip_no">
+  </div>
+
+  <table class="nn-table">
+    <thead>
+      <tr>
+        <th>Date & Time</th>
+        <th>Notes</th>
+        <th>SIGNATURE AND NAME</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <textarea [(ngModel)]="row.date_time"></textarea>
+        </td>
+        <td>
+          <textarea [(ngModel)]="row.notes"></textarea>
+        </td>
+       <td class="nn-sign-cell">
+  <label>Name</label>
+  <input
+    type="text"
+    [(ngModel)]="row.signature_name"
+    (ngModelChange)="syncNurseNotesToConsultant()">
+
+  <label class="upload-label no-print">Upload Signature</label>
+  <input
+    class="no-print"
+    type="file"
+    accept="image/*"
+    (change)="onNurseNoteSignatureUpload($event, row)">
+
+  <div class="nn-sign-preview" *ngIf="row.nurse_notes_signature_preview">
+  <img [src]="row.nurse_notes_signature_preview" alt="Signature">
+</div>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="nn-warning">
+    Do not use abbreviations - U, IU, QD, QOD, MS, MSO4, MgSO4, Trailing Zero, Lack of Leading Zero. (Eg 1...)
+  </p>
+
+  <button class="delete-page-btn no-print" *ngIf="nurseNotesRows.length > 1" (click)="removeNurseNotePage(i)">
+    Delete This Page
+  </button>
+
+</section>
+
+<button class="add-plan-btn no-print" (click)="addNurseNotePage()">
+  + Add Nurse Notes Page
+</button>

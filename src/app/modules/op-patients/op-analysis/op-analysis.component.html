@@ -1,0 +1,273 @@
+
+<div class="card1">
+    <div>
+        <h3>
+            OP Analysis
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:blue;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+
+<br>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Total Patients</p>
+                        <h5 class="mb-0" [ngClass]=class>{{orders_count_array[0]?.total_orders }}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color: #5d6e7e; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Today Patients</p>
+                        <h5 class="mb-0" [ngClass]=class>{{orders_count_array[0]?.current_orders }}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color: #15c115; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Last 7 Days Patients</p>
+                        <h5 class="mb-0" [ngClass]=class>{{orders_count_array[0]?.seven_amount }}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color: #f72f2f; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Last 30 Days Patients</p>
+                        <h5 class="mb-0" [ngClass]=class>{{orders_count_array[0]?.thirty_amount }}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card" style="background-color: #ee8b3a ; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Today Free Cards</p>
+                        <h5 class="mb-0" [ngClass]=class>{{amount_aary[0]?.total_orders }}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color:#2a93a9; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Today Amount</p>
+                        <h5 class="mb-0" [ngClass]=class>{{amount_aary[0]?.current_orders | number:'1.2-2'}}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color: #cd475e; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Today UPI Amount</p>
+                        <h5 class="mb-0" [ngClass]=class>{{amount_aary[0]?.seven_amount | number:'1.2-2'}}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="background-color: #8f5beb; border-radius: 12px;color:white;">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-truncate font-size-14 mb-2" [ngClass]=class>Cash IN Hand</p>
+                        <h5 class="mb-0" [ngClass]=class>{{amount_aary[0]?.thirty_amount | number:'1.2-2'}}</h5>
+                    </div>
+                    <div class="text-primary ms-auto">
+                        <i class=" font-size-24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card radius-10 overflow-hidden w-100">
+            <div class="card-body">
+                <p class="font-weight-bold mb-1 text-secondary">Last 7 Days Analysis</p>
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="mb-0"></h4>
+                    </div>
+                    <div class="">
+                        <p class="mb-0 align-self-center font-weight-bold text-success ms-2"><i
+                                class='bx bxs-up-arrow-alt mr-2'></i>
+                        </p>
+                    </div>
+                </div>
+                <div id="chart21"></div>
+            </div>
+        </div>
+    
+        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+            <div class="for-spin">
+                <span class="loader"></span>
+                <p style="text-align: center; font-weight: bold; color: white; font-size: 20PX; padding-top: 25PX;">
+                    Please Wait
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card radius-10 overflow-hidden w-100" style=" height: 95%;">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="mb-0">Patient Analysis</h6>
+                    </div>
+                    <div class="font-22 ms-auto" id="ic_im">
+                    </div>
+                </div>
+                <div class="chart-container-2 my-3">
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center mb-0">
+                    <tbody>
+                        <tr>
+                            <td><i class="bx bxs-circle me-2" style="color: #42d1f5"></i>Total Patients</td>
+                            <td>{{userarray[0]?.total}}</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bx bxs-circle me-2" style="color: #f57542"></i>Female</td>
+                            <td>{{userarray[0]?.female}}</td>
+
+                        </tr>
+                        <tr>
+                            <td><i class="bx bxs-circle me-2" style="color: #42f572"></i>Male</td>
+                            <td>{{userarray[0]?.male}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;"
+                *ngIf="showSpinner">
+                <div class="for-spin">
+                    <span class="loader"></span>
+                    <p style="text-align: center; font-weight: bold; color: white; font-size: 20PX; padding-top: 25PX;">
+                        Please Wait
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-xl-6">
+        <div class="card radius-10 overflow-hidden w-100" style=" height: 95%;">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="mb-0">Week Wise Analysis</h6>
+                    </div>
+                    <div class="font-22 ms-auto" id="ic_im"><i class="bx bx-dots-horizontal-rounded"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center ms-auto font-13 gap-2 my-3">
+                </div>
+                <div class="chart-container-1" id="ic_im">
+                    <canvas style="height:402px" id="chart1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;"
+            *ngIf="showSpinner">
+            <div class="for-spin">
+                <span class="loader"></span>
+                <p style="text-align: center; font-weight: bold; color: white; font-size: 20PX; padding-top: 25PX;">
+                    Please Wait
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-xl-6">
+        <div class="card radius-10 overflow-hidden">
+            <div class="card-body" style="height: 428px;">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="mb-0">Total Appointments in Month Wise</h6>
+                        <br>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div id="recruitment-cost"></div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+        <div class="for-spin">
+            <span class="loader"></span>
+            <p style="text-align: center; font-weight: bold; color: white; font-size: 20PX; padding-top: 25PX;">Please
+                Wait
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,358 @@
+<div class="card">
+    <div>
+        <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+            Add Contacts
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="card" style="padding: 1%;">
+
+        <div class="card-body" class="gth">
+            <form [formGroup]="addemployeedetailsform" (ngSubmit)="submitroomtype()">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="name"
+                                oninput="this.value = this.value.toUpperCase()"
+                                [ngClass]="{'is-invalid': submitted && f['name'].errors }" placeholder="Enter Name">
+                            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                <div *ngIf="f['name'].errors.required">Room Type is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Mobile Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="number"
+                                placeholder="Enter Mobile Number" (keypress)="numericOnly($event)"
+                                [ngClass]="{'is-invalid': submitted && f['number'].errors }" minlength="10"
+                                maxlength="10">
+                            <div *ngIf="submitted && f['number'].errors" class="invalid-feedback">
+                                <div *ngIf="f['number'].errors.required">Mobile Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="form-group">
+                            <label for="input-2">Department/Company Name<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="department"
+                                oninput="this.value = this.value.toUpperCase()"
+                                placeholder="Enter Department/Company Name"
+                                [ngClass]="{'is-invalid': submitted && f['department'].errors }">
+                            <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+                                <div *ngIf="f['department'].errors.required">Department is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label class="form-label">Address <span style="color:red">*</span></label>
+                        <textarea rows="3" class="form-control" formControlName="address"
+                            oninput="this.value = this.value.toUpperCase()"
+                            placeholder="D.No, Street, Area, City, Pincode"
+                            [ngClass]="{'is-invalid': submitted && f['address'].errors}">
+              </textarea>
+                        <div class="invalid-feedback" *ngIf="submitted && f['address'].errors">
+                            <div *ngIf="f['address'].errors?.['required']">
+                                Address is required
+                            </div>
+                            <div *ngIf="f['address'].errors?.['minlength']">
+                                Address must be at least 15 characters
+                            </div>
+                            <div *ngIf="f['address'].errors?.['pattern']">
+                                Enter a valid full address (Door No, Street, Area, Pincode)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-lg-4 col-xl-4" style="margin-top:15px">
+                        <div class="form-group">
+                            <label for="input-2">Alternate Mobile Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="input-2" formControlName="alternatenumber"
+                                placeholder="Enter Alternate Mobile Number" (keypress)="numericOnly($event)"
+                                [ngClass]="{'is-invalid': submitted && f['alternatenumber'].errors }" minlength="10"
+                                maxlength="10">
+                            <div *ngIf="submitted && f['alternatenumber'].errors" class="invalid-feedback">
+                                <div *ngIf="f['alternatenumber'].errors.required">Alternate Mobile Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <label for="input-2"></label>
+                        <br>
+                        <button type="submit" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;margin-top:13px">ADD</button>
+                    </div>
+                </div>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <!-- serch header start -->
+                    <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" #input>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+
+                                <!-- ✅ HIDDEN TABLE ONLY FOR EXCEL EXPORT (NO EDIT/DELETE) -->
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name</th>
+                                            <th>Mobile Number</th>
+                                            <th>Department/Company Name</th>
+                                            <th>Address</th>
+                                            <th>Alternate Mobile Number</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.name }}</td>
+                                            <td>{{ row.number }}</td>
+                                            <td>{{ row.department }}</td>
+                                            <td>{{ row.address }}</td>
+                                            <td>{{ row.alternatenumber }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- serch header end -->
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass"
+                                    style="width:30px"> S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.name || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.number || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Department/Company Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.department || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="address">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Address</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.address || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="alternatenumber">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Alternative Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.alternatenumber || '__'}}</span>
+                                </td>
+                            </ng-container>
+                            <!-- Select Start -->
+                            <ng-container matColumnDef="selectSlno" sticky:true>
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'name',value:item.name}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'name'; let int = index">
+                                                {{item.name }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'number',value:item.number}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'number'; let int = index">
+                                                {{item.number }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'department',value:item.department}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'department'; let int = index">
+                                                {{item.department }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select4">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'address',value:item.address}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'address'; let int = index">
+                                                {{item.address }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select5">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'alternatenumber',value:item.alternatenumber}"
+                                                *ngFor="let item of clonedata | removeDuplicateJsonObject : 'alternatenumber'; let int = index">
+                                                {{item.alternatenumber }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                                <!-- Footer end -->
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<ng-template #openmodel let-modal>
+    <div>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 ">Edit Add Type Form</h5>
+            <button style="background-color: transparent;border: 0px;" type="button" (click)="modalDismiss()">
+                <i style="font-size: 24px;" class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body" class="gth">
+            <form [formGroup]="updateform" style="height: 125px;">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="input-2">Room Type <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="update_roomtype" required
+                                placeholder="Enter RoomType"
+                                [ngClass]="{'is-invalid': submitted && f.update_roomtype.errors }">
+                            <div *ngIf="submitted && f.update_roomtype.errors" class="invalid-feedback">
+                                <div *ngIf="f.update_roomtype.errors.required">Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        <br>
+                        <button (click)="editaddroomtype()" style="background-color: blue;
+                        color: white;
+                        width: 98px;
+                        height: 38px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;margin-left: 170px;">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="showSpinner">
+    <div class="for-spin">
+        <span class="loader"></span>
+        <p style="text-align: center; font-weight: bold; color: black; font-size: 20PX; padding-top: 25PX;">Please Wait
+        </p>
+    </div>
+</div>

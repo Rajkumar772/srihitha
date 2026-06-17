@@ -1,0 +1,1372 @@
+/* ========= PAGE BACKGROUND ========= */
+.da-page {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, #4f46e520 0, transparent 55%),
+    radial-gradient(circle at bottom right, #ec489920 0, transparent 55%),
+    linear-gradient(180deg, #f9fafb 0%, #ffffff 40%, #eef2ff 100%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #0f172a;
+}
+
+
+.da-row-gap {
+  row-gap: 16px;
+  margin-bottom: 18px;
+}
+
+.da-header-card {
+  border-radius: 20px;
+  border: none;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 40%, #6366f1 100%);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4);
+  color: #e5e7eb;
+}
+
+.da-header-inner {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.da-header-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: dodgerblue;
+}
+
+.da-header-subtitle {
+  margin: 4px 0 0;
+  font-size: 13px;
+  opacity: 0.85;
+  color: dodgerblue;
+
+}
+
+.da-header-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.da-toggle-btn {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(191, 219, 254, 0.7);
+  color: #e5e7eb;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.da-toggle-btn i {
+  font-size: 20px;
+}
+
+.da-toggle-btn:hover {
+  background: rgba(15, 23, 42, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.6);
+}
+
+/* ========= GENERIC STAT CARD ========= */
+.da-stat-card {
+  border-radius: 18px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+  color: #f9fafb;
+  font-weight: 600;
+}
+
+.da-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background:
+    radial-gradient(circle at top left, #ffffff40 0, transparent 55%),
+    radial-gradient(circle at bottom right, #00000030 0, transparent 50%);
+  pointer-events: none;
+}
+
+.da-stat-card .card-body {
+  position: relative;
+  padding: 14px 14px;
+}
+
+.da-stat-label {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.da-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.da-stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.24);
+}
+
+.da-stat-icon i {
+  font-size: 22px;
+  color: #f9fafb;
+}
+
+/* Hover lift */
+.da-stat-card {
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.da-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.25);
+}
+
+/* ========= COLOR VARIANTS ========= */
+.da-stat-card--op {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+}
+
+.da-stat-card--lab,
+.da-stat-card--danger {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+}
+
+.da-stat-card--pharma,
+.da-stat-card--success {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+}
+
+.da-stat-card--ip {
+  background: linear-gradient(135deg, #6366f1 0%, #4c1d95 100%);
+}
+
+.da-stat-card--warning,
+.da-stat-card--amber {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.da-stat-card--violet {
+  background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+}
+
+.da-stat-card--deepblue {
+  background: linear-gradient(135deg, #0ea5e9 0%, #1d4ed8 100%);
+}
+
+.da-stat-card--orange {
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+}
+
+.da-stat-card--olive {
+  background: linear-gradient(135deg, #84cc16 0%, #4d7c0f 100%);
+}
+
+.da-stat-card--sky {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+}
+
+/* ========= CHART CARDS ========= */
+.da-chart-card {
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 45px rgba(148, 163, 184, 0.35);
+}
+
+.da-chart-card--right {
+  height: 100%;
+}
+
+.da-chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.da-chart-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Chart container area */
+.da-chart-area {
+  margin-top: 8px;
+  position: relative;
+  min-height: 260px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top left, #eef2ff 0, #ffffff 52%),
+    radial-gradient(circle at bottom right, #e0f2fe 0, #ffffff 55%);
+  box-shadow: inset 0 0 0 1px rgba(226, 232, 240, 0.8);
+  padding: 10px 4px;
+}
+
+/* canvas charts */
+#chart1,
+#chart2 {
+  border-radius: 18px;
+}
+
+/* ========= SMALL CHIP (Live trend, etc.) ========= */
+.da-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  gap: 4px;
+}
+
+.da-chip--success {
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+  border: 1px solid rgba(22, 163, 74, 0.4);
+}
+
+/* ========= MINI TABLE UNDER PIE ========= */
+.da-mini-table table {
+  font-size: 12px;
+}
+
+.da-mini-table td {
+  border-top: none;
+  padding: 6px 12px;
+}
+
+.da-table-value {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Colored bullets matching chart */
+.da-dot {
+  font-size: 10px;
+}
+
+.da-dot--total {
+  color: #0ea5e9 !important;
+}
+
+.da-dot--male {
+  color: #6366f1 !important;
+}
+
+.da-dot--female {
+  color: #ec4899 !important;
+}
+
+/* ========= SPINNER OVERLAY ========= */
+.da-spinner-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.da-spinner-text {
+  text-align: center;
+  font-weight: 600;
+  color: #111827;
+  font-size: 14px;
+  padding-top: 12px;
+}
+
+/* You can keep your existing .loader / .for-spin CSS as is */
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 992px) {
+  .da-page {
+    padding: 16px;
+  }
+
+  .da-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .da-chart-area {
+    min-height: 220px;
+  }
+
+  .da-services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .da-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .da-stat-card .card-body {
+    padding: 12px 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .da-page {
+    padding: 12px;
+  }
+
+  .da-row-gap {
+    row-gap: 10px;
+  }
+
+  .da-chart-area {
+    min-height: 200px;
+  }
+}
+
+/* Card container */
+.da-chart-card {
+  height: 100%;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Make card-body fill card */
+.da-flex-body {
+  min-height: 420px;
+  /* SAME height for both cards */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left chart area */
+.da-chart-area {
+  flex-grow: 1;
+  min-height: 300px;
+}
+
+/* Doughnut container */
+.chart-container-2 {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Titles */
+.da-chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.da-chart-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Chips */
+.da-chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.da-chip--success {
+  background: #e7f9ef;
+  color: #16a34a;
+}
+
+/* Mini table */
+.da-mini-table {
+  border-top: 1px solid #f1f1f1;
+}
+
+.da-table-value {
+  font-weight: 600;
+}
+
+/* Dots */
+.da-dot {
+  font-size: 10px;
+}
+
+.da-dot--total {
+  color: #3b82f6;
+}
+
+.da-dot--male {
+  color: #6366f1;
+}
+
+.da-dot--female {
+  color: #ec4899;
+}
+
+/* Loader */
+.da-spinner-wrap {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #4e73df;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .da-flex-body {
+    min-height: auto;
+  }
+}
+
+
+/* Layout */
+.dashboard-row {
+  row-gap: 16px;
+}
+
+.col-lg-6 {
+  display: flex;
+}
+
+/* Card */
+.dash-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  padding: 14px 16px;
+  width: 100%;
+  min-height: 380px;
+}
+
+/* Header */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dash-header h6 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.dash-header p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+
+/* Chart Area */
+.chart-box {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+}
+
+/* Chart sizing */
+canvas,
+#recruitment-cost {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.scrollable-table {
+  width: 100%;
+  overflow-x: auto;
+  /* horizontal scroll if table is wider */
+  -webkit-overflow-scrolling: touch;
+  /* smooth scrolling on mobile */
+  margin-bottom: 16px;
+  /* space below table */
+  border-radius: 12px;
+  /* optional, matches card design */
+}
+
+/* Make the table as wide as needed */
+.scrollable-table table {
+  width: max-content;
+  /* table expands based on columns */
+  min-width: 100%;
+  /* table fills container if few columns */
+  border-collapse: collapse;
+}
+
+
+
+
+.scrollable-table th,
+.scrollable-table td {
+  border: 1px solid #ccc;
+  /* Light grey border */
+  padding: 8px 12px;
+  white-space: nowrap;
+  /* Prevent text wrapping */
+  text-align: left;
+}
+
+.scrollable-table th {
+  background-color: blue;
+  color: white
+}
+
+
+
+
+///new csss op total
+select {
+  -webkit-appearance: listbox !important;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  /* font-size: 14px; */
+  width: 50%;
+}
+
+.cust-icon {
+  // color:#3f51b5;
+  color: #0000ffab;
+  zoom: 1;
+  cursor: pointer;
+}
+
+th {
+  color: rgb(247, 7, 167);
+  font-weight: bolder;
+}
+
+::ng-deep .mat-icon {
+  height: 28px !important;
+  width: 28px !important;
+  font-size: 28px !important;
+}
+
+.button-customize {
+  height: 2.5rem;
+  width: 13rem;
+  text-align: center;
+  font-family: Gilroy !important;
+  font-size: 1rem !important;
+  margin: 10px;
+}
+
+.button-border-primary {
+  border-color: #e21b4e !important;
+}
+
+.button-border-accent {
+  border-color: #1f55ae !important;
+}
+
+.bg_clr {
+  color: red;
+}
+
+@media print {
+  .mat-drawer-content {
+    height: auto !important;
+  }
+
+  .mat-drawer-container {
+    overflow: inherit !important;
+  }
+
+  perfect-scrollbar {
+    height: auto;
+    max-height: none;
+  }
+
+  mat-sidenav-container {
+    overflow: inherit !important;
+  }
+}
+
+.btns {
+  margin: 5px;
+  text-align: end;
+}
+
+.print {
+  text-align: end;
+  color: white;
+}
+
+.pdf {
+  text-align: center;
+  color: white;
+}
+
+.cust-icon {
+  padding: 5px;
+}
+
+.cust-mat-icon {
+  // color:#3f51b5;
+  color: blue;
+  zoom: 1.5;
+  cursor: pointer;
+}
+
+#percent-sign {
+  top: 63%;
+  left: 12%;
+  color: #555;
+  position: absolute;
+  z-index: 1;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  /* font-size: 14px; */
+  width: 50%;
+}
+
+th {
+  color: rgb(247, 7, 167);
+  font-weight: bolder;
+}
+
+.width-textArea {
+  width: 200px;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+
+
+.zoom {
+  // padding: 50px;
+  background-color: green;
+  transition: transform .2s;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Safari 3-8 */
+  transform: scale(1.5);
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  /* font-size: 14px; */
+  width: 50%;
+}
+
+th {
+  color: rgb(247, 7, 167);
+  font-weight: bolder;
+}
+
+.width-textArea {
+  width: 200px;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+
+.zoom {
+  // padding: 50px;
+  background-color: green;
+  transition: transform .2s;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Safari 3-8 */
+  transform: scale(1.5);
+}
+
+
+
+.input_change {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+
+  background-color: white;
+  border-color: black;
+
+}
+
+.up {
+  margin-top: 10px;
+  margin-left: 200px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #eae2e2 !important;
+  border-collapse: collapse !important;
+  padding: 5px !important;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.btns {
+  margin: 5px;
+  text-align: end;
+}
+
+.header {
+  color: white !important;
+  background-color: blue !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+}
+
+
+.cell-not {
+  display: flex;
+}
+
+.select {
+  width: 150px;
+}
+
+.selectid {
+  width: 80px;
+}
+
+.header {
+  color: white !important;
+  background-color: blue !important;
+  font-weight: bold !important;
+  font-size: 17px !important;
+}
+
+.btns {
+  margin: 5px;
+  text-align: end;
+}
+
+.colorbtns {
+  margin: 5px;
+  text-align: center;
+}
+
+.colo {
+  background-color: blue;
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+}
+
+.colo1 {
+  background-color: rgb(0, 255, 242);
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+}
+
+.colo2 {
+  background-color: rgb(255, 174, 0);
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+}
+
+.colo3 {
+  background-color: rgb(255, 0, 170);
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+}
+
+.cust-icon {
+  color: blue;
+  cursor: pointer;
+  zoom: 1.3;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.example-container {
+  height: 100%;
+  // max-height: 450px;
+  overflow: auto;
+}
+
+.hide {
+  display: none;
+}
+
+.heading-style {
+  font-family: 'Times New Roman', Times, serif;
+  background: linear-gradient(180deg, #1c16cb, #222222);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position,
+td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky-border-elem-right {
+  border-left: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky-border-elem-left {
+  border-right: 1px solid #e0e0e0;
+}
+
+.toot {
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(236, 231, 231);
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 0 0 5px 0px gray inset;
+}
+
+input[type='radio']:hover {
+  box-shadow: 0 0 5px 0px orange inset;
+}
+
+input[type='radio']:before {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin: 20% auto;
+  border-radius: 50%;
+}
+
+input[type='radio']:checked:before {
+  background: green;
+}
+
+.calabel {
+  color: #585858;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.centre {
+  text-align: center
+}
+
+.mat-header-cell.text-center {
+  text-align: center;
+}
+
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-column-category {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.cent_btn {
+  display: flex;
+  align-items: center;
+}
+
+.color_custm {
+  display: flex;
+}
+
+.zoom {
+  background-color: green;
+  transition: transform .2s;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Safari 3-8 */
+  transform: scale(1.5);
+}
+
+.sea {
+  margin-left: 20px;
+}
+
+.left {
+  text-align: left;
+}
+
+h1 {
+  color: green;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#checkBoxes {
+  display: none;
+  border: 1px #8DF5E4 solid;
+}
+
+#checkBoxes label {
+  display: block;
+}
+
+#checkBoxes label:hover {
+  background-color: white;
+}
+
+.text-edit {
+  cursor: pointer;
+}
+
+
+#card1 {
+  //  background:linear-gradient(to right,#FF61D2 , #FE9090);
+  background-color: #4b4bf3;
+
+}
+
+#card2 {
+  // background:linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%) ;
+  background-color: #f72f2f;
+}
+
+#card3 {
+  background-color: #15c115;
+}
+
+#card4 {
+  // background:linear-gradient( 109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1% ); ;
+  background-color: #e32cf3;
+}
+
+.spl {
+  color: white;
+}
+
+#ic_im {
+  color: white;
+}
+
+.desc {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+td {
+  color: black;
+}
+
+
+///////////////////responsive///////////////////////
+@media (max-width:420px) {
+  .buttonhide {
+    display: none !important;
+
+  }
+}
+
+.b23 {
+  transition: all .5s ease;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  font-size: 15px;
+  border-color: #707070;
+  background-color: transparent;
+  padding: 10px;
+  outline: none;
+  border-radius: 5px;
+  margin: -3px;
+}
+
+.b23:hover {
+  color: white;
+  background-color: #707070;
+}
+
+
+
+.latest {
+  background-color: #a86669;
+  color: white;
+}
+
+
+
+.default {
+  background-color: #86868c;
+  color: white;
+}
+
+//////////////////////////// loader 
+
+.loader {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: black black transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent #FF3D00 #FF3D00;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+
+
+
+
+
+.da-stat-value {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.da-stat-value .count {
+  text-align: left;
+  font-weight: 600;
+}
+
+.da-stat-value .amount {
+  margin-left: auto;
+  text-align: right;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FORCE: override template card styles */
+.da-stat-card {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* each variant force */
+.da-stat-card.da-stat-card--op {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%) !important;
+}
+
+.da-stat-card.da-stat-card--danger,
+.da-stat-card.da-stat-card--lab {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+}
+
+.da-stat-card.da-stat-card--success,
+.da-stat-card.da-stat-card--pharma {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+}
+
+.da-stat-card.da-stat-card--warning,
+.da-stat-card.da-stat-card--amber {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.da-stat-card.da-stat-card--ip {
+  background: linear-gradient(135deg, #6366f1 0%, #4c1d95 100%) !important;
+}
+
+/* keep text visible */
+.da-stat-card .da-stat-label,
+.da-stat-card .da-stat-value {
+  color: #fff !important;
+}
+
+/*-----------------------------------------*/
+/* ===== Toggle container ===== */
+.da-header-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Button circle (your existing class) ===== */
+.da-toggle-btn {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+  cursor: pointer;
+  overflow: visible;
+  /* allow ring outside */
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.da-toggle-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.18);
+}
+
+.da-toggle-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== “Click here” pulse rings ===== */
+.da-toggle-btn .hint-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 2px solid rgba(7, 7, 178, 0.55);
+  /* blue ring */
+  box-shadow: 0 0 0 6px rgba(0, 212, 200, 0.10);
+  /* teal glow */
+  animation: hintPulse 1.4s ease-out infinite;
+  pointer-events: none;
+}
+
+.da-toggle-btn .hint-ring.ring2 {
+  inset: -12px;
+  border-color: rgba(0, 212, 200, 0.45);
+  animation-delay: .35s;
+  opacity: .9;
+}
+
+/* Small “nudge” to attract attention */
+.da-hint .da-toggle-btn i {
+  animation: nudge 1.2s ease-in-out infinite;
+}
+
+/* Stop animation on hover (optional) */
+.da-hint:hover .hint-ring,
+.da-hint:hover .da-toggle-btn i {
+  animation-play-state: paused;
+}
+
+/* ===== Tooltip ===== */
+.da-tooltip {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.92);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+}
+
+/* little arrow */
+.da-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(15, 23, 42, 0.92);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+/* show tooltip on hover OR auto-show (first time feel) */
+.da-hint:hover .da-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-2px);
+}
+
+/* ===== Animations ===== */
+@keyframes hintPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+
+  70% {
+    transform: scale(1.10);
+    opacity: 0.0;
+  }
+
+  100% {
+    transform: scale(1.10);
+    opacity: 0.0;
+  }
+}
+
+@keyframes nudge {
+
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateX(-2px) rotate(-10deg);
+  }
+}

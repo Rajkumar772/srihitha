@@ -1,0 +1,159 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+<br>
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;" *ngFor="let item of opdata; let i = index;">
+        <mat-card class="card" *ngIf="opdata.length" style="border: 4px double grey; padding: 10px;">
+            <div class="row" style="display: flex; align-items: center;border-bottom: 1px solid grey;">
+                <div class="col-3">
+
+                    <img src="assets/back/logo2.png"
+                        style="width: 200px;height: 180px;margin-top: 0px;margin-bottom: 0px;margin-left: 0px;">
+                </div>
+                <div class="col-6">
+                    <h4 style="font-size: 20px; font-weight: bold; text-align: center;">Hospital Management
+                    </h4>
+                    <h5 style="font-size: 14px; font-weight: 500; text-align: center;line-height: 20px;">
+
+                        RAJAMAHENDRAVARM - 533103 ::: [Phone : +91 7729079781] <br>
+                        <strong>GSTIN : 7729079781</strong>
+
+                    </h5>
+                </div>
+                <div class="col-3"
+                    style="border-left: 1px solid grey; margin-top: -10px; height: 124px; padding: 1px; text-align: left;">
+                    <h2 style="font-size: 15px; margin-top: 5px; font-weight: bold;">
+                        &nbsp;UHID&nbsp;:&nbsp;{{item.uh_id || '-'}}
+                    </h2>
+                    <h2 style="font-size: 13px; margin-top: 10px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date&nbsp;:&nbsp;
+                        <span
+                            style="letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">{{item.date
+                            | date:'dd/MM/YYYY'}}</span>
+                    </h2>
+                    <h2 style="font-size: 13px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;:&nbsp;
+                        <span
+                            style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">{{item.i_ts
+                            | date:'HH:mm:ss a'}}</span>
+                    </h2>
+                    <h2 style="font-size: 13px; line-height: 18px;">
+                        &nbsp;&nbsp;&nbsp;<span
+                            style="letter-spacing: normal;  margin-top: 0; margin-bottom: 0; white-space: nowrap;">Card
+                            Type</span>
+                        &nbsp;:
+                        &nbsp;{{item.card_appointment_type}}
+                    </h2>
+                </div>
+            </div>
+            <br>
+
+            <div class="row" style="height: 100%; margin-top: -10px; margin-bottom: -8px;padding: 1px;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4" style="font-size: 15px; text-align: justify;">
+                            <span
+                                style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">Patient
+                                Name </span>
+                            <br> Age/Sex
+                            <br> Address
+                            <br> Phone <br>
+                            <!-- <span
+                                style="letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">Aadhar/ID
+                                No</span>
+                            <br> Reffered By -->
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> : <br> : <br>
+                        </div>
+                        <div class="col-7" style="font-size: 15px; text-align: justify;">
+                            {{item.name}} <br>
+                            {{item.age + " " + item.yandm}} / {{item?.gender[0]}} <br>
+                            {{item.address || '-'}} <br>
+                            {{item.phone_number || '-'}} <br>
+                            <!-- {{item.aadhar || '-'}} <br>
+                            <span
+                                style="letter-spacing: normal; font-size: 15px; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                                {{item.reffered_by|| '-'}}
+                            </span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4"
+                            style="font-size: 15px; text-align: justify;letter-spacing: normal; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                            Payment Mode
+                            <br>
+                            Consultation Fee
+                            <br>
+                            Amount in Words<br>
+                            Consultant
+                            Name
+                        </div>
+                        <div class="col-1" style="font-size: 15px;">
+                            : <br> : <br> : <br> : <br>
+                        </div>
+                        <div class="col-7" style="font-size: 15px; text-align: justify;">
+                            <!-- <span *ngIf="item.payment_way === null">FREE</span>
+                            <span *ngIf="item.payment_way !== null">{{ item.payment_way || '_' }}</span> -->
+
+                            <span *ngIf="item.payment_way === 'BOTH'; else normalMode">
+                                BOTH (cash & UPI)
+                            </span>
+                            <ng-template #normalMode>
+                                {{ item.payment_way || '-' }}
+                            </ng-template>
+                            <br>
+                            {{item.consultant_fee }}/- <br>
+                            <span
+                                style="letter-spacing: normal; font-size: 15px; margin-top: 0; margin-bottom: 0; white-space: nowrap;text-transform: capitalize;">{{
+                                (numberInWords.charAt(0).toUpperCase() +
+                                numberInWords.slice(1)) + " Rupees Only" }}</span> <br>
+                            <p
+                                style="letter-spacing: normal; font-size: 12px; margin-top: 0; margin-bottom: 0; white-space: nowrap;">
+                                {{item.doctor_name}}<br>
+                                <span style="font-size: 12px;"> {{item.doctor_department}}</span> &nbsp;
+                            </p>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: -17px;margin-bottom: 10px;">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-6" *ngIf="item.consultant_fee > 0">
+                        <b>
+                            OP Card Valid Upto&nbsp;:&nbsp;
+                            {{ item.expiry_date | date:'dd-MM-yyyy' }}
+                        </b>
+                    </div>
+
+                </div>
+            </div>
+
+        </mat-card>
+        <!-- 
+        <div class="row" style="margin-left: 6px;font-weight: bold;line-height: 6px;margin-top: -9px;font-size: 13px;">
+            <p>* &nbsp;All Procedures will be done with Prior Appointment only.</p>
+            <p>*&nbsp; Card Valid for 2 weeks (14 Days) or 2 visits (Which ever is Earlier)</p><br>
+            <p>* &nbsp;OP Timings 10:00AM to 2:00PM and 6:00PM to 8:00PM. SUNDAY HOLIDAY</p><br>
+            <p>* &nbsp;OP Cancellation Fee Rs.100/-,</p><br>
+        </div> -->
+        <div class="row mt-4">
+            <div class="col-4"></div>
+            <div class="col-4"></div>
+            <div class="col-4">
+                <h5 style="text-align: end;font-size: 15px"><b>(Authorized Signature)</b></h5>
+            </div>
+        </div>
+    </div>
+</div>

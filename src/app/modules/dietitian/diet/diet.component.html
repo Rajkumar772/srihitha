@@ -1,0 +1,196 @@
+<div class="diet-topbar">
+  <div class="diet-topbar-inner">
+    <div class="diet-icon">📋</div>
+    <div class="diet-top-title">Diet Plan Management</div>
+  </div>
+</div>
+
+<div class="diet-page">
+  <div class="diet-card">
+
+    <div class="diet-card-head">
+      <h3>Create Diet Plan</h3>
+    </div>
+
+    <div class="diet-line"></div>
+
+    <form [formGroup]="myformgroup" (ngSubmit)="saveDietPlan()">
+
+      <!-- ===== FORM GRID ===== -->
+      <div class="diet-grid">
+
+        <!-- Patient ID -->
+        <div class="diet-field">
+          <label>Patient ID:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Patient ID" formControlName="patientid" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('patientid')?.invalid && myformgroup.get('patientid')?.touched">
+              Patient ID is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Ward/Room -->
+        <div class="diet-field">
+          <label>Ward/Room:</label>
+          <div class="diet-input-wrap">
+            <select formControlName="wordroom">
+              <option value="">Select Ward/Room</option>
+              <option>Room 101</option>
+              <option>Room 102</option>
+            </select>
+            <div class="diet-error"
+              *ngIf="myformgroup.get('wordroom')?.invalid && myformgroup.get('wordroom')?.touched">
+              Ward/Room is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient Name -->
+        <div class="diet-field">
+          <label>Patient Name:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Patient Name" formControlName="patientname" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('patientname')?.invalid && myformgroup.get('patientname')?.touched">
+              Patient Name is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Diet Date -->
+        <div class="diet-field">
+          <label>Diet Date:</label>
+          <div class="diet-input-wrap">
+            <div class="diet-date">
+              <input type="date" formControlName="dietdate" />
+              <span class="diet-cal">📅</span>
+            </div>
+            <div class="diet-error"
+              *ngIf="myformgroup.get('dietdate')?.invalid && myformgroup.get('dietdate')?.touched">
+              Diet Date is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Diet Type -->
+        <div class="diet-field">
+          <label>Diet Type:</label>
+          <div class="diet-input-wrap">
+            <select formControlName="selectdiet">
+              <option value="">Select Diet Type</option>
+              <option>Diabetic</option>
+              <option>Renal</option>
+              <option>Low Salt</option>
+            </select>
+            <div class="diet-error"
+              *ngIf="myformgroup.get('selectdiet')?.invalid && myformgroup.get('selectdiet')?.touched">
+              Diet Type is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Allergies -->
+        <div class="diet-field">
+          <label>Allergies:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Allergies" formControlName="allergies" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('allergies')?.invalid && myformgroup.get('allergies')?.touched">
+              Allergies is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Calories -->
+        <div class="diet-field">
+          <label>Calories/Day:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Calories (kcal)" formControlName="caloriesperday" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('caloriesperday')?.invalid && myformgroup.get('caloriesperday')?.touched">
+              Calories per day is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="diet-field">
+          <label>Notes:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Additional Notes" formControlName="note" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('note')?.invalid && myformgroup.get('note')?.touched">
+              Note is required
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="diet-line diet-line2"></div>
+
+      <!-- ===== MEALS ===== -->
+      <div class="diet-meal-grid">
+
+        <!-- Breakfast -->
+        <div class="diet-field">
+          <label>Breakfast:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Breakfast Items" formControlName="breakfast" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('breakfast')?.invalid && myformgroup.get('breakfast')?.touched">
+              Breakfast is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Lunch -->
+        <div class="diet-field">
+          <label>Lunch:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Lunch Items" formControlName="lunch" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('lunch')?.invalid && myformgroup.get('lunch')?.touched">
+              Lunch is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Dinner -->
+        <div class="diet-field diet-span-2">
+          <label>Dinner:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Dinner Items" formControlName="dinner" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('dinner')?.invalid && myformgroup.get('dinner')?.touched">
+              Dinner is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Snacks -->
+        <div class="diet-field diet-span-2">
+          <label>Snacks:</label>
+          <div class="diet-input-wrap">
+            <input type="text" placeholder="Enter Snack Items" formControlName="snacks" />
+            <div class="diet-error"
+              *ngIf="myformgroup.get('snacks')?.invalid && myformgroup.get('snacks')?.touched">
+              Snacks is required
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== BUTTONS ===== -->
+      <div class="diet-actions">
+        <button class="diet-btn diet-btn-primary" type="submit">ADD</button>
+        <button class="diet-btn diet-btn-light" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

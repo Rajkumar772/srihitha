@@ -1,0 +1,211 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+
+
+<div contenteditable="true" id="editor" class="editor" style="padding: 10px;">
+
+
+
+    <div style="display: flex;flex-direction: column;align-items: center;margin-top: 90px;">
+        <div class="text-center mb-4">
+            <h5 style="text-decoration: underline;text-underline-offset: 2px;">FINAL BILL</h5>
+        </div>
+
+        <div style="border: 1px solid black;width: 100%;border-radius: 10px;">
+            <div style="width: 100%; padding: 6px;font-size: 16px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Name</b></td>
+                        <td style="padding: 4px 3px;">: {{bill_data[0].name}}</td>
+                        <td style="padding: 4px 3px;"><b>Age/Sex</b></td>
+                        <td style="padding: 4px 3px;">: {{bill_data[0].age}} / {{bill_data[0]?.gender[0]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 3px; "><b>UH ID No</b></td>
+                        <td style="padding: 4px 3px; ">: {{bill_data[0].uh_id}}</td>
+                        <td style="padding: 4px 3px; "><b>IP ID No</b></td>
+                        <td style="padding: 4px 3px; ">: {{bill_data[0].ip_number}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Claim No</b></td>
+                        <td>
+                            <input [(ngModel)]="claim_no" type="text" class="form-control" />
+                        </td>
+
+                        <td style="padding: 4px 3px;"><b>Pre Intimation number </b></td>
+                        <td>
+                            <input [(ngModel)]="pre_initmation_number" type="text" class="form-control" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Date of Admission, Time</b></td>
+                        <td style="padding: 4px 3px;">: {{ formatDate(bill_data[0].date_of_admission) }}</td>
+
+                        <td style="padding: 4px 3px;"><b>Date of Discharge</b></td>
+                        <td style="padding: 4px 3px;">: {{ bill_data[0]?.date_of_discharge ?
+                            formatDate(bill_data[0]?.date_of_discharge , showTime) : '_____________' }}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Name of the Consultant</b></td>
+                        <td style="padding: 4px 3px;">: {{ bill_data[0].referred_by}}</td>
+
+                        <td style="padding: 3px 3px;"><b>Bill No</b></td>
+                        <td style="padding: 3px 3px;">: {{ final_bill_no}}</td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Diagnosis</b></td>
+                        <td style="padding: 4px 3px;">: {{bill_data[0].diagnosis}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 3px;"><b>Surgery Procedure</b></td>
+                        <td style="padding: 4px 3px;" colspan="3">: {{bill_data[0].surgery_procedure}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div style="width: 80%;margin-top: 50px;">
+            <table style="border: 1px solid black; border-collapse: collapse;width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black; padding: 5px;text-align: center;font-size: 18px;">Statement
+                            of Bill</th>
+                        <th style="border: 1px solid black; padding: 5px;text-align: center;font-size: 18px;">Total
+                            Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'hide-on-print': column_one == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_one"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_one" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_two == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_two"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_two" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_three == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_three"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_three" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_four == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_four"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_four" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_five == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_five"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_five" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_six == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_six"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_six" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'hide-on-print': column_seven == 0}">
+
+                        <td style="border: 1px solid black;">
+                            <textarea type="text" style="text-align: center;" class="form-control"
+                                [(ngModel)]="head_seven"></textarea>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <input type="number" style="text-align: center;" class="form-control" min="0"
+                                [(ngModel)]="column_seven" (ngModelChange)="calculateGrandTotal()" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;text-align: center;font-size: 20px;">
+                            <b>Total cost of the surgery </b>
+                        </td>
+
+                        <td style="border: 1px solid black; ">
+                            <input type="number" style="text-align: center;font-weight: 600;font-size: 20px;"
+                                [value]="grandTotal" class="form-control" readonly />
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <div class="text-center m-4" id="printPageButton">
+            <button (click)="submitFinallBill()" class="btn btn-primary">Submit</button>
+        </div>
+
+
+
+    </div>
+
+    <div class="mt-4" style="text-align: left">
+
+        <b>*The above payment is subject to applicable TDS.</b>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <span class="loader"></span>
+    <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>

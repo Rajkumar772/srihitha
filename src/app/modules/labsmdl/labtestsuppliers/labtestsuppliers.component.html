@@ -1,0 +1,407 @@
+<div class="card">
+    <div>
+        <h3
+            style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue ; color: white;">
+             Lab Kits Suppliers
+            <span style="float: right;">
+                <a href="javaScript:;" style="color: white;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+                </a> &nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-xl-12 mx-auto">
+        <div class="card" style="padding:1%">
+            <div class="card-body" class="gth">
+                <div>
+                    <form [formGroup]="submitlabtestSupplierForm">
+                        <div class="row">
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>Supplier Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <input type="text" class="form-control" formControlName="supplier_name"
+                                        placeholder="Type something"
+                                        [ngClass]="{'is-invalid': submitted && valid['supplier_name'].errors }" />
+                                    <div *ngIf="submitted && valid['supplier_name'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['supplier_name'].errors['required']">Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>Phone Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <input (keypress)="numericOnly($event)" type="text" minlength="10" maxlength="10"
+                                        class="form-control" formControlName="supplier_number"
+                                        placeholder="Type something"
+                                        [ngClass]="{'is-invalid': submitted && valid['supplier_number'].errors }" />
+                                    <div *ngIf="submitted && valid['supplier_number'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['supplier_number'].errors['required']">Number is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>Landline Number</label>
+                                    <input (keypress)="numericOnly($event)" type="text" class="form-control"
+                                        formControlName="supp_landline_no" placeholder="Type something" minlength="10"
+                                        maxlength="10"
+                                        [ngClass]="{'is-invalid': submitted && valid['supp_landline_no'].errors }" />
+                                    <div *ngIf="submitted && valid['supp_landline_no'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['supp_landline_no'].errors['required']">landline is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>Address<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <textarea class="form-control" formControlName="supplier_address"
+                                        [ngClass]="{'is-invalid': submitted && valid['supplier_address'].errors }"></textarea>
+                                    <div *ngIf="submitted && valid['supplier_address'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['supplier_address'].errors['required']">Address is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>Gst Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <input minlength="15" maxlength="15" type="text" class="form-control"
+                                        formControlName="supplier_gst" placeholder="Type something"
+                                        [ngClass]="{'is-invalid': submitted && valid['supplier_gst'].errors }" />
+                                    <div *ngIf="submitted && valid['supplier_gst'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['supplier_gst'].errors['required']">Gst No is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>DL No 1<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <input type="text" class="form-control" formControlName="dl_no1"
+                                        placeholder="Type something"
+                                        [ngClass]="{'is-invalid': submitted && valid['dl_no1'].errors }" />
+                                    <div *ngIf="submitted && valid['dl_no1'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['dl_no1'].errors['required']">DL No is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-1">
+                                <div class="form-group p-1">
+                                    <label>DL No 2<span style="color:red">&nbsp;&nbsp;*</span></label>
+                                    <input type="text" class="form-control" formControlName="dl_no2"
+                                        placeholder="Type something"
+                                        [ngClass]="{'is-invalid': submitted && valid['dl_no2'].errors }" />
+                                    <div *ngIf="submitted && valid['dl_no2'].errors" class="invalid-feedback">
+                                        <div *ngIf="valid['dl_no2'].errors['required']">DL No is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div style="text-align:center ;">
+                            <button (click)="submitlabtestSupplier()" style="background-color: blue;
+                            color: white;
+                            width: 98px;
+                            height: 38px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 5px;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                          <div class="row buttonhide">
+                        <div class="col">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                    
+                    
+
+                        <div class="col">
+                            <div class="btns">
+                               <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'rooms-list', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+
+                                <!-- <button mat-raised-button class="btn btn-secondary"
+                                    (click)="downloadPdf(dataSource)">PDF</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_name}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Mobile Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_number}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supp_landline_no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Landline No</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <div *ngIf="row.supp_landline_no == ''|| row.supp_landline_no == null "> _ </div>
+                                    <div *ngIf="row.supp_landline_no!='' || row.supp_landline_no != null ">
+                                        {{row.supp_landline_no}}
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_address">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Address</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_address}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_gst">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Gst Number</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_gst}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dl_no1">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    DL No 1</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.dl_no1}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dl_no2">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    DL No 2</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.dl_no2}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="edit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Edit</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre"><i
+                                        (click)="editLabsupplierdts(editLabSupplierTmpo,row)"
+                                        style="font-size: 20px;cursor: pointer;" class="fa fa-pencil"></i></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_name' ,value:item.supplier_name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.supplier_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_number' ,value:item.supplier_number}"
+                                                *ngFor="let item of clonedata">
+                                                {{item.supplier_number}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #editLabSupplierTmpo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Edit Lab Tests Suppliers Details</h5>
+        <button type="button" (click)="modalDismiss()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editlabtestSupplierForm">
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>Supplier Name<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input type="text" class="form-control" formControlName="supplier_name"
+                                placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['supplier_name'].errors }" />
+                            <div *ngIf="submittedd && validEdit['supplier_name'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['supplier_name'].errors['required']">Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>Phone Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input (keypress)="numericOnly($event)" type="text" minlength="10" maxlength="10"
+                                class="form-control" formControlName="supplier_number" placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['supplier_number'].errors }" />
+                            <div *ngIf="submittedd && validEdit['supplier_number'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['supplier_number'].errors['required']">Number is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>Landline Number</label>
+                            <input (keypress)="numericOnly($event)" type="text" class="form-control"
+                                formControlName="supp_landline_no" placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && valid['supp_landline_no'].errors }" />
+                            <div *ngIf="submittedd && valid['supp_landline_no'].errors" class="invalid-feedback">
+                                <div *ngIf="valid['supp_landline_no'].errors['required']">landline is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>Address<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <textarea class="form-control" formControlName="supplier_address"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['supplier_address'].errors }"></textarea>
+                            <div *ngIf="submittedd && validEdit['supplier_address'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['supplier_address'].errors['required']">Address is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>Gst Number<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input minlength="15" maxlength="15" type="text" class="form-control"
+                                formControlName="supplier_gst" placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['supplier_gst'].errors }" />
+                            <div *ngIf="submittedd && validEdit['supplier_gst'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['supplier_gst'].errors['required']">Gst No is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>DL No 1<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input type="text" class="form-control" formControlName="dl_no1"
+                                placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['dl_no1'].errors }" />
+                            <div *ngIf="submittedd && validEdit['dl_no1'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['dl_no1'].errors['required']">DL No is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-1">
+                        <div class="form-group p-1">
+                            <label>DL No 2<span style="color:red">&nbsp;&nbsp;*</span></label>
+                            <input type="text" class="form-control" formControlName="dl_no2"
+                                placeholder="Type something"
+                                [ngClass]="{'is-invalid': submittedd && validEdit['dl_no2'].errors }" />
+                            <div *ngIf="submittedd && validEdit['dl_no2'].errors" class="invalid-feedback">
+                                <div *ngIf="validEdit['dl_no2'].errors['required']">DL No is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="text-align:center ;">
+                    <button (click)="updtLabSpplrsdts()" style="background-color: blue;
+                    color: white;
+                    width: 98px;
+                    height: 38px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;">Update</button>&nbsp;
+                    <button (click)="dltLabSpplrsdts()" class="btn btn-danger" style="width: 98px;">Delete</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</ng-template>

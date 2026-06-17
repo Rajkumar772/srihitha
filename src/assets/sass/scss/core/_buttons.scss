@@ -1,0 +1,44 @@
+.btn {
+	letter-spacing: .5px;
+  
+	i {
+	  vertical-align: middle;
+	  font-size: 1.3rem;
+	  margin-top: -1em;
+	  margin-bottom: -1em;
+	  margin-right: 5px;
+	}
+  }
+  
+  .btn-facebook {
+	box-shadow: 0 2px 2px 0 rgba(59, 89, 152, 0.14), 0 3px 1px -2px rgba(59, 89, 152, 0.2), 0 1px 5px 0 rgba(59, 89, 152, 0.12);
+	background-color: #3b5998;
+	border-color: #3b5998;
+	color: #fff;
+  
+	&:hover {
+	  color: #fff;
+	}
+  }
+  
+  .btn-white {
+	background-color: #fff;
+	border-color: #e7eaf3;
+  }
+
+  .btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1cbb8c;
+    --bs-btn-border-color: #1cbb8c;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #189f77;
+    --bs-btn-hover-border-color: #169670;
+    --bs-btn-focus-shadow-rgb: 62, 197, 157;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #169670;
+    --bs-btn-active-border-color: #158c69;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #1cbb8c;
+    --bs-btn-disabled-border-color: #1cbb8c;
+}

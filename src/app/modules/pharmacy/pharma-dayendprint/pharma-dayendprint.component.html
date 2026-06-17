@@ -1,0 +1,155 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+
+
+
+<div class="p-2">
+    <table>
+        <thead>
+            <tr>
+                <th colspan="3" style="font-size: 16px;">
+                    Date : <b>{{currntDate | date: 'dd/MM/yyyy' }}</b>
+                </th>
+                <th colspan="9" style="font-size: 16px;">
+                    <b>PHARMACY SALE DAY END REPORT</b>
+                </th>
+            </tr>
+            <tr>
+                <th>S.No</th>
+                <th>Date</th>
+                <th>Bill No</th>
+                <th>Type</th>
+                <th>OP Patient ID</th>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Payment Mode</th>
+                <th>Payment Status</th>
+                <th>Credited Date Time</th>
+                <th>Discount Per(%)</th>
+                <th>Grand Total</th>
+                <th>Return Date</th>
+                <th>Return Amount</th>
+                <th>NOI</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of pharmacydata.masterdata;let i=index;">
+                <td>{{i+1}}</td>
+                <td><b>{{a.sale_date | date: 'dd/MM/yyyy' }}</b></td>
+                <td>{{a.sale_bill_no}}</td>
+                <td>
+                    <span *ngIf="a.patient_type=='1'" style="font-weight: bold;text-transform: uppercase;">
+                        PHARMACY
+                    </span>
+                    <span *ngIf="a.patient_type=='2'" style="font-weight: bold;text-transform: uppercase;">
+                        DOCTOR
+                    </span>
+                    <span *ngIf="a.patient_type=='3'" style="font-weight: bold;text-transform: uppercase;">
+                        DIRECT
+                    </span>
+                </td>
+                <td>
+                    <b>{{a.uh_id || '-'}}</b>
+                    <b *ngIf='a.d_in=="1"' style="color: red;"> ( DELETED BILL)</b>
+                </td>
+                <td>{{a.patient_name}}</td>
+                <td>{{a.patient_age || '-'}}</td>
+                <td>
+                    <span *ngIf="a.payment_mode == 'CASH'">
+                        <h6 style="font-weight: 600;" class="text-success">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'UPI'">
+                        <h6 style="font-weight: 600;" class="text-info">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'BOTH'">
+                        <h6 style="font-weight: 600;" class="text-dark">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'CREDIT'">
+                        <h6 style="font-weight: 600;" class="text-danger">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                    <span *ngIf="a.payment_mode == 'E - CARD'">
+                        <h6 style="font-weight: 700;color: #8a0bf2;">
+                            {{a.payment_mode}}</h6>
+                    </span>
+                </td>
+                <td>
+                    <span *ngIf="a.pymnt_mode_ind == '0' && a.pymnt_mode_status == '0'">
+                        <h6 style="font-weight: 600;" class="text-primary">
+
+                            <i style="color: rgb(28, 28, 242);font-size: 18px" class="fa-solid fa-check"></i>
+                        </h6>
+                    </span>
+                    <span *ngIf="a.pymnt_mode_ind == '1' && a.pymnt_mode_status == '0'">
+                        <h6 style="font-weight: 600;" class="text-danger">
+
+                            <i class="fa fa-remove" style="color: red;font-size: 18px;"></i>
+                        </h6>
+                    </span>
+                    <span *ngIf="a.pymnt_mode_status == '1'">
+                        <h6 style="font-weight: 600;" class="text-success">
+                            TO CASH </h6>
+                    </span>
+                    <span *ngIf="a.pymnt_mode_status == '2'">
+                        <h6 style="font-weight: 600;" class="text-info">
+                            TO UPI/TO E - CARD</h6>
+                    </span>
+                    <span *ngIf="a.pymnt_mode_status == '3'">
+                        <h6 style="font-weight: 600;" class="text-dark">
+                            TO BOTH</h6>
+                    </span>
+                </td>
+                <td>
+                    <span *ngIf="a.pymnt_update_dt !== 'null' && a.pymnt_update_dt !== ''
+                     && a.pymnt_update_dt !== null ; else noTransactionId">
+                        <b>{{a.pymnt_update_dt | date:'dd-MM-YYYY HH:mm:ss'}}</b>
+                    </span>
+                    <ng-template #noTransactionId>_</ng-template>
+                </td>
+                <td>{{a.sale_disc_percnt}}</td>
+                <td><b>{{a.sale_grandtotal | number:'1.2-2'}}</b></td>
+                <td>
+                    <span *ngIf="a.bill_modified_date !== 'null' && a.bill_modified_date !== ''
+                     && a.bill_modified_date !== null ; else nomodifieddate">
+                        <b>{{a.bill_modified_date | date:'dd-MM-YYYY HH:mm:ss'}}</b>
+                    </span>
+                    <ng-template #nomodifieddate>_</ng-template>
+                </td>
+                <td>{{a.return_amount || 0}}</td>
+                <td><b>{{a.no_of_items}}</b></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td> <span style="font-weight: 800;font-size: 18px;">Grand Total </span> </td>
+                <td style="text-align: center;">
+                    <span style="font-weight: 800;font-size: 18px;">{{FullgrandTotal |
+                        currency:'INR':'symbol':'1.0-0'}} </span>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

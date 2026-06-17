@@ -1,0 +1,147 @@
+
+<div class="btns no-print">
+  <button mat-raised-button (click)="print()" color="primary" class="button-customize">Print</button>&nbsp; 
+  <button mat-raised-button (click)="Back()" color="primary" class="button-customize">Back</button>
+</div>
+
+<!-- PRINT AREA -->
+<div id="printArea" class="rx-page">
+<header class="rx-header-top">
+  <div class="rx-header-row">
+    <!-- LEFT -->
+    <div class="rx-header-left">
+      QTOP CARE MATRIX
+    </div>
+
+    <!-- RIGHT -->
+    <div class="rx-header-right">
+      <div> D.No: 1st floor, Block-1, 5-233, above Kotak Mahindra Bank BalajiPet road, Venkateswara Nagar,
+Rajamahendravaram</div>
+      <div>Email: support@qtopglobaltechnologies.com </div>
+      <div>Phone +91 99122 77734</div>
+    </div>
+  </div>
+
+  <div class="rx-header-line"></div>
+</header>
+
+
+  <!-- Patient Header -->
+  <div class="rx-card rx-header">
+    <div class="rx-grid">
+      <div class="rx-row">
+        <div class="rx-label">OP Patient ID</div>
+        <div class="rx-value">: {{ patient_mdcn_dts.uh_id }}</div>
+      </div>
+
+      <div class="rx-row">
+        <div class="rx-label">Patient Name</div>
+        <div class="rx-value text-capitalize">: {{ patient_mdcn_dts.name + " " + patient_mdcn_dts.full_name }}</div>
+      </div>
+
+      <div class="rx-row">
+        <div class="rx-label">Age/Sex</div>
+        <div class="rx-value">: {{ patient_mdcn_dts.age }} / {{ patient_mdcn_dts.gender }}</div>
+      </div>
+
+      <div class="rx-row">
+        <div class="rx-label">Phone</div>
+        <div class="rx-value">: {{ patient_mdcn_dts.phone_number }}</div>
+      </div>
+
+      <div class="rx-row rx-span-2">
+        <div class="rx-label">Date</div>
+        <div class="rx-value">: {{ patient_mdcn_dts.date | date: 'dd-MM-yyyy' }}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="rx-section">
+        <div class="rx-section-title">Chief Complaints</div>
+        <div class="rx-section-box">
+          <ul class="rx-bullets" *ngIf="splitToBullets(patient_mdcn_dts.complaint).length; else noComplaints">
+            <li *ngFor="let c of splitToBullets(patient_mdcn_dts.complaint)">
+              {{ c }}
+            </li>
+          </ul>
+
+          <ng-template #noComplaints>-</ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="rx-section">
+        <div class="rx-section-title">Examination Findings</div>
+        <div class="rx-section-box">
+          <ul class="rx-bullets" *ngIf="splitToBullets(patient_mdcn_dts.examination).length; else noExam">
+            <li *ngFor="let e of splitToBullets(patient_mdcn_dts.examination)">
+              {{ e }}
+            </li>
+          </ul>
+          <ng-template #noExam>-</ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Medicine Table -->
+  <div class="rx-section">
+    <table class="rx-table">
+      <thead>
+        <tr>
+          <th class="c-sno">#</th>
+          <th class="c-med">Medicine</th>
+          <th class="c-dose">Dose</th>
+          <th class="c-time">Timing</th>
+          <th class="c-dur">Duration</th>
+          <th class="c-rem">Remarks</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of medicalData; let i = index">
+          <td class="text-center">{{ i + 1 }}</td>
+
+          <td class="text-left">
+            <div class="med-brand">
+              {{ item.isParsed ? getFormattedBrands(item.brands) : (item.medicine_name || '-') }}
+            </div>
+
+            <div class="med-sub">
+              {{ item.isParsed ? (item.composition || '-') : (item.composition_name || '-') }}
+            </div>
+          </td>
+
+          <td class="text-center">{{ item.instruction || '-' }}</td>
+          <td class="text-center">{{ item.time_options || '-' }}</td>
+          <td class="text-center">{{ item.days ? (item.days + ' Days') : '-' }}</td>
+          <td class="c-rem">{{ item.remarks || '-' }}</td>
+        </tr>
+
+        <tr *ngIf="!medicalData?.length">
+          <td colspan="6" class="text-center">No medicines</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+<div class="rx-row rx-span-12 ">
+<div class="rx-label">Advice:</div>
+
+<div class="rx-advice-text">
+    {{ patient_mdcn_dts.advice || '-' }}
+</div>
+
+</div>
+  <!-- Footer -->
+  <div class="rx-footer">
+    <div class="rx-next">
+      <b><i>Next Visit</i></b> : {{ patient_mdcn_dts.next_visitdate | date: 'dd-MM-yyyy' }}
+    </div>
+  </div>
+</div>

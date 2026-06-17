@@ -1,0 +1,79 @@
+<div class="btns">
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="print()" color="primary"
+        class="button-customize">
+        Print</button>
+    <button mat-raised-button id="printPageButton" style=" margin-top:10px;" (click)="Back()" color="primary"
+        class="button-customize">
+        Back</button>
+</div>
+
+<div class="all-bill">
+    <div class="center card_cent" style="width: 100%;">
+        <mat-card class="card">
+            <div class="table-responsive p-2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3" style="font-size: 16px;">
+                                Month : <b>{{ currentMonth| date: 'MMMM-YYYY' }}</b>
+                            </th>
+                            <th colspan="9" style="font-size: 16px;">
+
+                                <b>PHARMACY SALE MONTH END AUDIT REPORT</b>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Date</th>
+                            <th>No of Bills</th>
+                            <th>CASH Payments</th>
+                            <th>UPI Payments</th>
+                            <th>Both CASH Payments</th>
+                            <th>Both UPI Payments</th>
+                            <!-- <th>Credit Amount(-)</th> -->
+                            <th>Total Sales</th>
+                            <!-- <th>OT Amount(-)</th>
+                            <th>Day End Total</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of audtData;let i=index;">
+                            <td>{{i+1}}</td>
+                            <td><b>{{a.each_day | date: 'dd/MM/yyyy'}}</b></td>
+                            <td>{{a.total_bills_generated}}</td>
+                            <td>{{a.cash_amount | number:'1.2-2'}}</td>
+                            <td>{{a.upi_amount | number:'1.2-2' }}</td>
+                            <td>{{a.both_cash_amount | number:'1.2-2'}}</td>
+                            <td>{{a.both_upi_amount | number:'1.2-2'}}</td>
+                            <!-- <td>{{a.credit_amount | number:'1.2-2' }}</td> -->
+                            <td><b>{{a.without_reduction | number:'1.2-2'}}</b></td>
+                            <!-- <td>{{a.ot_returns | number:'1.2-2'}}</td>
+                            <td>{{a.day_grandtotal | number:'1.2-2'}}</td> -->
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!-- <td></td> -->
+                            <td style="font-weight: 800;font-size: 18px;">
+                                SalesTotal</td>
+                            <td> <span style="font-weight: 800;font-size: 19px;">{{getSalesTotl() |
+                                    currency:'INR':'symbol':'1.0-0'}} </span></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </mat-card>
+    </div>
+</div>
+
+<div class="my-overlay" *ngIf="showSpinner">
+    <div class="loader"></div>
+    <h5 style="color: white;padding: 5px;">Please Wait...</h5>
+</div>

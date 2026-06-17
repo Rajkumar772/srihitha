@@ -1,0 +1,393 @@
+<br>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Lab Purchase-Reports</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+
+                    <li class="breadcrumb-item"><a href="javascript: void(0);" style="color: black;">Lab
+                            Purchase-Reports</a></li>
+                    <li class="breadcrumb-item active">Lab Purchase-Kits</li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card border-top border-0 border-4" style="padding: 1%;">
+            <div style="background-color: #ae92c5;
+            border: none;
+            width: 210px;
+            height: 45px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;cursor: pointer;" (click)="gotopurchase()"><i class="fa-solid fa-bars"></i>
+                &nbsp; &nbsp;Lab Purchase-Kits
+            </div><br>
+            <div class="card-body" class="gth">
+                <form>
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>From Date<span style="color: red;">*</span></label>
+                                <input id="from_date" (change)="functionToGetRange()" type="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>To Date<span style="color: red;">*</span></label>
+                                <input id="to_date" (change)="functionToGetRange()" type="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group mb-4">
+                                <label>Supplier Name <span style="color:red">&nbsp;&nbsp;*</span></label>
+                                <ng-select id="gettingSuppliers" (change)="changepns($event)">
+                                    <ng-option *ngFor="let p of suppyrdata" [value]="{name:p.supplier_name,number:p.supplier_number,
+                                            supplier_gst:p.supplier_gst,
+                                             'lab_product_id':p.id }">{{p.supplier_name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+
+                        <div style="display: flex;flex-wrap: wrap;">
+
+                            <div *ngFor="let a of selectedArraySupplyrs;let i=index;">
+                                <div
+                                    style="background-color: #ae92c5;color: white;border-radius: 10px;padding: 5px;margin: 5px;">
+                                    <img style="height: 50px;width: 50px;" src="assets/back/man.png" />
+                                    {{a.supplier_name}}
+                                    <i (click)="removeItem(i)" style="font-size: 20px;cursor: pointer;"
+                                        class="fa fa-remove"></i>
+                                </div>
+                            </div>
+
+                        </div> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-body">
+            <div class="row toppad" style="background: white;">
+                <div class="mat-elevation-z8" #TABLE style="width:100%">
+                    <div class="row buttonhide">
+                        <div class="col-3">
+                            <mat-form-field class="sea">
+                                <mat-label>Search</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"   #input>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-1 search">
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(1)">find_in_page</i>
+                            <i class="material-icons cust-icon para" style="color: #a19a98;"
+                                (click)="originalandtoggle(0)">refresh</i>
+                        </div>
+
+                        <div class="col-2 cent_btn mt-2" style="margin-top: 13px;">
+                            <div class="colorbtns color_custm">
+                                <button class="colorbtns colo" (click)="changecolor('blue')"> </button>
+                                <button class="colorbtns colo1" (click)="changecolor('rgb(0, 255, 242)')"></button>
+                                <button class="colorbtns colo2" (click)="changecolor('rgb(255, 174, 0)')"></button>
+                                <button class="colorbtns colo3" (click)="changecolor('rgb(255, 0, 170)')"></button>
+                                <input type="color" id="color1" name="favcolor" value="blue"
+                                    (change)="this.changeCustomColor($event)" (keyup)="this.changeCustomColor($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <mat-paginator [pageSizeOptions]="[100,500,1000,1500]" showFirstLastButton>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-2">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1"
+                                    (click)="exportTable('ExampleMaterialTable','Purchase Reports')">Excel</button>
+
+                                <!-- <button mat-raised-button style="background-color: blue;
+                                color: white;
+                                width: 75px;
+                                height: 38px;
+                                font-size: 16px;
+                                border: none;
+                                border-radius: 5px;" (click)="printPurchases()">Print</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-container">
+
+                        <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+                            #exporter="matTableExporter" id="ExampleMaterialTable">
+                            <ng-container matColumnDef="i">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">S.No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="purchase_bill_no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Bill No
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.purchase_bill_no}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Supplier Name</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_name}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supplier_gst">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    GST No</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.supplier_gst}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoice_number">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Invoice No</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.invoice_number}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="invoice_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Invoice Date</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.invoice_date | date:'dd-MM-YYYY'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="total_gross">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Gross Amount</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.total_gross | number:'1.2-2'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="discount_percent">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Discount Per %</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.discount_percent + " " + "%"}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="total_wth_discount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total With Discount</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.total_wth_discount | number:'1.2-2'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="cgst_amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    CGST Amnt</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.cgst_amount | number:'1.2-2'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <ng-container matColumnDef="sgst_amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    SGST Amnt</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.sgst_amount | number:'1.2-2'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="no_of_items">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total Kits</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.no_of_items}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef>
+                                    <span style="font-weight: 800;font-size: 18px;">Grand Total</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="grandtotal">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    Total Net Amount</th>
+                                <td mat-cell *matCellDef="let row" class="centre">
+                                    <span class="para">{{row.grandtotal | number:'1.2-2'}}</span>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                                    <span style="font-weight: 800;font-size: 18px;">{{getTotalCost() |
+                                        currency:'INR':'symbol':'1.0-0'}} </span>
+                                </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="view">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                                    View</th>
+                                <td mat-cell *matCellDef="let row; let i=index" class="centre">
+                                    <i (click)="showAllLabpurchaseItems(tempoForItemsList, row)"
+                                        style="font-size: 20px;cursor: pointer;" class="fa-solid fa-eye"></i>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select1">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'i' ,value:item.i}"
+                                                *ngFor="let item of clonedata; let int = index">
+                                                {{item.i}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="selectBillno">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'purchase_bill_no' ,value:item.purchase_bill_no}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.purchase_bill_no}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="select2">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="select" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_name' ,value:item.supplier_name}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.supplier_name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="select3">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="cell">
+                                        <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                                            (change)="columnfilterdata($event, 0)" [searchable]="true"
+                                            [clearable]="true">
+                                            <ng-option [value]="{key:'supplier_gst' ,value:item.supplier_gst}"
+                                                *ngFor="let item of clonedata ">
+                                                {{item.supplier_gst}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true"
+                                class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
+                            <tr mat-footer-row *matFooterRowDef="nextdisplayedColumns"></tr>
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #tempoForItemsList let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Lab Purchased Kits</h5>
+        <button type="button" (click)="modalDismiss()" class="btn-close" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="m-2" style="overflow: auto;">
+            <table class="table table-bordered">
+                <thead style="background-color: blue;">
+                    <tr>
+                        <th style="color: white;">S.No</th>
+                        <th style="color: white;">Kit Name</th>
+                        <th style="color: white;">HSN Code</th>
+                        <th style="color: white;">Batch No</th>
+                        <th style="color: white;">No of Kits</th>
+                        <th style="color: white;">Each Kit MRP Rate</th>
+                        <th style="color: white;">Each Tab Cost</th>
+                        <th style="color: white;">Purchasing Rate/Kit</th>
+                        <th style="color: white;">Total Qnty of Kits</th>
+                        <th style="color: white;">GST %</th>
+                        <th style="color: white;">Without GST Price</th>
+                        <th style="color: white;">Free Kits</th>
+                        <th style="color: white;">Total Kits</th>
+                        <th style="color: white;">Expiry Date</th>
+                        <!-- <th style="color: white;">Update Tabs</th> -->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr" *ngFor="let i of eachPurchaseItems;let y=index;">
+                        <td>{{y+1}}</td>
+                        <td>{{i.kit_name}}</td>
+                        <td>{{i.hsncode}}</td>
+                        <td>{{i.batch_no}}</td>
+                        <td>{{i.pack}}</td>
+                        <td>{{i.mrp_rate | number:'1.2-2'}}</td>
+                        <td>{{i.eachcost | number:'1.2-2'}}</td>
+                        <td>{{i.purchase_rate | number:'1.2-2'}}</td>
+                        <td>{{i.quantity }}</td>
+                        <td>{{i.gst_per + "%"}}</td>
+                        <td>{{i.without_gst_medicine_price | number:'1.2-2'}}</td>
+                        <td>
+                            <span
+                                *ngIf="i.free_tabs !== 'null' && i.free_tabs !== '' && i.free_tabs !== null;else noTransactionId">
+                                {{i.free_tabs}}
+                            </span>
+                            <ng-template #noTransactionId>0</ng-template>
+                        </td>
+                        <td>{{i.total_tabs}}</td>
+                        <td>{{i.expirydate }}</td>
+                        <!-- <td> <i style="cursor: pointer;font-size: 20px;align-items: center;"
+                                (click)="updateTabsinBatchMed(i,editFormTempo)" class="fa-solid fa-pen-to-square"></i>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>

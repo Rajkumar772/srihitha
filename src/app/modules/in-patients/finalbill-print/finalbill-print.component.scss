@@ -1,0 +1,248 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f7fb;
+}
+
+.action-bar {
+  display: flex;
+  gap: 10px;
+  padding: 10px 18px;
+}
+
+.action-btn {
+  min-width: 80px;
+  height: 36px;
+}
+
+.bill-page {
+  width: 794px;
+  min-height: 1123px;
+  margin: 20px auto;
+  padding: 35px 45px;
+  background: #fff;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.18);
+}
+
+.bill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #111;
+  padding-bottom: 12px;
+}
+
+.logo-box img {
+  width: 210px;
+  max-height: 90px;
+  object-fit: contain;
+}
+
+.hospital-info {
+  text-align: right;
+}
+
+.hospital-info h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+}
+
+.hospital-info p {
+  margin: 3px 0;
+  font-size: 13px;
+}
+
+.bill-title {
+  text-align: center;
+  margin: 18px 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.patient-card {
+  border: 1px solid #111;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 25px;
+}
+
+.patient-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.patient-card td {
+  padding: 5px 6px;
+  font-size: 13px;
+  color: #111;
+  vertical-align: top;
+}
+
+.patient-card td:nth-child(1),
+.patient-card td:nth-child(3) {
+  width: 20%;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.patient-card td:nth-child(2),
+.patient-card td:nth-child(4) {
+  width: 30%;
+}
+
+.bill-table-wrapper {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.bill-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #111;
+}
+
+.bill-table th {
+  border: 1px solid #111;
+  background: #f1f1f1;
+  padding: 8px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.bill-table td {
+  border: 1px solid #111;
+  padding: 7px 10px;
+  font-size: 14px;
+}
+
+.bill-table td:first-child {
+  width: 60%;
+  font-weight: 600;
+}
+
+.bill-table td:last-child {
+  width: 40%;
+}
+
+.amount-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px;
+}
+
+.amount-input:focus {
+  border: 1px solid #222;
+  background: #fff;
+}
+
+.grand-total-row td {
+  background: #f7f7f7;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.total-input {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.words-cell {
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.pay-mode {
+  margin-right: 14px;
+  font-weight: 600;
+}
+
+.footer-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 55px;
+}
+
+.footer-section p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.signature-box {
+  min-width: 180px;
+  text-align: center;
+  border-top: 1px solid #111;
+  padding-top: 8px;
+}
+
+.submit-box {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.my-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Print */
+@media print {
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+
+  body {
+    background: #fff !important;
+    margin: 0;
+  }
+
+  .no-print,
+  .action-bar,
+  .submit-box,
+  .my-overlay {
+    display: none !important;
+  }
+
+  .bill-page {
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .hide-on-print {
+    display: none !important;
+  }
+
+  .amount-input {
+    border: none !important;
+    outline: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

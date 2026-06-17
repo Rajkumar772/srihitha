@@ -1,0 +1,426 @@
+<div class="card">
+  <div>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: center;background: blue; color: white;">
+      Vehicle Registration
+      <span style="float: right;">
+        <a href="javaScript:;" style="color: black;background-color:white;
+                text-decoration: none;font-size: 25px;border-radius: 20px;">
+        </a> &nbsp;&nbsp;
+      </span>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card" style="padding: 1%;">
+    <div class="card-body" class="gth">
+      <form [formGroup]="ambulanceForm" (ngSubmit)="save()">
+        <div class="row">
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Vehicle Number / Registration Number<span style="color: red;">*</span></label>
+              <input type="text" class="form-control" id="input-2" formControlName="vehicleregisternumber"
+                [ngClass]="{'is-invalid': submitted && f['vehicleregisternumber'].errors }"
+                placeholder="Vehicle Number/Registration Number">
+              <div *ngIf="submitted && f['vehicleregisternumber'].errors" class="invalid-feedback">
+                <div *ngIf="f['vehicleregisternumber'].errors.required">Trip Creation From Date is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Choose Vehicle Type<span style="color: red;">*</span></label>
+              <div>
+                <ng-select id="inputstate" id="default-select" formControlName="vehicletype" appendTo="body"
+                  dropdownpostion="auto" [ngClass]="{'is-invalid': submitted && f['vehicletype'].errors }">
+                  <ng-option value="" disabled Selected>Select Vehicle Type</ng-option>
+                  <ng-option value="Basic Life Support (BLS)">Basic Life Support (BLS)</ng-option>
+                  <ng-option value="Advanced Life Support (ALS)">Advanced Life Support (ALS)</ng-option>
+                  <ng-option value="Patient Transport Vehicle">Patient Transport Vehicle</ng-option>
+                </ng-select>
+                <div *ngIf="submitted && f['vehicletype'].errors" class="invalid-feedback">
+                  <div *ngIf="f['vehicletype'].errors.required">Choose Vehicle Type is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Vehicle Model<span style="color: red;">*</span></label>
+              <input type="text" class="form-control" id="input-2" formControlName="vehiclemodel"
+                [ngClass]="{'is-invalid': submitted && f['vehiclemodel'].errors }" placeholder="Vehicle Model">
+              <div *ngIf="submitted && f['vehiclemodel'].errors" class="invalid-feedback">
+                <div *ngIf="f['vehiclemodel'].errors.required">Vehicle Model is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Manufacturer / Company<span style="color: red;">*</span></label>
+              <input type="text" class="form-control" id="input-2" formControlName="manufacturecompany"
+                [ngClass]="{'is-invalid': submitted && f['manufacturecompany'].errors }"
+                placeholder="Enter Manufacturer/Company">
+              <div *ngIf="submitted && f['manufacturecompany'].errors" class="invalid-feedback">
+                <div *ngIf="f['manufacturecompany'].errors.required">Manufacturer/Company is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Year of Manufacture<span style="color: red;">*</span></label>
+              <input type="text" class="form-control" id="input-2" formControlName="yearofmanufacture"
+                [ngClass]="{'is-invalid': submitted && f['yearofmanufacture'].errors }"
+                placeholder="Enter Year of Manufacture">
+              <div *ngIf="submitted && f['yearofmanufacture'].errors" class="invalid-feedback">
+                <div *ngIf="f['yearofmanufacture'].errors.required">Year of Manufacture is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="form-group">
+              <label for="input-2">Choose Fuel Type<span style="color: red;">*</span></label>
+              <div>
+                <ng-select id="inputstate" id="default-select" formControlName="fueltype" appendTo="body"
+                  dropdownpostion="auto" [ngClass]="{'is-invalid': submitted && f['fueltype'].errors }">
+                  <ng-option value="" disabled Selected>Select Fuel Type</ng-option>
+                  <ng-option value="Diesel">Diesel</ng-option>
+                  <ng-option value="Petrol">Petrol</ng-option>
+                  <ng-option value="Electric">Electric</ng-option>
+                </ng-select>
+                <div *ngIf="submitted && f['fueltype'].errors" class="invalid-feedback">
+                  <div *ngIf="f['fueltype'].errors.required">Fuel Type is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <label for="input-2"></label>
+            <br>
+            <button type="submit" style="background-color: blue;
+              color: white; width: 98px;height: 38px;font-size: 16px;border: none;border-radius: 5px;">ADD
+            </button>
+          </div>
+        </div>
+        <br><br>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="my-overlay" *ngIf="showSpinner">
+  <span class="loader"></span>
+  <h5 style="color: white;padding-top: 5px;">Loading</h5>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card-body">
+      <div class="row toppad" style="background: white;">
+        <div class="mat-elevation-z8" #TABLE style="width:100%">
+          <!-- serch header start -->
+          <div class="row buttonhide">
+            <div class="col">
+              <mat-form-field class="sea">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col">
+                            <div class="btns">
+                                <button mat-raised-button class="btn btn-secondary m-1" (click)="exportTable()">
+                                    Excel
+                                </button>
+                                <table id="exportTable" style="display:none">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Room Type</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let row of dataSource?.filteredData; let idx = index">
+                                            <td>{{ idx + 1 }}</td>
+                                            <td>{{ row.roomtype }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+          </div>
+          <!-- serch header end -->
+          <div class="example-container">
+            <table mat-table matTableExporter #tab mat-table [dataSource]="dataSource" matSort
+              #exporter="matTableExporter" id="ExampleMaterialTable">
+              <ng-container matColumnDef="i">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass" style="width:30px"> S.No
+                </th>
+                <td mat-cell *matCellDef="let row; let i=index" class="centre">{{row.i}}</td>
+              </ng-container>
+              <ng-container matColumnDef="vehicleregisternumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Vehicle Register Number</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.vehicleregisternumber}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="vehicletype">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Vehicle Type</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.vehicletype}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="vehiclemodel">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Vehicle Model</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.vehiclemodel}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="manufacturecompany">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                </th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.manufacturecompany}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="yearofmanufacture">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Year of Manufacture</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.yearofmanufacture}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fueltype">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">
+                  Fuel Type</th>
+                <td mat-cell *matCellDef="let row" class="centre">
+                  <span class="para">{{row.fueltype}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">Upload Documents </th>
+                <td style="background-color: white;" mat-cell *matCellDef="let data" class="centre">
+                  <i style="cursor: pointer;font-size: 20px;" class="fa fa-upload upload-icon"
+                    (click)="uploaddocuments(data,openmodeluploaddocuments)" aria-hidden="true"></i>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="view">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="headerclass">View Documents </th>
+                <td style="background-color: white;" mat-cell *matCellDef="let data" class="centre">
+                  <i style="cursor: pointer;font-size: 20px;" class="fa fa-eye"
+                    (click)="viewdocuments(data,openmodelviewdocuments)" aria-hidden="true"></i>
+                </td>
+              </ng-container>
+              <!-- Select Start -->
+              <ng-container matColumnDef="selectSlno" sticky:true>
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="selectid" appendTo="body"
+                      (change)="columnfilterdata($event, 0)" [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'i' ,value:item.i}" *ngFor="let item of clonedata; let int = index">
+                        {{item.i}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select1">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'vehicleregisternumber',value:item.vehicleregisternumber}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'vehicleregisternumber'; let int = index">
+                        {{item.vehicleregisternumber}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select2">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'vehicletype',value:item.vehicletype}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'vehicletype'; let int = index">
+                        {{item.vehicletype}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select3">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'vehiclemodel',value:item.vehiclemodel}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'vehiclemodel'; let int = index">
+                        {{item.vehiclemodel}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select4">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'manufacturecompany',value:item.manufacturecompany}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'manufacturecompany'; let int = index">
+                        {{item.manufacturecompany}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select5">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'yearofmanufacture',value:item.yearofmanufacture}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'yearofmanufacture'; let int = index">
+                        {{item.yearofmanufacture}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select6">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'fueltype',value:item.fueltype}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'fueltype'; let int = index">
+                        {{item.fueltype}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="select7">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="cell">
+                    <ng-select [(ngModel)]="reset" class="select" appendTo="body" (change)="columnfilterdata($event, 0)"
+                      [searchable]="true" [clearable]="true">
+                      <ng-option [value]="{key:'edit',value:item.edit}"
+                        *ngFor="let item of clonedata | removeDuplicateJsonObject : 'edit'; let int = index">
+                        {{item.edit}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </th>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="nextdisplayedColumns;sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: nextdisplayedColumns;sticky: true"></tr>
+              <tr mat-header-row *matHeaderRowDef="selectColumns;sticky: true" class="example-second-header-row"
+                [ngClass]="{'hide': !hideselect}">
+                <!-- Footer end -->
+            </table>
+          </div>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<ng-template #openmodeluploaddocuments let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Upload Original Documents</h5>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <i class="fa fa-window-close"></i>
+    </button>
+  </div>
+
+
+
+  <div class="modal-body">
+    <form [formGroup]="updateform">
+      <div class="row align-items-end">
+        <div class="col-md-4">
+          <label>
+            Upload Original Documents <span class="text-danger">*</span>
+          </label>
+          <input type="file" accept="image/*,.pdf" class="form-control" (change)="onImageChange($event)"
+            formControlName="upload_documents">
+          <div *ngIf="review && reviewimg" class="preview-box mt-2">
+            <img [src]="reviewimg" alt="Preview" class="img-fluid">
+          </div>
+          <div *ngIf="review && reviewPdfUrl" class="preview-box mt-2">
+            <iframe [src]="reviewPdfUrl" width="100%" height="200"></iframe>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">
+            Document/File Name <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" formControlName="documentname" placeholder="Enter Certificate Name"
+            [ngClass]="{'is-invalid': submitted && f['documentname'].errors}">
+          <div class="invalid-feedback" *ngIf="submitted && f['documentname'].errors?.['required']">
+            Document/File Name required
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-primary w-100" (click)="submitfiles()">
+            ADD
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+
+
+
+<ng-template #openmodelviewdocuments let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">View Documents</h5>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <i class="fa fa-window-close"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-3 mb-3" *ngFor="let doc of imageDocuments">
+        <h4>{{doc.documentname}}</h4>
+        <img [src]="doc.documents" class="img-thumbnail" style="cursor:pointer;height:120px;width:100%;object-fit:cover"
+          (click)="openFullImage(doc.documents, fullImageModal)">
+      </div>
+      <div *ngIf="imageDocuments.length === 0" class="text-center w-100">
+        No images available
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #fullImageModal let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <i class="fa fa-window-close"></i>
+    </button>
+  </div>
+
+  <div class="modal-body img-preview-body">
+    <img [src]="selectedImage" class="img-preview" />
+  </div>
+</ng-template>
