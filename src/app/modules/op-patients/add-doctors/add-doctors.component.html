@@ -34,8 +34,7 @@
                             <div class="form-group">
                                 <label>Age <span style="color:red">&nbsp;&nbsp; * </span></label>
                                 <input type="text" class="form-control" formControlName="doctor_age"
-                                    placeholder="Enter Age" minlength="2" maxlength="2"
-                                    (keypress)="numericOnly($event)"
+                                    placeholder="Enter Age" minlength="2" maxlength="2" (keypress)="numericOnly($event)"
                                     [ngClass]="{'is-invalid': submitte && valid['doctor_age'].errors }" />
                                 <div *ngIf="submitte && valid['doctor_age'].errors" class="invalid-feedback">
                                     <div *ngIf="valid['doctor_age'].errors['required']">Age is required</div>
@@ -45,7 +44,7 @@
                         <div class="col-lg-4 mt-3">
                             <div class="form-group">
                                 <label>Gender <span style="color:red">&nbsp;&nbsp; * </span></label>
-                                <ng-select formControlName="doctor_gender" appendTo="body" dropdownpostion="auto" 
+                                <ng-select formControlName="doctor_gender" appendTo="body" dropdownpostion="auto"
                                     [ngClass]="{'is-invalid': submitte && valid['doctor_gender'].errors }">
                                     <ng-option value="MALE">MALE</ng-option>
                                     <ng-option value="FEMALE">FEMALE</ng-option>
@@ -71,7 +70,7 @@
                             <div class="form-group">
                                 <label>Timings <span style="color:red">&nbsp;&nbsp;</span></label>
                                 <ng-select formControlName="doctor_timings" (change)="changeType($event,opentimings)"
-                                    appendTo="body" dropdownpostion="auto" >
+                                    appendTo="body" dropdownpostion="auto">
                                     <ng-option *ngFor="let p of timings" value="{{p.timings}}">{{p.timings}}
                                     </ng-option>
                                     <ng-option value="ADD">Add New Timings</ng-option>
@@ -170,7 +169,8 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea type="text" class="form-control" formControlName="description"
-                                    placeholder="Ex: Specialization in Cardiology" oninput="this.value = this.value.toUpperCase()"
+                                    placeholder="Ex: Specialization in Cardiology"
+                                    oninput="this.value = this.value.toUpperCase()"
                                     [ngClass]="{'is-invalid': submitte && valid['description'].errors }"></textarea>
                                 <div *ngIf="submitte && valid['description'].errors" class="invalid-feedback">
                                     <div *ngIf="valid['description'].errors['required']"></div>
@@ -516,7 +516,10 @@
                                 class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
                                 <!-- Footer end -->
                         </table>
+                        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons>
+                        </mat-paginator>
                     </div>
+
                 </div>
                 <br><br>
             </div>

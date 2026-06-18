@@ -408,7 +408,7 @@ tr:hover td {
 /* BADGE BUTTONS INSIDE TABLE */
 td .btn-sm {
   border-radius: 999px !important;
-  min-width: 54px;
+  min-width: 70px;
   padding: 6px 12px !important;
   font-size: 12px;
   font-weight: 900;
@@ -810,7 +810,7 @@ a {
 
   button[type="submit"],
   button[style*="dodgerblue"] {
-    width: 100% !important;
+    width: 90% !important;
   }
 
   .btns {
@@ -995,3 +995,5 @@ tr:hover td {
     width: 100% !important;
   }
 }
+
+

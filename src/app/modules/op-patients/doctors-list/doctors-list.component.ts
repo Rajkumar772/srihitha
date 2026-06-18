@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableUtil } from 'src/app/tableUtil';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-doctors-list',

@@ -18,6 +18,7 @@ import { ka } from 'date-fns/esm/locale';
 })
 export class AddDoctorsComponent {
 
+  
   dataSource: MatTableDataSource<any>;     // Datasource For Mable to assign array
   @ViewChild(MatPaginator) paginator: MatPaginator;      // Mat Table Pagination selector
   @ViewChild(MatSort) sort: MatSort;                     // Mat Table Sorting selector
@@ -83,6 +84,7 @@ headerclass = {
     this.getDoctors()
   }
 
+  
   numericOnly(event): boolean {
     let patt = /^([0-9])$/;
     let result = patt.test(event.key);

@@ -313,6 +313,11 @@
                                             class="example-second-header-row" [ngClass]="{'hide': !hideselect}">
                                             <!-- Footer end -->
                                     </table>
+                                    <mat-paginator
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 50]"
+  showFirstLastButtons>
+</mat-paginator>
                                 </div>
                             </div>
                             <br><br>
