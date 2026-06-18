@@ -21,6 +21,7 @@ import { OpServicesService } from '../op-services.service';
 })
 export class OpPatientsListComponent {
 
+  
   dataSource: MatTableDataSource<any>;     // Datasource For Mable to assign array
   @ViewChild(MatPaginator) paginator: MatPaginator;      // Mat Table Pagination selector
   @ViewChild(MatSort) sort: MatSort;                     // Mat Table Sorting selector
@@ -325,70 +326,135 @@ export class OpPatientsListComponent {
   masterdata_main: any;
   forshowdisplay1: any = [];
 
-  exportexcel(dataSource) {
-    this.masterdata_main = dataSource._data._value;
+exportexcel(dataSource) {
+  this.masterdata_main = dataSource._data._value;
 
-    const headers = [
-      'S.NO',
-      'Booking Date',
-      'Card Type',
-      'Patient Name',
-      'Address',
-      'Payment Way',
-      'Total After Discount',
-    ];
+  let fromDate = this.op_patientsSrch.value.from_date;
+  let toDate = this.op_patientsSrch.value.to_date;
 
-    const exportData = this.masterdata_main.map((table: any) => [
-      table.i,
-      this.formatDate(table.date) || '-',
-      table.card_appointment_type || '-',
-      table.name || '-',
-      table.address || '-',
-      table.payment_way || 'FREE',
-      table.after_discount_total + '/-' || '-',
-    ]);
-
-
-
-    let fromDate = this.op_patientsSrch.value.from_date;
-    let toDate = this.op_patientsSrch.value.to_date;
-
-
-    if (!fromDate || !toDate) {
-      const currentDate = new Date();
-      fromDate = fromDate || currentDate;
-      toDate = toDate || currentDate;
-    }
-
-    const formattedFromDate = this.formatDateToDDMMYYYY(fromDate);
-    const formattedToDate = this.formatDateToDDMMYYYY(toDate);
-
-
-    const title = [['Hospital Managemet']];
-    const dateInfo = [
-      [`From Date: ${formattedFromDate}`],
-      [`To Date: ${formattedToDate}`]
-    ];
-
-
-    const allData = [...title, ...dateInfo, headers, ...exportData];
-
-
-    const worksheet = XLSX.utils.aoa_to_sheet(allData);
-
-
-    const workbook = XLSX.utils.book_new();
-
-
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'OP Patient List');
-
-
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-
-    const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    saveAs(excelBlob, 'OP Report.xlsx');
+  if (!fromDate || !toDate) {
+    const currentDate = new Date();
+    fromDate = fromDate || currentDate;
+    toDate = toDate || currentDate;
   }
+
+  const formattedFromDate = this.formatDateToDDMMYYYY(fromDate);
+  const formattedToDate = this.formatDateToDDMMYYYY(toDate);
+
+  const headers = [
+    'S.No',
+    'Booking Date',
+    'OP Patient ID',
+    'Patient Type',
+    'Patient Name',
+    'Age',
+    'Gender',
+    'Mobile No',
+    'Marital Status',
+    'Doctor Name',
+    'Card Type',
+    'Appointment Type',
+    'Consultant Fee',
+    'Payment Type',
+    'Payment Way',
+    'Total After Discount',
+    'Posted Date'
+  ];
+
+  const exportData = this.masterdata_main.map((row: any, index: number) => [
+    index + 1,
+    this.formatDate(row.date) || '-',
+    row.uh_id || '-',
+    row.patient_type || '-',
+    row.name || '-',
+    row.age ? `${row.age} ${row.yandm || ''}` : '-',
+    row.gender || '-',
+    row.phone_number || '-',
+    row.marital_status || '-',
+    row.doctor_name || '-',
+    row.card_type || '-',
+    row.card_appointment_type || '-',
+    row.consultant_fee || 0,
+    row.payment_types || '-',
+    row.payment_way || 'FREE',
+    row.after_discount_total || 0,
+    row.i_ts ? this.formatDate(row.i_ts) : '-'
+  ]);
+
+  exportData.push([]);
+  exportData.push(['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Cash Total', this.cash || 0]);
+  exportData.push(['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'UPI Total', this.upi || 0]);
+  exportData.push(['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Grand Total', this.grandTotal || 0]);
+
+const allData = [
+  ['SRIHITHA CHILDREN\'S HOSPITAL'],
+  ['OP PATIENT REPORT'],
+  [`From Date : ${formattedFromDate}`, '', '', '', `To Date : ${formattedToDate}`],
+  [],
+  headers,
+  ...exportData
+];
+  const worksheet = XLSX.utils.aoa_to_sheet(allData);
+
+worksheet['!merges'] = [
+  { s: { r: 0, c: 0 }, e: { r: 0, c: headers.length - 1 } },
+  { s: { r: 1, c: 0 }, e: { r: 1, c: headers.length - 1 } }
+];
+
+worksheet['A1'].s = {
+  font: {
+    bold: true,
+    sz: 18
+  },
+  alignment: {
+    horizontal: 'center'
+  }
+};
+
+worksheet['A2'].s = {
+  font: {
+    bold: true,
+    sz: 14
+  },
+  alignment: {
+    horizontal: 'center'
+  }
+};
+
+  worksheet['!cols'] = [
+    { wch: 8 },
+    { wch: 14 },
+    { wch: 18 },
+    { wch: 14 },
+    { wch: 22 },
+    { wch: 12 },
+    { wch: 12 },
+    { wch: 15 },
+    { wch: 18 },
+    { wch: 22 },
+    { wch: 18 },
+    { wch: 24 },
+    { wch: 16 },
+    { wch: 16 },
+    { wch: 16 },
+    { wch: 20 },
+    { wch: 18 }
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'OP Patient Report');
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: 'xlsx',
+    type: 'array'
+  });
+
+  const excelBlob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
+
+  saveAs(excelBlob, `OP Patient Report ${formattedFromDate} to ${formattedToDate}.xlsx`);
+}
 
   formatDate(date: any): string {
     const d = new Date(date);

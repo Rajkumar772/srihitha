@@ -509,3 +509,18 @@ td {
     display: none !important;
   }
 }
+
+::ng-deep .mat-paginator {
+  border-top: 1px solid #e5edf7 !important;
+  border-radius: 0 0 16px 16px !important;
+  background: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .mat-paginator-container {
+  min-height: 58px !important;
+  justify-content: flex-end !important;
+}
+
+
+
